@@ -1,0 +1,6 @@
+framework module Pods_Arrival {
+  umbrella header "Pods-Arrival-umbrella.h"
+
+  export *
+  module * { export * }
+}
