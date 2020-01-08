@@ -11,9 +11,9 @@ import UIKit
 import SwiftUI
 
 struct Train: Hashable, Codable, Identifiable {
-    var id: Int
+    var id: UUID
     var direction: String
-    var time: String
+    var time: Int
     var unit: String
     var color: String
     

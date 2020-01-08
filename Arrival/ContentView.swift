@@ -18,18 +18,18 @@ struct ContentView: View {
     let baseAPI = "https://api.arrival.city"
     let stationAPI = "https://api.arrival.city/api/v2/stationlist"
     
-
+    
     var body: some View {
         NavigationView {
-            if userData.network {
+            if userData.network && userData.trains.count > 0 {
                 List(userData.trains) { Train in
                     HStack {
                         Text(Train.direction).font(.headline)
                         Spacer()
-                        Text(Train.time + Train.unit).font(.subheadline)
+                        Text(String(Train.time) + Train.unit).font(.subheadline)
                     }
                     
-                }.navigationBarTitle(Text("Arrival " + String(userData.stations.count)))
+                }.navigationBarTitle(Text(String(userData.closestStation.name)))
             } else {
                 VStack {
                     Text("Network Error")

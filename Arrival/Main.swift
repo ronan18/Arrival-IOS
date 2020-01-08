@@ -15,7 +15,12 @@ struct Main: View {
     var body: some View {
         VStack {
             if self.userData.authorized {
-                ContentView()
+                if userData.trains.count > 0 {
+                  ContentView()
+                } else {
+                    Loading()
+                }
+                
                 
             } else {
                 Login()

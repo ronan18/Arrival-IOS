@@ -11,40 +11,103 @@ import Combine
 import Alamofire
 import SwiftyJSON
 import CoreLocation
+import CoreData
+var container: NSPersistentContainer!
 //let baseURL = "http://localhost:3000"
 let baseURL = "https://api.arrival.city"
 
+func deg2rad(deg:Double) -> Double {
+    return deg * M_PI / 180
+}
 
+func rad2deg(rad:Double) -> Double {
+    return rad * 180.0 / M_PI
+}
+
+func distance(lat1:Double, lon1:Double, lat2:Double, lon2:Double, unit:String) -> Double {
+    let theta = lon1 - lon2
+    var dist = sin(deg2rad(deg: lat1)) * sin(deg2rad(deg: lat2)) + cos(deg2rad(deg: lat1)) * cos(deg2rad(deg: lat2)) * cos(deg2rad(deg: theta))
+    dist = acos(dist)
+    dist = rad2deg(rad: dist)
+    dist = dist * 60 * 1.1515
+    if (unit == "K") {
+        dist = dist * 1.609344
+    }
+    else if (unit == "N") {
+        dist = dist * 0.8684
+    }
+    return dist
+}
+
+let appDelegate = UIApplication.shared.delegate as! AppDelegate
+let context = appDelegate.persistentContainer.viewContext
 final class UserData: NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var authorized = true
     //@Published var passphrase = ""
     @Published var passphrase = "test"
-    @Published var trains = trainData
+    @Published var trains: Array = [Train]()
     @Published var dataLoaded: Bool = false
     @Published var stations = [Station]()
+    @Published var closestStation = Station(id: 0, name: "test", lat: 0.0, long: 0.0, abbr: "test")
     @Published var network: Bool = true
     @Published var lat: Double = 0.0
     @Published var long: Double = 0.0
+    @Published var lastLat: Double = 0.0
+    @Published var lastLong: Double = 0.0
+    @Published var startedTrains: Bool = false
     let locationManager: CLLocationManager = CLLocationManager()
     
     override init() {
         super.init()
         print("init")
+        
         locationManager.requestWhenInUseAuthorization()
         if CLLocationManager.locationServicesEnabled() {
             print("location auth")
             locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.startUpdatingLocation()
         } else {
             print("no location auth")
         }
         
         getStations()
-        if self.authorized {
-            beginHome()
+        
+        
+    }
+    func runTrains() {
+        print("running Trains")
+        self.startedTrains = true
+        self.fetchTrains()
+        Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { timer in
+            self.fetchTrains()
         }
         
+    }
+    func fetchTrains() {
+        print("fetching trains from", self.closestStation.abbr)
+        let headers: HTTPHeaders = [
+            "Authorization": self.passphrase,
+            "Accept": "application/json"
+        ]
+        Alamofire.request(baseURL + "/api/v2/trains/" + self.closestStation.abbr, headers: headers).responseJSON { response in
+            print(JSON(response.value))
+            let estimates = JSON(JSON(response.value)["estimates"]["etd"].arrayValue)
+            print(estimates.count)
+            var results: Array = [Train]()
+            for i in 0...estimates.count - 1 {
+                for x in 0...estimates[i]["estimate"].arrayValue.count - 1 {
+                    let thisTrain = estimates[i]["estimate"][x]
+                    results.append(Train(id: UUID(), direction: estimates[i]["destination"].stringValue, time: thisTrain["minutes"].intValue, unit: "min", color: thisTrain["color"].stringValue))
+                }
+            }
+            results.sort {
+                $0.time < $1.time
+            }
+            self.trains = results
+            
+            
+        }
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else {
@@ -52,7 +115,8 @@ final class UserData: NSObject, CLLocationManagerDelegate, ObservableObject {
         }
         print("locations = \(locValue.latitude) \(locValue.longitude)")
         self.lat = locValue.latitude
-        self.lat = locValue.longitude
+        self.long = locValue.longitude
+        getNearestStation()
     }
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if(status == CLAuthorizationStatus.denied) {
@@ -67,6 +131,49 @@ final class UserData: NSObject, CLLocationManagerDelegate, ObservableObject {
     }
     func getNearestStation() {
         print("getting nearest station")
+        let locationChange = self.lat != self.lastLat || self.long != self.lastLong
+        if (self.lat != 0 && self.stations.count > 0 && locationChange ) {
+            print("have location")
+            let myCord: CLLocation = CLLocation(latitude: self.lat, longitude: self.long)
+            print(self.lat, self.long)
+            var closestStation = Station(id: 0, name: "test", lat: 0.0, long: 0.0, abbr: "test")
+            var closestdistance:Double = 0.0
+            for i in 0...self.stations.count - 1 {
+                
+                let station = self.stations[i]
+                //  print(self.stations)
+                print(station.lat, station.long)
+                let stationLoc: CLLocation = CLLocation(latitude: station.lat, longitude: station.long)
+                //  let distanceMiles = distance(lat1: station.lat, lon1: station.long, lat2: self.lat,lon2: self.long, unit: "K")
+                let distanceMiles = myCord.distance(from: stationLoc)
+                
+                
+                print(station.name,distanceMiles)
+                if (closestdistance == 0 || closestdistance > distanceMiles) {
+                    closestStation = station
+                    closestdistance = distanceMiles
+                }
+                
+            }
+            print(closestStation, closestdistance)
+            var newStation: Bool = false
+            if (closestStation.abbr != self.closestStation.abbr) {
+                newStation = true
+            }
+            self.closestStation = closestStation
+            self.lastLong = self.long
+            self.lastLat = self.lat
+            if (!self.startedTrains) {
+                runTrains()
+            } else {
+                if newStation {
+                    fetchTrains()
+                }
+            }
+            
+        } else {
+            print("no location")
+        }
         
         
         
@@ -74,31 +181,82 @@ final class UserData: NSObject, CLLocationManagerDelegate, ObservableObject {
     }
     
     func getStations (){
-        
-        Alamofire.request(baseAPI + "/api/v2/stations")
-            .responseJSON{
-                response in
-                
-                //  print("spacer")
-                //  print(response, "response status")
-                if  response.value != nil {
-                    let stationJSON = JSON(response.value)
-                    for i in 0..<stationJSON.count {
-                        let json = stationJSON[i]
-                        let id = json["_id"].intValue
-                        let name = json["name"].stringValue
-                        let abbr = json["abbr"].stringValue
-                        let lat = json["gtfs_latitude"].doubleValue
-                        let long = json["gtfs_longitude"].doubleValue
-                        self.stations.append(Station(id:id, name: name, lat: lat, long: long, abbr: abbr))
-                    }
-                    //  print(self.stations)
-                    print("got stations")
-                } else {
-                    print("error retreving stations")
-                    self.network = false
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "StationCore")
+        //request.predicate = NSPredicate(format: "age = %@", "12")
+        request.returnsObjectsAsFaults = false
+        do {
+            let result = try context.fetch(request)
+            var stations: [Station] = []
+            var version: Int = 0
+            for data in result as! [NSObject] {
+                let name = data.value(forKey: "name") as! String
+                let abbr = data.value(forKey: "abbr") as! String
+                let id = data.value(forKey: "id") as! Int
+                let lat = data.value(forKey: "lat") as! Double
+                let long = data.value(forKey: "long") as! Double
+                stations.append(Station(id: id,name: name,lat: lat,long: long,abbr: abbr))
+                version = data.value(forKey: "version") as! Int
+            }
+            print(stations.count, version)
+            if (stations.count == 0) {
+                Alamofire.request(baseAPI + "/api/v3/stations")
+                           .responseJSON{
+                               response in
+                               
+                               //  print("spacer")
+                               //  print(response, "response status")
+                               if  response.value != nil {
+                                   let stationJSON = JSON(response.value)
+                                let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "StationCore")
+                                let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+                             
+                                   for i in 0..<stationJSON["stations"].arrayValue.count {
+                                       let json = stationJSON["stations"][i]
+                                       let id = json["_id"].intValue
+                                       let name = json["name"].stringValue
+                                       let abbr = json["abbr"].stringValue
+                                       let lat = json["gtfs_latitude"].doubleValue
+                                       let long = json["gtfs_longitude"].doubleValue
+                                       let entity = NSEntityDescription.entity(forEntityName: "StationCore", in: context)
+                                       let newStation = NSManagedObject(entity: entity!, insertInto: context)
+                                       newStation.setValue(name, forKey: "name")
+                                       newStation.setValue(id, forKey: "id")
+                                       newStation.setValue(abbr, forKey: "abbr")
+                                       newStation.setValue(lat, forKey: "lat")
+                                       newStation.setValue(long, forKey: "long")
+                                       newStation.setValue(stationJSON["version"].intValue, forKey: "version")
+                                       do {
+                                           try context.save()
+                                       } catch {
+                                           print("Failed saving")
+                                       }
+                                       self.stations.append(Station(id:id, name: name, lat: lat, long: long, abbr: abbr))
+                                   }
+                                   //   print(self.stations)
+                                   
+                                   print("got stations from server")
+                                   if self.authorized {
+                                       self.beginHome()
+                                   }
+                               } else {
+                                   print("error retreving stations")
+                                   self.network = false
+                               }
+                       }
+            } else {
+                self.stations = stations
+                print("got stations from core data")
+                if self.authorized {
+                    self.beginHome()
                 }
+            }
+            
+        } catch {
+            
+            print("Failed")
         }
+        
+       
         
     }
     
