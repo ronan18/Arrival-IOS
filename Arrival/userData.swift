@@ -64,32 +64,39 @@ final class UserData: NSObject, CLLocationManagerDelegate, ObservableObject {
                 self.ready = true
                 
             } else {
-              let nsResult =  result as! [NSObject]
+                let nsResult =  result as! [NSObject]
                 self.passphrase = nsResult[0].value(forKey: "passphrase") as! String
                 print(self.passphrase)
                 let headers: HTTPHeaders = [
-                                  "Authorization": self.passphrase,
-                                  "Accept": "application/json"
-                              ]
+                    "Authorization": self.passphrase,
+                    "Accept": "application/json"
+                ]
                 Alamofire.request("https://api.arrival.city/api/v2/login", headers: headers).responseJSON {
-                             response in //print(response.value)
-                             let jsonResponse = JSON(response.value)
-                             if jsonResponse["user"].stringValue == "true" {
-                                 self.authorized = true
-                                    self.ready = true
-                                self.getStations()
-                                
-                                 print("user authorized")
+                    response in //print(response.value)
+                    if  response.value != nil {
+                        let jsonResponse = JSON(response.value)
+                        if jsonResponse["user"].stringValue == "true" {
+                            self.authorized = true
+                            self.ready = true
+                            self.getStations()
                             
-                                 
-                             } else {
-                                 print("user not authorized")
-                                self.authorized = false
-                                self.passphrase = ""
-                                self.ready = true
-                             }
-                         }
- 
+                            print("user authorized")
+                            
+                            
+                        } else {
+                            print("user not authorized")
+                            self.authorized = false
+                            self.passphrase = ""
+                            self.ready = true
+                        }
+                    } else {
+                        print("error logging in")
+                       // self.network = false
+                        // self.ready = true
+                    }
+                }
+                
+                
             }
         } catch {
             
@@ -106,9 +113,9 @@ final class UserData: NSObject, CLLocationManagerDelegate, ObservableObject {
         
     }
     func fetchTrains() {
-       
+        
         if (self.authorized) {
-             print("fetching trains from", self.closestStation.abbr)
+            print("fetching trains from", self.closestStation.abbr)
             let headers: HTTPHeaders = [
                 "Authorization": self.passphrase,
                 "Accept": "application/json"

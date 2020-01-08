@@ -20,6 +20,7 @@
 		C548A69623C1E67800E265F8 /* ArrivalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C548A69523C1E67800E265F8 /* ArrivalTests.swift */; };
 		C55A3BB123C28D9700240A94 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55A3BB023C28D9700240A94 /* Station.swift */; };
 		C55A3BB323C3960100240A94 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55A3BB223C3960100240A94 /* Login.swift */; };
+		C57F1D3C23C647E3005C9BE5 /* AppIcon.appiconset in Resources */ = {isa = PBXBuildFile; fileRef = C57F1D3B23C647E3005C9BE5 /* AppIcon.appiconset */; };
 		C59568D523C40F8400CEEA83 /* Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59568D423C40F8400CEEA83 /* Main.swift */; };
 		C59568D723C4247E00CEEA83 /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59568D623C4247E00CEEA83 /* Coordinate.swift */; };
 		C5C81F7823C24B6500A4D0FD /* userData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C81F7723C24B6500A4D0FD /* userData.swift */; };
@@ -58,6 +59,7 @@
 		C548A69723C1E67800E265F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C55A3BB023C28D9700240A94 /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
 		C55A3BB223C3960100240A94 /* Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
+		C57F1D3B23C647E3005C9BE5 /* AppIcon.appiconset */ = {isa = PBXFileReference; lastKnownFileType = folder; path = AppIcon.appiconset; sourceTree = "<group>"; };
 		C59568D423C40F8400CEEA83 /* Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Main.swift; sourceTree = "<group>"; };
 		C59568D623C4247E00CEEA83 /* Coordinate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		C5C81F7723C24B6500A4D0FD /* userData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userData.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				C5C81F7723C24B6500A4D0FD /* userData.swift */,
 				C55A3BB223C3960100240A94 /* Login.swift */,
 				344E05DF23C5870100853B2D /* Arrival.xcdatamodeld */,
+				C57F1D3B23C647E3005C9BE5 /* AppIcon.appiconset */,
 			);
 			path = Arrival;
 			sourceTree = "<group>";
@@ -272,6 +275,7 @@
 				C5C81F8523C2507F00A4D0FD /* trainData.json in Resources */,
 				C548A68B23C1E67800E265F8 /* LaunchScreen.storyboard in Resources */,
 				C548A68823C1E67800E265F8 /* Preview Assets.xcassets in Resources */,
+				C57F1D3C23C647E3005C9BE5 /* AppIcon.appiconset in Resources */,
 				C548A68523C1E67800E265F8 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
