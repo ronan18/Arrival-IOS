@@ -9,6 +9,7 @@
 import SwiftUI
 import Alamofire
 import SwiftyJSON
+import CoreData
 
 struct Login: View {
     @EnvironmentObject var userData: UserData
@@ -44,13 +45,23 @@ struct Login: View {
                     "Accept": "application/json"
                 ]
                 Alamofire.request("https://api.arrival.city/api/v2/login", headers: headers).responseJSON {
-                    response in print(response.value)
+                    response in //print(response.value)
                     let jsonResponse = JSON(response.value)
                     if jsonResponse["user"].stringValue == "true" {
                         self.userData.authorized = true
+                        self.userData.getStations()
                         self.userData.beginHome()
                         print("user authorized")
-                       
+                        let entity = NSEntityDescription.entity(forEntityName: "User", in: context)
+                        let newUser = NSManagedObject(entity: entity!, insertInto: context)
+                        newUser.setValue(self.userData.passphrase, forKey: "passphrase")
+                        do {
+                            try context.save()
+                            print("saved passphrase")
+                        } catch {
+                            print("Failed saving")
+                        }
+                        
                     } else {
                         print("user not authorized")
                     }

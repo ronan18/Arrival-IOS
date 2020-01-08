@@ -14,6 +14,7 @@ struct Main: View {
     @EnvironmentObject var userData: UserData
     var body: some View {
         VStack {
+            if (self.userData.ready) {
             if self.userData.authorized {
                 if userData.trains.count > 0 {
                   ContentView()
@@ -24,6 +25,9 @@ struct Main: View {
                 
             } else {
                 Login()
+            }
+            } else {
+                Loading()
             }
         }
     }
