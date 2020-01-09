@@ -11,6 +11,7 @@
 		344E05E123C5870100853B2D /* Arrival.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 344E05DF23C5870100853B2D /* Arrival.xcdatamodeld */; };
 		4D18E14AB8C185CC26934E04 /* Pods_Arrival.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8ECAC3A29703FE20039E3DC /* Pods_Arrival.framework */; };
 		629F7084BF5E305400D80CC7 /* Pods_ArrivalTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C2531C5A4FEC7A45224233 /* Pods_ArrivalTests.framework */; };
+		C50FE0DF23C6E2D3006657C5 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50FE0DE23C6E2D3006657C5 /* ColorExtension.swift */; };
 		C548A67F23C1E67700E265F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C548A67E23C1E67700E265F8 /* AppDelegate.swift */; };
 		C548A68123C1E67700E265F8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C548A68023C1E67700E265F8 /* SceneDelegate.swift */; };
 		C548A68323C1E67700E265F8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C548A68223C1E67700E265F8 /* ContentView.swift */; };
@@ -46,6 +47,7 @@
 		344E05E023C5870100853B2D /* Arrival.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Arrival.xcdatamodel; sourceTree = "<group>"; };
 		3C066A2537670BED1EB6CF56 /* Pods-Arrival.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Arrival.debug.xcconfig"; path = "Target Support Files/Pods-Arrival/Pods-Arrival.debug.xcconfig"; sourceTree = "<group>"; };
 		54C2531C5A4FEC7A45224233 /* Pods_ArrivalTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArrivalTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C50FE0DE23C6E2D3006657C5 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		C548A67B23C1E67700E265F8 /* Arrival.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Arrival.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C548A67E23C1E67700E265F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C548A68023C1E67700E265F8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				C5C81F7A23C24C5300A4D0FD /* Train.swift */,
 				C55A3BB023C28D9700240A94 /* Station.swift */,
 				C59568D623C4247E00CEEA83 /* Coordinate.swift */,
+				C50FE0DE23C6E2D3006657C5 /* ColorExtension.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -370,6 +373,7 @@
 				C55A3BB123C28D9700240A94 /* Station.swift in Sources */,
 				C55A3BB323C3960100240A94 /* Login.swift in Sources */,
 				C59568D723C4247E00CEEA83 /* Coordinate.swift in Sources */,
+				C50FE0DF23C6E2D3006657C5 /* ColorExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

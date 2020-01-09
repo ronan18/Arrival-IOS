@@ -128,7 +128,9 @@ final class UserData: NSObject, CLLocationManagerDelegate, ObservableObject {
                 for i in 0...estimates.count - 1 {
                     for x in 0...estimates[i]["estimate"].arrayValue.count - 1 {
                         let thisTrain = estimates[i]["estimate"][x]
-                        results.append(Train(id: UUID(), direction: estimates[i]["destination"].stringValue, time: thisTrain["minutes"].intValue, unit: "min", color: thisTrain["color"].stringValue))
+                        let color = thisTrain["color"].stringValue
+                        
+                        results.append(Train(id: UUID(), direction: estimates[i]["destination"].stringValue, time: thisTrain["minutes"].intValue, unit: "min", color: color, cars: thisTrain["length"].intValue, hex: thisTrain["hexcode"].stringValue))
                     }
                 }
                 results.sort {

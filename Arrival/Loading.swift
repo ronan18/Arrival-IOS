@@ -10,7 +10,14 @@ import SwiftUI
 
 struct Loading: View {
     var body: some View {
-        Text("Loading")
+        VStack(alignment: .center)  {
+            Text("loading")
+            
+            
+        }
+        
+        
+        
     }
 }
 

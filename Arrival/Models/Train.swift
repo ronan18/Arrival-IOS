@@ -16,5 +16,9 @@ struct Train: Hashable, Codable, Identifiable {
     var time: Int
     var unit: String
     var color: String
-    
+    var cars: Int
+    var hex: String
+
+  
+   
 }
