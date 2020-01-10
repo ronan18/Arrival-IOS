@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import  SwiftUI
 func colorToColor(color: String) -> Color {
-
+    
     if (color == "YELLOW") {
         return Color.yellow
     } else if (color == "BLUE") {
@@ -24,11 +24,13 @@ func colorToColor(color: String) -> Color {
     } else if (color == "PURPLE") {
         return Color.purple
     } else {
-         return Color.black
+        return Color.gray
     }
-   
+    
 }
 extension Color {
     //static let oldPrimaryColor = Color(UIColor.systemIndigo)
     static let lightDarkBG: Color = Color("lightDarkBG")
+    static let whiteDark: Color = Color("whiteDark")
 }
+

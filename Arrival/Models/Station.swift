@@ -8,7 +8,7 @@
 
 import Foundation
 struct Station : Codable,Identifiable{
-    var id: Int
+    var id: String
     var name: String
     var lat: Double
     var long: Double

@@ -11,6 +11,7 @@
 		344E05E123C5870100853B2D /* Arrival.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 344E05DF23C5870100853B2D /* Arrival.xcdatamodeld */; };
 		4D18E14AB8C185CC26934E04 /* Pods_Arrival.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E8ECAC3A29703FE20039E3DC /* Pods_Arrival.framework */; };
 		629F7084BF5E305400D80CC7 /* Pods_ArrivalTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 54C2531C5A4FEC7A45224233 /* Pods_ArrivalTests.framework */; };
+		C50EB09B23C7966D0052581D /* StationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50EB09A23C7966D0052581D /* StationView.swift */; };
 		C50FE0DF23C6E2D3006657C5 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C50FE0DE23C6E2D3006657C5 /* ColorExtension.swift */; };
 		C548A67F23C1E67700E265F8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C548A67E23C1E67700E265F8 /* AppDelegate.swift */; };
 		C548A68123C1E67700E265F8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C548A68023C1E67700E265F8 /* SceneDelegate.swift */; };
@@ -47,6 +48,8 @@
 		344E05E023C5870100853B2D /* Arrival.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Arrival.xcdatamodel; sourceTree = "<group>"; };
 		3C066A2537670BED1EB6CF56 /* Pods-Arrival.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Arrival.debug.xcconfig"; path = "Target Support Files/Pods-Arrival/Pods-Arrival.debug.xcconfig"; sourceTree = "<group>"; };
 		54C2531C5A4FEC7A45224233 /* Pods_ArrivalTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArrivalTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C50EB09A23C7966D0052581D /* StationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationView.swift; sourceTree = "<group>"; };
+		C50EB09C23C799870052581D /* Arrival v2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Arrival v2.xcdatamodel"; sourceTree = "<group>"; };
 		C50FE0DE23C6E2D3006657C5 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		C548A67B23C1E67700E265F8 /* Arrival.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Arrival.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C548A67E23C1E67700E265F8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -150,6 +153,7 @@
 				C55A3BB223C3960100240A94 /* Login.swift */,
 				344E05DF23C5870100853B2D /* Arrival.xcdatamodeld */,
 				C57F1D3B23C647E3005C9BE5 /* AppIcon.appiconset */,
+				C50EB09A23C7966D0052581D /* StationView.swift */,
 			);
 			path = Arrival;
 			sourceTree = "<group>";
@@ -364,6 +368,7 @@
 				C59568D523C40F8400CEEA83 /* Main.swift in Sources */,
 				344E05E123C5870100853B2D /* Arrival.xcdatamodeld in Sources */,
 				C548A67F23C1E67700E265F8 /* AppDelegate.swift in Sources */,
+				C50EB09B23C7966D0052581D /* StationView.swift in Sources */,
 				C5C81F7D23C24CE900A4D0FD /* Data.swift in Sources */,
 				344E05B623C5070900853B2D /* Loading.swift in Sources */,
 				C548A68123C1E67700E265F8 /* SceneDelegate.swift in Sources */,
@@ -645,9 +650,10 @@
 		344E05DF23C5870100853B2D /* Arrival.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				C50EB09C23C799870052581D /* Arrival v2.xcdatamodel */,
 				344E05E023C5870100853B2D /* Arrival.xcdatamodel */,
 			);
-			currentVersion = 344E05E023C5870100853B2D /* Arrival.xcdatamodel */;
+			currentVersion = C50EB09C23C799870052581D /* Arrival v2.xcdatamodel */;
 			path = Arrival.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

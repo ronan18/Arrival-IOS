@@ -23,10 +23,11 @@ final class UserData: NSObject, CLLocationManagerDelegate, ObservableObject {
     @Published var ready = false
     //@Published var passphrase = ""
     @Published var passphrase = ""
+    @Published var fromStationSearch = ""
     @Published var trains: Array = [Train]()
     @Published var dataLoaded: Bool = false
     @Published var stations = [Station]()
-    @Published var closestStation = Station(id: 0, name: "test", lat: 0.0, long: 0.0, abbr: "test")
+    @Published var closestStation = Station(id: "0", name: "test", lat: 0.0, long: 0.0, abbr: "test")
     @Published var network: Bool = true
     @Published var lat: Double = 0.0
     @Published var long: Double = 0.0
@@ -48,10 +49,6 @@ final class UserData: NSObject, CLLocationManagerDelegate, ObservableObject {
         } else {
             print("no location auth")
         }
-        
-        
-        
-        
     }
     func login() {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
@@ -78,11 +75,11 @@ final class UserData: NSObject, CLLocationManagerDelegate, ObservableObject {
                         if jsonResponse["user"].stringValue == "true" {
                             self.authorized = true
                             self.ready = true
-                            self.getStations()
-                            
+                            if self.stations.isEmpty {
+                                  self.getStations()
+                            }
+                        
                             print("user authorized")
-                            
-                            
                         } else {
                             print("user not authorized")
                             self.authorized = false
@@ -91,7 +88,7 @@ final class UserData: NSObject, CLLocationManagerDelegate, ObservableObject {
                         }
                     } else {
                         print("error logging in")
-                       // self.network = false
+                        // self.network = false
                         // self.ready = true
                     }
                 }
@@ -173,7 +170,7 @@ final class UserData: NSObject, CLLocationManagerDelegate, ObservableObject {
             print("have location")
             let myCord: CLLocation = CLLocation(latitude: self.lat, longitude: self.long)
             print(self.lat, self.long)
-            var closestStation = Station(id: 0, name: "test", lat: 0.0, long: 0.0, abbr: "test")
+            var closestStation = Station(id: "0", name: "test", lat: 0.0, long: 0.0, abbr: "test")
             var closestdistance:Double = 0.0
             for i in 0...self.stations.count - 1 {
                 
@@ -228,7 +225,7 @@ final class UserData: NSObject, CLLocationManagerDelegate, ObservableObject {
             for data in result as! [NSObject] {
                 let name = data.value(forKey: "name") as! String
                 let abbr = data.value(forKey: "abbr") as! String
-                let id = data.value(forKey: "id") as! Int
+                let id = data.value(forKey: "id") as! String
                 let lat = data.value(forKey: "lat") as! Double
                 let long = data.value(forKey: "long") as! Double
                 stations.append(Station(id: id,name: name,lat: lat,long: long,abbr: abbr))
@@ -249,7 +246,7 @@ final class UserData: NSObject, CLLocationManagerDelegate, ObservableObject {
                             
                             for i in 0..<stationJSON["stations"].arrayValue.count {
                                 let json = stationJSON["stations"][i]
-                                let id = json["_id"].intValue
+                                let id = json["_id"].stringValue
                                 let name = json["name"].stringValue
                                 let abbr = json["abbr"].stringValue
                                 let lat = json["gtfs_latitude"].doubleValue
@@ -270,7 +267,7 @@ final class UserData: NSObject, CLLocationManagerDelegate, ObservableObject {
                                 self.stations.append(Station(id:id, name: name, lat: lat, long: long, abbr: abbr))
                             }
                             //   print(self.stations)
-                            
+                           
                             print("got stations from server")
                             if self.authorized {
                                 self.beginHome()
@@ -282,7 +279,9 @@ final class UserData: NSObject, CLLocationManagerDelegate, ObservableObject {
                 }
             } else {
                 self.stations = stations
-                print("got stations from core data")
+             
+                
+                print("got stations from core data", self.stations)
                 if self.authorized {
                     self.beginHome()
                 }
