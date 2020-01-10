@@ -49,6 +49,7 @@ final class UserData: NSObject, CLLocationManagerDelegate, ObservableObject {
         } else {
             print("no location auth")
         }
+        getStations()
     }
     func login() {
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
@@ -75,10 +76,7 @@ final class UserData: NSObject, CLLocationManagerDelegate, ObservableObject {
                         if jsonResponse["user"].stringValue == "true" {
                             self.authorized = true
                             self.ready = true
-                            if self.stations.isEmpty {
-                                  self.getStations()
-                            }
-                        
+                            self.beginHome()
                             print("user authorized")
                         } else {
                             print("user not authorized")
@@ -159,7 +157,8 @@ final class UserData: NSObject, CLLocationManagerDelegate, ObservableObject {
     }
     func beginHome() {
         print("running home fetches")
-        if self.network {
+   
+        if self.network && !self.stations.isEmpty {
             getNearestStation()
         }
     }
@@ -199,6 +198,7 @@ final class UserData: NSObject, CLLocationManagerDelegate, ObservableObject {
             self.lastLat = self.lat
             if (!self.startedTrains) {
                 runTrains()
+                self.startedTrains = true
             } else {
                 if newStation {
                     fetchTrains()
@@ -269,9 +269,7 @@ final class UserData: NSObject, CLLocationManagerDelegate, ObservableObject {
                             //   print(self.stations)
                            
                             print("got stations from server")
-                            if self.authorized {
-                                self.beginHome()
-                            }
+                           
                         } else {
                             print("error retreving stations")
                             self.network = false
@@ -282,9 +280,7 @@ final class UserData: NSObject, CLLocationManagerDelegate, ObservableObject {
              
                 
                 print("got stations from core data", self.stations)
-                if self.authorized {
-                    self.beginHome()
-                }
+            
             }
             
         } catch {
