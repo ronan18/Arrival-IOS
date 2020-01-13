@@ -28,6 +28,7 @@ struct StationView: View {
                     Text("Dismiss")
                 }
             }
+            //TODO use a search feild
             TextField("Seach for station", text: $userData.fromStationSearch)
             List(userData.stations.filter{
                 if userData.fromStationSearch.count > 0 {

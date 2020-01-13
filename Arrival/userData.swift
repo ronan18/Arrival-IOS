@@ -157,7 +157,11 @@ final class UserData: NSObject, CLLocationManagerDelegate, ObservableObject {
     }
     func beginHome() {
         print("running home fetches")
-   
+        if self.authorized {
+            
+        } else {
+            self.ready = true
+        }
         if self.network && !self.stations.isEmpty {
             getNearestStation()
         }
