@@ -1,0 +1,17 @@
+//
+//  Colors.swift
+//  Arrival-iOS2
+//
+//  Created by Ronan Furuta on 1/12/20.
+//  Copyright © 2020 Stomp Rocket. All rights reserved.
+//
+
+import Foundation
+import UIKit
+import  SwiftUI
+extension Color {
+    //static let oldPrimaryColor = Color(UIColor.systemIndigo)
+
+    static let background: Color = Color("cardBackground")
+     static let arrivalBlue: Color = Color("arrivalBlue")
+}

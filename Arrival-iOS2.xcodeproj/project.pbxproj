@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		34EF38AF23CC23D4000DE4AF /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EF38AE23CC23D4000DE4AF /* Colors.swift */; };
+		34EF38B123CC2692000DE4AF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EF38B023CC2692000DE4AF /* HomeView.swift */; };
+		34EF38B323CC2AC1000DE4AF /* StationChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EF38B223CC2AC1000DE4AF /* StationChooserView.swift */; };
 		64BB2D2FF3AB6F51B9399F08 /* Pods_Arrival_iOS2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74ACA5CF5B67BD66D8845E5D /* Pods_Arrival_iOS2.framework */; };
 		C58F248223CC1438003882F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58F248123CC1438003882F3 /* AppDelegate.swift */; };
 		C58F248423CC1438003882F3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58F248323CC1438003882F3 /* SceneDelegate.swift */; };
@@ -31,6 +34,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		34EF38AE23CC23D4000DE4AF /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		34EF38B023CC2692000DE4AF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		34EF38B223CC2AC1000DE4AF /* StationChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationChooserView.swift; sourceTree = "<group>"; };
 		74ACA5CF5B67BD66D8845E5D /* Pods_Arrival_iOS2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Arrival_iOS2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		751A431627D2482AE13CFE9F /* Pods-Arrival-iOS2Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Arrival-iOS2Tests.release.xcconfig"; path = "Target Support Files/Pods-Arrival-iOS2Tests/Pods-Arrival-iOS2Tests.release.xcconfig"; sourceTree = "<group>"; };
 		C56D06D647AB3355D1B3247D /* Pods-Arrival-iOS2Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Arrival-iOS2Tests.debug.xcconfig"; path = "Target Support Files/Pods-Arrival-iOS2Tests/Pods-Arrival-iOS2Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -124,6 +130,9 @@
 				C58F248523CC1438003882F3 /* Arrival_iOS2.xcdatamodeld */,
 				C58F248C23CC143A003882F3 /* Preview Content */,
 				C58F24A623CC14D1003882F3 /* TrainView.swift */,
+				34EF38AE23CC23D4000DE4AF /* Colors.swift */,
+				34EF38B023CC2692000DE4AF /* HomeView.swift */,
+				34EF38B223CC2AC1000DE4AF /* StationChooserView.swift */,
 			);
 			path = "Arrival-iOS2";
 			sourceTree = "<group>";
@@ -314,6 +323,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				C58F24A723CC14D1003882F3 /* TrainView.swift in Sources */,
+				34EF38B123CC2692000DE4AF /* HomeView.swift in Sources */,
+				34EF38AF23CC23D4000DE4AF /* Colors.swift in Sources */,
+				34EF38B323CC2AC1000DE4AF /* StationChooserView.swift in Sources */,
 				C58F248723CC1438003882F3 /* Arrival_iOS2.xcdatamodeld in Sources */,
 				C58F248223CC1438003882F3 /* AppDelegate.swift in Sources */,
 				C58F248923CC1438003882F3 /* ContentView.swift in Sources */,
