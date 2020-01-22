@@ -9,6 +9,7 @@
 import SwiftUI
 import UIKit
 struct HomeView: View {
+    @State var fromModalDisplayed = false
     init() {
         // 1.
         UINavigationBar.appearance().backgroundColor = UIColor(named: "arrivalBlue")
@@ -20,16 +21,36 @@ struct HomeView: View {
         NavigationView {
             VStack {
                 HStack {
-                    VStack(alignment: .leading) {
-                        Text("from").font(.caption)
-                        Text("Station").font(.headline)
+                    Button  (action: {
+                        
+                        self.fromModalDisplayed = true
+                    }) {
+                        VStack(alignment: .leading) {
+                            Text("from").font(.caption)
+                            Text("Station").font(.headline)
+                        }
+                    }.sheet(isPresented: $fromModalDisplayed) {
+                        VStack(alignment: .leading) {
+                            HStack(alignment: .center) {
+                                Text("From Station")
+                                    .font(.largeTitle)
+                                    .fontWeight(.bold)
+                                Spacer()
+                                Button(action: {
+                                    self.fromModalDisplayed = false
+                                }) {
+                                    Text("Dismiss")
+                                }
+                            }
+                            StationChooserView()
+                        }.padding()
                     }
                     Spacer()
                     VStack(alignment: .trailing) {
                         Text("to").font(.caption)
                         Text("Station").font(.headline)
                     }
-                }.padding().foregroundColor(.white).background(Color.black)
+                }.padding().foregroundColor(.white).background(Color.blackBG)
                 TrainView()
             }.navigationBarTitle("Arrival")
         }.padding(.top, 43.0).edgesIgnoringSafeArea(.top)

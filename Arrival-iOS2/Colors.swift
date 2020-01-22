@@ -11,7 +11,8 @@ import UIKit
 import  SwiftUI
 extension Color {
     //static let oldPrimaryColor = Color(UIColor.systemIndigo)
-
+ static let blackBG: Color = Color("blackBG")
+     static let arrivalBlueBG: Color = Color("arrivalBlueBG")
     static let background: Color = Color("cardBackground")
      static let arrivalBlue: Color = Color("arrivalBlue")
 }

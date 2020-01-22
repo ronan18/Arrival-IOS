@@ -14,7 +14,11 @@ struct StationChooserView: View {
         VStack(alignment: .leading) {
          
             TextField("Search for a Station", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/)
-            
+            Text("suggested")
+                .font(.caption)
+            List {
+                TrainComponent(type: "station", name: "Antioch")
+            }
             Spacer()
         }.padding()
     }
@@ -22,6 +26,10 @@ struct StationChooserView: View {
 
 struct StationChooserView_Previews: PreviewProvider {
     static var previews: some View {
-        StationChooserView()
+        Group {
+             StationChooserView().environment(\.colorScheme, .dark)
+            StationChooserView().environment(\.colorScheme, .light)
+        }
+      
     }
 }
