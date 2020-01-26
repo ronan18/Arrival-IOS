@@ -11,10 +11,14 @@ import SwiftUI
 import CoreData
 import SwiftyJSON
 import Alamofire
+import CoreLocation
+
+
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
 let context = appDelegate.persistentContainer.viewContext
 let baseURL = "https://api.arrival.city"
-class AppData: ObservableObject {
+
+class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     
     @Published var trains: String = ""
     @Published var passphrase: String = ""
@@ -22,10 +26,33 @@ class AppData: ObservableObject {
     @Published var auth: Bool = false
     @Published var stations = [Station]()
     @Published var network = true
-    
-    init() {
+    private let locationManager = CLLocationManager()
+    private var lat = 0.0
+    private var long = 0.0
+    override init() {
+        super.init()
         print("init function")
+        start()
         getStations()
+    }
+    private func start() {
+        locationManager.requestWhenInUseAuthorization()
+        
+        // If location services is enabled get the users location
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest // You can change the locaiton accuary here.
+            locationManager.startUpdatingLocation()
+        }
+        
+    }
+    // Print out the location to the console
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            print(location.coordinate)
+            lat = location.coordinate.latitude
+            long = location.coordinate.longitude
+        }
     }
     func getStationsFromApi() {
         print("getting stations from api")
