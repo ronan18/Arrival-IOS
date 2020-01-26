@@ -7,11 +7,27 @@
 //
 
 import SwiftUI
+import Combine
 
 struct ContentView: View {
     @EnvironmentObject private var appData: AppData
     var body: some View {
-       HomeView()
+        VStack {
+            if (self.appData.ready) {
+                if (self.appData.auth) {
+                    HomeView()
+                } else {
+                    LoginView()
+                }
+            } else {
+                LoadingView()
+            }
+            
+        }.onAppear(){
+            print("main Appeared")
+            self.appData.login()
+        }
+        
     }
 }
 

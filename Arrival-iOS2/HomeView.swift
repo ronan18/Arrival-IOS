@@ -53,7 +53,9 @@ struct HomeView: View {
                 }.padding().foregroundColor(.white).background(Color.blackBG)
                 TrainView()
             }.navigationBarTitle("Arrival")
-        }.padding(.top, 43.0).edgesIgnoringSafeArea(.top)
+        }.padding(.top, 43.0).edgesIgnoringSafeArea(.top).onAppear(){
+            print("home Appeared")
+        }
     }
 }
 
