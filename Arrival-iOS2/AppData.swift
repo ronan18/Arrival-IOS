@@ -103,6 +103,44 @@ class AppData: ObservableObject {
     func load() {
         print ("load func ran")
     }
+    func loginFromWeb(passphrase: String) {
+        print("logging in from web", passphrase)
+        let headers: HTTPHeaders = [
+            "Authorization": passphrase,
+            "Accept": "application/json"
+        ]
+        Alamofire.request("https://api.arrival.city/api/v2/login", headers: headers).responseJSON {
+            response in //print(response.value)
+            if  response.value != nil {
+                let jsonResponse = JSON(response.value)
+                if jsonResponse["user"].stringValue == "true" {
+                    self.auth = true
+                    self.ready = true
+                    self.passphrase = passphrase
+                    print("user authorized")
+                    let entity = NSEntityDescription.entity(forEntityName: "User", in: context)
+                    let newUser = NSManagedObject(entity: entity!, insertInto: context)
+                    newUser.setValue(passphrase, forKey: "pass")
+                    
+                    do {
+                        try context.save()
+                    } catch {
+                        print("Failed saving")
+                    }
+                } else {
+                    print("user not authorized")
+                    self.auth = false
+                    self.passphrase = ""
+                    self.ready = true
+                    //TODO handle showing error
+                }
+            } else {
+                print("error logging in")
+                // self.network = false
+                // self.ready = true
+            }
+        }
+    }
     func login() {
         print("logging in")
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
@@ -120,7 +158,7 @@ class AppData: ObservableObject {
                 let passphraseToTest = nsResult[0].value(forKey: "pass") as! String
                 print(passphraseToTest, "passphrase to  test login with")
                 let headers: HTTPHeaders = [
-                    "Authorization": self.passphrase,
+                    "Authorization": passphraseToTest,
                     "Accept": "application/json"
                 ]
                 Alamofire.request("https://api.arrival.city/api/v2/login", headers: headers).responseJSON {
