@@ -10,6 +10,8 @@ import SwiftUI
 import UIKit
 struct HomeView: View {
     @State var fromModalDisplayed = false
+    @State var fromStationSearch = ""
+    @EnvironmentObject private var appData: AppData
     init() {
         // 1.
         UINavigationBar.appearance().backgroundColor = UIColor(named: "arrivalBlue")
@@ -22,13 +24,21 @@ struct HomeView: View {
             VStack {
                 HStack {
                     Button  (action: {
-                        
+                        self.fromStationSearch = ""
                         self.fromModalDisplayed = true
                     }) {
-                        VStack(alignment: .leading) {
-                            Text("from").font(.caption)
-                            Text("Station").font(.headline)
+                        if (self.appData.fromStation.id != "loading") {
+                            VStack(alignment: .leading) {
+                                Text("from").font(.caption)
+                                Text(self.appData.fromStation.name).font(.headline)
+                            }
+                        } else {
+                            VStack(alignment: .leading) {
+                                Text("from").font(.caption)
+                                Text("Station").font(.headline)
+                            }
                         }
+                        
                     }.sheet(isPresented: $fromModalDisplayed) {
                         VStack(alignment: .leading) {
                             HStack(alignment: .center) {
@@ -42,7 +52,29 @@ struct HomeView: View {
                                     Text("Dismiss")
                                 }
                             }
-                            StationChooserView()
+                            VStack(alignment: .leading) {
+                                
+                                TextField("Search for a Station", text: self.$fromStationSearch)
+                                Text("suggested")
+                                    .font(.caption)
+                                List(self.appData.closestStations.filter {
+                                    if self.fromStationSearch.count > 0 {
+                                        return  $0.name.contains(self.fromStationSearch)
+                                    } else {
+                                        return true
+                                    }
+                                }) { station in
+                                    Button(action: {
+                                        print("set from station", station)
+                                        self.appData.setFromStation(station: station)
+                                        self.fromModalDisplayed = false
+                                    }) {
+                                        TrainComponent(type: "station", name: station.name)
+                                    }
+                                    
+                                }
+                                Spacer()
+                            }
                         }.padding()
                     }
                     Spacer()
@@ -55,6 +87,10 @@ struct HomeView: View {
             }.navigationBarTitle("Arrival")
         }.padding(.top, 43.0).edgesIgnoringSafeArea(.top).onAppear(){
             print("home Appeared")
+            self.appData.cylce()
+            Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { timer in
+                self.appData.cylce()
+            }
         }
     }
 }
@@ -63,8 +99,8 @@ struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             
-            HomeView().environment(\.colorScheme, .light)
-            HomeView().environment(\.colorScheme, .dark)
+            HomeView().environment(\.colorScheme, .light).environmentObject(AppData())
+            HomeView().environment(\.colorScheme, .dark).environmentObject(AppData())
         }
     }
 }

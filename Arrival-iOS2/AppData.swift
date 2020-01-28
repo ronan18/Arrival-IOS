@@ -20,20 +20,83 @@ let baseURL = "https://api.arrival.city"
 
 class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     
-    @Published var trains: String = ""
+    @Published var trains: Array = [Train]()
     @Published var passphrase: String = ""
     @Published var ready: Bool = false
     @Published var auth: Bool = false
     @Published var stations = [Station]()
     @Published var network = true
+    @Published var goingOffClosestStation: Bool = true
+    @Published var closestStations = [Station]()
+    @Published var fromStation: Station = Station(id: "loading", name: "loading", lat: 0.0, long: 0.0, abbr: "load", version: 0)
     private let locationManager = CLLocationManager()
     private var lat = 0.0
     private var long = 0.0
+    private var lastLat = 0.0
+    private var lastLong = 0.0
+    private var allowCycle = true
     override init() {
         super.init()
         print("init function")
         start()
         getStations()
+    }
+    func convertColor(color: String) -> Color {
+        switch (color) {
+        case "RED" :
+            return Color.red
+        case "YELLOW" :
+            return Color.yellow
+        case "GREEN" :
+            return Color.green
+        case "ORANGE" :
+            return Color.orange
+        case "PURPLE" :
+            return Color.purple
+        case "BLUE" :
+            return Color.blue
+        default :
+            return Color.black
+            
+        }
+    }
+    func setFromStation(station: Station) {
+        print("setting from Station")
+        self.fromStation = station
+        self.goingOffClosestStation = false
+        self.cylce()
+    }
+    @objc func cylce() {
+        if (self.fromStation.name != "loading" && self.auth && self.ready && !self.passphrase.isEmpty && allowCycle) {
+            print("cycling", self.passphrase)
+            print("fetching trains from", self.fromStation.abbr)
+            let headers: HTTPHeaders = [
+                "Authorization": self.passphrase,
+                "Accept": "application/json"
+            ]
+            Alamofire.request(baseURL + "/api/v2/trains/" + self.fromStation.abbr, headers: headers).responseJSON { response in
+               // print(JSON(response.value))
+                let estimates = JSON(JSON(response.value)["estimates"]["etd"].arrayValue)
+             //   print(estimates.count)
+                var results: Array = [Train]()
+                for i in 0...estimates.count - 1 {
+                    for x in 0...estimates[i]["estimate"].arrayValue.count - 1 {
+                        let thisTrain = estimates[i]["estimate"][x]
+                        let color = thisTrain["color"].stringValue
+                        
+                        results.append(Train(id: UUID(), direction: estimates[i]["destination"].stringValue, time: thisTrain["minutes"].intValue, unit: "min", color: color, cars: thisTrain["length"].intValue, hex: thisTrain["hexcode"].stringValue))
+                    }
+                }
+                results.sort {
+                    $0.time < $1.time
+                }
+                self.trains = results
+            }
+        } else {
+            print("cycling failed due to invalid data")
+            let timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(cylce), userInfo: nil, repeats: false)
+           
+        }
     }
     private func start() {
         locationManager.requestWhenInUseAuthorization()
@@ -52,6 +115,40 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             print(location.coordinate)
             lat = location.coordinate.latitude
             long = location.coordinate.longitude
+            getClosestStations()
+        }
+    }
+    func getClosestStations() {
+        if (!stations.isEmpty && lat != 0.0 && long != 0.0) {
+            let locChange = lat != lastLat || long != lastLong
+            if locChange {
+                lastLong = long
+                lastLat = lat
+                print("getting nearest station")
+                let myCord: CLLocation = CLLocation(latitude: lat, longitude: long)
+                let testingStations = self.stations.sorted {
+                    let station1Loc: CLLocation = CLLocation(latitude: $0.lat, longitude: $0.long)
+                    let station2Loc: CLLocation = CLLocation(latitude: $1.lat, longitude: $1.long)
+                    let distance1Miles = myCord.distance(from: station1Loc)
+                    let distance2Miles = myCord.distance(from: station2Loc)
+                    return distance1Miles < distance2Miles
+                }
+                if (self.closestStations.isEmpty || testingStations[0].name != self.closestStations[0].name) {
+                    
+                    self.closestStations = testingStations
+                    print(self.closestStations)
+                    if (self.goingOffClosestStation) {
+                        self.fromStation = self.closestStations[0]
+                    }
+                } else {
+                    print("Stations calculated but no change in order")
+                }
+            } else {
+                print("no loc change")
+            }
+            
+        } else {
+            print("getting nearest station FAILED due to lack of info")
         }
     }
     func getStationsFromApi() {
@@ -85,10 +182,12 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                             print("Failed saving")
                         }
                         self.stations.append(Station(id:id, name: name, lat: lat, long: long, abbr: abbr, version: stationJSON["version"].intValue))
+                        
                     }
                     //   print(self.stations)
                     
                     print("got stations from server")
+                    self.getClosestStations()
                     
                 } else {
                     print("error retreving stations")
@@ -119,6 +218,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             } else {
                 self.stations = stations
                 print("got stations from core data")
+                getClosestStations()
             }
         }
         catch {
@@ -196,6 +296,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                             self.auth = true
                             self.ready = true
                             print("user authorized")
+                            self.passphrase = passphraseToTest
                         } else {
                             print("user not authorized")
                             self.auth = false

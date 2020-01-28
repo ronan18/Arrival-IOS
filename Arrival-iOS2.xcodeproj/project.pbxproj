@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		34AF24A823DFD00400E66C34 /* Train.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AF24A723DFD00400E66C34 /* Train.swift */; };
 		34EF38AF23CC23D4000DE4AF /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EF38AE23CC23D4000DE4AF /* Colors.swift */; };
 		34EF38B123CC2692000DE4AF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EF38B023CC2692000DE4AF /* HomeView.swift */; };
 		34EF38B323CC2AC1000DE4AF /* StationChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EF38B223CC2AC1000DE4AF /* StationChooserView.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		34AF24A723DFD00400E66C34 /* Train.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Train.swift; sourceTree = "<group>"; };
 		34EF38AE23CC23D4000DE4AF /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		34EF38B023CC2692000DE4AF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		34EF38B223CC2AC1000DE4AF /* StationChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationChooserView.swift; sourceTree = "<group>"; };
@@ -49,7 +51,7 @@
 		C568C40323D95FA000AB9E67 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		C568C40523D95FA800AB9E67 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		C56D06D647AB3355D1B3247D /* Pods-Arrival-iOS2Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Arrival-iOS2Tests.debug.xcconfig"; path = "Target Support Files/Pods-Arrival-iOS2Tests/Pods-Arrival-iOS2Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		C58F247E23CC1438003882F3 /* Arrival-iOS2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Arrival-iOS2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C58F247E23CC1438003882F3 /* Arrival.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Arrival.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C58F248123CC1438003882F3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C58F248323CC1438003882F3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		C58F248623CC1438003882F3 /* Arrival_iOS2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Arrival_iOS2.xcdatamodel; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				C568C3FF23D8B99400AB9E67 /* Station.swift */,
+				34AF24A723DFD00400E66C34 /* Train.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -130,7 +133,7 @@
 		C58F247F23CC1438003882F3 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C58F247E23CC1438003882F3 /* Arrival-iOS2.app */,
+				C58F247E23CC1438003882F3 /* Arrival.app */,
 				C58F249723CC143A003882F3 /* Arrival-iOS2Tests.xctest */,
 			);
 			name = Products;
@@ -196,7 +199,7 @@
 			);
 			name = "Arrival-iOS2";
 			productName = "Arrival-iOS2";
-			productReference = C58F247E23CC1438003882F3 /* Arrival-iOS2.app */;
+			productReference = C58F247E23CC1438003882F3 /* Arrival.app */;
 			productType = "com.apple.product-type.application";
 		};
 		C58F249623CC143A003882F3 /* Arrival-iOS2Tests */ = {
@@ -347,6 +350,7 @@
 			files = (
 				C58F24A723CC14D1003882F3 /* TrainView.swift in Sources */,
 				34EF38B123CC2692000DE4AF /* HomeView.swift in Sources */,
+				34AF24A823DFD00400E66C34 /* Train.swift in Sources */,
 				34EF38AF23CC23D4000DE4AF /* Colors.swift in Sources */,
 				34EF38B323CC2AC1000DE4AF /* StationChooserView.swift in Sources */,
 				C58F248723CC1438003882F3 /* Arrival_iOS2.xcdatamodeld in Sources */,
@@ -519,8 +523,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "StompRocket.Arrival-iOS2";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = StompRocket.Arrival;
+				PRODUCT_NAME = Arrival;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -540,8 +544,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "StompRocket.Arrival-iOS2";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = StompRocket.Arrival;
+				PRODUCT_NAME = Arrival;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

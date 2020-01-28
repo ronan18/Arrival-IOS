@@ -9,27 +9,33 @@
 import SwiftUI
 
 struct StationChooserView: View {
-    
-       var body: some View {
+    @EnvironmentObject private var appData: AppData
+    var body: some View {
         VStack(alignment: .leading) {
-         
+            
             TextField("Search for a Station", text: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Value@*/.constant("")/*@END_MENU_TOKEN@*/)
             Text("suggested")
                 .font(.caption)
-            List {
-                TrainComponent(type: "station", name: "Antioch")
+            List(self.appData.closestStations) { station in
+                Button(action: {
+                    print("set from station", station)
+                    self.appData.setFromStation(station: station)
+                }) {
+                    TrainComponent(type: "station", name: station.name)
+                }
+                
             }
             Spacer()
-        }.padding()
+        }
     }
 }
 
 struct StationChooserView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-             StationChooserView().environment(\.colorScheme, .dark)
-            StationChooserView().environment(\.colorScheme, .light)
+            StationChooserView().environment(\.colorScheme, .dark).environmentObject(AppData())
+            StationChooserView().environment(\.colorScheme, .light).environmentObject(AppData())
         }
-      
+        
     }
 }

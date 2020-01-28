@@ -10,12 +10,16 @@ import SwiftUI
 
 struct LoadingView: View {
     var body: some View {
-        Text("Loading")
+        Image("arrivalLogo").resizable().frame(width: 200.0, height: 200.0)
     }
 }
 
 struct LoadingView_Previews: PreviewProvider {
     static var previews: some View {
-        LoadingView()
+        Group {
+            LoadingView().environment(\.colorScheme, .light)
+            LoadingView().environment(\.colorScheme, .dark)
+        }
+        
     }
 }
