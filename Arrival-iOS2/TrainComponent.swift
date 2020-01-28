@@ -12,9 +12,10 @@ struct TrainComponent: View {
     var type: String
     var name: String = ""
     var cars: Int = 0
-    var departs: Int = 0
+    var departs: String = ""
     var unit: String = ""
     var color: Color = Color.gray
+    var eta: String = ""
     
     var body: some View {
         
@@ -56,7 +57,7 @@ struct TrainComponent: View {
 struct TrainComponent_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            TrainComponent(type: "train", name:"Antioch", cars: 10, departs: 5, unit: "min", color: Color.yellow)
+            TrainComponent(type: "train", name:"Antioch", cars: 10, departs: "5", unit: "min", color: Color.yellow)
             TrainComponent(type: "station", name: "Antioch")
         }
         

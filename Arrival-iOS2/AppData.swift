@@ -28,7 +28,9 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var network = true
     @Published var goingOffClosestStation: Bool = true
     @Published var closestStations = [Station]()
+    @Published var toStationSuggestions = [Station]()
     @Published var fromStation: Station = Station(id: "loading", name: "loading", lat: 0.0, long: 0.0, abbr: "load", version: 0)
+    @Published var toStation: Station = Station(id: "none", name: "none", lat: 0.0, long: 0.0, abbr: "none", version: 0)
     private let locationManager = CLLocationManager()
     private var lat = 0.0
     private var long = 0.0
@@ -66,6 +68,12 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         self.goingOffClosestStation = false
         self.cylce()
     }
+    func setToStation(station: Station) {
+           print("setting from Station")
+           self.toStation = station
+        
+           self.cylce()
+       }
     @objc func cylce() {
         if (self.fromStation.name != "loading" && self.auth && self.ready && !self.passphrase.isEmpty && allowCycle) {
             print("cycling", self.passphrase)
@@ -84,7 +92,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         let thisTrain = estimates[i]["estimate"][x]
                         let color = thisTrain["color"].stringValue
                         
-                        results.append(Train(id: UUID(), direction: estimates[i]["destination"].stringValue, time: thisTrain["minutes"].intValue, unit: "min", color: color, cars: thisTrain["length"].intValue, hex: thisTrain["hexcode"].stringValue))
+                        results.append(Train(id: UUID(), direction: estimates[i]["destination"].stringValue, time: thisTrain["minutes"].stringValue, unit: "min", color: color, cars: thisTrain["length"].intValue, hex: thisTrain["hexcode"].stringValue, eta: ""))
                     }
                 }
                 results.sort {
@@ -134,7 +142,8 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     return distance1Miles < distance2Miles
                 }
                 if (self.closestStations.isEmpty || testingStations[0].name != self.closestStations[0].name) {
-                    
+                    self.toStationSuggestions = testingStations
+                    self.toStationSuggestions.insert(Station(id: "none", name: "none", lat: 0.0, long: 0.0, abbr: "none", version: 0), at: 0)
                     self.closestStations = testingStations
                     print(self.closestStations)
                     if (self.goingOffClosestStation) {

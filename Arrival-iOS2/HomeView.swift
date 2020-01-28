@@ -10,6 +10,7 @@ import SwiftUI
 import UIKit
 struct HomeView: View {
     @State var fromModalDisplayed = false
+    @State var toModalDisplayed = false
     @State var fromStationSearch = ""
     @EnvironmentObject private var appData: AppData
     init() {
@@ -78,9 +79,55 @@ struct HomeView: View {
                         }.padding()
                     }
                     Spacer()
-                    VStack(alignment: .trailing) {
-                        Text("to").font(.caption)
-                        Text("Station").font(.headline)
+                    Button  (action: {
+                        self.fromStationSearch = ""
+                        self.toModalDisplayed = true
+                    }) {
+                        VStack(alignment: .trailing) {
+                            Text("to").font(.caption)
+                            Text(self.appData.toStation.name).font(.headline)
+                        }
+                    }.sheet(isPresented: $toModalDisplayed) {
+                        VStack(alignment: .leading) {
+                            HStack(alignment: .center) {
+                                Text("To Station")
+                                    .font(.largeTitle)
+                                    .fontWeight(.bold)
+                                Spacer()
+                                Button(action: {
+                                    self.toModalDisplayed = false
+                                }) {
+                                    Text("Dismiss")
+                                }
+                            }
+                            VStack(alignment: .leading) {
+                                
+                                TextField("Search for a Station", text: self.$fromStationSearch)
+                                Text("suggested")
+                                    .font(.caption)
+                                List(self.appData.toStationSuggestions.filter {
+                                    if ($0.name == self.appData.fromStation.name) {
+                                        return false
+                                    } else {
+                                        if self.fromStationSearch.count > 0 {
+                                            return  $0.name.contains(self.fromStationSearch)
+                                        } else {
+                                            return true
+                                        }
+                                    }
+                                }) { station in
+                                    Button(action: {
+                                        print("set from station", station)
+                                        self.appData.setToStation(station: station)
+                                        self.toModalDisplayed = false
+                                    }) {
+                                        TrainComponent(type: "station", name: station.name)
+                                    }
+                                    
+                                }
+                                Spacer()
+                            }
+                        }.padding()
                     }
                 }.padding().foregroundColor(.white).background(Color.blackBG)
                 TrainView()

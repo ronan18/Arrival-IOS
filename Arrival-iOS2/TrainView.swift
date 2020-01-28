@@ -17,6 +17,8 @@ struct TrainView: View {
     var body: some View {
         
         List(self.appData.trains) { train in
+          
+            
             TrainComponent(type: "train",  name: train.direction, cars: train.cars, departs: train.time,unit: train.unit, color: self.appData.convertColor(color: train.color))
             
         }

@@ -13,11 +13,12 @@ import SwiftUI
 struct Train: Hashable, Codable, Identifiable {
     var id: UUID
     var direction: String
-    var time: Int
+    var time: String
     var unit: String
     var color: String
     var cars: Int
     var hex: String
+    var eta: String
 
   
    
