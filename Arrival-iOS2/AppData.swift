@@ -99,7 +99,23 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         }
                     }
                     results.sort {
-                        $0.time < $1.time
+                        var time1: Int
+                        var time2: Int
+                        print($0.time, $1.time)
+                        if ($0.time == "Leaving") {
+                            time1 = 0
+                        } else {
+                            time1 = Int($0.time)  as! Int
+                        }
+                        if ($1.time == "Leaving") {
+                            time2 = 0
+                        } else {
+                            time2 = Int($1.time) as! Int
+                        }
+                        
+                        
+                        print(time1, time2)
+                        return time1 < time2
                     }
                     self.trains = results
                 }
@@ -111,7 +127,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                 ]
                 print(baseURL + "/api/v2/routes/" + self.fromStation.abbr + "/" + self.toStation.abbr)
                 Alamofire.request(baseURL + "/api/v2/routes/" + self.fromStation.abbr + "/" + self.toStation.abbr, headers: headers).responseJSON { response in
-                  //  print(JSON(response.value))
+                    //  print(JSON(response.value))
                     let estimates = JSON(JSON(response.value)["trips"].arrayValue)
                     //   print(estimates.count)
                     var results: Array = [Train]()
@@ -183,6 +199,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     print(self.closestStations)
                     if (self.goingOffClosestStation) {
                         self.fromStation = self.closestStations[0]
+                        self.cylce()
                     }
                 } else {
                     print("Stations calculated but no change in order")
