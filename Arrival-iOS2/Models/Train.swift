@@ -15,10 +15,10 @@ struct Train: Hashable, Codable, Identifiable {
     var direction: String
     var time: String
     var unit: String
-    var color: String
-    var cars: Int
-    var hex: String
-    var eta: String
+    var color: String = "none"
+    var cars: Int = 0
+    var hex: String = "0"
+    var eta: String = ""
 
   
    

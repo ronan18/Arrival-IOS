@@ -20,7 +20,7 @@ struct TrainComponent: View {
     var body: some View {
         
         HStack {
-            if (type == "train") {
+            if (type == "train"  && color != Color.white) {
                 Rectangle()
                     .frame(width: 10.0)
                     .foregroundColor(color)
@@ -33,16 +33,26 @@ struct TrainComponent: View {
                 }
                 Spacer()
                 if (type == "train") {
-                    VStack(alignment: .trailing) {
-                        Text("cars").font(.caption)
-                        Text(String(cars)).font(.headline)
+                    if (cars > 0) {
+                        VStack(alignment: .trailing) {
+                            Text("cars").font(.caption)
+                            Text(String(cars)).font(.headline)
+                        }
                     }
+                    
+                    
                     
                     VStack(alignment: .trailing) {
                         Text("departs").font(.caption)
                         Text(String(departs)).font(.headline) + Text(" " + unit).font(.subheadline)
                     }
-                    .padding(10.0).padding(/*@START_MENU_TOKEN@*/.trailing/*@END_MENU_TOKEN@*/)
+                    if (!eta.isEmpty) {
+                        VStack(alignment: .trailing) {
+                            Text("arrives").font(.caption)
+                            Text(String(eta)).font(.headline)
+                        }
+                    }
+                    
                 }
             }.padding()
             
