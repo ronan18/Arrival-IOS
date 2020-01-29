@@ -136,7 +136,7 @@ struct HomeView: View {
                     }.padding().foregroundColor(.white).background(Color.blackBG)
                     TrainView()
                 }.navigationBarTitle("Arrival")
-            }.padding(.top, geometry.safeAreaInsets.top - (geometry.safeAreaInsets.top/4)).onAppear(){
+            }.padding(.top, geometry.safeAreaInsets.top - (geometry.safeAreaInsets.top/3.5)).onAppear(){
                 print("home Appeared")
                 self.appData.cylce()
                 Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { timer in
