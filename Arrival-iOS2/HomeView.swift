@@ -19,126 +19,131 @@ struct HomeView: View {
         UINavigationBar.appearance().largeTitleTextAttributes = [
             .foregroundColor: UIColor.white,
         ]
+        
     }
     var body: some View {
-        NavigationView {
-            VStack {
-                HStack {
-                    Button  (action: {
-                        self.fromStationSearch = ""
-                        self.fromModalDisplayed = true
-                    }) {
-                        if (self.appData.fromStation.id != "loading") {
-                            VStack(alignment: .leading) {
-                                Text("from").font(.caption)
-                                Text(self.appData.fromStation.name).font(.headline)
-                            }
-                        } else {
-                            VStack(alignment: .leading) {
-                                Text("from").font(.caption)
-                                Text("Station").font(.headline)
-                            }
-                        }
-                        
-                    }.sheet(isPresented: $fromModalDisplayed) {
-                        VStack(alignment: .leading) {
-                            HStack(alignment: .center) {
-                                Text("From Station")
-                                    .font(.largeTitle)
-                                    .fontWeight(.bold)
-                                Spacer()
-                                Button(action: {
-                                    self.fromModalDisplayed = false
-                                }) {
-                                    Text("Dismiss")
+        GeometryReader { geometry in
+            NavigationView {
+                VStack {
+                    HStack {
+                        Button  (action: {
+                            self.fromStationSearch = ""
+                            self.fromModalDisplayed = true
+                        }) {
+                            if (self.appData.fromStation.id != "loading") {
+                                VStack(alignment: .leading) {
+                                    Text("from").font(.caption)
+                                    Text(self.appData.fromStation.name).font(.headline)
+                                }
+                            } else {
+                                VStack(alignment: .leading) {
+                                    Text("from").font(.caption)
+                                    Text("Station").font(.headline)
                                 }
                             }
+                            
+                        }.sheet(isPresented: self.$fromModalDisplayed) {
                             VStack(alignment: .leading) {
-                                
-                                TextField("Search for a Station", text: self.$fromStationSearch)
-                                Text("suggested")
-                                    .font(.caption)
-                                List(self.appData.closestStations.filter {
-                                    if self.fromStationSearch.count > 0 {
-                                        return  $0.name.contains(self.fromStationSearch)
-                                    } else {
-                                        return true
-                                    }
-                                }) { station in
+                                HStack(alignment: .center) {
+                                    Text("From Station")
+                                        .font(.largeTitle)
+                                        .fontWeight(.bold)
+                                    Spacer()
                                     Button(action: {
-                                        print("set from station", station)
-                                        self.appData.setFromStation(station: station)
                                         self.fromModalDisplayed = false
                                     }) {
-                                        TrainComponent(type: "station", name: station.name)
+                                        Text("Dismiss")
                                     }
+                                }
+                                VStack(alignment: .leading) {
                                     
-                                }
-                                Spacer()
-                            }
-                        }.padding()
-                    }
-                    Spacer()
-                    Button  (action: {
-                        self.fromStationSearch = ""
-                        self.toModalDisplayed = true
-                    }) {
-                        VStack(alignment: .trailing) {
-                            Text("to").font(.caption)
-                            Text(self.appData.toStation.name).font(.headline)
-                        }
-                    }.sheet(isPresented: $toModalDisplayed) {
-                        VStack(alignment: .leading) {
-                            HStack(alignment: .center) {
-                                Text("To Station")
-                                    .font(.largeTitle)
-                                    .fontWeight(.bold)
-                                Spacer()
-                                Button(action: {
-                                    self.toModalDisplayed = false
-                                }) {
-                                    Text("Dismiss")
-                                }
-                            }
-                            VStack(alignment: .leading) {
-                                
-                                TextField("Search for a Station", text: self.$fromStationSearch)
-                                Text("suggested")
-                                    .font(.caption)
-                                List(self.appData.toStationSuggestions.filter {
-                                    if ($0.name == self.appData.fromStation.name) {
-                                        return false
-                                    } else {
+                                    TextField("Search for a Station", text: self.$fromStationSearch)
+                                    Text("suggested")
+                                        .font(.caption)
+                                    List { ForEach(self.appData.closestStations.filter {
                                         if self.fromStationSearch.count > 0 {
                                             return  $0.name.contains(self.fromStationSearch)
                                         } else {
                                             return true
                                         }
+                                    }){ station in
+                                        Button(action: {
+                                            print("set from station", station)
+                                            self.appData.setFromStation(station: station)
+                                            self.fromModalDisplayed = false
+                                        }) {
+                                            TrainComponent(type: "station", name: station.name)
+                                        }.listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
+                                        
+                                        }
                                     }
-                                }) { station in
+                                    Spacer()
+                                }
+                            }.padding()
+                        }
+                        Spacer()
+                        Button  (action: {
+                            self.fromStationSearch = ""
+                            self.toModalDisplayed = true
+                        }) {
+                            VStack(alignment: .trailing) {
+                                Text("to").font(.caption)
+                                Text(self.appData.toStation.name).font(.headline)
+                            }
+                        }.sheet(isPresented: self.$toModalDisplayed) {
+                            VStack(alignment: .leading) {
+                                HStack(alignment: .center) {
+                                    Text("To Station")
+                                        .font(.largeTitle)
+                                        .fontWeight(.bold)
+                                    Spacer()
                                     Button(action: {
-                                        print("set from station", station)
-                                        self.appData.setToStation(station: station)
                                         self.toModalDisplayed = false
                                     }) {
-                                        TrainComponent(type: "station", name: station.name)
+                                        Text("Dismiss")
                                     }
-                                    
                                 }
-                                Spacer()
-                            }
-                        }.padding()
-                    }
-                }.padding().foregroundColor(.white).background(Color.blackBG)
-                TrainView()
-            }.navigationBarTitle("Arrival")
-        }.padding(.top, 43.0).edgesIgnoringSafeArea(.top).onAppear(){
-            print("home Appeared")
-            self.appData.cylce()
-            Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { timer in
+                                VStack(alignment: .leading) {
+                                    
+                                    TextField("Search for a Station", text: self.$fromStationSearch)
+                                    Text("suggested")
+                                        .font(.caption)
+                                    List { ForEach(self.appData.toStationSuggestions.filter {
+                                        if ($0.name == self.appData.fromStation.name) {
+                                            return false
+                                        } else {
+                                            if self.fromStationSearch.count > 0 {
+                                                return  $0.name.contains(self.fromStationSearch)
+                                            } else {
+                                                return true
+                                            }
+                                        }
+                                    }) { station in
+                                        Button(action: {
+                                            print("set from station", station)
+                                            self.appData.setToStation(station: station)
+                                            self.toModalDisplayed = false
+                                        }) {
+                                            TrainComponent(type: "station", name: station.name)
+                                        }
+                                        
+                                        }
+                                    }.listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
+                                    Spacer()
+                                }
+                            }.padding()
+                        }
+                    }.padding().foregroundColor(.white).background(Color.blackBG)
+                    TrainView()
+                }.navigationBarTitle("Arrival")
+            }.padding(.top, geometry.safeAreaInsets.top - (geometry.safeAreaInsets.top/4)).onAppear(){
+                print("home Appeared")
                 self.appData.cylce()
+                Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { timer in
+                    self.appData.cylce()
+                }
             }
-        }
+        }.edgesIgnoringSafeArea(.top)
     }
 }
 

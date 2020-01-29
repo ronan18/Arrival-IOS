@@ -44,7 +44,14 @@ struct TrainComponent: View {
                     
                     VStack(alignment: .trailing) {
                         Text("departs").font(.caption)
-                        Text(String(departs)).font(.headline) + Text(" " + unit).font(.subheadline)
+                        
+                        if  (String(departs) != "Leaving") {
+                            Text(String(departs)).font(.headline) +  Text(" " + unit).font(.subheadline)
+                            
+                        } else {
+                            Text(String("now")).font(.headline)
+                        }
+                        
                     }
                     if (!eta.isEmpty) {
                         VStack(alignment: .trailing) {

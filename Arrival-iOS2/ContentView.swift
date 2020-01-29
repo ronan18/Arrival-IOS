@@ -11,6 +11,7 @@ import Combine
 
 struct ContentView: View {
     @EnvironmentObject private var appData: AppData
+  
     var body: some View {
         VStack {
             if (self.appData.ready) {

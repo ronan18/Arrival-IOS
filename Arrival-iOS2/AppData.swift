@@ -101,7 +101,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     results.sort {
                         var time1: Int
                         var time2: Int
-                        print($0.time, $1.time)
+                       // print($0.time, $1.time)
                         if ($0.time == "Leaving") {
                             time1 = 0
                         } else {
@@ -114,7 +114,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         }
                         
                         
-                        print(time1, time2)
+                        //print(time1, time2)
                         return time1 < time2
                     }
                     self.trains = results
