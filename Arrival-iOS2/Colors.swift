@@ -14,5 +14,7 @@ extension Color {
  static let blackBG: Color = Color("blackBG")
      static let arrivalBlueBG: Color = Color("arrivalBlueBG")
     static let background: Color = Color("cardBackground")
+    static let inputBackground: Color = Color("inputBackground")
      static let arrivalBlue: Color = Color("arrivalBlue")
+      static let skeleton: Color = Color("skeleton")
 }

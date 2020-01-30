@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct TrainComponent: View {
-    var type: String
+    var type: String = "skeleton"
     var name: String = ""
     var cars: Int = 0
     var departs: String = ""
@@ -20,6 +20,7 @@ struct TrainComponent: View {
     var body: some View {
         
         HStack {
+            
             if (type == "train"  && color != Color.white) {
                 Rectangle()
                     .frame(width: 10.0)
@@ -27,9 +28,15 @@ struct TrainComponent: View {
             }
             HStack {
                 VStack(alignment: .leading) {
+                    if (type != "skeleton") {
                     if (type == "train") { Text("direction").font(.caption)
                     }
                     Text(name).font(.headline)
+                    } else {
+                         Rectangle()
+                                       .fill(Color.skeleton)
+                                       .frame(width: 200, height: 15)
+                    }
                 }
                 Spacer()
                 if (type == "train") {
@@ -69,6 +76,7 @@ struct TrainComponent: View {
             RoundedRectangle(cornerRadius: CGFloat(10.0)).stroke(Color(.sRGB, red:170/255, green: 170/255, blue: 170/255, opacity: 0.1), lineWidth:3)
         ).cornerRadius(10.0)
     }
+    
 }
 
 struct TrainComponent_Previews: PreviewProvider {
@@ -76,6 +84,7 @@ struct TrainComponent_Previews: PreviewProvider {
         Group {
             TrainComponent(type: "train", name:"Antioch", cars: 10, departs: "5", unit: "min", color: Color.yellow)
             TrainComponent(type: "station", name: "Antioch")
+            TrainComponent(type: "skeleton")
         }
         
     }
