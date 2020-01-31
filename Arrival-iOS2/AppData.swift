@@ -23,7 +23,9 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var trains: Array = [Train]()
     @Published var passphrase: String = ""
     @Published var ready: Bool = false
+    @Published var loaded: Bool = false
     @Published var auth: Bool = false
+    @Published var authLoading: Bool = false
     @Published var stations = [Station]()
     @Published var network = true
     @Published var goingOffClosestStation: Bool = true
@@ -66,96 +68,108 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     }
     func setFromStation(station: Station) {
         print("setting from Station")
+        self.loaded = false
         self.fromStation = station
-        self.goingOffClosestStation = false
+        if (station.abbr == self.closestStations[0].abbr) {
+            self.goingOffClosestStation = true
+        } else {
+            self.goingOffClosestStation = false
+        }
+        
         self.cylce()
     }
     func setToStation(station: Station) {
         print("setting from Station")
+        self.loaded = false
         self.toStation = station
         
         self.cylce()
     }
     @objc func cylce() {
-        if (self.fromStation.name != "loading" && self.auth && self.ready && !self.passphrase.isEmpty && allowCycle) {
-            print("cycling", self.passphrase)
-            if (self.toStation.id == "none" ) {
-                print("fetching trains from", self.fromStation.abbr)
-                let headers: HTTPHeaders = [
-                    "Authorization": self.passphrase,
-                    "Accept": "application/json"
-                ]
-                Alamofire.request(baseURL + "/api/v2/trains/" + self.fromStation.abbr, headers: headers).responseJSON { response in
-                    // print(JSON(response.value))
-                    let estimates = JSON(JSON(response.value)["estimates"]["etd"].arrayValue)
-                    //   print(estimates.count)
-                    var results: Array = [Train]()
-                    for i in 0...estimates.count - 1 {
-                        for x in 0...estimates[i]["estimate"].arrayValue.count - 1 {
-                            let thisTrain = estimates[i]["estimate"][x]
-                            let color = thisTrain["color"].stringValue
+     
+            getClosestStations()
+            if (self.fromStation.name != "loading" && self.auth && self.ready && !self.passphrase.isEmpty && allowCycle) {
+                print("cycling", self.passphrase)
+                if (self.toStation.id == "none" ) {
+                    print("fetching trains from", self.fromStation.abbr)
+                    let headers: HTTPHeaders = [
+                        "Authorization": self.passphrase,
+                        "Accept": "application/json"
+                    ]
+                    Alamofire.request(baseURL + "/api/v2/trains/" + self.fromStation.abbr, headers: headers).responseJSON { response in
+                        // print(JSON(response.value))
+                        let estimates = JSON(JSON(response.value)["estimates"]["etd"].arrayValue)
+                        //   print(estimates.count)
+                        var results: Array = [Train]()
+                        for i in 0...estimates.count - 1 {
+                            for x in 0...estimates[i]["estimate"].arrayValue.count - 1 {
+                                let thisTrain = estimates[i]["estimate"][x]
+                                let color = thisTrain["color"].stringValue
+                                
+                                results.append(Train(id: UUID(), direction: estimates[i]["destination"].stringValue, time: thisTrain["minutes"].stringValue, unit: "min", color: color, cars: thisTrain["length"].intValue, hex: thisTrain["hexcode"].stringValue, eta: ""))
+                            }
+                        }
+                        results.sort {
+                            var time1: Int
+                            var time2: Int
+                            // print($0.time, $1.time)
+                            if ($0.time == "Leaving") {
+                                time1 = 0
+                            } else {
+                                time1 = Int($0.time)  as! Int
+                            }
+                            if ($1.time == "Leaving") {
+                                time2 = 0
+                            } else {
+                                time2 = Int($1.time) as! Int
+                            }
                             
-                            results.append(Train(id: UUID(), direction: estimates[i]["destination"].stringValue, time: thisTrain["minutes"].stringValue, unit: "min", color: color, cars: thisTrain["length"].intValue, hex: thisTrain["hexcode"].stringValue, eta: ""))
+                            
+                            //print(time1, time2)
+                            return time1 < time2
                         }
+                        self.trains = results
+                        self.loaded = true
                     }
-                    results.sort {
-                        var time1: Int
-                        var time2: Int
-                       // print($0.time, $1.time)
-                        if ($0.time == "Leaving") {
-                            time1 = 0
-                        } else {
-                            time1 = Int($0.time)  as! Int
-                        }
-                        if ($1.time == "Leaving") {
-                            time2 = 0
-                        } else {
-                            time2 = Int($1.time) as! Int
+                } else {
+                    print("fetching trips from", self.fromStation.abbr, "to", self.toStation.abbr )
+                    let headers: HTTPHeaders = [
+                        "Authorization": self.passphrase,
+                        "Accept": "application/json"
+                    ]
+                    print(baseURL + "/api/v2/routes/" + self.fromStation.abbr + "/" + self.toStation.abbr)
+                    Alamofire.request(baseURL + "/api/v2/routes/" + self.fromStation.abbr + "/" + self.toStation.abbr, headers: headers).responseJSON { response in
+                        //  print(JSON(response.value))
+                        let estimates = JSON(JSON(response.value)["trips"].arrayValue)
+                        //   print(estimates.count)
+                        var results: Array = [Train]()
+                        
+                        for x in 0...estimates.count - 1 {
+                            let thisTrain = estimates[x]
+                            let etd = thisTrain["@origTimeMin"].stringValue
+                            let eta = thisTrain["@destTimeMin"].stringValue
+                            let direction = thisTrain["leg"][0]["@trainHeadStation"].stringValue
+                            
+                            //let color = thisTrain["color"].stringValue
+                            let color = "none"
+                            print(eta)
+                            results.append(Train(id: UUID(), direction: direction, time: etd, unit: "", color: "none", cars: 0, hex: "0", eta: eta))
                         }
                         
-                        
-                        //print(time1, time2)
-                        return time1 < time2
+                        results.sort {
+                            $0.time < $1.time
+                        }
+                        self.trains = results
+                        self.loaded = true
                     }
-                    self.trains = results
                 }
+                
             } else {
-                print("fetching trips from", self.fromStation.abbr, "to", self.toStation.abbr )
-                let headers: HTTPHeaders = [
-                    "Authorization": self.passphrase,
-                    "Accept": "application/json"
-                ]
-                print(baseURL + "/api/v2/routes/" + self.fromStation.abbr + "/" + self.toStation.abbr)
-                Alamofire.request(baseURL + "/api/v2/routes/" + self.fromStation.abbr + "/" + self.toStation.abbr, headers: headers).responseJSON { response in
-                    //  print(JSON(response.value))
-                    let estimates = JSON(JSON(response.value)["trips"].arrayValue)
-                    //   print(estimates.count)
-                    var results: Array = [Train]()
-                    
-                    for x in 0...estimates.count - 1 {
-                        let thisTrain = estimates[x]
-                        let etd = thisTrain["@origTimeMin"].stringValue
-                        let eta = thisTrain["@destTimeMin"].stringValue
-                        let direction = thisTrain["leg"][0]["@trainHeadStation"].stringValue
-                        
-                        //let color = thisTrain["color"].stringValue
-                        let color = "none"
-                        print(eta)
-                        results.append(Train(id: UUID(), direction: direction, time: etd, unit: "", color: "none", cars: 0, hex: "0", eta: eta))
-                    }
-                    
-                    results.sort {
-                        $0.time < $1.time
-                    }
-                    self.trains = results
-                }
+                print("cycling failed due to invalid data")
+                let timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(cylce), userInfo: nil, repeats: false)
+                
             }
-            
-        } else {
-            print("cycling failed due to invalid data")
-            let timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(cylce), userInfo: nil, repeats: false)
-            
-        }
+      
     }
     private func start() {
         locationManager.requestWhenInUseAuthorization()
@@ -291,7 +305,30 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     func load() {
         print ("load func ran")
     }
+    func createNewAccount(passphrase: String) {
+        self.authLoading = true
+        print("creating account", passphrase)
+               let headers: HTTPHeaders = [
+                   "Accept": "application/json"
+               ]
+        Alamofire.request("https://api.arrival.city/api/v2/createaccount", method: .post, parameters: ["passphrase": passphrase]).responseJSON {
+            response in
+                if (response.value) != nil {
+                    let jsonResponse = JSON(response.value)
+                    if (jsonResponse["success"].boolValue) {
+                        self.loginFromWeb(passphrase: passphrase)
+                    } else {
+                        print("error creating account")
+                    }
+                } else {
+                    print("error creating account")
+                 
+                }
+            
+        }
+    }
     func loginFromWeb(passphrase: String) {
+        self.authLoading = true
         print("logging in from web", passphrase)
         let headers: HTTPHeaders = [
             "Authorization": passphrase,
@@ -305,6 +342,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     self.auth = true
                     self.ready = true
                     self.passphrase = passphrase
+                    self.authLoading = false
                     print("user authorized")
                     let entity = NSEntityDescription.entity(forEntityName: "User", in: context)
                     let newUser = NSManagedObject(entity: entity!, insertInto: context)

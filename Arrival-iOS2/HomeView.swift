@@ -13,8 +13,8 @@ struct HomeView: View {
     @State var toModalDisplayed = false
     @State var fromStationSearch = ""
     @EnvironmentObject private var appData: AppData
+    let lightGreyColor = Color(red: 239.0/255.0, green: 243.0/255.0, blue: 244.0/255.0, opacity: 1.0)
     init() {
-        // 1.
         UINavigationBar.appearance().backgroundColor = UIColor(named: "arrivalBlue")
         UINavigationBar.appearance().largeTitleTextAttributes = [
             .foregroundColor: UIColor.white,
@@ -58,6 +58,10 @@ struct HomeView: View {
                                 VStack(alignment: .leading) {
                                     
                                     TextField("Search for a Station", text: self.$fromStationSearch)
+                                        .padding()
+                                        .background(Color.inputBackground)
+                                        .cornerRadius(10)
+                                    Spacer().frame(height: 10)
                                     Text("suggested")
                                         .font(.caption)
                                     List { ForEach(self.appData.closestStations.filter {
@@ -73,13 +77,13 @@ struct HomeView: View {
                                             self.fromModalDisplayed = false
                                         }) {
                                             TrainComponent(type: "station", name: station.name)
-                                        }.listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
-                                        
                                         }
-                                    }
+                                     
+                                        }
+                                    }.listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
                                     Spacer()
                                 }
-                            }.padding()
+                            }.padding().edgesIgnoringSafeArea(.bottom)
                         }
                         Spacer()
                         Button  (action: {
@@ -106,6 +110,10 @@ struct HomeView: View {
                                 VStack(alignment: .leading) {
                                     
                                     TextField("Search for a Station", text: self.$fromStationSearch)
+                                        .padding()
+                                        .background(Color.inputBackground)
+                                        .cornerRadius(10)
+                                    Spacer().frame(height: 10)
                                     Text("suggested")
                                         .font(.caption)
                                     List { ForEach(self.appData.toStationSuggestions.filter {
@@ -131,7 +139,7 @@ struct HomeView: View {
                                     }.listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 5, trailing: 0))
                                     Spacer()
                                 }
-                            }.padding()
+                            }.padding().edgesIgnoringSafeArea(.bottom)
                         }
                     }.padding().foregroundColor(.white).background(Color.blackBG)
                     TrainView()
@@ -150,7 +158,6 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            
             HomeView().environment(\.colorScheme, .light).environmentObject(AppData())
             HomeView().environment(\.colorScheme, .dark).environmentObject(AppData())
         }
