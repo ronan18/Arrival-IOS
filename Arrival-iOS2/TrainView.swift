@@ -16,7 +16,11 @@ struct TrainView: View {
     }
     var body: some View {
         VStack {
-            if (self.appData.trains.isEmpty || !self.appData.loaded) {
+            if (self.appData.noTrains) {
+                Spacer()
+                Text("No Trains")
+                Spacer()
+            } else if (self.appData.trains.isEmpty || !self.appData.loaded) {
                 
                 List {
                     TrainComponent(type: "skeleton")

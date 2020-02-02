@@ -27,6 +27,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var passphrase: String = ""
     @Published var ready: Bool = false
     @Published var loaded: Bool = false
+    @Published var noTrains: Bool = false
     @Published var auth: Bool = false
     @Published var authLoading: Bool = false
     @Published var stations = [Station]()
@@ -88,7 +89,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         guard let toStationOutput = try? MLmodel.prediction(day: Double(day), hour: Double(hour), inStation: self.fromStation.abbr) else {
             fatalError("Unexpected runtime error.")
         }
-       
+        
         let output = toStationOutput.outStationProbability
         
         print(output, "time, ai")
@@ -100,7 +101,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "Trip")
         do {
             var priorities: [String: Int] = [:]
-        let result = try managedContext.fetch(fetchRequest)
+            let result = try managedContext.fetch(fetchRequest)
             for data in result as! [NSManagedObject] {
                 let toStation = data.value(forKey: "toStation") as! String
                 if (JSON(priorities)[toStation].intValue > 0) {
@@ -118,8 +119,8 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     s1 = JSON(priorities)[$0.abbr].intValue
                 }
                 if (JSON(priorities)[$1.abbr].intValue > 0) {
-                                  s2 = JSON(priorities)[$1.abbr].intValue
-                              }
+                    s2 = JSON(priorities)[$1.abbr].intValue
+                }
                 print(s1, s2, $0.abbr, $1.abbr, "to Stations")
                 return s1 > s2
             }
@@ -127,7 +128,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                 return self.fromStation.abbr != $0.abbr
             }
             
-                self.toStationSuggestions.insert(Station(id: "none", name: "none", lat: 0.0, long: 0.0, abbr: "none", version: 0), at: 0)
+            self.toStationSuggestions.insert(Station(id: "none", name: "none", lat: 0.0, long: 0.0, abbr: "none", version: 0), at: 0)
         } catch {
             print("failed to get trips")
             
@@ -156,7 +157,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
          }
          */
         
-    
+        
         
     }
     func setFromStation(station: Station) {
@@ -191,7 +192,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         } catch let error as NSError {
             print(error)
         }
-         
+        
         
     }
     @objc func cylce() {
@@ -211,36 +212,41 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     //   print(estimates.count)
                     
                     //TODO Fix error handeling
-                    var results: Array = [Train]()
-                    for i in 0...estimates.count - 1 {
-                        for x in 0...estimates[i]["estimate"].arrayValue.count - 1 {
-                            let thisTrain = estimates[i]["estimate"][x]
-                            let color = thisTrain["color"].stringValue
+                    if (estimates.count > 0) {
+                        var results: Array = [Train]()
+                        for i in 0...estimates.count - 1 {
+                            for x in 0...estimates[i]["estimate"].arrayValue.count - 1 {
+                                let thisTrain = estimates[i]["estimate"][x]
+                                let color = thisTrain["color"].stringValue
+                                
+                                results.append(Train(id: UUID(), direction: estimates[i]["destination"].stringValue, time: thisTrain["minutes"].stringValue, unit: "min", color: color, cars: thisTrain["length"].intValue, hex: thisTrain["hexcode"].stringValue, eta: ""))
+                            }
+                        }
+                        results.sort {
+                            var time1: Int
+                            var time2: Int
+                            // print($0.time, $1.time)
+                            if ($0.time == "Leaving") {
+                                time1 = 0
+                            } else {
+                                time1 = Int($0.time)  as! Int
+                            }
+                            if ($1.time == "Leaving") {
+                                time2 = 0
+                            } else {
+                                time2 = Int($1.time) as! Int
+                            }
                             
-                            results.append(Train(id: UUID(), direction: estimates[i]["destination"].stringValue, time: thisTrain["minutes"].stringValue, unit: "min", color: color, cars: thisTrain["length"].intValue, hex: thisTrain["hexcode"].stringValue, eta: ""))
+                            
+                            //print(time1, time2)
+                            return time1 < time2
                         }
+                        self.trains = results
+                        self.loaded = true
+                    } else {
+                        self.loaded = true
+                        self.noTrains = true
                     }
-                    results.sort {
-                        var time1: Int
-                        var time2: Int
-                        // print($0.time, $1.time)
-                        if ($0.time == "Leaving") {
-                            time1 = 0
-                        } else {
-                            time1 = Int($0.time)  as! Int
-                        }
-                        if ($1.time == "Leaving") {
-                            time2 = 0
-                        } else {
-                            time2 = Int($1.time) as! Int
-                        }
-                        
-                        
-                        //print(time1, time2)
-                        return time1 < time2
-                    }
-                    self.trains = results
-                    self.loaded = true
                 }
             } else {
                 print("fetching trips from", self.fromStation.abbr, "to", self.toStation.abbr )
