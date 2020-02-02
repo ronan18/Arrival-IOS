@@ -241,6 +241,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                             //print(time1, time2)
                             return time1 < time2
                         }
+                        self.noTrains = false
                         self.trains = results
                         self.loaded = true
                     } else {
@@ -258,26 +259,32 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                 Alamofire.request(baseURL + "/api/v2/routes/" + self.fromStation.abbr + "/" + self.toStation.abbr, headers: headers).responseJSON { response in
                     //  print(JSON(response.value))
                     let estimates = JSON(JSON(response.value)["trips"].arrayValue)
-                    //   print(estimates.count)
-                    var results: Array = [Train]()
-                    
-                    for x in 0...estimates.count - 1 {
-                        let thisTrain = estimates[x]
-                        let etd = thisTrain["@origTimeMin"].stringValue
-                        let eta = thisTrain["@destTimeMin"].stringValue
-                        let direction = thisTrain["leg"][0]["@trainHeadStation"].stringValue
+                    if (estimates.count > 0) {
+                        //   print(estimates.count)
+                        var results: Array = [Train]()
                         
-                        //let color = thisTrain["color"].stringValue
-                        let color = "none"
-                        print(eta)
-                        results.append(Train(id: UUID(), direction: direction, time: etd, unit: "", color: "none", cars: 0, hex: "0", eta: eta))
+                        for x in 0...estimates.count - 1 {
+                            let thisTrain = estimates[x]
+                            let etd = thisTrain["@origTimeMin"].stringValue
+                            let eta = thisTrain["@destTimeMin"].stringValue
+                            let direction = thisTrain["leg"][0]["@trainHeadStation"].stringValue
+                            
+                            //let color = thisTrain["color"].stringValue
+                            let color = "none"
+                            print(eta)
+                            results.append(Train(id: UUID(), direction: direction, time: etd, unit: "", color: "none", cars: 0, hex: "0", eta: eta))
+                        }
+                        
+                        results.sort {
+                            $0.time < $1.time
+                        }
+                        self.noTrains = false
+                        self.trains = results
+                        self.loaded = true
+                    } else {
+                        self.loaded = true
+                        self.noTrains = true
                     }
-                    
-                    results.sort {
-                        $0.time < $1.time
-                    }
-                    self.trains = results
-                    self.loaded = true
                 }
             }
             
