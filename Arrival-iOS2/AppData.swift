@@ -98,6 +98,40 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         }
         let managedContext =  appDelegate.persistentContainer.viewContext
         let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "Trip")
+        do {
+            var priorities: [String: Int] = [:]
+        let result = try managedContext.fetch(fetchRequest)
+            for data in result as! [NSManagedObject] {
+                let toStation = data.value(forKey: "toStation") as! String
+                if (JSON(priorities)[toStation].intValue > 0) {
+                    priorities[toStation] = priorities[toStation]! + 1
+                } else {
+                    priorities[toStation] = 1
+                }
+                print(toStation, "to Stations")
+            }
+            print(priorities, "to Stations")
+            self.toStationSuggestions = self.stations.sorted {
+                var s1 = 0
+                var s2 = 0
+                if (JSON(priorities)[$0.abbr].intValue > 0) {
+                    s1 = JSON(priorities)[$0.abbr].intValue
+                }
+                if (JSON(priorities)[$1.abbr].intValue > 0) {
+                                  s2 = JSON(priorities)[$1.abbr].intValue
+                              }
+                print(s1, s2, $0.abbr, $1.abbr, "to Stations")
+                return s1 > s2
+            }
+            self.toStationSuggestions = self.toStationSuggestions.filter{
+                return self.fromStation.abbr != $0.abbr
+            }
+            
+                self.toStationSuggestions.insert(Station(id: "none", name: "none", lat: 0.0, long: 0.0, abbr: "none", version: 0), at: 0)
+        } catch {
+            print("failed to get trips")
+            
+        }
         /*
          let brainJSSource: String = Bundle.main.path(forResource: "brain", ofType: "js") as! String
          if let jsSourcePath = Bundle.main.path(forResource: "toStations", ofType: "js") {
@@ -122,8 +156,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
          }
          */
         
-        self.toStationSuggestions = self.stations
-        self.toStationSuggestions.insert(Station(id: "none", name: "none", lat: 0.0, long: 0.0, abbr: "none", version: 0), at: 0)
+    
         
     }
     func setFromStation(station: Station) {
