@@ -12,12 +12,15 @@ import CoreData
 import SwiftyJSON
 import Alamofire
 import CoreLocation
-
+import CoreML
+import JavaScriptCore
 
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
 let context = appDelegate.persistentContainer.viewContext
 let baseURL = "https://api.arrival.city"
-
+let MLmodel = Arrival_BART_Classifier_2()
+let MLmodelKNN = UpdatableKNN()
+var jsContext: JSContext!
 class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     
     @Published var trains: Array = [Train]()
@@ -39,6 +42,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     private var lastLat = 0.0
     private var lastLong = 0.0
     private var allowCycle = true
+    private var netJSON: [String: Any?] = [:]
     override init() {
         super.init()
         print("init function")
@@ -46,6 +50,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         getStations()
     }
     func convertColor(color: String) -> Color {
+        
         switch (color) {
         case "RED" :
             return Color.red
@@ -59,6 +64,8 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             return Color.purple
         case "BLUE" :
             return Color.blue
+        case "WHITE" :
+            return Color(UIColor.systemIndigo)
         case "none" :
             return Color.white
         default :
@@ -66,10 +73,64 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             
         }
     }
+    func computeToSuggestions() {
+        
+        jsContext = JSContext()
+        jsContext.exceptionHandler = { context, exception in
+            if let exc = exception {
+                print("JS Exception:", exc.toString())
+            }
+        }
+        let day = Calendar.current.component(.weekday, from: Date())
+        let hour = Calendar.current.component(.hour, from: Date())
+        print(hour, day, "time, ai")
+        
+        guard let toStationOutput = try? MLmodel.prediction(day: Double(day), hour: Double(hour), inStation: self.fromStation.abbr) else {
+            fatalError("Unexpected runtime error.")
+        }
+       
+        let output = toStationOutput.outStationProbability
+        
+        print(output, "time, ai")
+        
+        for i in output {
+            print(i, "station, ai")
+        }
+        let managedContext =  appDelegate.persistentContainer.viewContext
+        let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "Trip")
+        /*
+         let brainJSSource: String = Bundle.main.path(forResource: "brain", ofType: "js") as! String
+         if let jsSourcePath = Bundle.main.path(forResource: "toStations", ofType: "js") {
+         do {
+         // Load its contents to a String variable.
+         let jsSourceContents = try String(contentsOfFile: jsSourcePath)
+         let brainContents = try String(contentsOfFile: brainJSSource)
+         // Add the Javascript code that currently exists in the jsSourceContents to the Javascript Runtime through the jsContext object.
+         jsContext.evaluateScript(brainContents)
+         jsContext.evaluateScript(jsSourceContents)
+         
+         
+         if let functionCompute = jsContext.objectForKeyedSubscript("getToStations") {
+         if let results = functionCompute.call(withArguments: [self.netJSON, day, hour, self.fromStation.abbr]) {
+         print(results, "brain ai")
+         }
+         }
+         }
+         catch {
+         print(error.localizedDescription, "brain ai error")
+         }
+         }
+         */
+        
+        self.toStationSuggestions = self.stations
+        self.toStationSuggestions.insert(Station(id: "none", name: "none", lat: 0.0, long: 0.0, abbr: "none", version: 0), at: 0)
+        
+    }
     func setFromStation(station: Station) {
         print("setting from Station")
         self.loaded = false
         self.fromStation = station
+        computeToSuggestions()
         if (station.abbr == self.closestStations[0].abbr) {
             self.goingOffClosestStation = true
         } else {
@@ -79,99 +140,117 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         self.cylce()
     }
     func setToStation(station: Station) {
-        print("setting from Station")
+        print("setting to Station")
         self.loaded = false
         self.toStation = station
-        
         self.cylce()
+        let day = Calendar.current.component(.weekday, from: Date())
+        let hour = Calendar.current.component(.hour, from: Date())
+        let managedContext =  appDelegate.persistentContainer.viewContext
+        let tripEntity = NSEntityDescription.entity(forEntityName: "Trip", in: managedContext)!
+        let trip = NSManagedObject(entity: tripEntity, insertInto: managedContext)
+        trip.setValue(self.fromStation.abbr, forKeyPath: "fromStation")
+        trip.setValue(self.toStation.abbr, forKeyPath: "toStation")
+        trip.setValue(day, forKeyPath: "day")
+        trip.setValue(hour, forKeyPath: "hour")
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print(error)
+        }
+         
+        
     }
     @objc func cylce() {
-     
-            getClosestStations()
-            if (self.fromStation.name != "loading" && self.auth && self.ready && !self.passphrase.isEmpty && allowCycle) {
-                print("cycling", self.passphrase)
-                if (self.toStation.id == "none" ) {
-                    print("fetching trains from", self.fromStation.abbr)
-                    let headers: HTTPHeaders = [
-                        "Authorization": self.passphrase,
-                        "Accept": "application/json"
-                    ]
-                    Alamofire.request(baseURL + "/api/v2/trains/" + self.fromStation.abbr, headers: headers).responseJSON { response in
-                        // print(JSON(response.value))
-                        let estimates = JSON(JSON(response.value)["estimates"]["etd"].arrayValue)
-                        //   print(estimates.count)
-                        var results: Array = [Train]()
-                        for i in 0...estimates.count - 1 {
-                            for x in 0...estimates[i]["estimate"].arrayValue.count - 1 {
-                                let thisTrain = estimates[i]["estimate"][x]
-                                let color = thisTrain["color"].stringValue
-                                
-                                results.append(Train(id: UUID(), direction: estimates[i]["destination"].stringValue, time: thisTrain["minutes"].stringValue, unit: "min", color: color, cars: thisTrain["length"].intValue, hex: thisTrain["hexcode"].stringValue, eta: ""))
-                            }
-                        }
-                        results.sort {
-                            var time1: Int
-                            var time2: Int
-                            // print($0.time, $1.time)
-                            if ($0.time == "Leaving") {
-                                time1 = 0
-                            } else {
-                                time1 = Int($0.time)  as! Int
-                            }
-                            if ($1.time == "Leaving") {
-                                time2 = 0
-                            } else {
-                                time2 = Int($1.time) as! Int
-                            }
+        
+        getClosestStations()
+        if (self.fromStation.name != "loading" && self.auth && self.ready && !self.passphrase.isEmpty && allowCycle) {
+            print("cycling", self.passphrase)
+            if (self.toStation.id == "none" ) {
+                print("fetching trains from", self.fromStation.abbr)
+                let headers: HTTPHeaders = [
+                    "Authorization": self.passphrase,
+                    "Accept": "application/json"
+                ]
+                Alamofire.request(baseURL + "/api/v2/trains/" + self.fromStation.abbr, headers: headers).responseJSON { response in
+                    // print(JSON(response.value))
+                    let estimates = JSON(JSON(response.value)["estimates"]["etd"].arrayValue)
+                    //   print(estimates.count)
+                    
+                    //TODO Fix error handeling
+                    var results: Array = [Train]()
+                    for i in 0...estimates.count - 1 {
+                        for x in 0...estimates[i]["estimate"].arrayValue.count - 1 {
+                            let thisTrain = estimates[i]["estimate"][x]
+                            let color = thisTrain["color"].stringValue
                             
-                            
-                            //print(time1, time2)
-                            return time1 < time2
+                            results.append(Train(id: UUID(), direction: estimates[i]["destination"].stringValue, time: thisTrain["minutes"].stringValue, unit: "min", color: color, cars: thisTrain["length"].intValue, hex: thisTrain["hexcode"].stringValue, eta: ""))
                         }
-                        self.trains = results
-                        self.loaded = true
                     }
-                } else {
-                    print("fetching trips from", self.fromStation.abbr, "to", self.toStation.abbr )
-                    let headers: HTTPHeaders = [
-                        "Authorization": self.passphrase,
-                        "Accept": "application/json"
-                    ]
-                    print(baseURL + "/api/v2/routes/" + self.fromStation.abbr + "/" + self.toStation.abbr)
-                    Alamofire.request(baseURL + "/api/v2/routes/" + self.fromStation.abbr + "/" + self.toStation.abbr, headers: headers).responseJSON { response in
-                        //  print(JSON(response.value))
-                        let estimates = JSON(JSON(response.value)["trips"].arrayValue)
-                        //   print(estimates.count)
-                        var results: Array = [Train]()
-                        
-                        for x in 0...estimates.count - 1 {
-                            let thisTrain = estimates[x]
-                            let etd = thisTrain["@origTimeMin"].stringValue
-                            let eta = thisTrain["@destTimeMin"].stringValue
-                            let direction = thisTrain["leg"][0]["@trainHeadStation"].stringValue
-                            
-                            //let color = thisTrain["color"].stringValue
-                            let color = "none"
-                            print(eta)
-                            results.append(Train(id: UUID(), direction: direction, time: etd, unit: "", color: "none", cars: 0, hex: "0", eta: eta))
+                    results.sort {
+                        var time1: Int
+                        var time2: Int
+                        // print($0.time, $1.time)
+                        if ($0.time == "Leaving") {
+                            time1 = 0
+                        } else {
+                            time1 = Int($0.time)  as! Int
+                        }
+                        if ($1.time == "Leaving") {
+                            time2 = 0
+                        } else {
+                            time2 = Int($1.time) as! Int
                         }
                         
-                        results.sort {
-                            $0.time < $1.time
-                        }
-                        self.trains = results
-                        self.loaded = true
+                        
+                        //print(time1, time2)
+                        return time1 < time2
                     }
+                    self.trains = results
+                    self.loaded = true
                 }
-                
             } else {
-                print("cycling failed due to invalid data")
-                let timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(cylce), userInfo: nil, repeats: false)
-                
+                print("fetching trips from", self.fromStation.abbr, "to", self.toStation.abbr )
+                let headers: HTTPHeaders = [
+                    "Authorization": self.passphrase,
+                    "Accept": "application/json"
+                ]
+                print(baseURL + "/api/v2/routes/" + self.fromStation.abbr + "/" + self.toStation.abbr)
+                Alamofire.request(baseURL + "/api/v2/routes/" + self.fromStation.abbr + "/" + self.toStation.abbr, headers: headers).responseJSON { response in
+                    //  print(JSON(response.value))
+                    let estimates = JSON(JSON(response.value)["trips"].arrayValue)
+                    //   print(estimates.count)
+                    var results: Array = [Train]()
+                    
+                    for x in 0...estimates.count - 1 {
+                        let thisTrain = estimates[x]
+                        let etd = thisTrain["@origTimeMin"].stringValue
+                        let eta = thisTrain["@destTimeMin"].stringValue
+                        let direction = thisTrain["leg"][0]["@trainHeadStation"].stringValue
+                        
+                        //let color = thisTrain["color"].stringValue
+                        let color = "none"
+                        print(eta)
+                        results.append(Train(id: UUID(), direction: direction, time: etd, unit: "", color: "none", cars: 0, hex: "0", eta: eta))
+                    }
+                    
+                    results.sort {
+                        $0.time < $1.time
+                    }
+                    self.trains = results
+                    self.loaded = true
+                }
             }
-      
+            
+        } else {
+            print("cycling failed due to invalid data")
+            let timer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(cylce), userInfo: nil, repeats: false)
+            
+        }
+        
     }
     private func start() {
+        
         locationManager.requestWhenInUseAuthorization()
         
         // If location services is enabled get the users location
@@ -207,8 +286,8 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     return distance1Miles < distance2Miles
                 }
                 if (self.closestStations.isEmpty || testingStations[0].name != self.closestStations[0].name) {
-                    self.toStationSuggestions = testingStations
-                    self.toStationSuggestions.insert(Station(id: "none", name: "none", lat: 0.0, long: 0.0, abbr: "none", version: 0), at: 0)
+                    computeToSuggestions()
+                    
                     self.closestStations = testingStations
                     print(self.closestStations)
                     if (self.goingOffClosestStation) {
@@ -308,22 +387,22 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     func createNewAccount(passphrase: String) {
         self.authLoading = true
         print("creating account", passphrase)
-               let headers: HTTPHeaders = [
-                   "Accept": "application/json"
-               ]
+        let headers: HTTPHeaders = [
+            "Accept": "application/json"
+        ]
         Alamofire.request("https://api.arrival.city/api/v2/createaccount", method: .post, parameters: ["passphrase": passphrase]).responseJSON {
             response in
-                if (response.value) != nil {
-                    let jsonResponse = JSON(response.value)
-                    if (jsonResponse["success"].boolValue) {
-                        self.loginFromWeb(passphrase: passphrase)
-                    } else {
-                        print("error creating account")
-                    }
+            if (response.value) != nil {
+                let jsonResponse = JSON(response.value)
+                if (jsonResponse["success"].boolValue) {
+                    self.loginFromWeb(passphrase: passphrase)
                 } else {
                     print("error creating account")
-                 
                 }
+            } else {
+                print("error creating account")
+                
+            }
             
         }
     }
@@ -347,6 +426,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     let entity = NSEntityDescription.entity(forEntityName: "User", in: context)
                     let newUser = NSManagedObject(entity: entity!, insertInto: context)
                     newUser.setValue(passphrase, forKey: "pass")
+                    
                     
                     do {
                         try context.save()
@@ -395,6 +475,11 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                             self.auth = true
                             self.ready = true
                             print("user authorized")
+                            // print(jsonResponse["net"].dictionaryObject, "brain ai json raw")
+                            if (!jsonResponse["net"].isEmpty) {
+                                self.netJSON = jsonResponse["net"].dictionaryObject as! [String: Any?]
+                                //print(self.netJSON, "brain ai json")
+                            }
                             self.passphrase = passphraseToTest
                         } else {
                             print("user not authorized")

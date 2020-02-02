@@ -8,11 +8,18 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="version" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
     </entity>
+    <entity name="Trip" representedClassName="Trip" syncable="YES" codeGenerationType="class">
+        <attribute name="day" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="fromStation" optional="YES" attributeType="String"/>
+        <attribute name="hour" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="toStation" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="User" representedClassName="User" syncable="YES" codeGenerationType="class">
         <attribute name="pass" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="User" positionX="-63" positionY="-18" width="128" height="58"/>
         <element name="StationModel" positionX="-36" positionY="18" width="128" height="133"/>
+        <element name="User" positionX="-63" positionY="-18" width="128" height="58"/>
+        <element name="Trip" positionX="-45" positionY="45" width="128" height="103"/>
     </elements>
 </model>
