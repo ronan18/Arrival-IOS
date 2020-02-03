@@ -14,11 +14,13 @@ struct LoginView: View {
     @State var newPass = ""
     @EnvironmentObject private var appData: AppData
     var body: some View {
+         GeometryReader { geometry in
         VStack(alignment: .center) {
+            
             if (self.appData.authLoading) {
                 LoadingView()
             } else {
-                if (onboard == 0) {
+                if (self.onboard == 0) {
                     Spacer()
                     GeometryReader { geo in
                         Image("map")
@@ -50,7 +52,7 @@ struct LoginView: View {
                     }.background(/*@START_MENU_TOKEN@*/Color.blue/*@END_MENU_TOKEN@*/).cornerRadius(/*@START_MENU_TOKEN@*/10.0/*@END_MENU_TOKEN@*/).foregroundColor(/*@START_MENU_TOKEN@*/.white/*@END_MENU_TOKEN@*/)
                     
                     
-                } else if (onboard == 4) {
+                } else if (self.onboard == 4) {
                     HStack {
                         Button(action: {
                             self.onboard = 0
@@ -93,7 +95,7 @@ struct LoginView: View {
                     }.background(/*@START_MENU_TOKEN@*/Color.blue/*@END_MENU_TOKEN@*/).cornerRadius(/*@START_MENU_TOKEN@*/10.0/*@END_MENU_TOKEN@*/).foregroundColor(/*@START_MENU_TOKEN@*/.white/*@END_MENU_TOKEN@*/)
                     
                     
-                } else if (onboard == 1) {
+                } else if (self.onboard == 1) {
                     HStack {
                         Button(action: {
                             self.onboard = 4
@@ -147,12 +149,12 @@ struct LoginView: View {
                                 .lineLimit(nil)
                             Spacer()
                         }.padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-                    }.background(Color.white).foregroundColor(.black).overlay(
+                    }.background(Color.white).cornerRadius(10.0).foregroundColor(.black).overlay(
                         RoundedRectangle(cornerRadius: 10)
                             .stroke(Color.black, lineWidth: 3)
                     )
                     
-                } else if (onboard == 2) {
+                } else if (self.onboard == 2) {
                     HStack {
                         Button(action: {
                             self.onboard = 1
@@ -167,7 +169,7 @@ struct LoginView: View {
                     
                     Spacer()
                     VStack {
-                        TextField("Enter Your Passphrase", text: $passphrase).padding()
+                        TextField("Enter Your Passphrase", text: self.$passphrase).padding()
                         Rectangle().fill(Color("arrivalBlue")).frame(height: 5)
                         
                     }
@@ -194,7 +196,7 @@ struct LoginView: View {
                         }.padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
                     }.background(/*@START_MENU_TOKEN@*/Color.blue/*@END_MENU_TOKEN@*/).cornerRadius(CGFloat(/*@START_MENU_TOKEN@*/10.0/*@END_MENU_TOKEN@*/)).foregroundColor(/*@START_MENU_TOKEN@*/.white/*@END_MENU_TOKEN@*/)
                     
-                } else if (onboard == 3) {
+                } else if (self.onboard == 3) {
                     HStack {
                         Button(action: {
                             self.onboard = 1
@@ -235,12 +237,14 @@ struct LoginView: View {
                                 .lineLimit(nil)
                             Spacer()
                         }.padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+                        Spacer()
                     }.background(/*@START_MENU_TOKEN@*/Color.blue/*@END_MENU_TOKEN@*/).cornerRadius(CGFloat(/*@START_MENU_TOKEN@*/10.0/*@END_MENU_TOKEN@*/)).foregroundColor(/*@START_MENU_TOKEN@*/.white/*@END_MENU_TOKEN@*/)
                     
                 }
                 
             }
-            
+           
+             
         }
         .padding().onAppear(perform: {
             func randomString(length: Int) -> String {
@@ -249,12 +253,18 @@ struct LoginView: View {
             }
             self.newPass = randomString(length: 6)
         })
+            
+    }
+       
     }
     
 }
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView().environmentObject(AppData())
+        Group {
+             LoginView().environmentObject(AppData()).environment(\.colorScheme, .light)
+        LoginView().environmentObject(AppData()).environment(\.colorScheme, .dark)
+        }
     }
 }
