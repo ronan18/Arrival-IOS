@@ -66,7 +66,7 @@ struct HomeView: View {
                                         .font(.caption)
                                     List { ForEach(self.appData.closestStations.filter {
                                         if self.fromStationSearch.count > 0 {
-                                            return  $0.name.contains(self.fromStationSearch)
+                                            return  $0.name.lowercased().contains(self.fromStationSearch.lowercased())
                                         } else {
                                             return true
                                         }
@@ -121,7 +121,7 @@ struct HomeView: View {
                                             return false
                                         } else {
                                             if self.fromStationSearch.count > 0 {
-                                                return  $0.name.contains(self.fromStationSearch)
+                                                return  $0.name.lowercased().contains(self.fromStationSearch.lowercased())
                                             } else {
                                                 return true
                                             }
