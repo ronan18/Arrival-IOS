@@ -118,7 +118,7 @@ struct LoginView: View {
                     Text("Anonymous")
                         .font(.largeTitle)
                         .fontWeight(.heavy)
-                    Text("Because Arrival generates some pretty personal information about you, your daily commute, we have created an anonymous authentication system that still allows for cross device syncing.")
+                    Text("Because Arrival generates some pretty personal information, your daily commute, we have created an anonymous authentication system that still allows for cross device syncing and machine learning.")
                         .font(.subheadline)
                         .multilineTextAlignment(.center)
                     Spacer()
