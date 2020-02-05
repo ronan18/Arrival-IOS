@@ -76,12 +76,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     }
     func computeToSuggestions() {
         
-        jsContext = JSContext()
-        jsContext.exceptionHandler = { context, exception in
-            if let exc = exception {
-                print("JS Exception:", exc.toString())
-            }
-        }
+       
         let day = Calendar.current.component(.weekday, from: Date())
         let hour = Calendar.current.component(.hour, from: Date())
         print(hour, day, "time, ai")

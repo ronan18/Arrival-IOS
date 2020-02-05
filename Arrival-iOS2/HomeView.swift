@@ -25,6 +25,15 @@ struct HomeView: View {
         GeometryReader { geometry in
             NavigationView {
                 VStack {
+                VStack {
+                    VStack {
+                    HStack {
+                        Text("Arrival").font(.largeTitle).foregroundColor(Color.white).fontWeight(.bold)
+                      Spacer()
+                    }.padding()
+                    }
+                }.background(Color.arrivalBlueBG).frame(height: geometry.safeAreaInsets.top + 10)
+                VStack {
                     HStack {
                         Button  (action: {
                             self.fromStationSearch = ""
@@ -143,8 +152,9 @@ struct HomeView: View {
                         }
                     }.padding().foregroundColor(.white).background(Color.blackBG)
                     TrainView()
-                }.navigationBarTitle("Arrival")
-            }.padding(.top, geometry.safeAreaInsets.top - (geometry.safeAreaInsets.top/3.5)).onAppear(){
+                    }
+                }
+            }.onAppear(){
                 print("home Appeared")
                 self.appData.cylce()
                 Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { timer in
