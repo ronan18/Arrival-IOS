@@ -22,7 +22,7 @@ let MLmodel = Arrival_BART_Classifier_2()
 let MLmodelKNN = UpdatableKNN()
 var jsContext: JSContext!
 class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
-    
+    @Published var screen: String = "home"
     @Published var trains: Array = [Train]()
     @Published var passphrase: String = ""
     @Published var ready: Bool = false

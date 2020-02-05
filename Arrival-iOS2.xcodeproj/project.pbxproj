@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		34AF24A823DFD00400E66C34 /* Train.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AF24A723DFD00400E66C34 /* Train.swift */; };
+		34CD87F723EA8A24004F8024 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CD87F623EA8A24004F8024 /* SettingsView.swift */; };
 		34EF38AF23CC23D4000DE4AF /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EF38AE23CC23D4000DE4AF /* Colors.swift */; };
 		34EF38B123CC2692000DE4AF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EF38B023CC2692000DE4AF /* HomeView.swift */; };
 		34EF38B323CC2AC1000DE4AF /* StationChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EF38B223CC2AC1000DE4AF /* StationChooserView.swift */; };
@@ -46,6 +47,7 @@
 
 /* Begin PBXFileReference section */
 		34AF24A723DFD00400E66C34 /* Train.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Train.swift; sourceTree = "<group>"; };
+		34CD87F623EA8A24004F8024 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		34EF38AE23CC23D4000DE4AF /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		34EF38B023CC2692000DE4AF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		34EF38B223CC2AC1000DE4AF /* StationChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationChooserView.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				C568C40523D95FA800AB9E67 /* LoginView.swift */,
 				C512BCC723E751650079F49C /* toStations.js */,
 				C592370823E151AD00AFCD6C /* HostingController.swift */,
+				34CD87F623EA8A24004F8024 /* SettingsView.swift */,
 			);
 			path = "Arrival-iOS2";
 			sourceTree = "<group>";
@@ -384,6 +387,7 @@
 				C568C40623D95FA800AB9E67 /* LoginView.swift in Sources */,
 				C58F248423CC1438003882F3 /* SceneDelegate.swift in Sources */,
 				C55640F723CF8439003BCB91 /* AppData.swift in Sources */,
+				34CD87F723EA8A24004F8024 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -545,7 +549,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival;
 				PRODUCT_NAME = Arrival;
 				SWIFT_VERSION = 5.0;
@@ -567,7 +571,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = 1.5;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival;
 				PRODUCT_NAME = Arrival;
 				SWIFT_VERSION = 5.0;

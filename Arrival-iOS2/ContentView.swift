@@ -16,7 +16,12 @@ struct ContentView: View {
         VStack {
             if (self.appData.ready) {
                 if (self.appData.auth) {
-                    HomeView()
+                    if (self.appData.screen == "home") {
+                          HomeView()
+                    } else if (self.appData.screen == "settings") {
+                        SettingsView()
+                    }
+                 
                 } else {
                     LoginView()
                 }
