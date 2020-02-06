@@ -48,7 +48,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     private var allowCycle = true
     private var netJSON: [String: Any?] = [:]
     private var settingsSuscriber: Any?
-     private var authSubscriber: Any?
+    private var authSubscriber: Any?
     override init() {
         super.init()
         print("init function")
@@ -56,7 +56,24 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         getStations()
         
     }
-    
+    func logOut() {
+        self.passphrase = ""
+        self.auth = false
+        self.loaded = false
+        self.goingOffClosestStation = true
+        self.screen = "home"
+        self.toStation = Station(id: "none", name: "none", lat: 0.0, long: 0.0, abbr: "none", version: 0)
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        do {
+            try context.execute(batchDeleteRequest)
+        } catch {
+            print("Failed saving")
+        }
+        
+        
+        
+    }
     func convertColor(color: String) -> Color {
         
         switch (color) {
@@ -106,12 +123,23 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             let result = try managedContext.fetch(fetchRequest)
             for data in result as! [NSManagedObject] {
                 let toStation = data.value(forKey: "toStation") as! String
-                if (JSON(priorities)[toStation].intValue > 0) {
-                    priorities[toStation] = priorities[toStation]! + 1
-                } else {
-                    priorities[toStation] = 1
+                let user = data.value(forKey: "user")
+                if (user == nil || user as! String == self.passphrase) {
+                    print("trip user", user)
+                    data.setValue(self.passphrase, forKey: "user")
+                    if (JSON(priorities)[toStation].intValue > 0) {
+                        priorities[toStation] = priorities[toStation]! + 1
+                    } else {
+                        priorities[toStation] = 1
+                    }
+                    print(toStation, "to Stations")
                 }
-                print(toStation, "to Stations")
+            }
+            do {
+                try context.save()
+                print("updated trips")
+            } catch {
+                print("failed updating trips")
             }
             print(priorities, "to Stations")
             self.toStationSuggestions = self.stations.sorted {
@@ -189,6 +217,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         trip.setValue(self.toStation.abbr, forKeyPath: "toStation")
         trip.setValue(day, forKeyPath: "day")
         trip.setValue(hour, forKeyPath: "hour")
+        trip.setValue(self.passphrase, forKeyPath: "user")
         do {
             try managedContext.save()
         } catch let error as NSError {
@@ -358,30 +387,30 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             if (self.auth) {
                 print("passphrase changed and auth settings from auth")
                 let managedContext =  appDelegate.persistentContainer.viewContext
-                               let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "Preferences")
-                               do {
-                                   
-                                   let result = try managedContext.fetch(fetchRequest)
-                                   if (!result.isEmpty) {
-                                       print("fetching settings from auth")
-                                       for data in result as! [NSManagedObject] {
-                                           let user = data.value(forKey: "user") as! String
-                                           let sortTrainsByTimeSetting = data.value(forKey: "sortTrainsByTime") as! Bool
-                                        print(user, value, "user settings from auth")
-                                           print(sortTrainsByTimeSetting, "sort t b t settings from auth")
-                                           if (user == value) {
-                                            self.sortTrainsByTime = sortTrainsByTimeSetting
-                                            print("set stbt settings from auth to", sortTrainsByTimeSetting)
-                                           }
-                                           
-                                       }
-                                   }
-                                   
-                                   
-                               } catch {
-                                   print("failed to get settings")
-                                   
-                               }
+                let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "Preferences")
+                do {
+                    
+                    let result = try managedContext.fetch(fetchRequest)
+                    if (!result.isEmpty) {
+                        print("fetching settings from auth")
+                        for data in result as! [NSManagedObject] {
+                            let user = data.value(forKey: "user") as! String
+                            let sortTrainsByTimeSetting = data.value(forKey: "sortTrainsByTime") as! Bool
+                            print(user, value, "user settings from auth")
+                            print(sortTrainsByTimeSetting, "sort t b t settings from auth")
+                            if (user == value) {
+                                self.sortTrainsByTime = sortTrainsByTimeSetting
+                                print("set stbt settings from auth to", sortTrainsByTimeSetting)
+                            }
+                            
+                        }
+                    }
+                    
+                    
+                } catch {
+                    print("failed to get settings")
+                    
+                }
             }
         }
         settingsSuscriber = $sortTrainsByTime.sink {value in
@@ -644,7 +673,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     if  response.value != nil {
                         let jsonResponse = JSON(response.value)
                         if jsonResponse["user"].stringValue == "true" {
-                           
+                            
                             self.auth = true
                             self.ready = true
                             print("user authorized")
@@ -653,7 +682,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                                 self.netJSON = jsonResponse["net"].dictionaryObject as! [String: Any?]
                                 //print(self.netJSON, "brain ai json")
                             }
-                             self.passphrase = passphraseToTest
+                            self.passphrase = passphraseToTest
                         } else {
                             print("user not authorized")
                             self.auth = false

@@ -37,6 +37,7 @@ struct SettingsView: View {
                     }
                 }.padding().frame(height: geometry.safeAreaInsets.top + 60).background(Color("arrivalBlue"))
                 List {
+                    
                     HStack {
                         Text("Account")
                         Spacer()
@@ -50,11 +51,11 @@ struct SettingsView: View {
                         }
                     }
                     Spacer()
-                    if (false) {
+                    
                     HStack {
                         Spacer()
                         Button(action: {
-                            
+                            self.appData.logOut()
                         }) {
                             HStack {
                                 Spacer()
@@ -68,7 +69,7 @@ struct SettingsView: View {
                         }.background(Color.red).cornerRadius(/*@START_MENU_TOKEN@*/10.0/*@END_MENU_TOKEN@*/).foregroundColor(/*@START_MENU_TOKEN@*/.white/*@END_MENU_TOKEN@*/)
                         Spacer()
                     }
-                    }
+                    
                     
                 }
                 Spacer()
