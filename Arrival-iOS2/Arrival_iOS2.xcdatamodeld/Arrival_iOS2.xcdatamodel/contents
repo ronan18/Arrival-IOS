@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19C57" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="15702" systemVersion="19D76" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Preferences" representedClassName="Preferences" syncable="YES" codeGenerationType="class">
+        <attribute name="sortTrainsByTime" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="user" optional="YES" attributeType="String"/>
+    </entity>
     <entity name="StationModel" representedClassName="StationModel" syncable="YES" codeGenerationType="class">
         <attribute name="abbr" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
@@ -19,7 +23,8 @@
     </entity>
     <elements>
         <element name="StationModel" positionX="-36" positionY="18" width="128" height="133"/>
-        <element name="User" positionX="-63" positionY="-18" width="128" height="58"/>
         <element name="Trip" positionX="-45" positionY="45" width="128" height="103"/>
+        <element name="User" positionX="-63" positionY="-18" width="128" height="58"/>
+        <element name="Preferences" positionX="-45" positionY="45" width="128" height="73"/>
     </elements>
 </model>

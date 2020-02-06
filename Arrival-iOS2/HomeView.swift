@@ -32,7 +32,7 @@ struct HomeView: View {
                                 Button(action: {
                                     self.appData.screen = "settings"
                                 }) {
-                                    Image(systemName: "gear").foregroundColor(.white)
+                                    Image(systemName: "gear").foregroundColor(.white).padding(5)
                                 }
                             }
                         }

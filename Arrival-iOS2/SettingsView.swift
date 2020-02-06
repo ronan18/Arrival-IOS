@@ -9,11 +9,11 @@
 import SwiftUI
 
 struct SettingsView: View {
-     @EnvironmentObject private var appData: AppData
+    @EnvironmentObject private var appData: AppData
     init() {
-           // To remove all separators including the actual ones:
-
-       }
+        // To remove all separators including the actual ones:
+        
+    }
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
@@ -25,7 +25,7 @@ struct SettingsView: View {
                                 self.appData.screen = "home"
                             }) {
                                 HStack {
-                                Image(systemName: "chevron.left").foregroundColor(.white)
+                                    Image(systemName: "chevron.left").foregroundColor(.white).padding(5)
                                     
                                 }
                             }
@@ -44,12 +44,32 @@ struct SettingsView: View {
                             .fontWeight(.bold).foregroundColor(Color("arrivalBlue"))
                     }
                     HStack {
-                                         Text("Sort trains by time")
-                                         Spacer()
-                                         Text("no")
-                                             .fontWeight(.bold).foregroundColor(Color("arrivalBlue"))
-                                     }
-                   
+                        
+                        Toggle(isOn: self.$appData.sortTrainsByTime) {
+                            Text("Sort trains by time")
+                        }
+                    }
+                    Spacer()
+                    if (false) {
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            
+                        }) {
+                            HStack {
+                                Spacer()
+                                Text("LOGOUT")
+                                    .font(.body)
+                                    .fontWeight(.bold)
+                                    .multilineTextAlignment(.center)
+                                    .lineLimit(nil)
+                                Spacer()
+                            }.padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+                        }.background(Color.red).cornerRadius(/*@START_MENU_TOKEN@*/10.0/*@END_MENU_TOKEN@*/).foregroundColor(/*@START_MENU_TOKEN@*/.white/*@END_MENU_TOKEN@*/)
+                        Spacer()
+                    }
+                    }
+                    
                 }
                 Spacer()
             }

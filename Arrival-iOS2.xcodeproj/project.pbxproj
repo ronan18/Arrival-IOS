@@ -171,6 +171,7 @@
 				C58F24A623CC14D1003882F3 /* TrainView.swift */,
 				34EF38AE23CC23D4000DE4AF /* Colors.swift */,
 				34EF38B023CC2692000DE4AF /* HomeView.swift */,
+				34CD87F623EA8A24004F8024 /* SettingsView.swift */,
 				34EF38B223CC2AC1000DE4AF /* StationChooserView.swift */,
 				C5A517A423CCED0F003E616E /* TrainComponent.swift */,
 				C55640F623CF8438003BCB91 /* AppData.swift */,
@@ -178,7 +179,6 @@
 				C568C40523D95FA800AB9E67 /* LoginView.swift */,
 				C512BCC723E751650079F49C /* toStations.js */,
 				C592370823E151AD00AFCD6C /* HostingController.swift */,
-				34CD87F623EA8A24004F8024 /* SettingsView.swift */,
 			);
 			path = "Arrival-iOS2";
 			sourceTree = "<group>";
@@ -549,7 +549,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival;
 				PRODUCT_NAME = Arrival;
 				SWIFT_VERSION = 5.0;
@@ -571,7 +571,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5;
+				MARKETING_VERSION = 1.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival;
 				PRODUCT_NAME = Arrival;
 				SWIFT_VERSION = 5.0;

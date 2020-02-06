@@ -10,6 +10,7 @@ import SwiftUI
 let sampleData = [1,2,3,4,5]
 struct TrainView: View {
     @EnvironmentObject private var appData: AppData
+    @State private var direction = 0
     init() {
         // To remove all separators including the actual ones:
         UITableView.appearance().separatorStyle = .none
@@ -32,11 +33,34 @@ struct TrainView: View {
                 
                 
             } else {
+                if (self.appData.sortTrainsByTime || self.appData.toStation.abbr != "none") {
+                  
                 List(self.appData.trains) { train in
                     
                     
                     TrainComponent(type: "train",  name: train.direction, cars: train.cars, departs: train.time,unit: train.unit, color: self.appData.convertColor(color: train.color), eta: train.eta).listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                     
+                }
+                } else {
+                    
+                    Picker("",selection: self.$direction) {
+                                                     Text("Northbound").tag(0)
+                                                     Text("Southbound").tag(1)
+                                                    
+                    }.pickerStyle(SegmentedPickerStyle()).padding([.top, .leading, .trailing])
+                    List {
+                        if (self.direction == 0) {
+                        ForEach(self.appData.northTrains) { train in
+                           TrainComponent(type: "train",  name: train.direction, cars: train.cars, departs: train.time,unit: train.unit, color: self.appData.convertColor(color: train.color), eta: train.eta)
+                           
+                        }
+                       
+                        } else {
+                        ForEach(self.appData.southTrains) { train in
+                           TrainComponent(type: "train",  name: train.direction, cars: train.cars, departs: train.time,unit: train.unit, color: self.appData.convertColor(color: train.color), eta: train.eta)
+                        }
+                        }
+                    }
                 }
             }
             

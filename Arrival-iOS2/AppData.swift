@@ -24,6 +24,8 @@ var jsContext: JSContext!
 class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var screen: String = "home"
     @Published var trains: Array = [Train]()
+    @Published var northTrains: Array = [Train]()
+    @Published var southTrains: Array = [Train]()
     @Published var passphrase: String = ""
     @Published var ready: Bool = false
     @Published var loaded: Bool = false
@@ -32,6 +34,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var authLoading: Bool = false
     @Published var stations = [Station]()
     @Published var network = true
+    @Published var sortTrainsByTime = false
     @Published var goingOffClosestStation: Bool = true
     @Published var closestStations = [Station]()
     @Published var toStationSuggestions = [Station]()
@@ -44,12 +47,16 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     private var lastLong = 0.0
     private var allowCycle = true
     private var netJSON: [String: Any?] = [:]
+    private var settingsSuscriber: Any?
+     private var authSubscriber: Any?
     override init() {
         super.init()
         print("init function")
         start()
         getStations()
+        
     }
+    
     func convertColor(color: String) -> Color {
         
         switch (color) {
@@ -76,7 +83,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     }
     func computeToSuggestions() {
         
-       
+        
         let day = Calendar.current.component(.weekday, from: Date())
         let hour = Calendar.current.component(.hour, from: Date())
         print(hour, day, "time, ai")
@@ -209,11 +216,17 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     //TODO Fix error handeling
                     if (estimates.count > 0) {
                         var results: Array = [Train]()
+                        var northResults: Array = [Train]()
+                        var southResults: Array = [Train]()
                         for i in 0...estimates.count - 1 {
                             for x in 0...estimates[i]["estimate"].arrayValue.count - 1 {
                                 let thisTrain = estimates[i]["estimate"][x]
                                 let color = thisTrain["color"].stringValue
-                                
+                                if (thisTrain["direction"].stringValue == "North") {
+                                    northResults.append(Train(id: UUID(), direction: estimates[i]["destination"].stringValue, time: thisTrain["minutes"].stringValue, unit: "min", color: color, cars: thisTrain["length"].intValue, hex: thisTrain["hexcode"].stringValue, eta: ""))
+                                } else {
+                                    southResults.append(Train(id: UUID(), direction: estimates[i]["destination"].stringValue, time: thisTrain["minutes"].stringValue, unit: "min", color: color, cars: thisTrain["length"].intValue, hex: thisTrain["hexcode"].stringValue, eta: ""))
+                                }
                                 results.append(Train(id: UUID(), direction: estimates[i]["destination"].stringValue, time: thisTrain["minutes"].stringValue, unit: "min", color: color, cars: thisTrain["length"].intValue, hex: thisTrain["hexcode"].stringValue, eta: ""))
                             }
                         }
@@ -236,7 +249,47 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                             //print(time1, time2)
                             return time1 < time2
                         }
+                        northResults.sort {
+                            var time1: Int
+                            var time2: Int
+                            // print($0.time, $1.time)
+                            if ($0.time == "Leaving") {
+                                time1 = 0
+                            } else {
+                                time1 = Int($0.time)  as! Int
+                            }
+                            if ($1.time == "Leaving") {
+                                time2 = 0
+                            } else {
+                                time2 = Int($1.time) as! Int
+                            }
+                            
+                            
+                            //print(time1, time2)
+                            return time1 < time2
+                        }
+                        southResults.sort {
+                            var time1: Int
+                            var time2: Int
+                            // print($0.time, $1.time)
+                            if ($0.time == "Leaving") {
+                                time1 = 0
+                            } else {
+                                time1 = Int($0.time)  as! Int
+                            }
+                            if ($1.time == "Leaving") {
+                                time2 = 0
+                            } else {
+                                time2 = Int($1.time) as! Int
+                            }
+                            
+                            
+                            //print(time1, time2)
+                            return time1 < time2
+                        }
                         self.noTrains = false
+                        self.northTrains = northResults
+                        self.southTrains = southResults
                         self.trains = results
                         self.loaded = true
                     } else {
@@ -299,6 +352,84 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyBest // You can change the locaiton accuary here.
             locationManager.startUpdatingLocation()
+        }
+        authSubscriber = $passphrase.sink {value in
+            print(value, "auth subscriber")
+            if (self.auth) {
+                print("passphrase changed and auth settings from auth")
+                let managedContext =  appDelegate.persistentContainer.viewContext
+                               let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "Preferences")
+                               do {
+                                   
+                                   let result = try managedContext.fetch(fetchRequest)
+                                   if (!result.isEmpty) {
+                                       print("fetching settings from auth")
+                                       for data in result as! [NSManagedObject] {
+                                           let user = data.value(forKey: "user") as! String
+                                           let sortTrainsByTimeSetting = data.value(forKey: "sortTrainsByTime") as! Bool
+                                        print(user, value, "user settings from auth")
+                                           print(sortTrainsByTimeSetting, "sort t b t settings from auth")
+                                           if (user == value) {
+                                            self.sortTrainsByTime = sortTrainsByTimeSetting
+                                            print("set stbt settings from auth to", sortTrainsByTimeSetting)
+                                           }
+                                           
+                                       }
+                                   }
+                                   
+                                   
+                               } catch {
+                                   print("failed to get settings")
+                                   
+                               }
+            }
+        }
+        settingsSuscriber = $sortTrainsByTime.sink {value in
+            print(value, "settings change")
+            if (self.auth){
+                let managedContext =  appDelegate.persistentContainer.viewContext
+                let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "Preferences")
+                do {
+                    
+                    let result = try managedContext.fetch(fetchRequest)
+                    if (!result.isEmpty) {
+                        print("fetching old settings")
+                        for data in result as! [NSManagedObject] {
+                            let user = data.value(forKey: "user") as! String
+                            let sortTrainsByTimeSetting = data.value(forKey: "sortTrainsByTime") as! Bool
+                            print(user, "user setting")
+                            print(sortTrainsByTimeSetting, "sort t b t setting")
+                            if (user == self.passphrase) {
+                                data.setValue(value, forKey: "sortTrainsByTime")
+                                do {
+                                    try context.save()
+                                    print("saved updated settings")
+                                } catch {
+                                    print("Failed saving")
+                                }
+                            }
+                            
+                        }
+                    } else {
+                        print("creating new settings")
+                        let entity = NSEntityDescription.entity(forEntityName: "Preferences", in: context)
+                        let newPreference = NSManagedObject(entity: entity!, insertInto: context)
+                        newPreference.setValue(self.passphrase, forKey: "user")
+                        newPreference.setValue(value, forKey: "sortTrainsByTime")
+                        do {
+                            try context.save()
+                            print("saved new settings")
+                        } catch {
+                            print("Failed saving")
+                        }
+                    }
+                    
+                    
+                } catch {
+                    print("failed to get settings")
+                    
+                }
+            }
         }
         
     }
@@ -513,6 +644,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     if  response.value != nil {
                         let jsonResponse = JSON(response.value)
                         if jsonResponse["user"].stringValue == "true" {
+                           
                             self.auth = true
                             self.ready = true
                             print("user authorized")
@@ -521,7 +653,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                                 self.netJSON = jsonResponse["net"].dictionaryObject as! [String: Any?]
                                 //print(self.netJSON, "brain ai json")
                             }
-                            self.passphrase = passphraseToTest
+                             self.passphrase = passphraseToTest
                         } else {
                             print("user not authorized")
                             self.auth = false
