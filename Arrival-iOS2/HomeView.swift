@@ -29,11 +29,11 @@ struct HomeView: View {
                             HStack { Text("Arrival").font(.largeTitle).foregroundColor(Color.white).fontWeight(.bold)
                                 Spacer()
                                 
-                               /* Button(action: {
+                                Button(action: {
                                     self.appData.screen = "settings"
                                 }) {
                                     Image(systemName: "gear").foregroundColor(.white)
-                                }*/
+                                }
                             }
                         }
                     }.padding().frame(height: geometry.safeAreaInsets.top + 60).background(Color("arrivalBlue"))
