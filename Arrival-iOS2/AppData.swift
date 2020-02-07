@@ -18,8 +18,6 @@ import JavaScriptCore
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
 let context = appDelegate.persistentContainer.viewContext
 let baseURL = "https://api.arrival.city"
-let MLmodel = Arrival_BART_Classifier_2()
-let MLmodelKNN = UpdatableKNN()
 var jsContext: JSContext!
 class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var screen: String = "home"
@@ -98,41 +96,82 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             
         }
     }
-    func computeToSuggestions() {
-        
-        
-        let day = Calendar.current.component(.weekday, from: Date())
-        let hour = Calendar.current.component(.hour, from: Date())
+    func tripToDouble(day: Int, hour: Int, fromStation: String) -> [Double] {
+        let dayDouble = Double(day)
+        let hourDouble = Double(hour)
+        let fromStationDouble = stationToDouble(station:fromStation)
+        return [dayDouble,hourDouble, fromStationDouble]
+    }
+    func stationToDouble(station: String) -> Double {
+       
+        return Double(self.stations.firstIndex(where: { $0.abbr == station })!)
+    }
+    func stationFromInt(label: Int) -> String {
+      
+        return self.stations[label].abbr
+    }
+    func computeToSuggestions(pass: String = "") {
+        var knnPass = pass
+        if (pass.isEmpty) {
+            knnPass = self.passphrase
+        }
+        print("knn pass", knnPass, pass)
+        let day = Calendar.current.component(.weekday, from: Date()) as Int
+        let hour = Calendar.current.component(.hour, from: Date()) as Int
         print(hour, day, "time, ai")
         
-        guard let toStationOutput = try? MLmodel.prediction(day: Double(day), hour: Double(hour), inStation: self.fromStation.abbr) else {
-            fatalError("Unexpected runtime error.")
-        }
         
-        let output = toStationOutput.outStationProbability
-        
-        print(output, "time, ai")
-        
-        for i in output {
-            print(i, "station, ai")
-        }
         let managedContext =  appDelegate.persistentContainer.viewContext
         let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "Trip")
+        var trainingData: [[Double]] = []
+        var labels: [Int] = []
         do {
             var priorities: [String: Int] = [:]
+            
             let result = try managedContext.fetch(fetchRequest)
             for data in result as! [NSManagedObject] {
                 let toStation = data.value(forKey: "toStation") as! String
-                let user = data.value(forKey: "user")
-                if (user == nil || user as! String == self.passphrase) {
-                    print("trip user", user)
-                    data.setValue(self.passphrase, forKey: "user")
+                let fromStation = data.value(forKey: "fromStation") as! String
+                let user = data.value(forKey: "user") as! String?
+                let hour = data.value(forKey: "hour") as! Int
+                let day = data.value(forKey: "day") as! Int
+                let userString = user as! String
+                print("knn user", user, "knn pass", knnPass, user as! String == knnPass, user == nil, userString.isEmpty)
+                
+                if (userString.isEmpty || user == nil || user as! String == knnPass) {
+                   print("knn data", user, hour, day, toStation, fromStation)
+                    data.setValue(knnPass, forKey: "user")
                     if (JSON(priorities)[toStation].intValue > 0) {
                         priorities[toStation] = priorities[toStation]! + 1
                     } else {
                         priorities[toStation] = 1
                     }
+                    if (toStation != "none") {
+                        trainingData.append(tripToDouble(day: day, hour: hour, fromStation: fromStation))
+                        labels.append(Int(stationToDouble(station: toStation)))
+                    }
                     print(toStation, "to Stations")
+                }
+            }
+            print(trainingData, labels, "knn data")
+            var predictionType: [String]
+            if (!trainingData.isEmpty) {
+                
+                var nNeighbors = priorities.count - 1
+                if nNeighbors < 1 {
+                    nNeighbors = 1
+                }
+                 nNeighbors = 1
+               
+                print(nNeighbors, "knn neighbors")
+                let knn = KNearestNeighborsClassifier(data: trainingData, labels: labels, nNeighbors: nNeighbors)
+                if (self.fromStation.abbr != "load") {
+                    print("knn predicting", self.fromStation.abbr)
+                    let predictionLabels = knn.predict([tripToDouble(day: day, hour: hour, fromStation: self.fromStation.abbr)])
+                    print(predictionLabels, "knn prediction labels")
+                     predictionType = predictionLabels.map({ self.stationFromInt(label: $0) })
+                    print(predictionType, "knn prediction type")
+                    priorities[predictionType[0]] = (JSON(priorities)[predictionType[0]].intValue + 100) * 10
                 }
             }
             do {
@@ -151,7 +190,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                 if (JSON(priorities)[$1.abbr].intValue > 0) {
                     s2 = JSON(priorities)[$1.abbr].intValue
                 }
-                print(s1, s2, $0.abbr, $1.abbr, "to Stations")
+               // print(s1, s2, $0.abbr, $1.abbr, "to Stations")
                 return s1 > s2
             }
             self.toStationSuggestions = self.toStationSuggestions.filter{
@@ -210,16 +249,17 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         self.cylce()
         let day = Calendar.current.component(.weekday, from: Date())
         let hour = Calendar.current.component(.hour, from: Date())
-        let managedContext =  appDelegate.persistentContainer.viewContext
-        let tripEntity = NSEntityDescription.entity(forEntityName: "Trip", in: managedContext)!
-        let trip = NSManagedObject(entity: tripEntity, insertInto: managedContext)
+        
+        let tripEntity = NSEntityDescription.entity(forEntityName: "Trip", in: context)!
+        let trip = NSManagedObject(entity: tripEntity, insertInto: context)
         trip.setValue(self.fromStation.abbr, forKeyPath: "fromStation")
         trip.setValue(self.toStation.abbr, forKeyPath: "toStation")
         trip.setValue(day, forKeyPath: "day")
         trip.setValue(hour, forKeyPath: "hour")
         trip.setValue(self.passphrase, forKeyPath: "user")
         do {
-            try managedContext.save()
+            try context.save()
+            computeToSuggestions()
         } catch let error as NSError {
             print(error)
         }
@@ -385,7 +425,8 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         authSubscriber = $passphrase.sink {value in
             print(value, "auth subscriber")
             if (self.auth) {
-                print("passphrase changed and auth settings from auth")
+                print("passphrase changed and auth settings from auth", value)
+                self.computeToSuggestions(pass: value)
                 let managedContext =  appDelegate.persistentContainer.viewContext
                 let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "Preferences")
                 do {
@@ -487,12 +528,13 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     return distance1Miles < distance2Miles
                 }
                 if (self.closestStations.isEmpty || testingStations[0].name != self.closestStations[0].name) {
-                    computeToSuggestions()
+                    
                     
                     self.closestStations = testingStations
                     print(self.closestStations)
                     if (self.goingOffClosestStation) {
                         self.fromStation = self.closestStations[0]
+                        computeToSuggestions()
                         self.cylce()
                     }
                 } else {

@@ -1,0 +1,17 @@
+import turicreate as tc
+import coremltools
+data =  tc.SFrame('dayHourFirstRow.csv')
+print(data)
+#model = tc.classifier.create(data, target='outStation',
+                           #  features = ['day',
+                                  #       'hour',
+                                  #       'inStation'])
+#predictions = model.classify(data)
+#results = model.evaluate(data)
+#print(model)
+#model.export_coreml('bartknn.mlmodel')
+coreml_model_path = "./bartknn.mlmodel"
+
+spec = coremltools.utils.load_spec(coreml_model_path)
+builder = coremltools.models
+print(builder)
