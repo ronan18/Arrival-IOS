@@ -136,15 +136,19 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                 for data in result as! [NSManagedObject] {
                     let toStation = data.value(forKey: "toStation") as! String
                     let fromStation = data.value(forKey: "fromStation") as! String
-                    let user = data.value(forKey: "user") as! String?
+                    var user = data.value(forKey: "user")
                     let hour = data.value(forKey: "hour") as! Int
                     let day = data.value(forKey: "day") as! Int
-                    let userString = user as! String
-                    print("knn user", user, "knn pass", knnPass, user as! String == knnPass, user == nil, userString.isEmpty)
+                    if (user  == nil) {
+                         data.setValue(knnPass, forKey: "user")
+                        user = knnPass
+                    }
+                    //let userString = user as! String
+                    print("knn user", user, "knn pass", knnPass, user as! String == knnPass, user == nil)
                     
-                    if (userString.isEmpty || user == nil || user as! String == knnPass) {
+                    if (user as! String == knnPass) {
                         print("knn data", user, hour, day, toStation, fromStation)
-                        data.setValue(knnPass, forKey: "user")
+                       
                         if (toStation != "none" && fromStation != "load") {
                             if (JSON(priorities)[toStation].intValue > 0) {
                                 priorities[toStation] = priorities[toStation]! + 1
