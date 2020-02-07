@@ -15,6 +15,7 @@
 		64BB2D2FF3AB6F51B9399F08 /* Pods_Arrival_iOS2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74ACA5CF5B67BD66D8845E5D /* Pods_Arrival_iOS2.framework */; };
 		C512BCC823E751650079F49C /* toStations.js in Resources */ = {isa = PBXBuildFile; fileRef = C512BCC723E751650079F49C /* toStations.js */; };
 		C51B3EDD23ED26330021EBE0 /* KNearestNeighborsClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B3EDC23ED26330021EBE0 /* KNearestNeighborsClassifier.swift */; };
+		C51B3EE123EDE40E0021EBE0 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C51B3EE023EDE40E0021EBE0 /* GoogleService-Info.plist */; };
 		C55640F723CF8439003BCB91 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55640F623CF8438003BCB91 /* AppData.swift */; };
 		C568C40023D8B99400AB9E67 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = C568C3FF23D8B99400AB9E67 /* Station.swift */; };
 		C568C40423D95FA000AB9E67 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C568C40323D95FA000AB9E67 /* LoadingView.swift */; };
@@ -54,6 +55,7 @@
 		C512BCC423E4FBA80079F49C /* TimePlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = TimePlayground.playground; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C512BCC723E751650079F49C /* toStations.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = toStations.js; sourceTree = "<group>"; };
 		C51B3EDC23ED26330021EBE0 /* KNearestNeighborsClassifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KNearestNeighborsClassifier.swift; sourceTree = "<group>"; };
+		C51B3EE023EDE40E0021EBE0 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C55640F623CF8438003BCB91 /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
 		C568C3FF23D8B99400AB9E67 /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
 		C568C40323D95FA000AB9E67 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				C58F24A623CC14D1003882F3 /* TrainView.swift */,
 				34EF38AE23CC23D4000DE4AF /* Colors.swift */,
 				34EF38B023CC2692000DE4AF /* HomeView.swift */,
+				C51B3EE023EDE40E0021EBE0 /* GoogleService-Info.plist */,
 				34CD87F623EA8A24004F8024 /* SettingsView.swift */,
 				34EF38B223CC2AC1000DE4AF /* StationChooserView.swift */,
 				C51B3EDC23ED26330021EBE0 /* KNearestNeighborsClassifier.swift */,
@@ -280,6 +283,7 @@
 			files = (
 				C512BCC823E751650079F49C /* toStations.js in Resources */,
 				C58F249123CC143A003882F3 /* LaunchScreen.storyboard in Resources */,
+				C51B3EE123EDE40E0021EBE0 /* GoogleService-Info.plist in Resources */,
 				C58F248E23CC143A003882F3 /* Preview Assets.xcassets in Resources */,
 				C58F248B23CC143A003882F3 /* Assets.xcassets in Resources */,
 			);

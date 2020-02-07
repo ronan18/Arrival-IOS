@@ -178,6 +178,7 @@ struct LoginView: View {
                     Text("enter your passphrase")
                         .font(.subheadline)
                         .multilineTextAlignment(.center)
+                    Text(self.appData.loginError).foregroundColor(.red)
                     Spacer()
                     Button(action: {
                         if (!self.passphrase.isEmpty) {

@@ -8,6 +8,8 @@ target 'Arrival-iOS2' do
   # Pods for Arrival-iOS2
 pod 'Alamofire'
 pod 'SwiftyJSON'
+pod 'Firebase/Analytics'
+pod 'Firebase/Crashlytics'
   target 'Arrival-iOS2Tests' do
     inherit! :search_paths
     # Pods for testing

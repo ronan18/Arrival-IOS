@@ -38,6 +38,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var closestStations = [Station]()
     @Published var fromStationSuggestions = [Station]()
     @Published var toStationSuggestions = [Station]()
+    @Published var loginError = ""
     @Published var fromStation: Station = Station(id: "loading", name: "loading", lat: 0.0, long: 0.0, abbr: "load", version: 0)
     @Published var toStation: Station = Station(id: "none", name: "none", lat: 0.0, long: 0.0, abbr: "none", version: 0)
     private let locationManager = CLLocationManager()
@@ -689,6 +690,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     }
     func loginFromWeb(passphrase: String) {
         self.authLoading = true
+        self.loginError = ""
         print("logging in from web", passphrase)
         let headers: HTTPHeaders = [
             "Authorization": passphrase,
@@ -719,6 +721,8 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     self.auth = false
                     self.passphrase = ""
                     self.ready = true
+                    self.authLoading = false
+                    self.loginError = "Passphrase Incorrect"
                     //TODO handle showing error
                 }
             } else {
@@ -768,6 +772,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                             self.auth = false
                             self.passphrase = ""
                             self.ready = true
+                          
                             //TODO remove core data storage of the invalid passphrase
                         }
                     } else {
