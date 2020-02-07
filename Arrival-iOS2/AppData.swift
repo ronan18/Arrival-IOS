@@ -35,6 +35,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var sortTrainsByTime = false
     @Published var goingOffClosestStation: Bool = true
     @Published var closestStations = [Station]()
+    @Published var fromStationSuggestions = [Station]()
     @Published var toStationSuggestions = [Station]()
     @Published var fromStation: Station = Station(id: "loading", name: "loading", lat: 0.0, long: 0.0, abbr: "load", version: 0)
     @Published var toStation: Station = Station(id: "none", name: "none", lat: 0.0, long: 0.0, abbr: "none", version: 0)
@@ -47,6 +48,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     private var netJSON: [String: Any?] = [:]
     private var settingsSuscriber: Any?
     private var authSubscriber: Any?
+     private var closestStationsSuscriber: Any?
     override init() {
         super.init()
         print("init function")
@@ -103,7 +105,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         return [dayDouble,hourDouble, fromStationDouble]
     }
     func stationToDouble(station: String) -> Double {
-       
+       print(station, "station to double")
         return Double(self.stations.firstIndex(where: { $0.abbr == station })!)
     }
     func stationFromInt(label: Int) -> String {
@@ -111,6 +113,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         return self.stations[label].abbr
     }
     func computeToSuggestions(pass: String = "") {
+        if (self.fromStation.id != "loading") {
         var knnPass = pass
         if (pass.isEmpty) {
             knnPass = self.passphrase
@@ -146,7 +149,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     } else {
                         priorities[toStation] = 1
                     }
-                    if (toStation != "none") {
+                    if (toStation != "none" && fromStation != "load") {
                         trainingData.append(tripToDouble(day: day, hour: hour, fromStation: fromStation))
                         labels.append(Int(stationToDouble(station: toStation)))
                     }
@@ -202,6 +205,9 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             print("failed to get trips")
             
         }
+        } else {
+            self.toStationSuggestions = self.stations
+        }
         /*
          let brainJSSource: String = Bundle.main.path(forResource: "brain", ofType: "js") as! String
          if let jsSourcePath = Bundle.main.path(forResource: "toStations", ofType: "js") {
@@ -230,14 +236,18 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         
     }
     func setFromStation(station: Station) {
-        print("setting from Station")
+        print("setting from Station", station)
         self.loaded = false
         self.fromStation = station
         computeToSuggestions()
+        if (!self.closestStations.isEmpty) {
         if (station.abbr == self.closestStations[0].abbr) {
             self.goingOffClosestStation = true
         } else {
             self.goingOffClosestStation = false
+        }
+        } else {
+          self.goingOffClosestStation = false
         }
         
         self.cylce()
@@ -422,6 +432,14 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             locationManager.desiredAccuracy = kCLLocationAccuracyBest // You can change the locaiton accuary here.
             locationManager.startUpdatingLocation()
         }
+        closestStationsSuscriber = $closestStations.sink {value in
+            print (value, "closest Stations suscriber")
+            if (value.isEmpty) {
+                self.fromStationSuggestions = self.stations
+            } else {
+                self.fromStationSuggestions = value
+            }
+        }
         authSubscriber = $passphrase.sink {value in
             print(value, "auth subscriber")
             if (self.auth) {
@@ -582,7 +600,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         
                     }
                     //   print(self.stations)
-                    
+                    self.fromStationSuggestions = self.stations
                     print("got stations from server")
                     self.getClosestStations()
                     
@@ -614,6 +632,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                 getStationsFromApi()
             } else {
                 self.stations = stations
+                 self.fromStationSuggestions = self.stations
                 print("got stations from core data")
                 getClosestStations()
             }

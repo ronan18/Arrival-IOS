@@ -14,10 +14,10 @@ struct HomeView: View {
     @State var fromStationSearch = ""
     @EnvironmentObject private var appData: AppData
     let lightGreyColor = Color(red: 239.0/255.0, green: 243.0/255.0, blue: 244.0/255.0, opacity: 1.0)
-    init() {
-        
-        
-    }
+     init() {
+           // To remove all separators including the actual ones:
+           UITableView.appearance().separatorStyle = .none
+       }
     var body: some View {
         
         VStack(spacing: 0) {
@@ -78,7 +78,7 @@ struct HomeView: View {
                                         Spacer().frame(height: 10)
                                         Text("suggested")
                                             .font(.caption)
-                                        List { ForEach(self.appData.closestStations.filter {
+                                        List { ForEach(self.appData.fromStationSuggestions.filter {
                                             if self.fromStationSearch.count > 0 {
                                                 return  $0.name.lowercased().contains(self.fromStationSearch.lowercased())
                                             } else {
@@ -102,7 +102,10 @@ struct HomeView: View {
                             Spacer()
                             Button  (action: {
                                 self.fromStationSearch = ""
-                                self.toModalDisplayed = true
+                                if (self.appData.fromStation.id != "loading") {
+                                    self.toModalDisplayed = true
+                                }
+                                
                             }) {
                                 VStack(alignment: .trailing) {
                                     Text("to").font(.caption)
@@ -156,8 +159,20 @@ struct HomeView: View {
                                 }.padding().edgesIgnoringSafeArea(.bottom)
                             }
                         }.padding().foregroundColor(.white).background(Color.blackBG)
+                        if (self.appData.fromStation.abbr != "load") {
+                             TrainView()
+                        } else {
+                            Spacer()
+                            Button(action: {
+                                self.fromStationSearch = ""
+                                self.fromModalDisplayed = true
+                            }) {
+                               Text("Please choose a from station")
+                            }
+                           
+                            Spacer()
+                        }
                        
-                        TrainView()
                     }
                 }
             }

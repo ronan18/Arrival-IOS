@@ -11,10 +11,7 @@ let sampleData = [1,2,3,4,5]
 struct TrainView: View {
     @EnvironmentObject private var appData: AppData
     @State private var direction = 0
-    init() {
-        // To remove all separators including the actual ones:
-        UITableView.appearance().separatorStyle = .none
-    }
+   
     var body: some View {
         VStack {
             if (self.appData.noTrains) {
