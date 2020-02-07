@@ -12,7 +12,9 @@ struct HomeView: View {
     @State var fromModalDisplayed = false
     @State var toModalDisplayed = false
     @State var fromStationSearch = ""
+    @State var locationTimeout = false
     @EnvironmentObject private var appData: AppData
+    
     let lightGreyColor = Color(red: 239.0/255.0, green: 243.0/255.0, blue: 244.0/255.0, opacity: 1.0)
      init() {
            // To remove all separators including the actual ones:
@@ -159,7 +161,7 @@ struct HomeView: View {
                                 }.padding().edgesIgnoringSafeArea(.bottom)
                             }
                         }.padding().foregroundColor(.white).background(Color.blackBG)
-                        if (self.appData.fromStation.abbr != "load") {
+                        if (self.appData.fromStation.abbr != "load" || !self.locationTimeout && self.appData.locationAcess) {
                              TrainView()
                         } else {
                             Spacer()
@@ -167,8 +169,17 @@ struct HomeView: View {
                                 self.fromStationSearch = ""
                                 self.fromModalDisplayed = true
                             }) {
-                               Text("Please choose a from station")
+                                Text("Please choose a from station")
+                                    .multilineTextAlignment(.center)
                             }
+                            if (!self.appData.locationAcess) {
+                                Spacer()
+                                    .frame(height: 5.0)
+                                Text("enable location acess to allow Arrival to automatically determine your closest station")
+                                    .font(.subheadline)
+                                    .multilineTextAlignment(.center).padding()
+                            }
+                          
                            
                             Spacer()
                         }
@@ -181,6 +192,9 @@ struct HomeView: View {
             self.appData.cylce()
             Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { timer in
                 self.appData.cylce()
+            }
+            Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { timer in
+                self.locationTimeout = true
             }
             
         }

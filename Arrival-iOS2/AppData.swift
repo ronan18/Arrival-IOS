@@ -29,6 +29,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var loaded: Bool = false
     @Published var noTrains: Bool = false
     @Published var auth: Bool = false
+    @Published var locationAcess = true
     @Published var authLoading: Bool = false
     @Published var stations = [Station]()
     @Published var network = true
@@ -48,7 +49,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     private var netJSON: [String: Any?] = [:]
     private var settingsSuscriber: Any?
     private var authSubscriber: Any?
-     private var closestStationsSuscriber: Any?
+    private var closestStationsSuscriber: Any?
     override init() {
         super.init()
         print("init function")
@@ -105,106 +106,107 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         return [dayDouble,hourDouble, fromStationDouble]
     }
     func stationToDouble(station: String) -> Double {
-       print(station, "station to double")
+        print(station, "station to double")
         return Double(self.stations.firstIndex(where: { $0.abbr == station })!)
     }
     func stationFromInt(label: Int) -> String {
-      
+        
         return self.stations[label].abbr
     }
     func computeToSuggestions(pass: String = "") {
         if (self.fromStation.id != "loading") {
-        var knnPass = pass
-        if (pass.isEmpty) {
-            knnPass = self.passphrase
-        }
-        print("knn pass", knnPass, pass)
-        let day = Calendar.current.component(.weekday, from: Date()) as Int
-        let hour = Calendar.current.component(.hour, from: Date()) as Int
-        print(hour, day, "time, ai")
-        
-        
-        let managedContext =  appDelegate.persistentContainer.viewContext
-        let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "Trip")
-        var trainingData: [[Double]] = []
-        var labels: [Int] = []
-        do {
-            var priorities: [String: Int] = [:]
+            var knnPass = pass
+            if (pass.isEmpty) {
+                knnPass = self.passphrase
+            }
+            print("knn pass", knnPass, pass)
+            let day = Calendar.current.component(.weekday, from: Date()) as Int
+            let hour = Calendar.current.component(.hour, from: Date()) as Int
+            print(hour, day, "time, ai")
             
-            let result = try managedContext.fetch(fetchRequest)
-            for data in result as! [NSManagedObject] {
-                let toStation = data.value(forKey: "toStation") as! String
-                let fromStation = data.value(forKey: "fromStation") as! String
-                let user = data.value(forKey: "user") as! String?
-                let hour = data.value(forKey: "hour") as! Int
-                let day = data.value(forKey: "day") as! Int
-                let userString = user as! String
-                print("knn user", user, "knn pass", knnPass, user as! String == knnPass, user == nil, userString.isEmpty)
-                
-                if (userString.isEmpty || user == nil || user as! String == knnPass) {
-                   print("knn data", user, hour, day, toStation, fromStation)
-                    data.setValue(knnPass, forKey: "user")
-                    if (JSON(priorities)[toStation].intValue > 0) {
-                        priorities[toStation] = priorities[toStation]! + 1
-                    } else {
-                        priorities[toStation] = 1
-                    }
-                    if (toStation != "none" && fromStation != "load") {
-                        trainingData.append(tripToDouble(day: day, hour: hour, fromStation: fromStation))
-                        labels.append(Int(stationToDouble(station: toStation)))
-                    }
-                    print(toStation, "to Stations")
-                }
-            }
-            print(trainingData, labels, "knn data")
-            var predictionType: [String]
-            if (!trainingData.isEmpty) {
-                
-                var nNeighbors = priorities.count - 1
-                if nNeighbors < 1 {
-                    nNeighbors = 1
-                }
-                 nNeighbors = 1
-               
-                print(nNeighbors, "knn neighbors")
-                let knn = KNearestNeighborsClassifier(data: trainingData, labels: labels, nNeighbors: nNeighbors)
-                if (self.fromStation.abbr != "load") {
-                    print("knn predicting", self.fromStation.abbr)
-                    let predictionLabels = knn.predict([tripToDouble(day: day, hour: hour, fromStation: self.fromStation.abbr)])
-                    print(predictionLabels, "knn prediction labels")
-                     predictionType = predictionLabels.map({ self.stationFromInt(label: $0) })
-                    print(predictionType, "knn prediction type")
-                    priorities[predictionType[0]] = (JSON(priorities)[predictionType[0]].intValue + 100) * 10
-                }
-            }
+            
+            let managedContext =  appDelegate.persistentContainer.viewContext
+            let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "Trip")
+            var trainingData: [[Double]] = []
+            var labels: [Int] = []
             do {
-                try context.save()
-                print("updated trips")
+                var priorities: [String: Int] = [:]
+                
+                let result = try managedContext.fetch(fetchRequest)
+                for data in result as! [NSManagedObject] {
+                    let toStation = data.value(forKey: "toStation") as! String
+                    let fromStation = data.value(forKey: "fromStation") as! String
+                    let user = data.value(forKey: "user") as! String?
+                    let hour = data.value(forKey: "hour") as! Int
+                    let day = data.value(forKey: "day") as! Int
+                    let userString = user as! String
+                    print("knn user", user, "knn pass", knnPass, user as! String == knnPass, user == nil, userString.isEmpty)
+                    
+                    if (userString.isEmpty || user == nil || user as! String == knnPass) {
+                        print("knn data", user, hour, day, toStation, fromStation)
+                        data.setValue(knnPass, forKey: "user")
+                        if (toStation != "none" && fromStation != "load") {
+                            if (JSON(priorities)[toStation].intValue > 0) {
+                                priorities[toStation] = priorities[toStation]! + 1
+                            } else {
+                                priorities[toStation] = 1
+                            }
+                            
+                            trainingData.append(tripToDouble(day: day, hour: hour, fromStation: fromStation))
+                            labels.append(Int(stationToDouble(station: toStation)))
+                        }
+                        print(toStation, "to Stations")
+                    }
+                }
+                print(trainingData, labels, "knn data")
+                var predictionType: [String]
+                if (!trainingData.isEmpty) {
+                    
+                    var nNeighbors = priorities.count - 1
+                    if nNeighbors < 1 {
+                        nNeighbors = 1
+                    }
+                    nNeighbors = 1
+                    
+                    print(nNeighbors, "knn neighbors")
+                    let knn = KNearestNeighborsClassifier(data: trainingData, labels: labels, nNeighbors: nNeighbors)
+                    if (self.fromStation.abbr != "load") {
+                        print("knn predicting", self.fromStation.abbr)
+                        let predictionLabels = knn.predict([tripToDouble(day: day, hour: hour, fromStation: self.fromStation.abbr)])
+                        print(predictionLabels, "knn prediction labels")
+                        predictionType = predictionLabels.map({ self.stationFromInt(label: $0) })
+                        print(predictionType, "knn prediction type")
+                        priorities[predictionType[0]] = (JSON(priorities)[predictionType[0]].intValue + 100) * 10
+                    }
+                }
+                do {
+                    try context.save()
+                    print("updated trips")
+                } catch {
+                    print("failed updating trips")
+                }
+                print(priorities, "to Stations")
+                self.toStationSuggestions = self.stations.sorted {
+                    var s1 = 0
+                    var s2 = 0
+                    if (JSON(priorities)[$0.abbr].intValue > 0) {
+                        s1 = JSON(priorities)[$0.abbr].intValue
+                    }
+                    if (JSON(priorities)[$1.abbr].intValue > 0) {
+                        s2 = JSON(priorities)[$1.abbr].intValue
+                    }
+                    // print(s1, s2, $0.abbr, $1.abbr, "to Stations")
+                    return s1 > s2
+                }
+                self.toStationSuggestions = self.toStationSuggestions.filter{
+                    return self.fromStation.abbr != $0.abbr
+                }
+                
+                self.toStationSuggestions.insert(Station(id: "none", name: "none", lat: 0.0, long: 0.0, abbr: "none", version: 0), at: 0)
             } catch {
-                print("failed updating trips")
+                print("failed to get trips")
+                
             }
-            print(priorities, "to Stations")
-            self.toStationSuggestions = self.stations.sorted {
-                var s1 = 0
-                var s2 = 0
-                if (JSON(priorities)[$0.abbr].intValue > 0) {
-                    s1 = JSON(priorities)[$0.abbr].intValue
-                }
-                if (JSON(priorities)[$1.abbr].intValue > 0) {
-                    s2 = JSON(priorities)[$1.abbr].intValue
-                }
-               // print(s1, s2, $0.abbr, $1.abbr, "to Stations")
-                return s1 > s2
-            }
-            self.toStationSuggestions = self.toStationSuggestions.filter{
-                return self.fromStation.abbr != $0.abbr
-            }
-            
-            self.toStationSuggestions.insert(Station(id: "none", name: "none", lat: 0.0, long: 0.0, abbr: "none", version: 0), at: 0)
-        } catch {
-            print("failed to get trips")
-            
-        }
         } else {
             self.toStationSuggestions = self.stations
         }
@@ -241,13 +243,13 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         self.fromStation = station
         computeToSuggestions()
         if (!self.closestStations.isEmpty) {
-        if (station.abbr == self.closestStations[0].abbr) {
-            self.goingOffClosestStation = true
+            if (station.abbr == self.closestStations[0].abbr) {
+                self.goingOffClosestStation = true
+            } else {
+                self.goingOffClosestStation = false
+            }
         } else {
             self.goingOffClosestStation = false
-        }
-        } else {
-          self.goingOffClosestStation = false
         }
         
         self.cylce()
@@ -530,6 +532,19 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             getClosestStations()
         }
     }
+    func locationManager(_ manager: CLLocationManager,
+                         didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .notDetermined:
+            break
+        case .authorizedWhenInUse, .authorizedAlways:
+            if CLLocationManager.locationServicesEnabled() {
+                self.locationAcess = true
+            }
+        case .restricted, .denied:
+            self.locationAcess = false
+        }
+    }
     func getClosestStations() {
         if (!stations.isEmpty && lat != 0.0 && long != 0.0) {
             let locChange = lat != lastLat || long != lastLong
@@ -632,7 +647,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                 getStationsFromApi()
             } else {
                 self.stations = stations
-                 self.fromStationSuggestions = self.stations
+                self.fromStationSuggestions = self.stations
                 print("got stations from core data")
                 getClosestStations()
             }
