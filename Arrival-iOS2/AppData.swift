@@ -14,6 +14,8 @@ import Alamofire
 import CoreLocation
 import CoreML
 import JavaScriptCore
+import FirebasePerformance
+import FirebaseAnalytics
 
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
 let context = appDelegate.persistentContainer.viewContext
@@ -52,11 +54,15 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     private var netJSON: [String: Any?] = [:]
     private var settingsSuscriber: Any?
     private var authSubscriber: Any?
-      private var prioritizeLineSubscriber: Any?
+    private var prioritizeLineSubscriber: Any?
     private var closestStationsSuscriber: Any?
+    private var initialTrainsTrace: Trace?
+    private var cycleTrace: Trace?
+    private var initialTrainsTraceDone: Bool = false
     override init() {
         super.init()
         print("init function")
+        self.initialTrainsTrace = Performance.startTrace(name: "initalTrainsDisplay")!
         start()
         getStations()
         
@@ -290,6 +296,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         
         getClosestStations()
         if (self.fromStation.name != "loading" && self.auth && self.ready && !self.passphrase.isEmpty && allowCycle) {
+            self.cycleTrace = Performance.startTrace(name: "cycle")
             print("cycling", self.passphrase)
             if (self.toStation.id == "none" ) {
                 print("fetching trains from", self.fromStation.abbr)
@@ -381,9 +388,16 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         self.southTrains = southResults
                         self.trains = results
                         self.loaded = true
+                        if (!self.initialTrainsTraceDone) {
+                             self.initialTrainsTrace!.stop()
+                            self.initialTrainsTraceDone = true
+                        }
+                        self.cycleTrace!.stop()
+                      
                     } else {
                         self.loaded = true
                         self.noTrains = true
+                        self.cycleTrace!.stop()
                     }
                 }
             } else {
@@ -429,9 +443,11 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         self.trains = results
                         self.trips = trips
                         self.loaded = true
+                        self.cycleTrace!.stop()
                     } else {
                         self.loaded = true
                         self.noTrains = true
+                        self.cycleTrace!.stop()
                     }
                 }
             }
@@ -506,7 +522,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         prioritizeLineSubscriber = $prioritizeLine.sink {value in
         print(value, "settings change")
         if (self.auth){
-          
+          Analytics.setUserProperty(String(value), forName: "prioritizeLine")
             let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "Preferences")
             do {
                 
@@ -534,7 +550,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     let entity = NSEntityDescription.entity(forEntityName: "Preferences", in: context)
                     let newPreference = NSManagedObject(entity: entity!, insertInto: context)
                     newPreference.setValue(self.passphrase, forKey: "user")
-                    newPreference.setValue(value, forKey: "sortTrainsByTime")
+                    newPreference.setValue(value, forKey: "prioritizeTrain")
                     do {
                         try context.save()
                         print("saved new settings")
@@ -553,6 +569,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         settingsSuscriber = $sortTrainsByTime.sink {value in
             print(value, "settings change")
             if (self.auth){
+                   Analytics.setUserProperty(String(value), forName: "sortTrainsByTime")
                 let managedContext =  appDelegate.persistentContainer.viewContext
                 let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "Preferences")
                 do {
