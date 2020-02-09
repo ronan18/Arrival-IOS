@@ -6,7 +6,8 @@
 //  Copyright © 2020 Stomp Rocket. All rights reserved.
 //
 
-import XCTest
+//import XCTest
+/*
 @testable import Arrival_iOS2
 
 class Arrival_iOS2Tests: XCTestCase {
@@ -32,3 +33,4 @@ class Arrival_iOS2Tests: XCTestCase {
     }
 
 }
+*/

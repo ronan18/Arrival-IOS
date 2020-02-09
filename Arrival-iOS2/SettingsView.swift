@@ -50,6 +50,12 @@ struct SettingsView: View {
                             Text("Sort trains by time")
                         }
                     }
+                    HStack {
+                                           
+                                           Toggle(isOn: self.$appData.prioritizeLine) {
+                                               Text("Prioritize trip details for train information")
+                                           }
+                                       }
                     Spacer()
                     
                     HStack {
@@ -64,9 +70,10 @@ struct SettingsView: View {
                                     .fontWeight(.bold)
                                     .multilineTextAlignment(.center)
                                     .lineLimit(nil)
+                                    .foregroundColor(.red)
                                 Spacer()
                             }.padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-                        }.background(Color.red).cornerRadius(/*@START_MENU_TOKEN@*/10.0/*@END_MENU_TOKEN@*/).foregroundColor(/*@START_MENU_TOKEN@*/.white/*@END_MENU_TOKEN@*/)
+                        }
                         Spacer()
                     }
                     

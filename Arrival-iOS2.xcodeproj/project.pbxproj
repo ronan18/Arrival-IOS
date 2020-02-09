@@ -31,6 +31,8 @@
 		C58F24A723CC14D1003882F3 /* TrainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58F24A623CC14D1003882F3 /* TrainView.swift */; };
 		C592370923E151AD00AFCD6C /* HostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C592370823E151AD00AFCD6C /* HostingController.swift */; };
 		C5A517A523CCED0F003E616E /* TrainComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A517A423CCED0F003E616E /* TrainComponent.swift */; };
+		C5E5768C23EFB9E300A3A7BD /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E5768B23EFB9E300A3A7BD /* Trip.swift */; };
+		C5E5768E23EFBB0A00A3A7BD /* Leg.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E5768D23EFBB0A00A3A7BD /* Leg.swift */; };
 		CADDD6B3BE3BA43021E02366 /* Pods_Arrival_iOS2Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FD5EABF0B8A45DB86870B80A /* Pods_Arrival_iOS2Tests.framework */; };
 /* End PBXBuildFile section */
 
@@ -76,6 +78,8 @@
 		C58F24A623CC14D1003882F3 /* TrainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainView.swift; sourceTree = "<group>"; };
 		C592370823E151AD00AFCD6C /* HostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostingController.swift; sourceTree = "<group>"; };
 		C5A517A423CCED0F003E616E /* TrainComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainComponent.swift; sourceTree = "<group>"; };
+		C5E5768B23EFB9E300A3A7BD /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
+		C5E5768D23EFBB0A00A3A7BD /* Leg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Leg.swift; sourceTree = "<group>"; };
 		C82760030A0921AD836D9E8B /* Pods-Arrival-iOS2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Arrival-iOS2.release.xcconfig"; path = "Target Support Files/Pods-Arrival-iOS2/Pods-Arrival-iOS2.release.xcconfig"; sourceTree = "<group>"; };
 		F0A9A7194655A9A4C5A07CDE /* Pods-Arrival-iOS2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Arrival-iOS2.debug.xcconfig"; path = "Target Support Files/Pods-Arrival-iOS2/Pods-Arrival-iOS2.debug.xcconfig"; sourceTree = "<group>"; };
 		FD5EABF0B8A45DB86870B80A /* Pods_Arrival_iOS2Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Arrival_iOS2Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,6 +130,8 @@
 			children = (
 				C568C3FF23D8B99400AB9E67 /* Station.swift */,
 				34AF24A723DFD00400E66C34 /* Train.swift */,
+				C5E5768B23EFB9E300A3A7BD /* Trip.swift */,
+				C5E5768D23EFBB0A00A3A7BD /* Leg.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -397,6 +403,8 @@
 				C58F248223CC1438003882F3 /* AppDelegate.swift in Sources */,
 				C5A517A523CCED0F003E616E /* TrainComponent.swift in Sources */,
 				C58F248923CC1438003882F3 /* ContentView.swift in Sources */,
+				C5E5768E23EFBB0A00A3A7BD /* Leg.swift in Sources */,
+				C5E5768C23EFB9E300A3A7BD /* Trip.swift in Sources */,
 				C568C40023D8B99400AB9E67 /* Station.swift in Sources */,
 				C568C40623D95FA800AB9E67 /* LoginView.swift in Sources */,
 				C58F248423CC1438003882F3 /* SceneDelegate.swift in Sources */,
@@ -563,7 +571,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.12;
+				MARKETING_VERSION = 1.13;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival;
 				PRODUCT_NAME = Arrival;
 				SWIFT_VERSION = 5.0;
@@ -585,7 +593,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.12;
+				MARKETING_VERSION = 1.13;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival;
 				PRODUCT_NAME = Arrival;
 				SWIFT_VERSION = 5.0;

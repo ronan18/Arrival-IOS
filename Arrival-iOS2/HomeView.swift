@@ -55,7 +55,7 @@ struct HomeView: View {
                                     VStack(alignment: .leading) {
                                         Text("from").font(.caption)
                                         Text("Station").font(.headline)
-                                    }
+                                    }.lineLimit(1)
                                 }
                                 
                             }.sheet(isPresented: self.$fromModalDisplayed) {
@@ -79,7 +79,7 @@ struct HomeView: View {
                                             .cornerRadius(10)
                                         Spacer().frame(height: 10)
                                         Text("suggested")
-                                            .font(.caption)
+                                            .font(.subheadline)
                                         List { ForEach(self.appData.fromStationSuggestions.filter {
                                             if self.fromStationSearch.count > 0 {
                                                 return  $0.name.lowercased().contains(self.fromStationSearch.lowercased())
@@ -112,7 +112,7 @@ struct HomeView: View {
                                 VStack(alignment: .trailing) {
                                     Text("to").font(.caption)
                                     Text(self.appData.toStation.name).font(.headline)
-                                }
+                                }.lineLimit(1)
                             }.sheet(isPresented: self.$toModalDisplayed) {
                                 VStack(alignment: .leading) {
                                     HStack(alignment: .center) {
@@ -134,7 +134,7 @@ struct HomeView: View {
                                             .cornerRadius(10)
                                         Spacer().frame(height: 10)
                                         Text("suggested")
-                                            .font(.caption)
+                                            .font(.subheadline)
                                         List { ForEach(self.appData.toStationSuggestions.filter {
                                             if ($0.name == self.appData.fromStation.name) {
                                                 return false

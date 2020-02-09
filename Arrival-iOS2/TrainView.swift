@@ -11,7 +11,8 @@ let sampleData = [1,2,3,4,5]
 struct TrainView: View {
     @EnvironmentObject private var appData: AppData
     @State private var direction = 0
-   
+    @State private var showTransfers = false
+    @State private var tripToShow: TripInfo = TripInfo(origin: "", destination: "", legs: [], originTime: "", destinatonTime: "", tripTIme: 0.0)
     var body: some View {
         VStack {
             if (self.appData.noTrains) {
@@ -31,13 +32,92 @@ struct TrainView: View {
                 
             } else {
                 if (self.appData.sortTrainsByTime || self.appData.toStation.abbr != "none") {
-                    
-                    List(self.appData.trains) { train in
-                        
-                        
-                        TrainComponent(type: "train",  name: train.direction, cars: train.cars, departs: train.time,unit: train.unit, color: self.appData.convertColor(color: train.color), eta: train.eta).listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                        
+                    if (self.appData.toStation.abbr != "none") {
+                        List(self.appData.trips) { trip in
+                            
+                            
+                            Button(action: {
+                                self.tripToShow = trip
+                                self.showTransfers = true
+                            }) {
+                                TrainComponent(type: "train",  name: trip.destination, departs: trip.originTime, color: Color.white, eta: trip.destinatonTime).listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                            }
+                            
+                            
+                            
+                        }.sheet(isPresented: $showTransfers) {
+                            VStack {
+                                HStack {
+                                    Text("Trip Details")
+                                        .font(.largeTitle)
+                                        .fontWeight(.bold)
+                                    
+                                    Spacer()
+                                    Button(action: {
+                                        self.showTransfers = false
+                                    }) {
+                                        Text("Close")
+                                    }
+                                }
+                                List(self.tripToShow.legs) {leg in
+                                    VStack(alignment: .leading) {
+                                        if (self.appData.prioritizeLine) {
+                                            HStack(alignment: .bottom) {
+                                                Text(leg.trainDestination).font(.headline) + Text(" train").font(.caption)
+                                            }.lineLimit(1)
+                                            HStack(alignment: .center) {
+                                                Spacer().frame(width: 10)
+                                                Text(leg.origin)
+                                                Spacer()
+                                                Text(leg.originTime).font(.subheadline)
+                                            }.lineLimit(1)
+                                            HStack(alignment: .center) {
+                                                Spacer().frame(width: 10)
+                                                Text(leg.destination)
+                                                Spacer()
+                                                Text(leg.destinationTime).font(.subheadline)
+                                                
+                                            }.lineLimit(1)
+                                        } else {
+                                            HStack(alignment: .center) {
+                                                Text(leg.origin).font(.headline)
+                                                Spacer()
+                                                Text(leg.originTime).font(.subheadline)
+                                            }.lineLimit(1)
+                                            Spacer()
+                                                .frame(height: 5.0)
+                                            HStack {
+                                                Text(leg.trainDestination).font(.subheadline)
+                                                Spacer()
+                                                Text("Train").font(.caption)
+                                            }.lineLimit(1).foregroundColor(.gray)
+                                            Spacer().frame(height: 5.0)
+                                            HStack(alignment: .center) {
+                                                Text(leg.destination).font(.headline)
+                                                Spacer()
+                                                Text(leg.destinationTime).font(.subheadline)
+                                                
+                                            }.lineLimit(1)
+                                        }
+                                    }.padding().cornerRadius(10).background(Color.background).overlay(
+                                        RoundedRectangle(cornerRadius: CGFloat(10.0)).stroke(Color(.sRGB, red:170/255, green: 170/255, blue: 170/255, opacity: 0.1), lineWidth:3)
+                                    ).cornerRadius(10.0)
+                                    
+                                }
+                                Spacer()
+                                
+                            }.padding()
+                        }
+                    } else {
+                        List(self.appData.trains) { train in
+                            
+                            
+                            
+                            TrainComponent(type: "train",  name: train.direction, cars: train.cars, departs: train.time,unit: train.unit, color: self.appData.convertColor(color: train.color), eta: train.eta).listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                            
+                        }
                     }
+                    
                 } else {
                     
                     Picker("",selection: self.$direction) {

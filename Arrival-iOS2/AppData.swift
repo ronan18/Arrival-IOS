@@ -34,11 +34,13 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var stations = [Station]()
     @Published var network = true
     @Published var sortTrainsByTime = false
+    @Published var prioritizeLine = true
     @Published var goingOffClosestStation: Bool = true
     @Published var closestStations = [Station]()
     @Published var fromStationSuggestions = [Station]()
     @Published var toStationSuggestions = [Station]()
     @Published var loginError = ""
+    @Published var trips: Array = [TripInfo]()
     @Published var fromStation: Station = Station(id: "loading", name: "loading", lat: 0.0, long: 0.0, abbr: "load", version: 0)
     @Published var toStation: Station = Station(id: "none", name: "none", lat: 0.0, long: 0.0, abbr: "none", version: 0)
     private let locationManager = CLLocationManager()
@@ -50,6 +52,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     private var netJSON: [String: Any?] = [:]
     private var settingsSuscriber: Any?
     private var authSubscriber: Any?
+      private var prioritizeLineSubscriber: Any?
     private var closestStationsSuscriber: Any?
     override init() {
         super.init()
@@ -396,17 +399,27 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     if (estimates.count > 0) {
                         //   print(estimates.count)
                         var results: Array = [Train]()
+                        var trips: Array = [TripInfo]()
                         
                         for x in 0...estimates.count - 1 {
                             let thisTrain = estimates[x]
                             let etd = thisTrain["@origTimeMin"].stringValue
                             let eta = thisTrain["@destTimeMin"].stringValue
                             let direction = thisTrain["leg"][0]["@trainHeadStation"].stringValue
-                            
+                            var legs: Array = [Leg]()
+                            for i in 0...thisTrain["leg"].count - 1 {
+                                let leg = thisTrain["leg"][i]
+                                let originIndex = self.stations.firstIndex(where: { $0.abbr  == leg["@origin"].stringValue})
+                                let destinationIndex = self.stations.firstIndex(where: { $0.abbr  == leg["@destination"].stringValue})
+                                let origin = self.stations[originIndex as! Int].name
+                                let destination = self.stations[destinationIndex as! Int].name
+                                legs.append(Leg(order: leg["order"].intValue, origin: origin, destination: destination, originTime: leg["@origTimeMin"].stringValue, destinationTime: leg["@destTimeMin"].stringValue, line: leg["@line"].stringValue, trainDestination: leg["@trainHeadStation"].stringValue))
+                            }
                             //let color = thisTrain["color"].stringValue
                             let color = "none"
                             print(eta)
                             results.append(Train(id: UUID(), direction: direction, time: etd, unit: "", color: "none", cars: 0, hex: "0", eta: eta))
+                            trips.append(TripInfo(origin: self.fromStation.abbr, destination: direction, legs: legs, originTime: thisTrain["@origTimeMin"].stringValue, destinatonTime: thisTrain["@destTimeMin"].stringValue, tripTIme: thisTrain["@tripTime"].doubleValue))
                         }
                         
                         results.sort {
@@ -414,6 +427,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         }
                         self.noTrains = false
                         self.trains = results
+                        self.trips = trips
                         self.loaded = true
                     } else {
                         self.loaded = true
@@ -462,10 +476,20 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         for data in result as! [NSManagedObject] {
                             let user = data.value(forKey: "user") as! String
                             let sortTrainsByTimeSetting = data.value(forKey: "sortTrainsByTime") as! Bool
+                            print(data.value(forKey: "prioritizeTrain"), "setting")
+                            let prioritizeTrainSettingValue = data.value(forKey: "prioritizeTrain")
+                           
                             print(user, value, "user settings from auth")
-                            print(sortTrainsByTimeSetting, "sort t b t settings from auth")
+                            print(sortTrainsByTimeSetting, prioritizeTrainSettingValue, "sort t b t settings from auth")
                             if (user == value) {
                                 self.sortTrainsByTime = sortTrainsByTimeSetting
+                                if (prioritizeTrainSettingValue == nil) {
+                                     self.prioritizeLine = false
+                                } else {
+                                     self.prioritizeLine = prioritizeTrainSettingValue as! Bool
+                                }
+                               
+                               
                                 print("set stbt settings from auth to", sortTrainsByTimeSetting)
                             }
                             
@@ -477,6 +501,53 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     print("failed to get settings")
                     
                 }
+            }
+        }
+        prioritizeLineSubscriber = $prioritizeLine.sink {value in
+        print(value, "settings change")
+        if (self.auth){
+          
+            let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "Preferences")
+            do {
+                
+                let result = try context.fetch(fetchRequest)
+                if (!result.isEmpty) {
+                    print("fetching old settings")
+                    for data in result as! [NSManagedObject] {
+                        let user = data.value(forKey: "user") as! String
+                       // let prioritizeLineSetting = data.value(forKey: "prioritizeTrain") as! Bool
+                        print(user, "user setting")
+                      //  print(prioritizeLineSetting, "sort t b t setting")
+                        if (user == self.passphrase) {
+                            data.setValue(value, forKey: "prioritizeTrain")
+                            do {
+                                try context.save()
+                                print("saved updated settings")
+                            } catch {
+                                print("Failed saving")
+                            }
+                        }
+                        
+                    }
+                } else {
+                    print("creating new settings")
+                    let entity = NSEntityDescription.entity(forEntityName: "Preferences", in: context)
+                    let newPreference = NSManagedObject(entity: entity!, insertInto: context)
+                    newPreference.setValue(self.passphrase, forKey: "user")
+                    newPreference.setValue(value, forKey: "sortTrainsByTime")
+                    do {
+                        try context.save()
+                        print("saved new settings")
+                    } catch {
+                        print("Failed saving")
+                    }
+                }
+                
+                
+            } catch {
+                print("failed to get settings")
+                
+            }
             }
         }
         settingsSuscriber = $sortTrainsByTime.sink {value in
