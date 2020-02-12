@@ -50,12 +50,7 @@ struct SettingsView: View {
                             Text("Sort trains by time")
                         }
                     }
-                    HStack {
-                                           
-                                           Toggle(isOn: self.$appData.prioritizeLine) {
-                                               Text("Prioritize trip details for train information")
-                                           }
-                                       }
+            
                     Spacer()
                     
                     HStack {

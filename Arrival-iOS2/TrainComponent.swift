@@ -25,6 +25,10 @@ struct TrainComponent: View {
                 Rectangle()
                     .frame(width: 10.0)
                     .foregroundColor(color)
+            } else if (type == "trip"  && color != Color.white) {
+                Rectangle()
+                    .frame(width: 10.0)
+                    .foregroundColor(color)
             }
             HStack {
                 VStack(alignment: .leading) {

@@ -34,6 +34,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var locationAcess = true
     @Published var authLoading: Bool = false
     @Published var stations = [Station]()
+    @Published var stationsByAbbr: [String: Station] = ["none": Station(id: "none", name: "none", lat: 0.0, long: 0.0, abbr: "none", version: 0)]
     @Published var network = true
     @Published var sortTrainsByTime = false
     @Published var prioritizeLine = true
@@ -43,6 +44,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var toStationSuggestions = [Station]()
     @Published var loginError = ""
     @Published var trips: Array = [TripInfo]()
+    @Published var routes: [String: Route]? = nil
     @Published var fromStation: Station = Station(id: "loading", name: "loading", lat: 0.0, long: 0.0, abbr: "load", version: 0)
     @Published var toStation: Station = Station(id: "none", name: "none", lat: 0.0, long: 0.0, abbr: "none", version: 0)
     private let locationManager = CLLocationManager()
@@ -87,20 +89,20 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     }
     func convertColor(color: String) -> Color {
         
-        switch (color) {
-        case "RED" :
+        switch (color.lowercased()) {
+        case "red" :
             return Color.red
-        case "YELLOW" :
+        case "yellow" :
             return Color.yellow
-        case "GREEN" :
+        case "green" :
             return Color.green
-        case "ORANGE" :
+        case "orange" :
             return Color.orange
-        case "PURPLE" :
+        case "purple" :
             return Color.purple
-        case "BLUE" :
+        case "blue" :
             return Color.blue
-        case "WHITE" :
+        case "white" :
             return Color(UIColor.systemIndigo)
         case "none" :
             return Color.white
@@ -150,7 +152,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     let hour = data.value(forKey: "hour") as! Int
                     let day = data.value(forKey: "day") as! Int
                     if (user  == nil) {
-                         data.setValue(knnPass, forKey: "user")
+                        data.setValue(knnPass, forKey: "user")
                         user = knnPass
                     }
                     //let userString = user as! String
@@ -158,7 +160,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     
                     if (user as! String == knnPass) {
                         print("knn data", user, hour, day, toStation, fromStation)
-                       
+                        
                         if (toStation != "none" && fromStation != "load") {
                             if (JSON(priorities)[toStation].intValue > 0) {
                                 priorities[toStation] = priorities[toStation]! + 1
@@ -389,11 +391,11 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         self.trains = results
                         self.loaded = true
                         if (!self.initialTrainsTraceDone) {
-                             self.initialTrainsTrace!.stop()
+                            self.initialTrainsTrace!.stop()
                             self.initialTrainsTraceDone = true
                         }
                         self.cycleTrace!.stop()
-                      
+                        
                     } else {
                         self.loaded = true
                         self.noTrains = true
@@ -406,11 +408,25 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     "Authorization": self.passphrase,
                     "Accept": "application/json"
                 ]
-                print(baseURL + "/api/v2/routes/" + self.fromStation.abbr + "/" + self.toStation.abbr)
-                Alamofire.request(baseURL + "/api/v2/routes/" + self.fromStation.abbr + "/" + self.toStation.abbr, headers: headers).responseJSON { response in
-                    //  print(JSON(response.value))
+                print(baseURL + "/api/v3/routes/" + self.fromStation.abbr + "/" + self.toStation.abbr)
+                Alamofire.request(baseURL + "/api/v3/routes/" + self.fromStation.abbr + "/" + self.toStation.abbr, headers: headers).responseJSON { response in
+                    
+                
                     let estimates = JSON(JSON(response.value)["trips"].arrayValue)
                     if (estimates.count > 0) {
+
+                        var routes: [String: Route] = [:]
+                        for (id, route) in JSON(response.value)["routes"].dictionaryObject! {
+                          //  print(id, route)
+                            let routeJSON = JSON(route)
+                            let stations = routeJSON["config"]["station"].arrayValue.map { $0.stringValue}
+                          //  print(stations, "route stations")
+                            routes[id] = Route(name: routeJSON["name"].stringValue, abbr: routeJSON["abbr"].stringValue, routeID: routeJSON["routeID"].stringValue, origin: routeJSON["origin"].stringValue, destination: routeJSON["destination"].stringValue, direction: routeJSON["direction"].stringValue, color: routeJSON["color"].stringValue, stations: stations)
+                        }
+                        
+                        
+                        self.routes = routes
+                        print(self.routes, "routes after intial")
                         //   print(estimates.count)
                         var results: Array = [Train]()
                         var trips: Array = [TripInfo]()
@@ -423,11 +439,32 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                             var legs: Array = [Leg]()
                             for i in 0...thisTrain["leg"].count - 1 {
                                 let leg = thisTrain["leg"][i]
-                                let originIndex = self.stations.firstIndex(where: { $0.abbr  == leg["@origin"].stringValue})
-                                let destinationIndex = self.stations.firstIndex(where: { $0.abbr  == leg["@destination"].stringValue})
-                                let origin = self.stations[originIndex as! Int].name
-                                let destination = self.stations[destinationIndex as! Int].name
-                                legs.append(Leg(order: leg["order"].intValue, origin: origin, destination: destination, originTime: leg["@origTimeMin"].stringValue, destinationTime: leg["@destTimeMin"].stringValue, line: leg["@line"].stringValue, trainDestination: leg["@trainHeadStation"].stringValue))
+                                let origin = self.stationsByAbbr[leg["@origin"].stringValue]!.name
+                                 let destination = self.stationsByAbbr[leg["@destination"].stringValue]!.name
+                                let line = leg["@line"].stringValue
+                               
+                                let routeNum = leg["route"].stringValue
+                              
+                                if (self.routes![routeNum] != nil) {
+                                    let routeJSON = self.routes![routeNum]!
+                                   let fromStationIndex = routeJSON.stations.firstIndex(of: leg["@origin"].stringValue)
+                                   let toStationIndex = routeJSON.stations.firstIndex(of: leg["@destination"].stringValue)
+                                    print(fromStationIndex, toStationIndex, origin, destination)
+                                    
+                                  
+                                      let stopCount = abs(toStationIndex! - fromStationIndex!)
+                                    
+                               
+                                    print(stopCount, "route stop count")
+                                    
+                                     // print(routeJSON.dictionaryObject, "route for route", routeNum, "color", routeJSON["color"].stringValue)
+                                   
+                                    legs.append(Leg(order: leg["order"].intValue, origin: origin, destination: destination, originTime: leg["@origTimeMin"].stringValue, destinationTime: leg["@destTimeMin"].stringValue, line: leg["@line"].stringValue, route: leg["route"].intValue, trainDestination: leg["@trainHeadStation"].stringValue,  color:routeJSON.color, stops: stopCount))
+                                } else {
+                                    print("route for route", routeNum, leg, "doesn't exist")
+                                }
+                                
+                                
                             }
                             //let color = thisTrain["color"].stringValue
                             let color = "none"
@@ -439,6 +476,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         results.sort {
                             $0.time < $1.time
                         }
+                        
                         self.noTrains = false
                         self.trains = results
                         self.trips = trips
@@ -494,18 +532,18 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                             let sortTrainsByTimeSetting = data.value(forKey: "sortTrainsByTime") as! Bool
                             print(data.value(forKey: "prioritizeTrain"), "setting")
                             let prioritizeTrainSettingValue = data.value(forKey: "prioritizeTrain")
-                           
+                            
                             print(user, value, "user settings from auth")
                             print(sortTrainsByTimeSetting, prioritizeTrainSettingValue, "sort t b t settings from auth")
                             if (user == value) {
                                 self.sortTrainsByTime = sortTrainsByTimeSetting
                                 if (prioritizeTrainSettingValue == nil) {
-                                     self.prioritizeLine = false
+                                    self.prioritizeLine = false
                                 } else {
-                                     self.prioritizeLine = prioritizeTrainSettingValue as! Bool
+                                    self.prioritizeLine = prioritizeTrainSettingValue as! Bool
                                 }
-                               
-                               
+                                
+                                
                                 print("set stbt settings from auth to", sortTrainsByTimeSetting)
                             }
                             
@@ -520,56 +558,56 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             }
         }
         prioritizeLineSubscriber = $prioritizeLine.sink {value in
-        print(value, "settings change")
-        if (self.auth){
-          Analytics.setUserProperty(String(value), forName: "prioritizeLine")
-            let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "Preferences")
-            do {
-                
-                let result = try context.fetch(fetchRequest)
-                if (!result.isEmpty) {
-                    print("fetching old settings")
-                    for data in result as! [NSManagedObject] {
-                        let user = data.value(forKey: "user") as! String
-                       // let prioritizeLineSetting = data.value(forKey: "prioritizeTrain") as! Bool
-                        print(user, "user setting")
-                      //  print(prioritizeLineSetting, "sort t b t setting")
-                        if (user == self.passphrase) {
-                            data.setValue(value, forKey: "prioritizeTrain")
-                            do {
-                                try context.save()
-                                print("saved updated settings")
-                            } catch {
-                                print("Failed saving")
+            print(value, "settings change")
+            if (self.auth){
+                Analytics.setUserProperty(String(value), forName: "prioritizeLine")
+                let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "Preferences")
+                do {
+                    
+                    let result = try context.fetch(fetchRequest)
+                    if (!result.isEmpty) {
+                        print("fetching old settings")
+                        for data in result as! [NSManagedObject] {
+                            let user = data.value(forKey: "user") as! String
+                            // let prioritizeLineSetting = data.value(forKey: "prioritizeTrain") as! Bool
+                            print(user, "user setting")
+                            //  print(prioritizeLineSetting, "sort t b t setting")
+                            if (user == self.passphrase) {
+                                data.setValue(value, forKey: "prioritizeTrain")
+                                do {
+                                    try context.save()
+                                    print("saved updated settings")
+                                } catch {
+                                    print("Failed saving")
+                                }
                             }
+                            
                         }
-                        
+                    } else {
+                        print("creating new settings")
+                        let entity = NSEntityDescription.entity(forEntityName: "Preferences", in: context)
+                        let newPreference = NSManagedObject(entity: entity!, insertInto: context)
+                        newPreference.setValue(self.passphrase, forKey: "user")
+                        newPreference.setValue(value, forKey: "prioritizeTrain")
+                        do {
+                            try context.save()
+                            print("saved new settings")
+                        } catch {
+                            print("Failed saving")
+                        }
                     }
-                } else {
-                    print("creating new settings")
-                    let entity = NSEntityDescription.entity(forEntityName: "Preferences", in: context)
-                    let newPreference = NSManagedObject(entity: entity!, insertInto: context)
-                    newPreference.setValue(self.passphrase, forKey: "user")
-                    newPreference.setValue(value, forKey: "prioritizeTrain")
-                    do {
-                        try context.save()
-                        print("saved new settings")
-                    } catch {
-                        print("Failed saving")
-                    }
+                    
+                    
+                } catch {
+                    print("failed to get settings")
+                    
                 }
-                
-                
-            } catch {
-                print("failed to get settings")
-                
-            }
             }
         }
         settingsSuscriber = $sortTrainsByTime.sink {value in
             print(value, "settings change")
             if (self.auth){
-                   Analytics.setUserProperty(String(value), forName: "sortTrainsByTime")
+                Analytics.setUserProperty(String(value), forName: "sortTrainsByTime")
                 let managedContext =  appDelegate.persistentContainer.viewContext
                 let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "Preferences")
                 do {
@@ -705,7 +743,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                             print("Failed saving")
                         }
                         self.stations.append(Station(id:id, name: name, lat: lat, long: long, abbr: abbr, version: stationJSON["version"].intValue))
-                        
+                        self.stationsByAbbr[abbr] = Station(id:id, name: name, lat: lat, long: long, abbr: abbr, version: stationJSON["version"].intValue)
                     }
                     //   print(self.stations)
                     self.fromStationSuggestions = self.stations
@@ -733,6 +771,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                 let long = data.value(forKey: "long") as! Double
                 stations.append(Station(id: id,name: name,lat: lat,long: long,abbr: abbr, version: data.value(forKey: "version") as! Int))
                 version = data.value(forKey: "version") as! Int
+                self.stationsByAbbr[abbr] = Station(id: id,name: name,lat: lat,long: long,abbr: abbr, version: data.value(forKey: "version") as! Int)
             }
             print(stations, version)
             if (stations.isEmpty) {
@@ -860,7 +899,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                             self.auth = false
                             self.passphrase = ""
                             self.ready = true
-                          
+                            
                             //TODO remove core data storage of the invalid passphrase
                         }
                     } else {
