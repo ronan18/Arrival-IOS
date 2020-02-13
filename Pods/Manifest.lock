@@ -13,6 +13,9 @@ PODS:
   - Firebase/Performance (6.16.0):
     - Firebase/CoreOnly
     - FirebasePerformance (~> 3.1.9)
+  - Firebase/RemoteConfig (6.16.0):
+    - Firebase/CoreOnly
+    - FirebaseRemoteConfig (~> 4.4.6)
   - FirebaseABTesting (3.1.2):
     - FirebaseAnalyticsInterop (~> 1.3)
     - FirebaseCore (~> 6.1)
@@ -117,6 +120,7 @@ DEPENDENCIES:
   - Fabric (~> 1.10.2)
   - Firebase/Analytics
   - Firebase/Performance
+  - Firebase/RemoteConfig
   - SwiftyJSON
 
 SPEC REPOS:
@@ -172,6 +176,6 @@ SPEC CHECKSUMS:
   Protobuf: 0e94afe3b47cb11876eb6aee296638711a24bf75
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: 6c736af4234027175b6e9473da89737ad86f93da
+PODFILE CHECKSUM: 3c599b9ca305ed56ba810b6ad97aac42b0f8c6d8
 
 COCOAPODS: 1.8.4

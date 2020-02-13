@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-
+import FirebaseAnalytics
 struct LoginView: View {
     @State var onboard = 0
     @State var passphrase = ""
@@ -16,8 +16,8 @@ struct LoginView: View {
     var body: some View {
          GeometryReader { geometry in
         VStack(alignment: .center) {
-            
-            if (self.appData.authLoading) {
+           
+            if (self.appData.authLoading || !self.appData.onboardingLoaded) {
                 LoadingView()
             } else {
                 if (self.onboard == 0) {
@@ -29,11 +29,11 @@ struct LoginView: View {
                             .frame(width: geo.size.width)
                     }
                     .frame(height: 250)
-                    Text("Welcome to Arrival")
+                    Text(self.appData.onboardingMessages["onboarding1Heading"].stringValue)
                         .font(.largeTitle)
                         .fontWeight(.heavy)
                         .multilineTextAlignment(.center)
-                    Text("the faster, smarter way to coordinate BART schedules")
+                    Text(self.appData.onboardingMessages["onboarding1Tagline"].stringValue)
                         .font(.subheadline)
                         .multilineTextAlignment(.center)
                     Spacer()
@@ -248,6 +248,7 @@ struct LoginView: View {
              
         }
         .padding().onAppear(perform: {
+           // Analytics.setScreenName("login", screenClass: "login")
             func randomString(length: Int) -> String {
                 let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
                 return String((0..<length).map{ _ in letters.randomElement()! })

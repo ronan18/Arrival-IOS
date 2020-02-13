@@ -8,6 +8,8 @@
 
 import SwiftUI
 import UIKit
+import Firebase
+import FirebaseAnalytics
 struct HomeView: View {
     @State var fromModalDisplayed = false
     @State var toModalDisplayed = false
@@ -189,6 +191,7 @@ struct HomeView: View {
             }
         }.edgesIgnoringSafeArea(.top).onAppear(){
             print("home Appeared")
+           // Analytics.setScreenName("home", screenClass: "home")
             self.appData.cylce()
             Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { timer in
                 self.appData.cylce()

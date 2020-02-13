@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-
+import FirebaseAnalytics
 struct SettingsView: View {
     @EnvironmentObject private var appData: AppData
     init() {
@@ -50,7 +50,7 @@ struct SettingsView: View {
                             Text("Sort trains by time")
                         }
                     }
-            
+                    
                     Spacer()
                     
                     HStack {
@@ -76,7 +76,9 @@ struct SettingsView: View {
                 }
                 Spacer()
             }
-        }.edgesIgnoringSafeArea(.top)
+        }.edgesIgnoringSafeArea(.top).onAppear() {
+         //   Analytics.setScreenName("settings", screenClass: "settings")
+        }
     }
 }
 

@@ -16,6 +16,7 @@ import CoreML
 import JavaScriptCore
 import FirebasePerformance
 import FirebaseAnalytics
+import FirebaseRemoteConfig
 
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
 let context = appDelegate.persistentContainer.viewContext
@@ -47,6 +48,8 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var routes: [String: Route]? = nil
     @Published var fromStation: Station = Station(id: "loading", name: "loading", lat: 0.0, long: 0.0, abbr: "load", version: 0)
     @Published var toStation: Station = Station(id: "none", name: "none", lat: 0.0, long: 0.0, abbr: "none", version: 0)
+    @Published var onboardingMessages = JSON(["onboarding1Heading": ""])
+    @Published var onboardingLoaded = false
     private let locationManager = CLLocationManager()
     private var lat = 0.0
     private var long = 0.0
@@ -61,9 +64,103 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     private var initialTrainsTrace: Trace?
     private var cycleTrace: Trace?
     private var initialTrainsTraceDone: Bool = false
+    private var remoteConfig = RemoteConfig.remoteConfig()
+    private let settings = RemoteConfigSettings()
+    private var apiUrl = ""
+    
     override init() {
         super.init()
         print("init function")
+        settings.minimumFetchInterval = 43200
+        
+        remoteConfig.configSettings = settings
+        remoteConfig.setDefaults(fromPlist: "RemoteConfigDefaults")
+        self.apiUrl = self.remoteConfig["apiurl"].stringValue!
+        /* remoteConfig.fetch() { (status, error) -> Void in
+         if status == .success {
+         print("Config fetched!")
+         self.remoteConfig.activate(completionHandler: { (error) in
+         // ...
+         print("remote config activated", error, self.remoteConfig.configValue(forKey: "onboarding1Tagline").stringValue)
+         DispatchQueue.main.async {
+         print("This is run on the main queue, after the previous code in outer block")
+         self.onboardingMessages["onboarding1Heading"] = JSON(self.remoteConfig.configValue(forKey: "onboarding1Heading").stringValue!)
+         self.onboardingMessages["onboarding1Tagline"] = JSON(self.remoteConfig.configValue(forKey: "onboarding1Tagline").stringValue!)
+         self.onboardingMessages["onboarding2Heading"] = JSON(self.remoteConfig.configValue(forKey: "onboarding2Heading").stringValue!)
+         self.onboardingMessages["onboarding3Tagline"] = JSON(self.remoteConfig.configValue(forKey: "onboarding3Tagline").stringValue!)
+         self.onboardingMessages["onboarding3Heading"] = JSON(self.remoteConfig.configValue(forKey: "onboarding3Heading").stringValue!)
+         self.onboardingMessages["onboarding2Tagline"] = JSON(self.remoteConfig.configValue(forKey: "onboarding2Tagline").stringValue!)
+         print("got onboarding config activated", self.onboardingMessages.dictionaryObject, self.remoteConfig.configValue(forKey: "onboarding1Tagline").stringValue!, "1 tagline")
+         }
+         })
+         } else {
+         print("Config not fetched")
+         print("Error: \(error?.localizedDescription ?? "No error available.")")
+         }
+         }
+         */
+        let expirationDuration: TimeInterval = 43200
+        /*
+         remoteConfig.fetchAndActivate { (status, error) in
+         
+         if (status == .successUsingPreFetchedData) {
+         print("remote config activated from pre fetch")
+         } else if (status == .successFetchedFromRemote) {
+         print("remote config activated from remote fetch")
+         
+         }
+         print(self.remoteConfig["apiurl"].stringValue, "remote config api value")
+         print(self.remoteConfig["onboarding1Heading"].stringValue, "remote config onboarding1Heading value")
+         self.apiUrl = self.remoteConfig["apiurl"].stringValue!
+         self.onboardingMessages["onboarding1Heading"] = JSON(self.remoteConfig["onboarding1Heading"].stringValue!)
+         self.onboardingMessages["onboarding2Heading"] = JSON(self.remoteConfig["onboarding2Heading"].stringValue!)
+         self.onboardingMessages["onboarding3Heading"] = JSON(self.remoteConfig["onboarding3Heading"].stringValue!)
+         self.onboardingMessages["onboarding1Tagline"] = JSON(self.remoteConfig["onboarding1Tagline"].stringValue!)
+         self.onboardingMessages["onboarding2Tagline"] = JSON(self.remoteConfig["onboarding2Tagline"].stringValue!)
+         self.onboardingMessages["onboarding3Tagline"] = JSON(self.remoteConfig["onboarding3Tagline"].stringValue!)
+         /*
+         
+         self.apiUrl = self.remoteConfig.value(forKey: "apiurl") as! String
+         self.onboardingMessages["onboarding1Heading"] = JSON(self.remoteConfig.value(forKey: "onboarding1Heading") as! String)
+         self.onboardingMessages["onboarding1Tagline"] = JSON(self.remoteConfig.value(forKey: "onboarding1Tagline") as! String)
+         self.onboardingMessages["onboarding2Heading"] = JSON(self.remoteConfig.value(forKey: "onboarding2Heading") as! String)
+         self.onboardingMessages["onboarding3Tagline"] = JSON(self.remoteConfig.value(forKey: "onboarding3Tagline") as! String)
+         self.onboardingMessages["onboarding3Heading"] = JSON(self.remoteConfig.value(forKey: "onboarding3Heading") as! String)
+         self.onboardingMessages["onboarding2Tagline"] = JSON(self.remoteConfig.value(forKey: "onboarding2Tagline") as! String)
+         */
+         print(self.onboardingMessages.dictionaryObject, "config  onboarding messages")
+         self.onboardingLoaded = true
+         }
+         */
+        remoteConfig.fetch(withExpirationDuration: TimeInterval(expirationDuration)) { (status, error) -> Void in
+            if status == .success {
+                print("Config fetched!")
+                self.remoteConfig.activate(completionHandler: { (error) in
+                   DispatchQueue.main.async {
+                        print("This is run on the main queue, after the previous code in outer block config")
+                        print(self.remoteConfig["apiurl"].stringValue, "remote config api value")
+                        print(self.remoteConfig["onboarding1Heading"].stringValue, "remote config onboarding1Heading value")
+                        self.apiUrl = self.remoteConfig["apiurl"].stringValue!
+                        self.onboardingMessages["onboarding1Heading"] = JSON(self.remoteConfig["onboarding1Heading"].stringValue!)
+                        self.onboardingMessages["onboarding2Heading"] = JSON(self.remoteConfig["onboarding2Heading"].stringValue!)
+                        self.onboardingMessages["onboarding3Heading"] = JSON(self.remoteConfig["onboarding3Heading"].stringValue!)
+                        self.onboardingMessages["onboarding1Tagline"] = JSON(self.remoteConfig["onboarding1Tagline"].stringValue!)
+                        self.onboardingMessages["onboarding2Tagline"] = JSON(self.remoteConfig["onboarding2Tagline"].stringValue!)
+                        self.onboardingMessages["onboarding3Tagline"] = JSON(self.remoteConfig["onboarding3Tagline"].stringValue!)
+                        print(self.onboardingMessages.dictionaryObject, "config  onboarding messages")
+                        self.onboardingLoaded = true
+                        print(self.onboardingLoaded, "config onboarding loaded")
+                    }
+                })
+            } else {
+                print("Config not fetched")
+                print("Error: \(error?.localizedDescription ?? "No error available.")")
+            }
+            
+        }
+          
+        
+        // print("got onboarding config", onboardingMessages.dictionaryObject)
         self.initialTrainsTrace = Performance.startTrace(name: "initalTrainsDisplay")!
         start()
         getStations()
@@ -269,6 +366,9 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         }
         
         self.cylce()
+        Analytics.logEvent("set_fromStation", parameters: [
+            "station": station.abbr as NSObject
+        ])
     }
     func setToStation(station: Station) {
         print("setting to Station")
@@ -285,6 +385,10 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         trip.setValue(day, forKeyPath: "day")
         trip.setValue(hour, forKeyPath: "hour")
         trip.setValue(self.passphrase, forKeyPath: "user")
+        Analytics.logEvent("set_toStation", parameters: [
+            "station": station.abbr as NSObject,
+            "fromStation": self.fromStation.abbr as NSObject
+        ])
         do {
             try context.save()
             computeToSuggestions()
@@ -306,7 +410,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     "Authorization": self.passphrase,
                     "Accept": "application/json"
                 ]
-                Alamofire.request(baseURL + "/api/v2/trains/" + self.fromStation.abbr, headers: headers).responseJSON { response in
+                Alamofire.request(apiUrl + "/api/v2/trains/" + self.fromStation.abbr, headers: headers).responseJSON { response in
                     // print(JSON(response.value))
                     let estimates = JSON(JSON(response.value)["estimates"]["etd"].arrayValue)
                     //   print(estimates.count)
@@ -408,19 +512,19 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     "Authorization": self.passphrase,
                     "Accept": "application/json"
                 ]
-                print(baseURL + "/api/v3/routes/" + self.fromStation.abbr + "/" + self.toStation.abbr)
-                Alamofire.request(baseURL + "/api/v3/routes/" + self.fromStation.abbr + "/" + self.toStation.abbr, headers: headers).responseJSON { response in
+                print(apiUrl + "/api/v3/routes/" + self.fromStation.abbr + "/" + self.toStation.abbr)
+                Alamofire.request(apiUrl + "/api/v3/routes/" + self.fromStation.abbr + "/" + self.toStation.abbr, headers: headers).responseJSON { response in
                     
-                
+                    
                     let estimates = JSON(JSON(response.value)["trips"].arrayValue)
                     if (estimates.count > 0) {
-
+                        
                         var routes: [String: Route] = [:]
                         for (id, route) in JSON(response.value)["routes"].dictionaryObject! {
-                          //  print(id, route)
+                            //  print(id, route)
                             let routeJSON = JSON(route)
                             let stations = routeJSON["config"]["station"].arrayValue.map { $0.stringValue}
-                          //  print(stations, "route stations")
+                            //  print(stations, "route stations")
                             routes[id] = Route(name: routeJSON["name"].stringValue, abbr: routeJSON["abbr"].stringValue, routeID: routeJSON["routeID"].stringValue, origin: routeJSON["origin"].stringValue, destination: routeJSON["destination"].stringValue, direction: routeJSON["direction"].stringValue, color: routeJSON["color"].stringValue, stations: stations)
                         }
                         
@@ -440,25 +544,25 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                             for i in 0...thisTrain["leg"].count - 1 {
                                 let leg = thisTrain["leg"][i]
                                 let origin = self.stationsByAbbr[leg["@origin"].stringValue]!.name
-                                 let destination = self.stationsByAbbr[leg["@destination"].stringValue]!.name
+                                let destination = self.stationsByAbbr[leg["@destination"].stringValue]!.name
                                 let line = leg["@line"].stringValue
-                               
+                                
                                 let routeNum = leg["route"].stringValue
-                              
+                                
                                 if (self.routes![routeNum] != nil) {
                                     let routeJSON = self.routes![routeNum]!
-                                   let fromStationIndex = routeJSON.stations.firstIndex(of: leg["@origin"].stringValue)
-                                   let toStationIndex = routeJSON.stations.firstIndex(of: leg["@destination"].stringValue)
+                                    let fromStationIndex = routeJSON.stations.firstIndex(of: leg["@origin"].stringValue)
+                                    let toStationIndex = routeJSON.stations.firstIndex(of: leg["@destination"].stringValue)
                                     print(fromStationIndex, toStationIndex, origin, destination)
                                     
-                                  
-                                      let stopCount = abs(toStationIndex! - fromStationIndex!)
                                     
-                               
+                                    let stopCount = abs(toStationIndex! - fromStationIndex!)
+                                    
+                                    
                                     print(stopCount, "route stop count")
                                     
-                                     // print(routeJSON.dictionaryObject, "route for route", routeNum, "color", routeJSON["color"].stringValue)
-                                   
+                                    // print(routeJSON.dictionaryObject, "route for route", routeNum, "color", routeJSON["color"].stringValue)
+                                    
                                     legs.append(Leg(order: leg["order"].intValue, origin: origin, destination: destination, originTime: leg["@origTimeMin"].stringValue, destinationTime: leg["@destTimeMin"].stringValue, line: leg["@line"].stringValue, route: leg["route"].intValue, trainDestination: leg["@trainHeadStation"].stringValue,  color:routeJSON.color, stops: stopCount))
                                 } else {
                                     print("route for route", routeNum, leg, "doesn't exist")
@@ -519,6 +623,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             print(value, "auth subscriber")
             if (self.auth) {
                 print("passphrase changed and auth settings from auth", value)
+                
                 self.computeToSuggestions(pass: value)
                 let managedContext =  appDelegate.persistentContainer.viewContext
                 let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "Preferences")
@@ -675,7 +780,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             }
         case .restricted, .denied:
             self.locationAcess = false
-               Analytics.setUserProperty("false", forName: "locationAccess")
+            Analytics.setUserProperty("false", forName: "locationAccess")
         }
     }
     func getClosestStations() {
@@ -716,7 +821,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     }
     func getStationsFromApi() {
         print("getting stations from api")
-        Alamofire.request(baseURL + "/api/v3/stations")
+        Alamofire.request(apiUrl + "/api/v3/stations")
             .responseJSON{
                 response in print(response)
                 if  response.value != nil {
@@ -801,7 +906,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         let headers: HTTPHeaders = [
             "Accept": "application/json"
         ]
-        Alamofire.request("https://api.arrival.city/api/v2/createaccount", method: .post, parameters: ["passphrase": passphrase]).responseJSON {
+        Alamofire.request(apiUrl+"/api/v2/createaccount", method: .post, parameters: ["passphrase": passphrase]).responseJSON {
             response in
             if (response.value) != nil {
                 let jsonResponse = JSON(response.value)
@@ -825,7 +930,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             "Authorization": passphrase,
             "Accept": "application/json"
         ]
-        Alamofire.request("https://api.arrival.city/api/v2/login", headers: headers).responseJSON {
+        Alamofire.request(apiUrl + "/api/v2/login", headers: headers).responseJSON {
             response in //print(response.value)
             if  response.value != nil {
                 let jsonResponse = JSON(response.value)
@@ -838,7 +943,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     let entity = NSEntityDescription.entity(forEntityName: "User", in: context)
                     let newUser = NSManagedObject(entity: entity!, insertInto: context)
                     newUser.setValue(passphrase, forKey: "pass")
-                    
+                    Analytics.setUserID(passphrase)
                     
                     do {
                         try context.save()
@@ -881,7 +986,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     "Authorization": passphraseToTest,
                     "Accept": "application/json"
                 ]
-                Alamofire.request("https://api.arrival.city/api/v2/login", headers: headers).responseJSON {
+                Alamofire.request(apiUrl+"/api/v2/login", headers: headers).responseJSON {
                     response in //print(response.value)
                     if  response.value != nil {
                         let jsonResponse = JSON(response.value)
@@ -890,6 +995,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                             self.auth = true
                             self.ready = true
                             print("user authorized")
+                            Analytics.setUserID(passphraseToTest)
                             // print(jsonResponse["net"].dictionaryObject, "brain ai json raw")
                             if (!jsonResponse["net"].isEmpty) {
                                 self.netJSON = jsonResponse["net"].dictionaryObject as! [String: Any?]

@@ -31,6 +31,7 @@
 		C58F24A723CC14D1003882F3 /* TrainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58F24A623CC14D1003882F3 /* TrainView.swift */; };
 		C592370923E151AD00AFCD6C /* HostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C592370823E151AD00AFCD6C /* HostingController.swift */; };
 		C5A517A523CCED0F003E616E /* TrainComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A517A423CCED0F003E616E /* TrainComponent.swift */; };
+		C5A9B79D23F5C3BD004E8C5C /* RemoteConfigDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5A9B79C23F5C3BD004E8C5C /* RemoteConfigDefaults.plist */; };
 		C5E46EC623F3C53E00979DBB /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E46EC523F3C53E00979DBB /* Route.swift */; };
 		C5E5768C23EFB9E300A3A7BD /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E5768B23EFB9E300A3A7BD /* Trip.swift */; };
 		C5E5768E23EFBB0A00A3A7BD /* Leg.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E5768D23EFBB0A00A3A7BD /* Leg.swift */; };
@@ -79,6 +80,7 @@
 		C58F24A623CC14D1003882F3 /* TrainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainView.swift; sourceTree = "<group>"; };
 		C592370823E151AD00AFCD6C /* HostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostingController.swift; sourceTree = "<group>"; };
 		C5A517A423CCED0F003E616E /* TrainComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainComponent.swift; sourceTree = "<group>"; };
+		C5A9B79C23F5C3BD004E8C5C /* RemoteConfigDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RemoteConfigDefaults.plist; sourceTree = "<group>"; };
 		C5E46EC523F3C53E00979DBB /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		C5E5768B23EFB9E300A3A7BD /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		C5E5768D23EFBB0A00A3A7BD /* Leg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Leg.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				C5E5768B23EFB9E300A3A7BD /* Trip.swift */,
 				C5E5768D23EFBB0A00A3A7BD /* Leg.swift */,
 				C5E46EC523F3C53E00979DBB /* Route.swift */,
+				C5A9B79C23F5C3BD004E8C5C /* RemoteConfigDefaults.plist */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 				C58F249123CC143A003882F3 /* LaunchScreen.storyboard in Resources */,
 				C55BC25C23EE7FCC008E12AB /* GoogleService-Info.plist in Resources */,
 				C58F248E23CC143A003882F3 /* Preview Assets.xcassets in Resources */,
+				C5A9B79D23F5C3BD004E8C5C /* RemoteConfigDefaults.plist in Resources */,
 				C58F248B23CC143A003882F3 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -369,7 +373,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/Fabric/run\"\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n#\"${PODS_ROOT}/Fabric/run\"\n";
 		};
 		C5E5768F23EFEB7500A3A7BD /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -386,7 +390,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/Fabric/upload-symbols\" -gsp \"${PROJECT_DIR}/GoogleService-Info.plist\" -p ios \"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\"\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n#\"${PODS_ROOT}/Fabric/upload-symbols\" -gsp \"${PROJECT_DIR}/GoogleService-Info.plist\" -p ios \"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\"\n";
 		};
 		E17C82A52DBE2323B5D7E277 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
