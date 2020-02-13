@@ -36,7 +36,8 @@ struct HomeView: View {
                                 Button(action: {
                                     self.appData.screen = "settings"
                                 }) {
-                                    Image(systemName: "gear").foregroundColor(.white).padding(5)
+                                    
+                                    Image(systemName: "gear").font(.headline).foregroundColor(.white).padding(5)
                                 }
                             }
                         }
