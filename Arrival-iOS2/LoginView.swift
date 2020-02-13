@@ -72,10 +72,10 @@ struct LoginView: View {
                             .frame(width: geo.size.width)
                     }
                     .frame(height: 250)
-                    Text("Low Data Usage")
+                    Text(self.appData.onboardingMessages["onboarding2Heading"].stringValue)
                         .font(.largeTitle)
                         .fontWeight(.heavy)
-                    Text("Arrival harnesses modern technologies in order to receive schedules and make predictions without using tons of cellular data.")
+                    Text(self.appData.onboardingMessages["onboarding2Tagline"].stringValue)
                         .font(.subheadline)
                         .multilineTextAlignment(.center)
                     Spacer()
@@ -115,10 +115,10 @@ struct LoginView: View {
                             .frame(width: geo.size.width)
                     }
                     .frame(height: 250)
-                    Text("Anonymous")
+                    Text(self.appData.onboardingMessages["onboarding3Heading"].stringValue)
                         .font(.largeTitle)
                         .fontWeight(.heavy)
-                    Text("Because Arrival generates some pretty personal information, your daily commute, we have created an anonymous authentication system that still allows for cross device syncing and machine learning.")
+                    Text(self.appData.onboardingMessages["onboarding3Tagline"].stringValue)
                         .font(.subheadline)
                         .multilineTextAlignment(.center)
                     Spacer()
@@ -169,7 +169,11 @@ struct LoginView: View {
                     
                     Spacer()
                     VStack {
-                        TextField("Enter Your Passphrase", text: self.$passphrase).padding()
+                        TextField("Enter Your Passphrase", text: self.$passphrase, onCommit: {
+                            if (!self.passphrase.isEmpty) {
+                                                       self.appData.loginFromWeb(passphrase: self.passphrase)
+                                                   }
+                        }).autocapitalization(.none)
                         Rectangle().fill(Color("arrivalBlue")).frame(height: 5)
                         
                     }

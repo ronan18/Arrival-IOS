@@ -50,6 +50,8 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var toStation: Station = Station(id: "none", name: "none", lat: 0.0, long: 0.0, abbr: "none", version: 0)
     @Published var onboardingMessages = JSON(["onboarding1Heading": ""])
     @Published var onboardingLoaded = false
+    @Published var aboutText = ""
+     @Published var realtimeTripNotice = ""
     private let locationManager = CLLocationManager()
     private var lat = 0.0
     private var long = 0.0
@@ -149,6 +151,8 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         self.onboardingMessages["onboarding3Tagline"] = JSON(self.remoteConfig["onboarding3Tagline"].stringValue!)
                         print(self.onboardingMessages.dictionaryObject, "config  onboarding messages")
                         self.onboardingLoaded = true
+                    self.aboutText = self.remoteConfig["aboutText"].stringValue!
+                     self.realtimeTripNotice = self.remoteConfig["realtimeTripsNotice"].stringValue!
                         print(self.onboardingLoaded, "config onboarding loaded")
                     }
                 })

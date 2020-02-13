@@ -36,7 +36,7 @@ struct SettingsView: View {
                         }
                     }
                 }.padding().frame(height: geometry.safeAreaInsets.top + 60).background(Color("arrivalBlue"))
-                List {
+                VStack {
                     
                     HStack {
                         Text("Account")
@@ -71,10 +71,12 @@ struct SettingsView: View {
                         }
                         Spacer()
                     }
+                    Spacer().frame(height: 20)
+                    Text(self.appData.aboutText)
+                       .multilineTextAlignment(.center).font(.subheadline).foregroundColor(.gray)
                     
-                    
-                }
-                Spacer()
+                }.padding()
+               
             }
         }.edgesIgnoringSafeArea(.top).onAppear() {
          //   Analytics.setScreenName("settings", screenClass: "settings")

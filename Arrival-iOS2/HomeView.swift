@@ -52,7 +52,7 @@ struct HomeView: View {
                                     VStack(alignment: .leading) {
                                         Text("from").font(.caption)
                                         Text(self.appData.fromStation.name).font(.headline)
-                                    }
+                                    }.lineLimit(1)
                                 } else {
                                     VStack(alignment: .leading) {
                                         Text("from").font(.caption)

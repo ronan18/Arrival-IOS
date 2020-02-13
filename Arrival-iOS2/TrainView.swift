@@ -34,6 +34,7 @@ struct TrainView: View {
             } else {
                 if (self.appData.sortTrainsByTime || self.appData.toStation.abbr != "none") {
                     if (self.appData.toStation.abbr != "none") {
+                       
                         List(self.appData.trips) { trip in
                             
                             
@@ -102,6 +103,11 @@ struct TrainView: View {
                                 
                             }.padding()
                         }
+                        Spacer().frame(height: 1)
+                        Text(self.appData.realtimeTripNotice)
+                                                   .font(.caption)
+                                                .foregroundColor(Color.gray)
+                                                .multilineTextAlignment(.center).padding()
                     } else {
                         List(self.appData.trains) { train in
                             

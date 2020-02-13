@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>realtimeTripsNotice</key>
+	<string>Trip data is currently based off of BART&apos;s scheduled departures not realtime data. Future updates will enable realtime trip data.</string>
+	<key>aboutText</key>
+	<string>Arrival is an open souce app developed by Ronan Furuta. If you have any feedback or suggestions please email support@ronanfuruta.com</string>
 	<key>onboarding3Tagline</key>
 	<string>Because Arrival generates some pretty personal information, your daily commute, we have created an anonymous authentication system that still allows for cross device syncing and machine learning.</string>
 	<key>onboarding3Heading</key>
