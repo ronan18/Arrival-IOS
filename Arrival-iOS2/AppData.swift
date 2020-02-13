@@ -671,9 +671,11 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         case .authorizedWhenInUse, .authorizedAlways:
             if CLLocationManager.locationServicesEnabled() {
                 self.locationAcess = true
+                Analytics.setUserProperty("true", forName: "locationAccess")
             }
         case .restricted, .denied:
             self.locationAcess = false
+               Analytics.setUserProperty("false", forName: "locationAccess")
         }
     }
     func getClosestStations() {
