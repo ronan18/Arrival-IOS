@@ -8,6 +8,7 @@
 
 import SwiftUI
 import FirebaseAnalytics
+import FirebaseCrashlytics
 struct SettingsView: View {
     @EnvironmentObject private var appData: AppData
     init() {
@@ -26,10 +27,11 @@ struct SettingsView: View {
                             }) {
                                 HStack {
                                     Image(systemName: "chevron.left").foregroundColor(.white).padding(5)
+                                      Text("Settings").font(.largeTitle).foregroundColor(Color.white).fontWeight(.bold)
                                     
                                 }
                             }
-                            Text("Settings").font(.largeTitle).foregroundColor(Color.white).fontWeight(.bold)
+                          
                             Spacer()
                             
                             

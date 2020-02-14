@@ -18,7 +18,6 @@ import FirebasePerformance
 import FirebaseAnalytics
 import FirebaseRemoteConfig
 import FirebaseCrashlytics
-
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
 let context = appDelegate.persistentContainer.viewContext
 let baseURL = "https://api.arrival.city"
@@ -71,7 +70,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     private var initialTrainsTraceDone: Bool = false
     private var remoteConfig = RemoteConfig.remoteConfig()
     private let settings = RemoteConfigSettings()
-    private var apiUrl = ""
+    private var apiUrl = "https://api.arrival.city"
     
     override init() {
         super.init()
@@ -82,62 +81,17 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         remoteConfig.setDefaults(fromPlist: "RemoteConfigDefaults")
         self.apiUrl = self.remoteConfig["apiurl"].stringValue!
         self.cycleTimer = Double(self.remoteConfig["cycleTimer"].stringValue!)!
-        /* remoteConfig.fetch() { (status, error) -> Void in
-         if status == .success {
-         print("Config fetched!")
-         self.remoteConfig.activate(completionHandler: { (error) in
-         // ...
-         print("remote config activated", error, self.remoteConfig.configValue(forKey: "onboarding1Tagline").stringValue)
-         DispatchQueue.main.async {
-         print("This is run on the main queue, after the previous code in outer block")
-         self.onboardingMessages["onboarding1Heading"] = JSON(self.remoteConfig.configValue(forKey: "onboarding1Heading").stringValue!)
-         self.onboardingMessages["onboarding1Tagline"] = JSON(self.remoteConfig.configValue(forKey: "onboarding1Tagline").stringValue!)
-         self.onboardingMessages["onboarding2Heading"] = JSON(self.remoteConfig.configValue(forKey: "onboarding2Heading").stringValue!)
-         self.onboardingMessages["onboarding3Tagline"] = JSON(self.remoteConfig.configValue(forKey: "onboarding3Tagline").stringValue!)
-         self.onboardingMessages["onboarding3Heading"] = JSON(self.remoteConfig.configValue(forKey: "onboarding3Heading").stringValue!)
-         self.onboardingMessages["onboarding2Tagline"] = JSON(self.remoteConfig.configValue(forKey: "onboarding2Tagline").stringValue!)
-         print("got onboarding config activated", self.onboardingMessages.dictionaryObject, self.remoteConfig.configValue(forKey: "onboarding1Tagline").stringValue!, "1 tagline")
-         }
-         })
-         } else {
-         print("Config not fetched")
-         print("Error: \(error?.localizedDescription ?? "No error available.")")
-         }
-         }
-         */
+        let preferencesEntity = NSEntityDescription.entity(forEntityName: "Preferences", in: context)!
+        let newTestPref = NSManagedObject(entity: preferencesEntity, insertInto: context)
+        newTestPref.setValue(false, forKey: "prioritizeTrain")
+        newTestPref.setValue(true, forKey: "sortTrainsByTime")
+        do {
+            try context.save()
+        } catch {
+            print("failed so save testing pref")
+        }
         let expirationDuration: TimeInterval = 43200
-        /*
-         remoteConfig.fetchAndActivate { (status, error) in
-         
-         if (status == .successUsingPreFetchedData) {
-         print("remote config activated from pre fetch")
-         } else if (status == .successFetchedFromRemote) {
-         print("remote config activated from remote fetch")
-         
-         }
-         print(self.remoteConfig["apiurl"].stringValue, "remote config api value")
-         print(self.remoteConfig["onboarding1Heading"].stringValue, "remote config onboarding1Heading value")
-         self.apiUrl = self.remoteConfig["apiurl"].stringValue!
-         self.onboardingMessages["onboarding1Heading"] = JSON(self.remoteConfig["onboarding1Heading"].stringValue!)
-         self.onboardingMessages["onboarding2Heading"] = JSON(self.remoteConfig["onboarding2Heading"].stringValue!)
-         self.onboardingMessages["onboarding3Heading"] = JSON(self.remoteConfig["onboarding3Heading"].stringValue!)
-         self.onboardingMessages["onboarding1Tagline"] = JSON(self.remoteConfig["onboarding1Tagline"].stringValue!)
-         self.onboardingMessages["onboarding2Tagline"] = JSON(self.remoteConfig["onboarding2Tagline"].stringValue!)
-         self.onboardingMessages["onboarding3Tagline"] = JSON(self.remoteConfig["onboarding3Tagline"].stringValue!)
-         /*
-         
-         self.apiUrl = self.remoteConfig.value(forKey: "apiurl") as! String
-         self.onboardingMessages["onboarding1Heading"] = JSON(self.remoteConfig.value(forKey: "onboarding1Heading") as! String)
-         self.onboardingMessages["onboarding1Tagline"] = JSON(self.remoteConfig.value(forKey: "onboarding1Tagline") as! String)
-         self.onboardingMessages["onboarding2Heading"] = JSON(self.remoteConfig.value(forKey: "onboarding2Heading") as! String)
-         self.onboardingMessages["onboarding3Tagline"] = JSON(self.remoteConfig.value(forKey: "onboarding3Tagline") as! String)
-         self.onboardingMessages["onboarding3Heading"] = JSON(self.remoteConfig.value(forKey: "onboarding3Heading") as! String)
-         self.onboardingMessages["onboarding2Tagline"] = JSON(self.remoteConfig.value(forKey: "onboarding2Tagline") as! String)
-         */
-         print(self.onboardingMessages.dictionaryObject, "config  onboarding messages")
-         self.onboardingLoaded = true
-         }
-         */
+        
         remoteConfig.fetch(withExpirationDuration: TimeInterval(expirationDuration)) { (status, error) -> Void in
             if status == .success {
                 print("Config fetched!")
@@ -194,6 +148,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         
         
     }
+
     func convertColor(color: String) -> Color {
         
         switch (color.lowercased()) {
@@ -654,13 +609,23 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                             var sortTrainsByTimeSetting: Bool
                             let user: String
                             do {
-                                 user = try data.value(forKey: "user") as! String
+                                 let testUser = try data.value(forKey: "user")
+                                if testUser == nil {
+                                    user = ""
+                                } else {
+                                    user = testUser as! String
+                                }
                             } catch {
                                 user  =  ""
                             }
                             do {
                                   
-                               try  sortTrainsByTimeSetting = data.value(forKey: "sortTrainsByTime") as! Bool
+                                 let tempSetting  =  try data.value(forKey: "sortTrainsByTime")
+                                if (tempSetting == nil) {
+                                    sortTrainsByTimeSetting = false
+                                } else {
+                                    sortTrainsByTimeSetting = tempSetting as! Bool
+                                }
                             } catch {
                                 sortTrainsByTimeSetting = false
                                 
@@ -707,8 +672,27 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     if (!result.isEmpty) {
                         print("fetching old settings")
                         for data in result as! [NSManagedObject] {
-                            let user = data.value(forKey: "user") as! String
-                            let sortTrainsByTimeSetting = data.value(forKey: "sortTrainsByTime") as! Bool
+                            var user = ""
+                            do {
+                                   var temp =  try data.value(forKey: "user")
+                                if (temp != nil) {
+                                    user = temp as! String
+                                }
+                            } catch {
+                                user = ""
+                            }
+                          
+                            
+                            var sortTrainsByTimeSetting = false
+                            do {
+                              var temp = try data.value(forKey: "sortTrainsByTime")
+                                if  (temp != nil) {
+                                    sortTrainsByTimeSetting = temp as! Bool
+                                }
+                                
+                            } catch {
+                                sortTrainsByTimeSetting = false
+                            }
                             print(user, "user setting")
                             print(sortTrainsByTimeSetting, "sort t b t setting")
                             if (user == self.passphrase) {

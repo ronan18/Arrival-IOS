@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Combine
+import FirebaseCrashlytics
 
 struct ContentView: View {
     @EnvironmentObject private var appData: AppData

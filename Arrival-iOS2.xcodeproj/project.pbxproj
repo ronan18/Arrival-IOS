@@ -21,6 +21,7 @@
 		C568C40023D8B99400AB9E67 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = C568C3FF23D8B99400AB9E67 /* Station.swift */; };
 		C568C40423D95FA000AB9E67 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C568C40323D95FA000AB9E67 /* LoadingView.swift */; };
 		C568C40623D95FA800AB9E67 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C568C40523D95FA800AB9E67 /* LoginView.swift */; };
+		C5751DA923F7055E0071F224 /* SignInWithAppleDelegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5751DA823F7055E0071F224 /* SignInWithAppleDelegates.swift */; };
 		C58F248223CC1438003882F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58F248123CC1438003882F3 /* AppDelegate.swift */; };
 		C58F248423CC1438003882F3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58F248323CC1438003882F3 /* SceneDelegate.swift */; };
 		C58F248723CC1438003882F3 /* Arrival_iOS2.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C58F248523CC1438003882F3 /* Arrival_iOS2.xcdatamodeld */; };
@@ -67,6 +68,8 @@
 		C568C40323D95FA000AB9E67 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		C568C40523D95FA800AB9E67 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		C56D06D647AB3355D1B3247D /* Pods-Arrival-iOS2Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Arrival-iOS2Tests.debug.xcconfig"; path = "Target Support Files/Pods-Arrival-iOS2Tests/Pods-Arrival-iOS2Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		C5751DA523F702F70071F224 /* Arrival.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Arrival.entitlements; sourceTree = "<group>"; };
+		C5751DA823F7055E0071F224 /* SignInWithAppleDelegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInWithAppleDelegates.swift; sourceTree = "<group>"; };
 		C58F247E23CC1438003882F3 /* Arrival.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Arrival.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C58F248123CC1438003882F3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C58F248323CC1438003882F3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -167,6 +170,7 @@
 		C58F248023CC1438003882F3 /* Arrival-iOS2 */ = {
 			isa = PBXGroup;
 			children = (
+				C5751DA523F702F70071F224 /* Arrival.entitlements */,
 				C512BCC423E4FBA80079F49C /* TimePlayground.playground */,
 				C568C3FE23D8B98400AB9E67 /* Models */,
 				C58F248123CC1438003882F3 /* AppDelegate.swift */,
@@ -191,6 +195,7 @@
 				C5166C3823F610AB001F0254 /* TermsOfSeriviceView.swift */,
 				C512BCC723E751650079F49C /* toStations.js */,
 				C592370823E151AD00AFCD6C /* HostingController.swift */,
+				C5751DA823F7055E0071F224 /* SignInWithAppleDelegates.swift */,
 			);
 			path = "Arrival-iOS2";
 			sourceTree = "<group>";
@@ -224,8 +229,6 @@
 				C58F247B23CC1438003882F3 /* Frameworks */,
 				C58F247C23CC1438003882F3 /* Resources */,
 				E17C82A52DBE2323B5D7E277 /* [CP] Embed Pods Frameworks */,
-				C51B3EE523EE254A0021EBE0 /* Run Script */,
-				C5E5768F23EFEB7500A3A7BD /* ShellScript */,
 				C538A11423F661BD00DDF811 /* ShellScript */,
 			);
 			buildRules = (
@@ -362,24 +365,6 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C51B3EE523EE254A0021EBE0 /* Run Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Run Script";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n#\"${PODS_ROOT}/Fabric/run\"\n";
-		};
 		C538A11423F661BD00DDF811 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -398,23 +383,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
-		};
-		C5E5768F23EFEB7500A3A7BD /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n#\"${PODS_ROOT}/Fabric/upload-symbols\" -gsp \"${PROJECT_DIR}/GoogleService-Info.plist\" -p ios \"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\"\n";
 		};
 		E17C82A52DBE2323B5D7E277 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -454,6 +422,7 @@
 				C58F248923CC1438003882F3 /* ContentView.swift in Sources */,
 				C5E5768E23EFBB0A00A3A7BD /* Leg.swift in Sources */,
 				C5E46EC623F3C53E00979DBB /* Route.swift in Sources */,
+				C5751DA923F7055E0071F224 /* SignInWithAppleDelegates.swift in Sources */,
 				C5E5768C23EFB9E300A3A7BD /* Trip.swift in Sources */,
 				C568C40023D8B99400AB9E67 /* Station.swift in Sources */,
 				C568C40623D95FA800AB9E67 /* LoginView.swift in Sources */,
@@ -613,6 +582,7 @@
 			baseConfigurationReference = F0A9A7194655A9A4C5A07CDE /* Pods-Arrival-iOS2.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Arrival-iOS2/Arrival.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Arrival-iOS2/Preview Content\"";
@@ -623,7 +593,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.17;
+				MARKETING_VERSION = 1.20;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival;
 				PRODUCT_NAME = Arrival;
 				SWIFT_VERSION = 5.0;
@@ -636,6 +606,7 @@
 			baseConfigurationReference = C82760030A0921AD836D9E8B /* Pods-Arrival-iOS2.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "Arrival-iOS2/Arrival.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Arrival-iOS2/Preview Content\"";
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
@@ -645,7 +616,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.17;
+				MARKETING_VERSION = 1.20;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival;
 				PRODUCT_NAME = Arrival;
 				SWIFT_VERSION = 5.0;

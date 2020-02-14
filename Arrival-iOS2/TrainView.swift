@@ -8,6 +8,8 @@
 
 import SwiftUI
 import SwiftyJSON
+import FirebaseCrashlytics
+
 let sampleData = [1,2,3,4,5]
 struct TrainView: View {
     @EnvironmentObject private var appData: AppData

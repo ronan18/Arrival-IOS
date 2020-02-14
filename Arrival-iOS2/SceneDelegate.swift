@@ -10,6 +10,7 @@ import UIKit
 import SwiftUI
 import Foundation
 import Combine
+import FirebaseCrashlytics
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     

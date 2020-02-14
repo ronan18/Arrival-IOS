@@ -8,11 +8,13 @@
 
 import SwiftUI
 import FirebaseAnalytics
+import FirebaseCrashlytics
 struct LoginView: View {
     @State var onboard = 0
     @State var passphrase = ""
     @State var newPass = ""
     @EnvironmentObject private var appData: AppData
+
     var body: some View {
          GeometryReader { geometry in
         VStack(alignment: .center) {
@@ -122,6 +124,7 @@ struct LoginView: View {
                         .font(.subheadline)
                         .multilineTextAlignment(.center)
                     Spacer()
+                  
                     Button(action: {
                         self.onboard = 3
                     }) {

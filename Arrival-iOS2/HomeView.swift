@@ -10,6 +10,8 @@ import SwiftUI
 import UIKit
 import Firebase
 import FirebaseAnalytics
+import FirebaseCrashlytics
+
 struct HomeView: View {
     @State var fromModalDisplayed = false
     @State var toModalDisplayed = false
