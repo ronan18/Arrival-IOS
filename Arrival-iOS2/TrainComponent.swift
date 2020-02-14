@@ -57,7 +57,12 @@ struct TrainComponent: View {
                         Text("departs").font(.caption)
                         
                         if  (String(departs) != "Leaving") {
-                            Text(String(departs)).font(.headline) +  Text(" " + unit).font(.subheadline)
+                            if (unit.isEmpty) {
+                                Text(String(departs)).font(.headline).font(.subheadline)
+                            } else {
+                               Text(String(departs)).font(.headline) +  Text(" " + unit).font(.subheadline)
+                            }
+                           
                             
                         } else {
                             Text(String("now")).font(.headline)
