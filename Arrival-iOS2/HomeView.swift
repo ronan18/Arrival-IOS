@@ -199,6 +199,9 @@ struct HomeView: View {
             }
             Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { timer in
                 self.locationTimeout = true
+                if (self.appData.fromStation.abbr == "load") {
+                    Analytics.logEvent("locationTimeOut", parameters: [:])
+                }
             }
             
         }
