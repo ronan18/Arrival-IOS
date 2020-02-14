@@ -38,7 +38,6 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var stationsByAbbr: [String: Station] = ["none": Station(id: "none", name: "none", lat: 0.0, long: 0.0, abbr: "none", version: 0)]
     @Published var network = true
     @Published var sortTrainsByTime = false
-    @Published var prioritizeLine = true
     @Published var goingOffClosestStation: Bool = true
     @Published var closestStations = [Station]()
     @Published var fromStationSuggestions = [Station]()
@@ -52,6 +51,9 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var onboardingLoaded = false
     @Published var aboutText = ""
      @Published var realtimeTripNotice = ""
+    @Published var privacyPolicy = ""
+    @Published var termsOfService = ""
+    @Published var cycleTimer: Double = 30
     private let locationManager = CLLocationManager()
     private var lat = 0.0
     private var long = 0.0
@@ -78,6 +80,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         remoteConfig.configSettings = settings
         remoteConfig.setDefaults(fromPlist: "RemoteConfigDefaults")
         self.apiUrl = self.remoteConfig["apiurl"].stringValue!
+        self.cycleTimer = Double(self.remoteConfig["cycleTimer"].stringValue!)!
         /* remoteConfig.fetch() { (status, error) -> Void in
          if status == .success {
          print("Config fetched!")
@@ -153,6 +156,8 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         self.onboardingLoaded = true
                     self.aboutText = self.remoteConfig["aboutText"].stringValue!
                      self.realtimeTripNotice = self.remoteConfig["realtimeTripsNotice"].stringValue!
+                    self.privacyPolicy = self.remoteConfig["privacyPolicyUrl"].stringValue!
+                          self.termsOfService = self.remoteConfig["termsOfServiceUrl"].stringValue!
                         print(self.onboardingLoaded, "config onboarding loaded")
                     }
                 })
@@ -638,19 +643,18 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         print("fetching settings from auth")
                         for data in result as! [NSManagedObject] {
                             let user = data.value(forKey: "user") as! String
-                            let sortTrainsByTimeSetting = data.value(forKey: "sortTrainsByTime") as! Bool
+                            var sortTrainsByTimeSetting = data.value(forKey: "sortTrainsByTime") as! Bool?
+                            if (sortTrainsByTimeSetting == nil) {
+                                sortTrainsByTimeSetting = false
+                            }
                             print(data.value(forKey: "prioritizeTrain"), "setting")
-                            let prioritizeTrainSettingValue = data.value(forKey: "prioritizeTrain")
+                         //   let prioritizeTrainSettingValue = data.value(forKey: "prioritizeTrain")
                             
                             print(user, value, "user settings from auth")
-                            print(sortTrainsByTimeSetting, prioritizeTrainSettingValue, "sort t b t settings from auth")
+                         //   print( prioritizeTrainSettingValue, "sort t b t settings from auth")
                             if (user == value) {
-                                self.sortTrainsByTime = sortTrainsByTimeSetting
-                                if (prioritizeTrainSettingValue == nil) {
-                                    self.prioritizeLine = false
-                                } else {
-                                    self.prioritizeLine = prioritizeTrainSettingValue as! Bool
-                                }
+                                self.sortTrainsByTime = sortTrainsByTimeSetting!
+                             
                                 
                                 
                                 print("set stbt settings from auth to", sortTrainsByTimeSetting)
@@ -666,53 +670,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                 }
             }
         }
-        prioritizeLineSubscriber = $prioritizeLine.sink {value in
-            print(value, "settings change")
-            if (self.auth){
-                Analytics.setUserProperty(String(value), forName: "prioritizeLine")
-                let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "Preferences")
-                do {
-                    
-                    let result = try context.fetch(fetchRequest)
-                    if (!result.isEmpty) {
-                        print("fetching old settings")
-                        for data in result as! [NSManagedObject] {
-                            let user = data.value(forKey: "user") as! String
-                            // let prioritizeLineSetting = data.value(forKey: "prioritizeTrain") as! Bool
-                            print(user, "user setting")
-                            //  print(prioritizeLineSetting, "sort t b t setting")
-                            if (user == self.passphrase) {
-                                data.setValue(value, forKey: "prioritizeTrain")
-                                do {
-                                    try context.save()
-                                    print("saved updated settings")
-                                } catch {
-                                    print("Failed saving")
-                                }
-                            }
-                            
-                        }
-                    } else {
-                        print("creating new settings")
-                        let entity = NSEntityDescription.entity(forEntityName: "Preferences", in: context)
-                        let newPreference = NSManagedObject(entity: entity!, insertInto: context)
-                        newPreference.setValue(self.passphrase, forKey: "user")
-                        newPreference.setValue(value, forKey: "prioritizeTrain")
-                        do {
-                            try context.save()
-                            print("saved new settings")
-                        } catch {
-                            print("Failed saving")
-                        }
-                    }
-                    
-                    
-                } catch {
-                    print("failed to get settings")
-                    
-                }
-            }
-        }
+       
         settingsSuscriber = $sortTrainsByTime.sink {value in
             print(value, "settings change")
             if (self.auth){

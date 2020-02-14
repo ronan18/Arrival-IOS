@@ -194,7 +194,7 @@ struct HomeView: View {
             print("home Appeared")
            // Analytics.setScreenName("home", screenClass: "home")
             self.appData.cylce()
-            Timer.scheduledTimer(withTimeInterval: 30, repeats: true) { timer in
+            Timer.scheduledTimer(withTimeInterval: self.appData.cycleTimer, repeats: true) { timer in
                 self.appData.cylce()
             }
             Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { timer in

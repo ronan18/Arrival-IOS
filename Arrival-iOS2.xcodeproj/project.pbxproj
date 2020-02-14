@@ -14,6 +14,7 @@
 		34EF38B323CC2AC1000DE4AF /* StationChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EF38B223CC2AC1000DE4AF /* StationChooserView.swift */; };
 		64BB2D2FF3AB6F51B9399F08 /* Pods_Arrival_iOS2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74ACA5CF5B67BD66D8845E5D /* Pods_Arrival_iOS2.framework */; };
 		C512BCC823E751650079F49C /* toStations.js in Resources */ = {isa = PBXBuildFile; fileRef = C512BCC723E751650079F49C /* toStations.js */; };
+		C5166C3923F610AC001F0254 /* TermsOfSeriviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5166C3823F610AB001F0254 /* TermsOfSeriviceView.swift */; };
 		C51B3EDD23ED26330021EBE0 /* KNearestNeighborsClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B3EDC23ED26330021EBE0 /* KNearestNeighborsClassifier.swift */; };
 		C55640F723CF8439003BCB91 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55640F623CF8438003BCB91 /* AppData.swift */; };
 		C55BC25C23EE7FCC008E12AB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C55BC25B23EE7FCB008E12AB /* GoogleService-Info.plist */; };
@@ -58,6 +59,7 @@
 		751A431627D2482AE13CFE9F /* Pods-Arrival-iOS2Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Arrival-iOS2Tests.release.xcconfig"; path = "Target Support Files/Pods-Arrival-iOS2Tests/Pods-Arrival-iOS2Tests.release.xcconfig"; sourceTree = "<group>"; };
 		C512BCC423E4FBA80079F49C /* TimePlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = TimePlayground.playground; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C512BCC723E751650079F49C /* toStations.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = toStations.js; sourceTree = "<group>"; };
+		C5166C3823F610AB001F0254 /* TermsOfSeriviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfSeriviceView.swift; sourceTree = "<group>"; };
 		C51B3EDC23ED26330021EBE0 /* KNearestNeighborsClassifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KNearestNeighborsClassifier.swift; sourceTree = "<group>"; };
 		C55640F623CF8438003BCB91 /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
 		C55BC25B23EE7FCB008E12AB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 				C55640F623CF8438003BCB91 /* AppData.swift */,
 				C568C40323D95FA000AB9E67 /* LoadingView.swift */,
 				C568C40523D95FA800AB9E67 /* LoginView.swift */,
+				C5166C3823F610AB001F0254 /* TermsOfSeriviceView.swift */,
 				C512BCC723E751650079F49C /* toStations.js */,
 				C592370823E151AD00AFCD6C /* HostingController.swift */,
 			);
@@ -374,7 +377,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/Fabric/run\"\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n#\"${PODS_ROOT}/Fabric/run\"\n";
 		};
 		C5E5768F23EFEB7500A3A7BD /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -391,7 +394,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/Fabric/upload-symbols\" -gsp \"${PROJECT_DIR}/GoogleService-Info.plist\" -p ios \"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\"\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n#\"${PODS_ROOT}/Fabric/upload-symbols\" -gsp \"${PROJECT_DIR}/GoogleService-Info.plist\" -p ios \"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}\"\n";
 		};
 		E17C82A52DBE2323B5D7E277 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -434,6 +437,7 @@
 				C5E5768C23EFB9E300A3A7BD /* Trip.swift in Sources */,
 				C568C40023D8B99400AB9E67 /* Station.swift in Sources */,
 				C568C40623D95FA800AB9E67 /* LoginView.swift in Sources */,
+				C5166C3923F610AC001F0254 /* TermsOfSeriviceView.swift in Sources */,
 				C58F248423CC1438003882F3 /* SceneDelegate.swift in Sources */,
 				C55640F723CF8439003BCB91 /* AppData.swift in Sources */,
 				34CD87F723EA8A24004F8024 /* SettingsView.swift in Sources */,
@@ -503,7 +507,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -599,7 +603,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.15;
+				MARKETING_VERSION = 1.17;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival;
 				PRODUCT_NAME = Arrival;
 				SWIFT_VERSION = 5.0;
@@ -621,7 +625,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.15;
+				MARKETING_VERSION = 1.17;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival;
 				PRODUCT_NAME = Arrival;
 				SWIFT_VERSION = 5.0;

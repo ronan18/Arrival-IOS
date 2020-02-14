@@ -72,8 +72,10 @@ struct SettingsView: View {
                         Spacer()
                     }
                     Spacer().frame(height: 20)
+                     TermsOfSeriviceView()
                     Text(self.appData.aboutText)
                        .multilineTextAlignment(.center).font(.subheadline).foregroundColor(.gray)
+                   
                     
                 }.padding()
                

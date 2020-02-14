@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>cycleTimer</key>
+	<string>30</string>
+	<key>termsOfServiceUrl</key>
+	<string>https://arrival.city/termsofservice.html</string>
+	<key>privacyPolicyUrl</key>
+	<string>https://arrival.city/privacypolicy.html</string>
 	<key>realtimeTripsNotice</key>
 	<string>Trip data is currently based off of BART&apos;s scheduled departures not realtime data. Future updates will enable realtime trip data.</string>
 	<key>aboutText</key>

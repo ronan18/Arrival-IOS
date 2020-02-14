@@ -184,6 +184,8 @@ struct LoginView: View {
                         .multilineTextAlignment(.center)
                     Text(self.appData.loginError).foregroundColor(.red)
                     Spacer()
+                   TermsOfSeriviceView()
+                    
                     Button(action: {
                         if (!self.passphrase.isEmpty) {
                             self.appData.loginFromWeb(passphrase: self.passphrase)
@@ -226,6 +228,7 @@ struct LoginView: View {
                         .font(.footnote)
                         .multilineTextAlignment(.center)
                     Spacer()
+                    TermsOfSeriviceView()
                     Button(action: {
                         
                         print("trying to create new account", self.newPass)
