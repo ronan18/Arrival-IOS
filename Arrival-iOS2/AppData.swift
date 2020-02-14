@@ -643,7 +643,13 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         print("fetching settings from auth")
                         for data in result as! [NSManagedObject] {
                             let user = data.value(forKey: "user") as! String
-                            var sortTrainsByTimeSetting = data.value(forKey: "sortTrainsByTime") as! Bool?
+                            var sortTrainsByTimeSetting: Bool
+                            do {
+                               try  sortTrainsByTimeSetting = data.value(forKey: "sortTrainsByTime") as! Bool
+                            } catch {
+                                sortTrainsByTimeSetting = false
+                            }
+                           
                             if (sortTrainsByTimeSetting == nil) {
                                 sortTrainsByTimeSetting = false
                             }
@@ -653,7 +659,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                             print(user, value, "user settings from auth")
                          //   print( prioritizeTrainSettingValue, "sort t b t settings from auth")
                             if (user == value) {
-                                self.sortTrainsByTime = sortTrainsByTimeSetting!
+                                self.sortTrainsByTime = sortTrainsByTimeSetting
                              
                                 
                                 
