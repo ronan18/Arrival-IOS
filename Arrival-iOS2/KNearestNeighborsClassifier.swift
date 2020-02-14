@@ -8,32 +8,47 @@
 
 import Darwin
 import Foundation
-
+enum knnError: Error {
+    case cantFindMajority
+    case expectedNN(nNeighbors: Int, dataCount: Int)
+     case expectedDataCount(dataCount: Int, labelsCount: Int)
+    
+}
 public class KNearestNeighborsClassifier {
   
   private let data:           [[Double]]
   private let labels:         [Int]
   private let nNeighbors:     Int
   
-  public init(data: [[Double]], labels: [Int], nNeighbors: Int = 3) {
+  public init(data: [[Double]], labels: [Int], nNeighbors: Int = 3) throws  {
     self.data = data
     self.labels = labels
     self.nNeighbors = nNeighbors
     
     guard nNeighbors <= data.count else {
-      fatalError("Expected `nNeighbors` (\(nNeighbors)) <= `data.count` (\(data.count))")
+        throw(knnError.expectedNN(nNeighbors: nNeighbors, dataCount: data.count))
     }
     
     guard data.count == labels.count else {
-      fatalError("Expected `data.count` (\(data.count)) == `labels.count` (\(labels.count))")
+        throw(knnError.expectedDataCount(dataCount: data.count, labelsCount: labels.count))
     }
   }
   
-  public func predict(_ xTests: [[Double]]) -> [Int] {
-    return xTests.map({
+  public func predict(_ xTests: [[Double]]) throws -> [Int]  {
+    do {
+    return try xTests.map({
       let knn = kNearestNeighbors($0)
-      return kNearestNeighborsMajority(knn)
+        do {
+            let result = try kNearestNeighborsMajority(knn)
+            return result
+        } catch {
+            throw(error)
+        }
+      
     })
+    } catch {
+    throw(error)
+    }
   }
   
   private func distance(_ xTrain: [Double], _ xTest: [Double]) -> Double {
@@ -56,7 +71,7 @@ public class KNearestNeighborsClassifier {
     return Array(kNearestNeighborsSorted)
   }
   
-  private func kNearestNeighborsMajority(_ knn: [(key: Double, value: Int)]) -> Int {
+  private func kNearestNeighborsMajority(_ knn: [(key: Double, value: Int)]) throws -> Int {
     var labels = [Int :  Int]()
     
     for neighbor in knn {
@@ -69,6 +84,6 @@ public class KNearestNeighborsClassifier {
       }
     }
     
-    fatalError("Cannot find the majority.")
+    throw(knnError.cantFindMajority)
   }
 }

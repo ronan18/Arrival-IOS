@@ -17,6 +17,7 @@ import JavaScriptCore
 import FirebasePerformance
 import FirebaseAnalytics
 import FirebaseRemoteConfig
+import FirebaseCrashlytics
 
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
 let context = appDelegate.persistentContainer.viewContext
@@ -291,15 +292,22 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     nNeighbors = 1
                     
                     print(nNeighbors, "knn neighbors")
-                    let knn = KNearestNeighborsClassifier(data: trainingData, labels: labels, nNeighbors: nNeighbors)
-                    if (self.fromStation.abbr != "load") {
-                        print("knn predicting", self.fromStation.abbr)
-                        let predictionLabels = knn.predict([tripToDouble(day: day, hour: hour, fromStation: self.fromStation.abbr)])
-                        print(predictionLabels, "knn prediction labels")
-                        predictionType = predictionLabels.map({ self.stationFromInt(label: $0) })
-                        print(predictionType, "knn prediction type")
-                        priorities[predictionType[0]] = (JSON(priorities)[predictionType[0]].intValue + 100) * 10
+                    do {
+                        let knn = try KNearestNeighborsClassifier(data: trainingData, labels: labels, nNeighbors: nNeighbors)
+                        if (self.fromStation.abbr != "load") {
+                            print("knn predicting", self.fromStation.abbr)
+                            let predictionLabels = try knn.predict([tripToDouble(day: day, hour: hour, fromStation: self.fromStation.abbr)])
+                            print(predictionLabels, "knn prediction labels")
+                            predictionType = predictionLabels.map({ self.stationFromInt(label: $0) })
+                            print(predictionType, "knn prediction type")
+                            priorities[predictionType[0]] = (JSON(priorities)[predictionType[0]].intValue + 100) * 10
+                        }
+                    } catch {
+                        print("crash", error)
+                        Crashlytics.crashlytics().record(error: error)
+                        
                     }
+                    
                 }
                 do {
                     try context.save()
