@@ -9,9 +9,9 @@
 	<key>privacyPolicyUrl</key>
 	<string>https://arrival.city/privacypolicy.html</string>
 	<key>realtimeTripsNotice</key>
-	<string>Trip data is currently based off of BART&apos;s scheduled departures not realtime data. Future updates will enable realtime trip data.</string>
+	<string>Trip data is currently based on BART&apos;s scheduled departure times and not realtime data. Future updates will enable realtime trip data.</string>
 	<key>aboutText</key>
-	<string>Arrival is an open souce app developed by Ronan Furuta. If you have any feedback or suggestions please email support@ronanfuruta.com</string>
+	<string>Arrival is an open source app developed by Ronan Furuta. If you have any feedback or suggestions please email support@arrival.city</string>
 	<key>onboarding3Tagline</key>
 	<string>Because Arrival generates some pretty personal information, your daily commute, we have created an anonymous authentication system that still allows for cross device syncing and machine learning.</string>
 	<key>onboarding3Heading</key>
