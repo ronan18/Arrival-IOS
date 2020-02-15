@@ -16,16 +16,21 @@ struct ContentView: View {
     var body: some View {
         VStack {
             if (self.appData.ready) {
-                if (self.appData.auth) {
-                    if (self.appData.screen == "home") {
-                          HomeView()
-                    } else if (self.appData.screen == "settings") {
-                        SettingsView()
-                    }
-                 
+                if  (self.appData.network) {
+                    if (self.appData.auth) {
+                                      if (self.appData.screen == "home") {
+                                            HomeView()
+                                      } else if (self.appData.screen == "settings") {
+                                          SettingsView()
+                                      }
+                                   
+                                  } else {
+                                      LoginView()
+                                  }
                 } else {
-                    LoginView()
+                    NoNetworkView()
                 }
+              
             } else {
                 LoadingView()
             }

@@ -28,7 +28,7 @@ struct LoginView: View {
                         Image("map")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: geo.size.width)
+                            .frame(width: geo.size.width - 10)
                     }
                     .frame(height: 250)
                     Text(self.appData.onboardingMessages["onboarding1Heading"].stringValue)
@@ -71,7 +71,7 @@ struct LoginView: View {
                         Image("dataSync")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: geo.size.width)
+                            .frame(width: geo.size.width - 10)
                     }
                     .frame(height: 250)
                     Text(self.appData.onboardingMessages["onboarding2Heading"].stringValue)
@@ -114,7 +114,7 @@ struct LoginView: View {
                         Image("secure")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: geo.size.width)
+                            .frame(width: geo.size.width - 10)
                     }
                     .frame(height: 250)
                     Text(self.appData.onboardingMessages["onboarding3Heading"].stringValue)
@@ -152,9 +152,9 @@ struct LoginView: View {
                                 .lineLimit(nil)
                             Spacer()
                         }.padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-                    }.background(Color.white).cornerRadius(10.0).foregroundColor(.black).overlay(
+                    }.background(Color.whiteBG).cornerRadius(10.0).foregroundColor(.blackBorder).overlay(
                         RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.black, lineWidth: 3)
+                            .stroke(Color.blackBorder, lineWidth: 3)
                     )
                     
                 } else if (self.onboard == 2) {

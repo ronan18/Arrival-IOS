@@ -50,7 +50,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var onboardingMessages = JSON(["onboarding1Heading": ""])
     @Published var onboardingLoaded = false
     @Published var aboutText = ""
-     @Published var realtimeTripNotice = ""
+    @Published var realtimeTripNotice = ""
     @Published var privacyPolicy = ""
     @Published var termsOfService = ""
     @Published var cycleTimer: Double = 30
@@ -126,8 +126,21 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         
         // print("got onboarding config", onboardingMessages.dictionaryObject)
         self.initialTrainsTrace = Performance.startTrace(name: "initalTrainsDisplay")!
+        testNetwork()
         start()
         getStations()
+        
+    }
+    func testNetwork() {
+        print("network testing")
+        let headers: HTTPHeaders = [
+                           "Authorization": self.passphrase,
+                           "Accept": "application/json"
+                       ]
+                       Alamofire.request(apiUrl, headers: headers).response { response in
+                        print("network Test", response.error)
+                        self.network = response.error == nil
+        }
         
     }
     func logOut() {

@@ -34,6 +34,7 @@
 		C592370923E151AD00AFCD6C /* HostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C592370823E151AD00AFCD6C /* HostingController.swift */; };
 		C5A517A523CCED0F003E616E /* TrainComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A517A423CCED0F003E616E /* TrainComponent.swift */; };
 		C5A9B79D23F5C3BD004E8C5C /* RemoteConfigDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5A9B79C23F5C3BD004E8C5C /* RemoteConfigDefaults.plist */; };
+		C5DF911523F87EA800701D3F /* NoNetworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DF911423F87EA800701D3F /* NoNetworkView.swift */; };
 		C5E46EC623F3C53E00979DBB /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E46EC523F3C53E00979DBB /* Route.swift */; };
 		C5E5768C23EFB9E300A3A7BD /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E5768B23EFB9E300A3A7BD /* Trip.swift */; };
 		C5E5768E23EFBB0A00A3A7BD /* Leg.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E5768D23EFBB0A00A3A7BD /* Leg.swift */; };
@@ -86,6 +87,7 @@
 		C592370823E151AD00AFCD6C /* HostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostingController.swift; sourceTree = "<group>"; };
 		C5A517A423CCED0F003E616E /* TrainComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainComponent.swift; sourceTree = "<group>"; };
 		C5A9B79C23F5C3BD004E8C5C /* RemoteConfigDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RemoteConfigDefaults.plist; sourceTree = "<group>"; };
+		C5DF911423F87EA800701D3F /* NoNetworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoNetworkView.swift; sourceTree = "<group>"; };
 		C5E46EC523F3C53E00979DBB /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		C5E5768B23EFB9E300A3A7BD /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
 		C5E5768D23EFBB0A00A3A7BD /* Leg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Leg.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 				C55640F623CF8438003BCB91 /* AppData.swift */,
 				C568C40323D95FA000AB9E67 /* LoadingView.swift */,
 				C568C40523D95FA800AB9E67 /* LoginView.swift */,
+				C5DF911423F87EA800701D3F /* NoNetworkView.swift */,
 				C5166C3823F610AB001F0254 /* TermsOfSeriviceView.swift */,
 				C512BCC723E751650079F49C /* toStations.js */,
 				C592370823E151AD00AFCD6C /* HostingController.swift */,
@@ -426,6 +429,7 @@
 				C5E5768C23EFB9E300A3A7BD /* Trip.swift in Sources */,
 				C568C40023D8B99400AB9E67 /* Station.swift in Sources */,
 				C568C40623D95FA800AB9E67 /* LoginView.swift in Sources */,
+				C5DF911523F87EA800701D3F /* NoNetworkView.swift in Sources */,
 				C5166C3923F610AC001F0254 /* TermsOfSeriviceView.swift in Sources */,
 				C58F248423CC1438003882F3 /* SceneDelegate.swift in Sources */,
 				C55640F723CF8439003BCB91 /* AppData.swift in Sources */,
