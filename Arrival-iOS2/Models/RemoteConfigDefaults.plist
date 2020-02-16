@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>destinationStationText</key>
+	<string>stops to destination station...</string>
+	<key>transferStationText</key>
+	<string>stops to transfer station...</string>
 	<key>cycleTimer</key>
 	<string>30</string>
 	<key>termsOfServiceUrl</key>

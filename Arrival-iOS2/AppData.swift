@@ -546,9 +546,16 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                                     
                                     print(stopCount, "route stop count")
                                     
+                                    let type: String
+                                    if (i == thisTrain["leg"].count - 1) {
+                                        type = self.remoteConfig["destinationStationText"].stringValue!
+                                    }  else {
+                                        type = self.remoteConfig["transferStationText"].stringValue!
+                                    }
+                                    
                                     // print(routeJSON.dictionaryObject, "route for route", routeNum, "color", routeJSON["color"].stringValue)
                                     
-                                    legs.append(Leg(order: leg["order"].intValue, origin: origin, destination: destination, originTime: leg["@origTimeMin"].stringValue, destinationTime: leg["@destTimeMin"].stringValue, line: leg["@line"].stringValue, route: leg["route"].intValue, trainDestination: leg["@trainHeadStation"].stringValue,  color:routeJSON.color, stops: stopCount))
+                                    legs.append(Leg(order: leg["order"].intValue, origin: origin, destination: destination, originTime: leg["@origTimeMin"].stringValue, destinationTime: leg["@destTimeMin"].stringValue, line: leg["@line"].stringValue, route: leg["route"].intValue, trainDestination: leg["@trainHeadStation"].stringValue,  color:routeJSON.color, stops: stopCount, type: type))
                                 } else {
                                     print("route for route", routeNum, leg, "doesn't exist")
                                 }

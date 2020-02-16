@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 struct Leg: Identifiable, Codable {
     var id = UUID()
     var order: Int
@@ -19,4 +20,7 @@ struct Leg: Identifiable, Codable {
     var trainDestination: String
     var color: String
     var stops: Int
+    var type: String
+    
+    
 }

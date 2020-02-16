@@ -36,7 +36,7 @@ struct TrainView: View {
             } else {
                 if (self.appData.sortTrainsByTime || self.appData.toStation.abbr != "none") {
                     if (self.appData.toStation.abbr != "none") {
-                       
+                        
                         List(self.appData.trips) { trip in
                             
                             
@@ -63,31 +63,33 @@ struct TrainView: View {
                                         Text("Close")
                                     }
                                 }
+                                
                                 List(self.tripToShow.legs) {leg in
                                     HStack {
-                                 
+                                        
                                         Rectangle().frame(width: 10.0).foregroundColor(self.appData.convertColor(color: leg.color))
-                                     
+                                        
                                         VStack(alignment: .leading) {
                                             HStack(alignment: .center) {
                                                 VStack(alignment: .leading) {
-                                                Text(leg.trainDestination).font(.headline) + Text(" train").font(.caption)
+                                                    Text(leg.trainDestination).font(.headline) + Text(" train").font(.caption)
                                                     Text(leg.origin).font(.subheadline)
                                                 }
                                                 Spacer()
-                                                 Text(leg.originTime).font(.subheadline)
+                                                Text(leg.originTime).font(.subheadline)
                                             }.lineLimit(1)
                                             Spacer().frame(height: 15)
-                                            HStack {
-                                                Text("ride ").font(.caption) +
-                                                Text(String(leg.stops)).font(.caption) +
-                                                Text(" stops...").font(.caption)
-
-
-                                            }
-                                              Spacer().frame(height: 15)
+                                          
+                                                HStack {
+                                                    Text("ride ").font(.caption) +
+                                                        Text(String(leg.stops)).font(.caption) +
+                                                        Text(" " + leg.type).font(.caption)
+                                                }
+                                           
+                                            
+                                            Spacer().frame(height: 15)
                                             HStack(alignment: .center) {
-                                               
+                                                
                                                 Text(leg.destination).font(.headline) + Text(" station").font(.caption)
                                                 Spacer()
                                                 Text(leg.destinationTime).font(.subheadline)
@@ -95,7 +97,7 @@ struct TrainView: View {
                                             }.lineLimit(1)
                                             
                                         }.padding()
-                                    
+                                        
                                     }.cornerRadius(10).background(Color.background).overlay(
                                         RoundedRectangle(cornerRadius: CGFloat(10.0)).stroke(Color(.sRGB, red:170/255, green: 170/255, blue: 170/255, opacity: 0.1), lineWidth:3)
                                     ).cornerRadius(10.0)
@@ -107,9 +109,9 @@ struct TrainView: View {
                         }
                         Spacer().frame(height: 1)
                         Text(self.appData.realtimeTripNotice)
-                                                   .font(.caption)
-                                                .foregroundColor(Color.gray)
-                                                .multilineTextAlignment(.center).padding()
+                            .font(.caption)
+                            .foregroundColor(Color.gray)
+                            .multilineTextAlignment(.center).padding()
                     } else {
                         List(self.appData.trains) { train in
                             
