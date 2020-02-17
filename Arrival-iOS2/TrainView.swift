@@ -64,37 +64,45 @@ struct TrainView: View {
                                     }
                                 }
                                 
-                                List(self.tripToShow.legs) {leg in
+                                
+                                ForEach(self.tripToShow.legs) { leg in
                                     HStack {
                                         
-                                        Rectangle().frame(width: 10.0).foregroundColor(self.appData.convertColor(color: leg.color))
+                                        Rectangle().frame(width: 8.0, height: 160).foregroundColor(self.appData.convertColor(color: leg.color))
                                         
                                         VStack(alignment: .leading) {
                                             HStack(alignment: .center) {
                                                 VStack(alignment: .leading) {
-                                                    Text(leg.trainDestination).font(.headline) + Text(" train").font(.caption)
+                                                    HStack {
+                                                        Text(leg.trainDestination).font(.headline)
+                                                        Text("train").font(.caption)
+                                                    }.lineLimit(Int(self.appData.remoteConfig["tripviewStationLineLimit"].stringValue!))
                                                     Text(leg.origin).font(.subheadline)
-                                                }
+                                                }.lineLimit(Int(self.appData.remoteConfig["tripviewStationLineLimit"].stringValue!))
                                                 Spacer()
                                                 Text(leg.originTime).font(.subheadline)
-                                            }.lineLimit(1)
+                                            }
                                             Spacer().frame(height: 15)
-                                          
-                                                HStack {
-                                                    Text("ride ").font(.caption) +
-                                                        Text(String(leg.stops)).font(.caption) +
-                                                        Text(" " + leg.type).font(.caption)
-                                                }
-                                           
+                                            
+                                            HStack {
+                                                
+                                                Text(String(leg.stops)).font(.caption) +
+                                                    Text(" " + leg.type).font(.caption)
+                                            }
+                                            
                                             
                                             Spacer().frame(height: 15)
                                             HStack(alignment: .center) {
+                                                HStack {
+                                                    Text(leg.destination).font(.headline)
+                                                    Text("station").font(.caption)
+                                                }.lineLimit(Int(self.appData.remoteConfig["tripviewStationLineLimit"].stringValue!))
                                                 
-                                                Text(leg.destination).font(.headline) + Text(" station").font(.caption)
+                                                
                                                 Spacer()
                                                 Text(leg.destinationTime).font(.subheadline)
                                                 
-                                            }.lineLimit(1)
+                                            }.lineLimit(Int(self.appData.remoteConfig["tripviewStationLineLimit"].stringValue!))
                                             
                                         }.padding()
                                         
@@ -103,6 +111,7 @@ struct TrainView: View {
                                     ).cornerRadius(10.0)
                                     
                                 }
+                                
                                 Spacer()
                                 
                             }.padding()

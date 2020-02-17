@@ -53,6 +53,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var realtimeTripNotice = ""
     @Published var privacyPolicy = ""
     @Published var termsOfService = ""
+    @Published var remoteConfig = RemoteConfig.remoteConfig()
     @Published var cycleTimer: Double = 30
     private let locationManager = CLLocationManager()
     private var lat = 0.0
@@ -68,7 +69,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     private var initialTrainsTrace: Trace?
     private var cycleTrace: Trace?
     private var initialTrainsTraceDone: Bool = false
-    private var remoteConfig = RemoteConfig.remoteConfig()
+   
     private let settings = RemoteConfigSettings()
     private var apiUrl = "https://api.arrival.city"
     
