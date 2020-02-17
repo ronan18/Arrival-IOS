@@ -50,6 +50,8 @@ struct TrainView: View {
                             
                             
                         }.sheet(isPresented: $showTransfers) {
+                            TripDetailView(modalShow: self.$showTransfers, tripToShow: self.$tripToShow).environmentObject(self.appData)
+                            /*
                             VStack {
                                 HStack {
                                     Text("Trip Details")
@@ -115,6 +117,7 @@ struct TrainView: View {
                                 Spacer()
                                 
                             }.padding()
+                            */
                         }
                         Spacer().frame(height: 1)
                         Text(self.appData.realtimeTripNotice)

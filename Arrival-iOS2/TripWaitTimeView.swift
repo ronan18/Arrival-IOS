@@ -29,7 +29,7 @@ struct TripWaitTimeView: View {
             }
            
             Spacer()
-        }.foregroundColor(.black)
+        }.foregroundColor(.black).font(.subheadline)
     }
 }
 

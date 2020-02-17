@@ -14,9 +14,7 @@ pod 'Firebase/Analytics'
 pod 'Firebase/Crashlytics'
 pod 'Firebase/Performance'
 pod 'Firebase/RemoteConfig'
-  target 'Arrival-iOS2Tests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
+#pod 'SwiftMoment'
+
 
 end

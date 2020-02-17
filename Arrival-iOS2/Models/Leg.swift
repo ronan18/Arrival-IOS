@@ -21,6 +21,8 @@ struct Leg: Identifiable, Codable {
     var color: String
     var stops: Int
     var type: String
+    var enrouteTime: String
+    var transferWait: String?
     
     
 }

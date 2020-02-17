@@ -547,16 +547,30 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                                     
                                     print(stopCount, "route stop count")
                                     
-                                    let type: String
+                                    var type: String
                                     if (i == thisTrain["leg"].count - 1) {
-                                        type = self.remoteConfig["destinationStationText"].stringValue!
-                                    }  else {
-                                        type = self.remoteConfig["transferStationText"].stringValue!
+                                        type = "destination"
+                                    } else if (i == 0) {
+                                         type = "board"
+                                    }   else {
+                                        type = "transfer"
                                     }
+                                    var transferWait: String?
+                                    if (i != 0) {
+                                        let lastTrainString = thisTrain["leg"][i - 1]["@destTimeMin"].stringValue
+                                        let originTimeString = leg["@origTimeMin"].stringValue
+                                        let lastTrainTime = moment(lastTrainString, "HH:mm")
+                                        let originTime = moment(originTimeString, "HH:mm")
+                                        let difference = originTime.diff(lastTrainTime, "minutes")
+                                         transferWait = difference.stringValue + " min"
+                                        print(lastTrainTime.format(), originTime.format(), difference, transferWait, "transfer wait")
+                                    }
+                                    let enrouteTime = moment(leg["@destTimeMin"].stringValue, "HH:mm").diff(moment(leg["@origTimeMin"].stringValue, "HH:mm"), "minutes")
+                                   let enrouteTimeString = enrouteTime.stringValue + "min"
                                     
                                     // print(routeJSON.dictionaryObject, "route for route", routeNum, "color", routeJSON["color"].stringValue)
                                     
-                                    legs.append(Leg(order: leg["order"].intValue, origin: origin, destination: destination, originTime: leg["@origTimeMin"].stringValue, destinationTime: leg["@destTimeMin"].stringValue, line: leg["@line"].stringValue, route: leg["route"].intValue, trainDestination: leg["@trainHeadStation"].stringValue,  color:routeJSON.color, stops: stopCount, type: type))
+                                    legs.append(Leg(order: leg["@order"].intValue, origin: origin, destination: destination, originTime: leg["@origTimeMin"].stringValue, destinationTime: leg["@destTimeMin"].stringValue, line: leg["@line"].stringValue, route: leg["route"].intValue, trainDestination: leg["@trainHeadStation"].stringValue,  color:routeJSON.color, stops: stopCount, type: type, enrouteTime: enrouteTimeString, transferWait: transferWait))
                                 } else {
                                     print("route for route", routeNum, leg, "doesn't exist")
                                 }
