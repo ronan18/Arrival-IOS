@@ -73,7 +73,7 @@ struct HomeView: View {
                                         Button(action: {
                                             self.fromModalDisplayed = false
                                         }) {
-                                            Text("Dismiss")
+                                            Text("Close")
                                         }
                                     }
                                     VStack(alignment: .leading) {
@@ -128,7 +128,7 @@ struct HomeView: View {
                                         Button(action: {
                                             self.toModalDisplayed = false
                                         }) {
-                                            Text("Dismiss")
+                                            Text("Close")
                                         }
                                     }
                                     VStack(alignment: .leading) {

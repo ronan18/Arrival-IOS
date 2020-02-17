@@ -23,7 +23,7 @@ struct TripDetailView: View {
                 Button(action: {
                     self.modalShow = false
                 }) {
-                    Text("close")
+                    Text("Close")
                 }
             }
             HStack {

@@ -50,7 +50,7 @@ struct TrainView: View {
                             
                             
                         }.sheet(isPresented: $showTransfers) {
-                            TripDetailView(modalShow: self.$showTransfers, tripToShow: self.$tripToShow).environmentObject(self.appData)
+                            TripDetailView(modalShow: self.$showTransfers, tripToShow: self.$tripToShow).environmentObject(self.appData).edgesIgnoringSafeArea(.bottom)
                             /*
                             VStack {
                                 HStack {
