@@ -20,9 +20,9 @@ struct TripWaitTimeView: View {
             } else {
                 Image(systemName: "clock.fill")
                 if (type == "transfer") {
-                    Text("Wait \(time) to Transfer")
+                    Text("\(time) transfer window")
                 } else if (type == "board") {
-                     Text("Wait \(time) to Board")
+                     Text("Board in \(time)")
                 } else {
                     Text("Wait \(time)")
                 }

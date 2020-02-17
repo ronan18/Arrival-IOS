@@ -15,5 +15,6 @@ struct TripInfo: Identifiable, Codable {
     var originTime: String
     var destinatonTime: String
     var tripTIme: Double
+    var leavesIn: Int
    
 }

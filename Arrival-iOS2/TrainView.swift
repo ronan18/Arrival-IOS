@@ -15,7 +15,7 @@ struct TrainView: View {
     @EnvironmentObject private var appData: AppData
     @State private var direction = 0
     @State private var showTransfers = false
-    @State private var tripToShow: TripInfo = TripInfo(origin: "", destination: "", legs: [], originTime: "", destinatonTime: "", tripTIme: 0.0)
+    @State private var tripToShow: TripInfo = TripInfo(origin: "", destination: "", legs: [], originTime: "", destinatonTime: "", tripTIme: 0.0, leavesIn: 5)
     var body: some View {
         VStack {
             if (self.appData.noTrains) {
@@ -44,7 +44,7 @@ struct TrainView: View {
                                 self.tripToShow = trip
                                 self.showTransfers = true
                             }) {
-                                TrainComponent(type: "train",  name: trip.destination, departs: trip.originTime, color: self.appData.convertColor(color: trip.legs[0].color), eta: trip.destinatonTime).listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                                TrainComponent(type: "train",  name: trip.destination, departs: String(trip.leavesIn), unit: "min", color: self.appData.convertColor(color: trip.legs[0].color), eta: trip.destinatonTime).listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                             }
                             
                             

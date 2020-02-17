@@ -16,7 +16,7 @@ struct TripDetailView: View {
     @State var boardWait = ""
     @EnvironmentObject private var appData: AppData
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             HStack {
                 Text("Trip Details").font(.largeTitle).fontWeight(.bold)
                 Spacer()
@@ -26,27 +26,33 @@ struct TripDetailView: View {
                     Text("close")
                 }
             }
+            HStack {
+                VStack(alignment: .leading) {
+                    Text("Departs")
+                        .font(.caption)
+                    Text(self.tripToShow.originTime)
+                        .font(.headline)
+                }
+                Spacer()
+                VStack {
+                    Text("Travel")
+                        .font(.caption)
+                    Text(self.routeTime).font(.subheadline).fontWeight(.bold)
+                }
+
+                
+                Spacer()
+                VStack(alignment: .trailing) {
+                    Text("Arrives")
+                        .font(.caption)
+                    Text(self.tripToShow.destinatonTime)
+                        .font(.headline)
+                }
+            }.padding([.top, .bottom])
+            Divider()
             List {
                 VStack {
-                    HStack {
-                        VStack(alignment: .leading) {
-                            Text("Departs")
-                                .font(.caption)
-                            Text(self.tripToShow.originTime)
-                                .font(.headline)
-                        }
-                        Spacer()
-                        Text(self.routeTime).font(.subheadline)
-                        Spacer()
-                        VStack(alignment: .trailing) {
-                            Text("Arrives")
-                                .font(.caption)
-                            Text(self.tripToShow.destinatonTime)
-                                .font(.headline)
-                        }
-                    }.padding().cornerRadius(10).background(Color.background).overlay(
-                        RoundedRectangle(cornerRadius: CGFloat(10.0)).stroke(Color(.sRGB, red:170/255, green: 170/255, blue: 170/255, opacity: 0.1), lineWidth:3)
-                    ).cornerRadius(10.0)
+                    
                     ForEach(self.tripToShow.legs) {leg in
                         VStack {
                          
@@ -63,7 +69,7 @@ struct TripDetailView: View {
                         }
                     }
                     
-                }.edgesIgnoringSafeArea(.bottom).listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                }.edgesIgnoringSafeArea(.bottom).listRowInsets(.init(top: 10, leading: 0, bottom: 0, trailing: 0))
             }.edgesIgnoringSafeArea(.bottom)
             
             
@@ -83,6 +89,6 @@ struct TripDetailView: View {
 struct TripDetailView_Previews: PreviewProvider {
     
     static var previews: some View {
-        TripDetailView(modalShow: .constant(true), tripToShow: .constant(TripInfo(origin: "", destination: "", legs: [], originTime: "21:00", destinatonTime: "21:30", tripTIme: 0.0))).environmentObject(AppData())
+        TripDetailView(modalShow: .constant(true), tripToShow: .constant(TripInfo(origin: "", destination: "", legs: [], originTime: "21:00", destinatonTime: "21:30", tripTIme: 0.0, leavesIn: 5))).environmentObject(AppData())
     }
 }

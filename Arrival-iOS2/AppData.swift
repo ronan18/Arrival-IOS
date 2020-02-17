@@ -580,8 +580,11 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                             //let color = thisTrain["color"].stringValue
                             let color = "none"
                             print(eta)
+                            let originTime = moment(thisTrain["@origTimeMin"].stringValue, "HH:mm")
+                            let now = moment()
+                            let difference = originTime.diff(now, "minutes").intValue
                             results.append(Train(id: UUID(), direction: direction, time: etd, unit: "", color: "none", cars: 0, hex: "0", eta: eta))
-                            trips.append(TripInfo(origin: self.fromStation.abbr, destination: direction, legs: legs, originTime: thisTrain["@origTimeMin"].stringValue, destinatonTime: thisTrain["@destTimeMin"].stringValue, tripTIme: thisTrain["@tripTime"].doubleValue))
+                            trips.append(TripInfo(origin: self.fromStation.abbr, destination: direction, legs: legs, originTime: thisTrain["@origTimeMin"].stringValue, destinatonTime: thisTrain["@destTimeMin"].stringValue, tripTIme: thisTrain["@tripTime"].doubleValue, leavesIn: difference))
                         }
                         
                         results.sort {
