@@ -339,6 +339,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     func setFromStation(station: Station) {
         print("setting from Station", station)
         self.loaded = false
+        self.noTrains = false
         self.fromStation = station
         computeToSuggestions()
         if (!self.closestStations.isEmpty) {
@@ -359,6 +360,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     func setToStation(station: Station) {
         print("setting to Station")
         self.loaded = false
+         self.noTrains = false
         self.toStation = station
         self.cylce()
         let day = Calendar.current.component(.weekday, from: Date())
