@@ -12,7 +12,8 @@ struct TripDetailView: View {
     var body: some View {
         VStack {
             HStack {
-                Text("Trip Details").font(.largeTitle)
+                Text("Trip Details").font(.largeTitle).fontWeight(.bold)
+                Spacer()
                 Button(action: {}) {
                     Text("close")
                 }
@@ -20,25 +21,30 @@ struct TripDetailView: View {
             HStack {
                 VStack {
                     Text("Departs")
+                        .font(.caption)
                     Text("21:30")
+                        .font(.headline)
                 }
                 VStack {
                     Divider()
                 }
-                Text("55min")
+                Text("55") + Text(" min").font(.caption)
                 VStack {
                     Divider()
                 }
                 VStack(alignment: .trailing) {
                     Text("Departs")
+                        .font(.caption)
                     Text("21:30")
+                        .font(.headline)
                 }
-            }.cornerRadius(10).background(Color.background).overlay(
+                }.padding().cornerRadius(10).background(Color.background).overlay(
                 RoundedRectangle(cornerRadius: CGFloat(10.0)).stroke(Color(.sRGB, red:170/255, green: 170/255, blue: 170/255, opacity: 0.1), lineWidth:3)
             ).cornerRadius(10.0)
+            TripWaitTimeView(type: "board", time: "8min")
             
-            
-        }
+            Spacer()
+        }.padding()
     }
 }
 

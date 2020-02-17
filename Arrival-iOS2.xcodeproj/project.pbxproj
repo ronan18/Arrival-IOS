@@ -32,6 +32,7 @@
 		C5A9B79D23F5C3BD004E8C5C /* RemoteConfigDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = C5A9B79C23F5C3BD004E8C5C /* RemoteConfigDefaults.plist */; };
 		C5B5A53723FA62B00046CCF5 /* TripComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B5A53523FA62B00046CCF5 /* TripComponentView.swift */; };
 		C5B5A53823FA62B00046CCF5 /* TripDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B5A53623FA62B00046CCF5 /* TripDetailView.swift */; };
+		C5B5A53A23FA642D0046CCF5 /* TripWaitTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B5A53923FA642D0046CCF5 /* TripWaitTimeView.swift */; };
 		C5DF911523F87EA800701D3F /* NoNetworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DF911423F87EA800701D3F /* NoNetworkView.swift */; };
 		C5E46EC623F3C53E00979DBB /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E46EC523F3C53E00979DBB /* Route.swift */; };
 		C5E5768C23EFB9E300A3A7BD /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E5768B23EFB9E300A3A7BD /* Trip.swift */; };
@@ -70,6 +71,7 @@
 		C5A9B79C23F5C3BD004E8C5C /* RemoteConfigDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RemoteConfigDefaults.plist; sourceTree = "<group>"; };
 		C5B5A53523FA62B00046CCF5 /* TripComponentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripComponentView.swift; sourceTree = "<group>"; };
 		C5B5A53623FA62B00046CCF5 /* TripDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripDetailView.swift; sourceTree = "<group>"; };
+		C5B5A53923FA642D0046CCF5 /* TripWaitTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripWaitTimeView.swift; sourceTree = "<group>"; };
 		C5DF911423F87EA800701D3F /* NoNetworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoNetworkView.swift; sourceTree = "<group>"; };
 		C5E46EC523F3C53E00979DBB /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		C5E5768B23EFB9E300A3A7BD /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 				C5166C3823F610AB001F0254 /* TermsOfSeriviceView.swift */,
 				C5B5A53523FA62B00046CCF5 /* TripComponentView.swift */,
 				C5B5A53623FA62B00046CCF5 /* TripDetailView.swift */,
+				C5B5A53923FA642D0046CCF5 /* TripWaitTimeView.swift */,
 			);
 			path = "Arrival-iOS2";
 			sourceTree = "<group>";
@@ -335,6 +338,7 @@
 				C5E46EC623F3C53E00979DBB /* Route.swift in Sources */,
 				C5E5768C23EFB9E300A3A7BD /* Trip.swift in Sources */,
 				C568C40023D8B99400AB9E67 /* Station.swift in Sources */,
+				C5B5A53A23FA642D0046CCF5 /* TripWaitTimeView.swift in Sources */,
 				C568C40623D95FA800AB9E67 /* LoginView.swift in Sources */,
 				C5DF911523F87EA800701D3F /* NoNetworkView.swift in Sources */,
 				C5B5A53823FA62B00046CCF5 /* TripDetailView.swift in Sources */,
