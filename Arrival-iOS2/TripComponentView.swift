@@ -26,13 +26,13 @@ struct TripComponentView: View {
                 VStack {
                     HStack {
                         VStack(alignment: .leading, spacing: 0) {
-                            Text(fromStationName)
+                            Text(stationDisplay(fromStationName))
                                 .fontWeight(.semibold)
                             HStack(spacing: 0) {
                                 Image(systemName: "arrow.right.circle.fill").font(.subheadline)
                                 Spacer()
                                     .frame(width: 3.0)
-                                Text(trainName).font(.subheadline)
+                                Text(stationDisplay(trainName)).font(.subheadline)
                                 
                             }
                             
@@ -40,7 +40,7 @@ struct TripComponentView: View {
                             
                         }
                         Spacer()
-                        Text(fromStationTime)
+                        Text(timeDisplay(time: fromStationTime))
                             .font(.subheadline)
                     }
                     HStack {
@@ -60,14 +60,14 @@ struct TripComponentView: View {
                     }
                     HStack {
                         VStack(alignment: .leading, spacing: 0) {
-                            Text(destinationStationName)  .fontWeight(.semibold)
+                            Text(stationDisplay(destinationStationName)).fontWeight(.semibold)
                             
                             
                             
                             
                         }
                         Spacer()
-                        Text(toStationTime)
+                        Text(timeDisplay(time:toStationTime))
                             .font(.subheadline)
                     }
                 }.padding([.top, .bottom, .trailing]).padding(.leading, 5.0)

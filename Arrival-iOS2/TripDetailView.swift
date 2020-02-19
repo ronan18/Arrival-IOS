@@ -30,7 +30,7 @@ struct TripDetailView: View {
                 VStack(alignment: .leading) {
                     Text("Departs")
                         .font(.caption)
-                    Text(self.tripToShow.originTime)
+                    Text(timeDisplay(time: self.tripToShow.originTime))
                         .font(.headline)
                 }
                 Spacer()
@@ -45,13 +45,13 @@ struct TripDetailView: View {
                 VStack(alignment: .trailing) {
                     Text("Arrives")
                         .font(.caption)
-                    Text(self.tripToShow.destinatonTime)
+                    Text(timeDisplay(time: self.tripToShow.destinatonTime))
                         .font(.headline)
                 }
             }.padding([.top, .bottom])
             Divider()
             List {
-                VStack {
+               
                     
                     ForEach(self.tripToShow.legs) {leg in
                         VStack {
@@ -64,21 +64,20 @@ struct TripDetailView: View {
                             
                             TripComponentView(fromStationName: leg.origin, trainName: leg.trainDestination, stops: leg.stops, type: leg.type, destinationStationName: leg.destination, fromStationTime: leg.originTime, toStationTime: leg.destinationTime, enrouteTime: leg.enrouteTime, color: self.appData.convertColor(color: leg.color)).listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
                             if (leg.order == self.tripToShow.legs.count) {
-                                TripWaitTimeView(type: "arrive", time: self.tripToShow.destinatonTime)
+                                TripWaitTimeView(type: "arrive", time: timeDisplay(time:self.tripToShow.destinatonTime))
                             }
                         }
                     }
-                    
-                }.edgesIgnoringSafeArea(.bottom).listRowInsets(.init(top: 10, leading: 0, bottom: 0, trailing: 0))
+                 
             }.edgesIgnoringSafeArea(.bottom)
-            
+            Spacer()
             
      
         }.edgesIgnoringSafeArea(.bottom).padding().onAppear {
-            let originTIme = moment(self.tripToShow.originTime, "hh:mm")
-            let destinationTIme = moment(self.tripToShow.destinatonTime, "hh:mm")
+            let originTIme = moment(self.tripToShow.originTime, dateFormate)
+            let destinationTIme = moment(self.tripToShow.destinatonTime, dateFormate)
             let routeTime = destinationTIme.diff(originTIme, "minutes")
-            let boardTime =  moment(self.tripToShow.legs[0].originTime, "hh:mm")
+            let boardTime =  moment(self.tripToShow.legs[0].originTime, dateFormate)
             self.boardWait =  boardTime.fromNow(true)
             print(routeTime, destinationTIme.format(), originTIme.format(), "route time", wait)
             self.routeTime = routeTime.stringValue + "min"

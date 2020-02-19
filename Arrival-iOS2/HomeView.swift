@@ -54,7 +54,7 @@ struct HomeView: View {
                                 if (self.appData.fromStation.id != "loading") {
                                     VStack(alignment: .leading) {
                                         Text("from").font(.caption)
-                                        Text(self.appData.fromStation.name).font(.headline)
+                                        Text(stationDisplay(self.appData.fromStation.name)).font(.headline)
                                     }.lineLimit(1)
                                 } else {
                                     VStack(alignment: .leading) {
@@ -116,7 +116,7 @@ struct HomeView: View {
                             }) {
                                 VStack(alignment: .trailing) {
                                     Text("to").font(.caption)
-                                    Text(self.appData.toStation.name).font(.headline)
+                                    Text(stationDisplay(self.appData.toStation.name)).font(.headline)
                                 }.lineLimit(1)
                             }.sheet(isPresented: self.$toModalDisplayed) {
                                 VStack(alignment: .leading) {

@@ -35,7 +35,7 @@ struct TrainComponent: View {
                     if (type != "skeleton") {
                     if (type == "train") { Text("direction").font(.caption)
                     }
-                    Text(name).font(.headline)
+                    Text(stationDisplay(name)).font(.headline)
                     } else {
                          Rectangle()
                                        .fill(Color.skeleton)
@@ -72,7 +72,7 @@ struct TrainComponent: View {
                     if (!eta.isEmpty) {
                         VStack(alignment: .trailing) {
                             Text("arrives").font(.caption)
-                            Text(String(eta)).font(.headline)
+                            Text(timeDisplay(time: String(eta))).font(.headline)
                         }
                     }
                     
