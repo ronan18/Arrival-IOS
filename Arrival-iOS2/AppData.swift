@@ -18,6 +18,7 @@ import FirebasePerformance
 import FirebaseAnalytics
 import FirebaseRemoteConfig
 import FirebaseCrashlytics
+let dateFormate = "hh:mm A"
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
 let context = appDelegate.persistentContainer.viewContext
 let baseURL = "https://api.arrival.city"
@@ -561,13 +562,13 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                                     if (i != 0) {
                                         let lastTrainString = thisTrain["leg"][i - 1]["@destTimeMin"].stringValue
                                         let originTimeString = leg["@origTimeMin"].stringValue
-                                        let lastTrainTime = moment(lastTrainString, "HH:mm")
-                                        let originTime = moment(originTimeString, "HH:mm")
+                                        let lastTrainTime = moment(lastTrainString, "hh:mm")
+                                        let originTime = moment(originTimeString, "hh:mm")
                                         let difference = originTime.diff(lastTrainTime, "minutes")
                                          transferWait = difference.stringValue + " min"
                                         print(lastTrainTime.format(), originTime.format(), difference, transferWait, "transfer wait")
                                     }
-                                    let enrouteTime = moment(leg["@destTimeMin"].stringValue, "HH:mm").diff(moment(leg["@origTimeMin"].stringValue, "HH:mm"), "minutes")
+                                    let enrouteTime = moment(leg["@destTimeMin"].stringValue, "hh:mm A").diff(moment(leg["@origTimeMin"].stringValue, "hh:mm"), "minutes")
                                    let enrouteTimeString = enrouteTime.stringValue + "min"
                                     
                                     // print(routeJSON.dictionaryObject, "route for route", routeNum, "color", routeJSON["color"].stringValue)
@@ -582,7 +583,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                             //let color = thisTrain["color"].stringValue
                             let color = "none"
                             print(eta)
-                            let originTime = moment(thisTrain["@origTimeMin"].stringValue, "HH:mm")
+                            let originTime = moment(thisTrain["@origTimeMin"].stringValue, "hh:mm")
                             let now = moment()
                             let difference = originTime.diff(now, "minutes").intValue
                             results.append(Train(id: UUID(), direction: direction, time: etd, unit: "", color: "none", cars: 0, hex: "0", eta: eta))
@@ -600,7 +601,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         self.cycleTrace!.stop()
                     } else {
                         self.loaded = true
-                        self.noTrains = true
+                         self.noTrains = true
                         self.cycleTrace!.stop()
                     }
                 }

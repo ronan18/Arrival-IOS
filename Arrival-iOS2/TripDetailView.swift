@@ -75,10 +75,10 @@ struct TripDetailView: View {
             
      
         }.edgesIgnoringSafeArea(.bottom).padding().onAppear {
-            let originTIme = moment(self.tripToShow.originTime, "HH:mm")
-            let destinationTIme = moment(self.tripToShow.destinatonTime, "HH:mm")
+            let originTIme = moment(self.tripToShow.originTime, "hh:mm")
+            let destinationTIme = moment(self.tripToShow.destinatonTime, "hh:mm")
             let routeTime = destinationTIme.diff(originTIme, "minutes")
-            let boardTime =  moment(self.tripToShow.legs[0].originTime, "HH:mm")
+            let boardTime =  moment(self.tripToShow.legs[0].originTime, "hh:mm")
             self.boardWait =  boardTime.fromNow(true)
             print(routeTime, destinationTIme.format(), originTIme.format(), "route time", wait)
             self.routeTime = routeTime.stringValue + "min"
