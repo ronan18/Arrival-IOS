@@ -8,7 +8,7 @@
 import Foundation
 
 func timeDisplay(time: String) -> String {
-    return moment(time, dateFormate).format("h:mm a")
+    return moment(time, dateFormate).format("h:mma")
 }
 func stationDisplay(_ station: String) -> String {
     switch station.lowercased()  {

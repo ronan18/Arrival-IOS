@@ -16,7 +16,7 @@ struct TripWaitTimeView: View {
             Spacer()
             if (type == "arrive") {
                  Image(systemName: "checkmark.circle.fill")
-                 Text("Arrive \(time)!")
+                 Text("Arrive by \(time)!")
             } else {
                 Image(systemName: "clock.fill")
                 if (type == "transfer") {
