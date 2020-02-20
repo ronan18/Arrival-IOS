@@ -67,7 +67,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     private var prioritizeLineSubscriber: Any?
     private var closestStationsSuscriber: Any?
     private var initialTrainsTrace: Trace?
-    private var cycleTrace: Trace?
+
     private var initialTrainsTraceDone: Bool = false
    
     private let settings = RemoteConfigSettings()
@@ -394,7 +394,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         
         getClosestStations()
         if (self.fromStation.name != "loading" && self.auth && self.ready && !self.passphrase.isEmpty && allowCycle) {
-            self.cycleTrace = Performance.startTrace(name: "cycle")
+           
             print("cycling", self.passphrase)
             if (self.toStation.id == "none" ) {
                 print("fetching trains from", self.fromStation.abbr)
@@ -490,12 +490,12 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                             self.initialTrainsTrace!.stop()
                             self.initialTrainsTraceDone = true
                         }
-                        self.cycleTrace!.stop()
+                   
                         
                     } else {
                         self.loaded = true
                         self.noTrains = true
-                        self.cycleTrace!.stop()
+                     
                     }
                 }
             } else {
@@ -601,11 +601,11 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         self.trains = results
                         self.trips = trips
                         self.loaded = true
-                        self.cycleTrace!.stop()
+                   
                     } else {
                         self.loaded = true
                          self.noTrains = true
-                        self.cycleTrace!.stop()
+                     
                     }
                 }
             }
