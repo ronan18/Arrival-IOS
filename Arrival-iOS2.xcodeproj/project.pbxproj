@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3475759823FCCCE3008CF063 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3475759723FCCCE2008CF063 /* Helpers.swift */; };
 		34AF24A823DFD00400E66C34 /* Train.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AF24A723DFD00400E66C34 /* Train.swift */; };
 		34CD87F723EA8A24004F8024 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CD87F623EA8A24004F8024 /* SettingsView.swift */; };
 		34EF38AF23CC23D4000DE4AF /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EF38AE23CC23D4000DE4AF /* Colors.swift */; };
@@ -20,6 +19,7 @@
 		C524E7B323FAEC87002BC9A5 /* moment-with-locales.min.js in Resources */ = {isa = PBXBuildFile; fileRef = C524E7B123FAEC86002BC9A5 /* moment-with-locales.min.js */; };
 		C55640F723CF8439003BCB91 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55640F623CF8438003BCB91 /* AppData.swift */; };
 		C55BC25C23EE7FCC008E12AB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C55BC25B23EE7FCB008E12AB /* GoogleService-Info.plist */; };
+		C5612DCD23FE3B59002A8E20 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5612DCC23FE3B58002A8E20 /* Helpers.swift */; };
 		C568C40023D8B99400AB9E67 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = C568C3FF23D8B99400AB9E67 /* Station.swift */; };
 		C568C40423D95FA000AB9E67 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C568C40323D95FA000AB9E67 /* LoadingView.swift */; };
 		C568C40623D95FA800AB9E67 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C568C40523D95FA800AB9E67 /* LoginView.swift */; };
@@ -43,7 +43,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3475759723FCCCE2008CF063 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Helpers.swift; path = "/Users/ronan/Desktop/Dev/IOS/Arrival-IOS/Arrival-iOS2/Helpers.swift"; sourceTree = "<absolute>"; };
 		34AF24A723DFD00400E66C34 /* Train.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Train.swift; sourceTree = "<group>"; };
 		34CD87F623EA8A24004F8024 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		34EF38AE23CC23D4000DE4AF /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -58,6 +57,7 @@
 		C524E7B123FAEC86002BC9A5 /* moment-with-locales.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "moment-with-locales.min.js"; sourceTree = "<group>"; };
 		C55640F623CF8438003BCB91 /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
 		C55BC25B23EE7FCB008E12AB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C5612DCC23FE3B58002A8E20 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		C568C3FF23D8B99400AB9E67 /* Station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
 		C568C40323D95FA000AB9E67 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		C568C40523D95FA800AB9E67 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -182,7 +182,7 @@
 				C5B5A53523FA62B00046CCF5 /* TripComponentView.swift */,
 				C5B5A53623FA62B00046CCF5 /* TripDetailView.swift */,
 				C5B5A53923FA642D0046CCF5 /* TripWaitTimeView.swift */,
-				3475759723FCCCE2008CF063 /* Helpers.swift */,
+				C5612DCC23FE3B58002A8E20 /* Helpers.swift */,
 			);
 			path = "Arrival-iOS2";
 			sourceTree = "<group>";
@@ -355,8 +355,8 @@
 				C524E7B223FAEC87002BC9A5 /* moment.swift in Sources */,
 				C5166C3923F610AC001F0254 /* TermsOfSeriviceView.swift in Sources */,
 				C58F248423CC1438003882F3 /* SceneDelegate.swift in Sources */,
+				C5612DCD23FE3B59002A8E20 /* Helpers.swift in Sources */,
 				C55640F723CF8439003BCB91 /* AppData.swift in Sources */,
-				3475759823FCCCE3008CF063 /* Helpers.swift in Sources */,
 				34CD87F723EA8A24004F8024 /* SettingsView.swift in Sources */,
 				C5B5A53723FA62B00046CCF5 /* TripComponentView.swift in Sources */,
 			);
