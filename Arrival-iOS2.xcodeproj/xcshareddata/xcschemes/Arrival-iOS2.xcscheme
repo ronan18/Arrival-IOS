@@ -20,20 +20,6 @@
                ReferencedContainer = "container:Arrival-iOS2.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "NO"
-            buildForRunning = "NO"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C58F249623CC143A003882F3"
-               BuildableName = "Arrival-iOS2Tests.xctest"
-               BlueprintName = "Arrival-iOS2Tests"
-               ReferencedContainer = "container:Arrival-iOS2.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
