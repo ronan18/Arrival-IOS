@@ -124,38 +124,61 @@ struct LoginView: View {
                             .font(.subheadline)
                             .multilineTextAlignment(.center)
                         Spacer()
-                        
+                        TermsOfSeriviceView()
                         Button(action: {
-                            self.onboard = 3
+                            
+                            print("trying to create new account", self.newPass)
+                            Analytics.logEvent(AnalyticsEventSignUp, parameters: [
+                                AnalyticsParameterMethod: "authScreen"
+                            ])
+                            self.appData.createNewAccount(passphrase: self.newPass)
+                            
+                            
                         }) {
                             HStack {
                                 Spacer()
-                                Text("CREATE NEW ACCOUNT")
+                                Text("START NOW")
                                     .font(.body)
                                     .fontWeight(.bold)
                                     .multilineTextAlignment(.center)
                                     .lineLimit(nil)
                                 Spacer()
                             }.padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-                        }.background(/*@START_MENU_TOKEN@*/Color.blue/*@END_MENU_TOKEN@*/).cornerRadius(/*@START_MENU_TOKEN@*/10.0/*@END_MENU_TOKEN@*/).foregroundColor(/*@START_MENU_TOKEN@*/.white/*@END_MENU_TOKEN@*/)
-                        Spacer()
-                            .frame(height: 10.0)
-                        Button(action: {
-                            self.onboard = 2
-                        }) {
-                            HStack {
-                                Spacer()
-                                Text("I HAVE AN ACCOUNT")
-                                    .font(.body)
-                                    .fontWeight(.bold)
-                                    .multilineTextAlignment(.center)
-                                    .lineLimit(nil)
-                                Spacer()
-                            }.padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-                        }.background(Color.whiteBG).cornerRadius(10.0).foregroundColor(.blackBorder).overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.blackBorder, lineWidth: 3)
-                        )
+                            Spacer()
+                        }.background(/*@START_MENU_TOKEN@*/Color.blue/*@END_MENU_TOKEN@*/).cornerRadius(CGFloat(/*@START_MENU_TOKEN@*/10.0/*@END_MENU_TOKEN@*/)).foregroundColor(/*@START_MENU_TOKEN@*/.white/*@END_MENU_TOKEN@*/)
+                        /*
+                         Button(action: {
+                         self.onboard = 3
+                         }) {
+                         HStack {
+                         Spacer()
+                         Text("CREATE NEW ACCOUNT")
+                         .font(.body)
+                         .fontWeight(.bold)
+                         .multilineTextAlignment(.center)
+                         .lineLimit(nil)
+                         Spacer()
+                         }.padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+                         }.background(/*@START_MENU_TOKEN@*/Color.blue/*@END_MENU_TOKEN@*/).cornerRadius(/*@START_MENU_TOKEN@*/10.0/*@END_MENU_TOKEN@*/).foregroundColor(/*@START_MENU_TOKEN@*/.white/*@END_MENU_TOKEN@*/)
+                         Spacer()
+                         .frame(height: 10.0)
+                         Button(action: {
+                         self.onboard = 2
+                         }) {
+                         HStack {
+                         Spacer()
+                         Text("I HAVE AN ACCOUNT")
+                         .font(.body)
+                         .fontWeight(.bold)
+                         .multilineTextAlignment(.center)
+                         .lineLimit(nil)
+                         Spacer()
+                         }.padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+                         }.background(Color.whiteBG).cornerRadius(10.0).foregroundColor(.blackBorder).overlay(
+                         RoundedRectangle(cornerRadius: 10)
+                         .stroke(Color.blackBorder, lineWidth: 3)
+                         )
+                         */
                         
                     } else if (self.onboard == 2) {
                         HStack {
