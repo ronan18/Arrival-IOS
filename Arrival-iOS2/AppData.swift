@@ -621,7 +621,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                                         print(lastTrainTime.format(), originTime.format(), difference, transferWait, "transfer wait")
                                     }
                                     let enrouteTime = moment(leg["@destTimeMin"].stringValue, dateFormate).diff(moment(leg["@origTimeMin"].stringValue, dateFormate), "minutes")
-                                    let enrouteTimeString = enrouteTime.stringValue + "min"
+                                    let enrouteTimeString = enrouteTime.stringValue + " min"
                                     
                                     // print(routeJSON.dictionaryObject, "route for route", routeNum, "color", routeJSON["color"].stringValue)
                                     

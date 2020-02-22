@@ -45,7 +45,7 @@ struct TripComponentView: View {
                     }
                     HStack {
                         if (type == "destination") {
-                            Text("\(String(stops)) stops untill destination...")
+                            Text("\(String(stops)) stops until destination...")
                                                        .font(.caption).padding([.top, .bottom, .trailing])
                         
                         } else {

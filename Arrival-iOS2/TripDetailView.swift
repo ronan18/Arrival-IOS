@@ -80,7 +80,7 @@ struct TripDetailView: View {
             let boardTime =  moment(self.tripToShow.legs[0].originTime, dateFormate)
             self.boardWait =  boardTime.fromNow(true)
             print(routeTime, destinationTIme.format(), originTIme.format(), "route time", wait)
-            self.routeTime = routeTime.stringValue + "min"
+            self.routeTime = routeTime.stringValue + "  min"
         }
     }
 }
