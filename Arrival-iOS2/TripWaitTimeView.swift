@@ -15,10 +15,10 @@ struct TripWaitTimeView: View {
         HStack {
             Spacer()
             if (type == "arrive") {
-                 Image(systemName: "checkmark.circle.fill")
+                 Image(systemName: "checkmark.circle")
                  Text("Arrive by \(time)!")
             } else {
-                Image(systemName: "clock.fill")
+                Image(systemName: "clock")
                 if (type == "transfer") {
                     Text("\(time) transfer window")
                 } else if (type == "board") {

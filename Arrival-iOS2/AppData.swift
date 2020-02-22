@@ -35,6 +35,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var locationAcess = true
     @Published var authLoading: Bool = false
     @Published var stations = [Station]()
+    @Published var networkTestStatus = ""
     @Published var stationsByAbbr: [String: Station] = ["none": Station(id: "none", name: "none", lat: 0.0, long: 0.0, abbr: "none", version: 0)]
     @Published var network = true
     @Published var sortTrainsByTime = false
@@ -55,6 +56,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var termsOfService = ""
     @Published var remoteConfig = RemoteConfig.remoteConfig()
     @Published var cycleTimer: Double = 30
+    private let net = Alamofire.NetworkReachabilityManager(host: "https://api.arrival.city/")
     private let locationManager = CLLocationManager()
     private var lat = 0.0
     private var long = 0.0
@@ -134,18 +136,58 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         testNetwork()
         start()
         getStations()
+
+        net?.listener = { status in
+            
+
+            switch status {
+
+            case .reachable(.ethernetOrWiFi):
+                print("The network is reachable over the WiFi connection")
+                self.network = true
+                if (!self.ready) {
+                    self.login()
+                }
+
+            case .reachable(.wwan):
+                print("The network is reachable over the WWAN connection")
+                self.network = true
+                if (!self.ready) {
+                                   self.login()
+                               }
+
+            case .notReachable:
+                print("The network is not reachable")
+                self.network = false
+
+            case .unknown :
+                print("It is unknown whether the network is reachable")
+                self.network = false
+
+            }
+        
+        }
+
+            self.net?.startListening()
         
     }
     func testNetwork() {
+         //self.networkTestStatus = "checking..."
+       /*
+        self.networkTestStatus = "checking..."
         print("network testing")
         let headers: HTTPHeaders = [
                            "Authorization": self.passphrase,
                            "Accept": "application/json"
                        ]
                        Alamofire.request(apiUrl, headers: headers).response { response in
-                        print("network Test", response.error)
+                        print("network Test", response.error, response.error)
                         self.network = response.error == nil
-        }
+                        if (!self.network) {
+                            self.networkTestStatus = "test failed"
+                        }
+        }*/
+      
         
     }
     func logOut() {
@@ -306,6 +348,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                 }
                 
                 self.toStationSuggestions.insert(Station(id: "none", name: "none", lat: 0.0, long: 0.0, abbr: "none", version: 0), at: 0)
+                
             } catch {
                 print("failed to get trips")
                 
@@ -391,6 +434,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         
     }
     @objc func cylce() {
+        self.testNetwork()
         
         getClosestStations()
         if (self.fromStation.name != "loading" && self.auth && self.ready && !self.passphrase.isEmpty && allowCycle) {

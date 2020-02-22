@@ -20,10 +20,10 @@ struct HomeView: View {
     @EnvironmentObject private var appData: AppData
     
     let lightGreyColor = Color(red: 239.0/255.0, green: 243.0/255.0, blue: 244.0/255.0, opacity: 1.0)
-     init() {
-           // To remove all separators including the actual ones:
-           UITableView.appearance().separatorStyle = .none
-       }
+    init() {
+        // To remove all separators including the actual ones:
+        UITableView.appearance().separatorStyle = .none
+    }
     var body: some View {
         
         VStack(spacing: 0) {
@@ -166,8 +166,18 @@ struct HomeView: View {
                                 }.padding().edgesIgnoringSafeArea(.bottom)
                             }
                         }.padding().foregroundColor(.white).background(Color.blackBG)
+                        if (!self.appData.network) {
+                            HStack {
+                                Spacer()
+                                Text("No Network")
+                                    .font(.headline)
+                                    .fontWeight(.bold)
+                                    .foregroundColor(Color.white).padding()
+                                Spacer()
+                            }.background(Color.red)
+                        }
                         if (self.appData.fromStation.abbr != "load" || !self.locationTimeout && self.appData.locationAcess) {
-                             TrainView()
+                            TrainView()
                         } else {
                             Spacer()
                             Button(action: {
@@ -184,17 +194,17 @@ struct HomeView: View {
                                     .font(.subheadline)
                                     .multilineTextAlignment(.center).padding()
                             }
-                          
-                           
+                            
+                            
                             Spacer()
                         }
-                       
+                        
                     }
                 }
             }
         }.edgesIgnoringSafeArea(.top).onAppear(){
             print("home Appeared")
-           // Analytics.setScreenName("home", screenClass: "home")
+            // Analytics.setScreenName("home", screenClass: "home")
             self.appData.cylce()
             Timer.scheduledTimer(withTimeInterval: self.appData.cycleTimer, repeats: true) { timer in
                 self.appData.cylce()

@@ -27,21 +27,31 @@ struct SettingsView: View {
                             }) {
                                 HStack {
                                     Image(systemName: "chevron.left").foregroundColor(.white).padding(5)
-                                      Text("Settings").font(.largeTitle).foregroundColor(Color.white).fontWeight(.bold)
+                                    Text("Settings").font(.largeTitle).foregroundColor(Color.white).fontWeight(.bold)
                                     
                                 }
                             }
-                          
+                            
                             Spacer()
                             
                             
                         }
                     }
                 }.padding().frame(height: geometry.safeAreaInsets.top + 60).background(Color("arrivalBlue"))
+                if (!self.appData.network) {
+                    HStack {
+                        Spacer()
+                        Text("No Network")
+                            .font(.headline)
+                            .fontWeight(.bold)
+                            .foregroundColor(Color.white).padding()
+                        Spacer()
+                    }.background(Color.red)
+                }
                 VStack {
                     
                     HStack {
-                        Text("Account")
+                        Text("Account ID")
                         Spacer()
                         Text(self.appData.passphrase)
                             .fontWeight(.bold).foregroundColor(Color("arrivalBlue"))
@@ -55,36 +65,36 @@ struct SettingsView: View {
                     
                     Spacer()
                     
-                   /* HStack {
-                        Spacer()
-                        Button(action: {
-                            self.appData.logOut()
-                        }) {
-                            HStack {
-                                Spacer()
-                                Text("LOGOUT")
-                                    .font(.body)
-                                    .fontWeight(.bold)
-                                    .multilineTextAlignment(.center)
-                                    .lineLimit(nil)
-                                    .foregroundColor(.red)
-                                Spacer()
-                            }.padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-                        }
-                        Spacer()
-                    } */
+                    /* HStack {
+                     Spacer()
+                     Button(action: {
+                     self.appData.logOut()
+                     }) {
+                     HStack {
+                     Spacer()
+                     Text("LOGOUT")
+                     .font(.body)
+                     .fontWeight(.bold)
+                     .multilineTextAlignment(.center)
+                     .lineLimit(nil)
+                     .foregroundColor(.red)
+                     Spacer()
+                     }.padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+                     }
+                     Spacer()
+                     } */
                     Spacer().frame(height: 20)
-                   
+                    
                     Text(self.appData.aboutText)
-                       .multilineTextAlignment(.center).font(.subheadline).foregroundColor(.gray)
-                      TermsOfSeriviceView()
-                   
+                        .multilineTextAlignment(.center).font(.subheadline).foregroundColor(.gray)
+                    TermsOfSeriviceView()
+                    
                     
                 }.padding()
-               
+                
             }
         }.edgesIgnoringSafeArea(.top).onAppear() {
-         //   Analytics.setScreenName("settings", screenClass: "settings")
+            //   Analytics.setScreenName("settings", screenClass: "settings")
         }
     }
 }

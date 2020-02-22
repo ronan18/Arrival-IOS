@@ -12,28 +12,38 @@ import FirebaseCrashlytics
 
 struct ContentView: View {
     @EnvironmentObject private var appData: AppData
-  
+    
     var body: some View {
         VStack {
+            
             if (self.appData.ready) {
+                
+                if (self.appData.auth) {
+                    if (self.appData.screen == "home") {
+                        HomeView()
+                    } else if (self.appData.screen == "settings") {
+                        SettingsView()
+                    }
+                    
+                } else {
+                    if  (self.appData.network) {
+                        
+                        LoginView()
+                    } else {
+                        NoNetworkView()
+                    }
+                }
+                
+                
+            } else {
                 if  (self.appData.network) {
-                    if (self.appData.auth) {
-                                      if (self.appData.screen == "home") {
-                                            HomeView()
-                                      } else if (self.appData.screen == "settings") {
-                                          SettingsView()
-                                      }
-                                   
-                                  } else {
-                                      LoginView()
-                                  }
+                    LoadingView()
                 } else {
                     NoNetworkView()
                 }
-              
-            } else {
-                LoadingView()
+                
             }
+            
             
         }.onAppear(){
             print("main Appeared")

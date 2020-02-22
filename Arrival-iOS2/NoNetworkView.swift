@@ -37,6 +37,7 @@ struct NoNetworkView: View {
                              
             }
             Spacer()
+            /*
             Button(action: {
                 self.triedConnection = true
                 self.appData.testNetwork()
@@ -52,7 +53,7 @@ struct NoNetworkView: View {
                 }.padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
             }.background(/*@START_MENU_TOKEN@*/Color.blue/*@END_MENU_TOKEN@*/).cornerRadius(/*@START_MENU_TOKEN@*/10.0/*@END_MENU_TOKEN@*/).foregroundColor(/*@START_MENU_TOKEN@*/.white/*@END_MENU_TOKEN@*/)
             
-            
+            */
         }.onAppear(perform:{
             self.triedConnection = false
         }).padding()
