@@ -56,7 +56,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var termsOfService = ""
     @Published var remoteConfig = RemoteConfig.remoteConfig()
     @Published var cycleTimer: Double = 30
-    private let net = Alamofire.NetworkReachabilityManager(host: "https://api.arrival.city/")
+    private let net = Alamofire.NetworkReachabilityManager(host: "api.arrival.city")
     private let locationManager = CLLocationManager()
     private var lat = 0.0
     private var long = 0.0
@@ -69,9 +69,9 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     private var prioritizeLineSubscriber: Any?
     private var closestStationsSuscriber: Any?
     private var initialTrainsTrace: Trace?
-
+    
     private var initialTrainsTraceDone: Bool = false
-   
+    
     private let settings = RemoteConfigSettings()
     private var apiUrl = "https://api.arrival.city"
     
@@ -85,9 +85,9 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         self.apiUrl = self.remoteConfig["apiurl"].stringValue!
         self.cycleTimer = Double(self.remoteConfig["cycleTimer"].stringValue!)!
         self.aboutText = self.remoteConfig["aboutText"].stringValue!
-         self.realtimeTripNotice = self.remoteConfig["realtimeTripsNotice"].stringValue!
+        self.realtimeTripNotice = self.remoteConfig["realtimeTripsNotice"].stringValue!
         self.privacyPolicy = self.remoteConfig["privacyPolicyUrl"].stringValue!
-              self.termsOfService = self.remoteConfig["termsOfServiceUrl"].stringValue!
+        self.termsOfService = self.remoteConfig["termsOfServiceUrl"].stringValue!
         let preferencesEntity = NSEntityDescription.entity(forEntityName: "Preferences", in: context)!
         let newTestPref = NSManagedObject(entity: preferencesEntity, insertInto: context)
         newTestPref.setValue(false, forKey: "prioritizeTrain")
@@ -103,7 +103,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             if status == .success {
                 print("Config fetched!")
                 self.remoteConfig.activate(completionHandler: { (error) in
-                   DispatchQueue.main.async {
+                    DispatchQueue.main.async {
                         print("This is run on the main queue, after the previous code in outer block config")
                         print(self.remoteConfig["apiurl"].stringValue, "remote config api value")
                         print(self.remoteConfig["onboarding1Heading"].stringValue, "remote config onboarding1Heading value")
@@ -116,10 +116,10 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         self.onboardingMessages["onboarding3Tagline"] = JSON(self.remoteConfig["onboarding3Tagline"].stringValue!)
                         print(self.onboardingMessages.dictionaryObject, "config  onboarding messages")
                         self.onboardingLoaded = true
-                    self.aboutText = self.remoteConfig["aboutText"].stringValue!
-                     self.realtimeTripNotice = self.remoteConfig["realtimeTripsNotice"].stringValue!
-                    self.privacyPolicy = self.remoteConfig["privacyPolicyUrl"].stringValue!
-                          self.termsOfService = self.remoteConfig["termsOfServiceUrl"].stringValue!
+                        self.aboutText = self.remoteConfig["aboutText"].stringValue!
+                        self.realtimeTripNotice = self.remoteConfig["realtimeTripsNotice"].stringValue!
+                        self.privacyPolicy = self.remoteConfig["privacyPolicyUrl"].stringValue!
+                        self.termsOfService = self.remoteConfig["termsOfServiceUrl"].stringValue!
                         print(self.onboardingLoaded, "config onboarding loaded")
                     }
                 })
@@ -129,65 +129,70 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             }
             
         }
-          
+        
         
         // print("got onboarding config", onboardingMessages.dictionaryObject)
         self.initialTrainsTrace = Performance.startTrace(name: "initalTrainsDisplay")!
         testNetwork()
         start()
         getStations()
-
-        net?.listener = { status in
-            
-
-            switch status {
-
-            case .reachable(.ethernetOrWiFi):
-                print("The network is reachable over the WiFi connection")
-                self.network = true
-                if (!self.ready) {
-                    self.login()
-                }
-
-            case .reachable(.wwan):
-                print("The network is reachable over the WWAN connection")
-                self.network = true
-                if (!self.ready) {
-                                   self.login()
-                               }
-
-            case .notReachable:
-                print("The network is not reachable")
-                self.network = false
-
-            case .unknown :
-                print("It is unknown whether the network is reachable")
-                self.network = false
-
-            }
         
+        net?.listener = { status in
+            print("network status:", self.net?.isReachable, status, self.net?.flags)
+            if (self.net?.isReachable ?? false) {
+                self.network = true
+            } else {
+                self.network = false
+            }
+            /*
+             
+             switch status {
+             
+             case .reachable(_:):
+             print("The network is reachable over the WiFi or cellular connection")
+             self.network = true
+             if (!self.ready) {
+             self.login()
+             }
+             case .notReachable:
+             print("The network is not reachable")
+             self.network = false
+             
+             case .unknown :
+             print("It is unknown whether the network is reachable")
+             self.network = false
+             
+             }
+             */
+            
         }
-
-            self.net?.startListening()
+        
+        self.net?.startListening()
         
     }
     func testNetwork() {
-         //self.networkTestStatus = "checking..."
-       /*
-        self.networkTestStatus = "checking..."
-        print("network testing")
-        let headers: HTTPHeaders = [
-                           "Authorization": self.passphrase,
-                           "Accept": "application/json"
-                       ]
-                       Alamofire.request(apiUrl, headers: headers).response { response in
-                        print("network Test", response.error, response.error)
-                        self.network = response.error == nil
-                        if (!self.network) {
-                            self.networkTestStatus = "test failed"
-                        }
-        }*/
-      
+        print("network status:", self.net?.isReachable)
+        if (self.net?.isReachable ?? false) {
+            self.network = true
+        } else {
+            self.network = false
+        }
+        //self.networkTestStatus = "checking..."
+        /*
+         self.networkTestStatus = "checking..."
+         print("network testing")
+         let headers: HTTPHeaders = [
+         "Authorization": self.passphrase,
+         "Accept": "application/json"
+         ]
+         Alamofire.request(apiUrl, headers: headers).response { response in
+         print("network Test", response.error, response.error)
+         self.network = response.error == nil
+         if (!self.network) {
+         self.networkTestStatus = "test failed"
+         }
+         }*/
+        
         
     }
     func logOut() {
@@ -208,7 +213,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         
         
     }
-
+    
     func convertColor(color: String) -> Color {
         
         switch (color.lowercased()) {
@@ -407,7 +412,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     func setToStation(station: Station) {
         print("setting to Station")
         self.loaded = false
-         self.noTrains = false
+        self.noTrains = false
         self.toStation = station
         self.cylce()
         let day = Calendar.current.component(.weekday, from: Date())
@@ -438,7 +443,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         
         getClosestStations()
         if (self.fromStation.name != "loading" && self.auth && self.ready && !self.passphrase.isEmpty && allowCycle) {
-           
+            
             print("cycling", self.passphrase)
             if (self.toStation.id == "none" ) {
                 print("fetching trains from", self.fromStation.abbr)
@@ -534,12 +539,12 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                             self.initialTrainsTrace!.stop()
                             self.initialTrainsTraceDone = true
                         }
-                   
+                        
                         
                     } else {
                         self.loaded = true
                         self.noTrains = true
-                     
+                        
                     }
                 }
             } else {
@@ -601,7 +606,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                                     if (i == thisTrain["leg"].count - 1) {
                                         type = "destination"
                                     } else if (i == 0) {
-                                         type = "board"
+                                        type = "board"
                                     }   else {
                                         type = "transfer"
                                     }
@@ -612,11 +617,11 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                                         let lastTrainTime = moment(lastTrainString, dateFormate)
                                         let originTime = moment(originTimeString, dateFormate)
                                         let difference = originTime.diff(lastTrainTime, "minutes")
-                                         transferWait = difference.stringValue + " min"
+                                        transferWait = difference.stringValue + " min"
                                         print(lastTrainTime.format(), originTime.format(), difference, transferWait, "transfer wait")
                                     }
                                     let enrouteTime = moment(leg["@destTimeMin"].stringValue, dateFormate).diff(moment(leg["@origTimeMin"].stringValue, dateFormate), "minutes")
-                                   let enrouteTimeString = enrouteTime.stringValue + "min"
+                                    let enrouteTimeString = enrouteTime.stringValue + "min"
                                     
                                     // print(routeJSON.dictionaryObject, "route for route", routeNum, "color", routeJSON["color"].stringValue)
                                     
@@ -645,11 +650,11 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         self.trains = results
                         self.trips = trips
                         self.loaded = true
-                   
+                        
                     } else {
                         self.loaded = true
-                         self.noTrains = true
-                     
+                        self.noTrains = true
+                        
                     }
                 }
             }
@@ -693,11 +698,11 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     if (!result.isEmpty) {
                         print("fetching settings from auth")
                         for data in result as! [NSManagedObject] {
-                           
+                            
                             var sortTrainsByTimeSetting: Bool
                             let user: String
                             do {
-                                 let testUser = try data.value(forKey: "user")
+                                let testUser = try data.value(forKey: "user")
                                 if testUser == nil {
                                     user = ""
                                 } else {
@@ -707,8 +712,8 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                                 user  =  ""
                             }
                             do {
-                                  
-                                 let tempSetting  =  try data.value(forKey: "sortTrainsByTime")
+                                
+                                let tempSetting  =  try data.value(forKey: "sortTrainsByTime")
                                 if (tempSetting == nil) {
                                     sortTrainsByTimeSetting = false
                                 } else {
@@ -718,18 +723,18 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                                 sortTrainsByTimeSetting = false
                                 
                             }
-                           
+                            
                             if (sortTrainsByTimeSetting == nil) {
                                 sortTrainsByTimeSetting = false
                             }
                             print(data.value(forKey: "prioritizeTrain"), "setting")
-                         //   let prioritizeTrainSettingValue = data.value(forKey: "prioritizeTrain")
+                            //   let prioritizeTrainSettingValue = data.value(forKey: "prioritizeTrain")
                             
                             print(user, value, "user settings from auth")
-                         //   print( prioritizeTrainSettingValue, "sort t b t settings from auth")
+                            //   print( prioritizeTrainSettingValue, "sort t b t settings from auth")
                             if (user == value) {
                                 self.sortTrainsByTime = sortTrainsByTimeSetting
-                             
+                                
                                 
                                 
                                 print("set stbt settings from auth to", sortTrainsByTimeSetting)
@@ -747,7 +752,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                 }
             }
         }
-       
+        
         settingsSuscriber = $sortTrainsByTime.sink {value in
             print(value, "settings change")
             if (self.auth){
@@ -762,18 +767,18 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         for data in result as! [NSManagedObject] {
                             var user = ""
                             do {
-                                   var temp =  try data.value(forKey: "user")
+                                var temp =  try data.value(forKey: "user")
                                 if (temp != nil) {
                                     user = temp as! String
                                 }
                             } catch {
                                 user = ""
                             }
-                          
+                            
                             
                             var sortTrainsByTimeSetting = false
                             do {
-                              var temp = try data.value(forKey: "sortTrainsByTime")
+                                var temp = try data.value(forKey: "sortTrainsByTime")
                                 if  (temp != nil) {
                                     sortTrainsByTimeSetting = temp as! Bool
                                 }

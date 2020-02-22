@@ -57,16 +57,16 @@ struct TripDetailView: View {
                         VStack {
                          
                             if (leg.order == 1) {
-                                TripWaitTimeView(type: "board", time: self.boardWait)
+                                TripWaitTimeView(type: "board", time: self.boardWait).padding(.top)
                             } else {
                                 TripWaitTimeView(type: "transfer", time: leg.transferWait ?? "")
                             }
                             
-                            TripComponentView(fromStationName: leg.origin, trainName: leg.trainDestination, stops: leg.stops, type: leg.type, destinationStationName: leg.destination, fromStationTime: leg.originTime, toStationTime: leg.destinationTime, enrouteTime: leg.enrouteTime, color: self.appData.convertColor(color: leg.color)).listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                            TripComponentView(fromStationName: leg.origin, trainName: leg.trainDestination, stops: leg.stops, type: leg.type, destinationStationName: leg.destination, fromStationTime: leg.originTime, toStationTime: leg.destinationTime, enrouteTime: leg.enrouteTime, color: self.appData.convertColor(color: leg.color))
                             if (leg.order == self.tripToShow.legs.count) {
                                 TripWaitTimeView(type: "arrive", time: timeDisplay(time:self.tripToShow.destinatonTime))
                             }
-                        }
+                        }.listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
                     }
                  
             }.edgesIgnoringSafeArea(.bottom)

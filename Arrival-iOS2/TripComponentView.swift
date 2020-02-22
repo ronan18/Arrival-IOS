@@ -28,7 +28,7 @@ struct TripComponentView: View {
                         VStack(alignment: .leading, spacing: 0) {
                             Text(stationDisplay(fromStationName))
                                 .fontWeight(.semibold)
-                            HStack(spacing: 0) {
+                            HStack(alignment: .center, spacing: 0) {
                                 Image(systemName: "arrow.right.circle.fill").font(.subheadline)
                                 Spacer()
                                     .frame(width: 3.0)
