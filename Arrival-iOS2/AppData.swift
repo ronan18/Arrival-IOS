@@ -19,6 +19,7 @@ import FirebaseAnalytics
 import FirebaseRemoteConfig
 import FirebaseCrashlytics
 let dateFormate = "hh:mm A"
+let dateFormateDate = "hh:mm A MM/DD/YYYY"
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
 let context = appDelegate.persistentContainer.viewContext
 var jsContext: JSContext!
@@ -614,18 +615,19 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                                     if (i != 0) {
                                         let lastTrainString = thisTrain["leg"][i - 1]["@destTimeMin"].stringValue
                                         let originTimeString = leg["@origTimeMin"].stringValue
-                                        let lastTrainTime = moment(lastTrainString, dateFormate)
-                                        let originTime = moment(originTimeString, dateFormate)
+                                        let lastTrainTime = moment(lastTrainString + " " + thisTrain["leg"][i - 1]["@destTimeDate"].stringValue, dateFormateDate)
+                                        let originTime = moment(originTimeString + " " + leg["@origTimeDate"].stringValue, dateFormateDate)
                                         let difference = originTime.diff(lastTrainTime, "minutes")
                                         transferWait = difference.stringValue + " min"
                                         print(lastTrainTime.format(), originTime.format(), difference, transferWait, "transfer wait")
                                     }
-                                    let enrouteTime = moment(leg["@destTimeMin"].stringValue, dateFormate).diff(moment(leg["@origTimeMin"].stringValue, dateFormate), "minutes")
+                                    let enrouteTime = moment(leg["@destTimeMin"].stringValue  + " " + leg["@destTimeDate"].stringValue, dateFormateDate).diff(moment(leg["@origTimeMin"].stringValue + " " + leg["@origTimeDate"].stringValue, dateFormateDate), "minutes")
                                     let enrouteTimeString = enrouteTime.stringValue + " min"
-                                    
+                                    print(leg["@destTimeMin"].stringValue  + " " + leg["@destTimeDate"].stringValue, dateFormateDate, "leg time")
+                                     print(leg["@origTimeMin"].stringValue  + " " + leg["@origTimeDate"].stringValue, dateFormateDate, "leg time")
                                     // print(routeJSON.dictionaryObject, "route for route", routeNum, "color", routeJSON["color"].stringValue)
                                     
-                                    legs.append(Leg(order: leg["@order"].intValue, origin: origin, destination: destination, originTime: leg["@origTimeMin"].stringValue, destinationTime: leg["@destTimeMin"].stringValue, line: leg["@line"].stringValue, route: leg["route"].intValue, trainDestination: leg["@trainHeadStation"].stringValue,  color:routeJSON.color, stops: stopCount, type: type, enrouteTime: enrouteTimeString, transferWait: transferWait))
+                                    legs.append(Leg(order: leg["@order"].intValue, origin: origin, destination: destination, originTime: leg["@origTimeMin"].stringValue, originDate: leg["@origTimeDate"].stringValue, destinationTime: leg["@destTimeMin"].stringValue, destDate: leg["@origTimeDate"].stringValue, line: leg["@line"].stringValue, route: leg["route"].intValue, trainDestination: leg["@trainHeadStation"].stringValue,  color:routeJSON.color, stops: stopCount, type: type, enrouteTime: enrouteTimeString, transferWait: transferWait))
                                 } else {
                                     print("route for route", routeNum, leg, "doesn't exist")
                                 }
@@ -635,11 +637,14 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                             //let color = thisTrain["color"].stringValue
                             let color = "none"
                             print(eta)
-                            let originTime = moment(thisTrain["@origTimeMin"].stringValue, dateFormate)
+                            let originDate = thisTrain["@origTimeDate"].stringValue
+                            let destDate = thisTrain["@destTimeDate"].stringValue
+                            
+                            let originTime = moment(thisTrain["@origTimeMin"].stringValue + " " + originDate, dateFormateDate)
                             let now = moment()
                             let difference = originTime.diff(now, "minutes").intValue
                             results.append(Train(id: UUID(), direction: direction, time: etd, unit: "", color: "none", cars: 0, hex: "0", eta: eta))
-                            trips.append(TripInfo(origin: self.fromStation.abbr, destination: direction, legs: legs, originTime: thisTrain["@origTimeMin"].stringValue, destinatonTime: thisTrain["@destTimeMin"].stringValue, tripTIme: thisTrain["@tripTime"].doubleValue, leavesIn: difference))
+                            trips.append(TripInfo(origin: self.fromStation.abbr, destination: direction, legs: legs, originTime: thisTrain["@origTimeMin"].stringValue, originDate: originDate, destinatonTime: thisTrain["@destTimeMin"].stringValue, destinatonDate: destDate, tripTIme: thisTrain["@tripTime"].doubleValue, leavesIn: difference))
                         }
                         
                         results.sort {

@@ -49,7 +49,7 @@ struct TripComponentView: View {
                                                        .font(.caption).padding([.top, .bottom, .trailing])
                         
                         } else {
-                            Text("\(String(stops)) stops untill transfer...")
+                            Text("\(String(stops)) stops until transfer...")
                                                        .font(.caption).padding([.top, .bottom, .trailing])
                         }
                        

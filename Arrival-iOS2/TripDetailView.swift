@@ -59,7 +59,7 @@ struct TripDetailView: View {
                             if (leg.order == 1) {
                                 TripWaitTimeView(type: "board", time: self.boardWait).padding(.top)
                             } else {
-                                TripWaitTimeView(type: "transfer", time: leg.transferWait ?? "")
+                                TripWaitTimeView(type: "transfer", time: leg.transferWait ?? "").padding(.top)
                             }
                             
                             TripComponentView(fromStationName: leg.origin, trainName: leg.trainDestination, stops: leg.stops, type: leg.type, destinationStationName: leg.destination, fromStationTime: leg.originTime, toStationTime: leg.destinationTime, enrouteTime: leg.enrouteTime, color: self.appData.convertColor(color: leg.color))
@@ -74,10 +74,10 @@ struct TripDetailView: View {
             
      
         }.edgesIgnoringSafeArea(.bottom).padding().onAppear {
-            let originTIme = moment(self.tripToShow.originTime, dateFormate)
-            let destinationTIme = moment(self.tripToShow.destinatonTime, dateFormate)
+            let originTIme = moment(self.tripToShow.originTime + " " + self.tripToShow.originDate, dateFormateDate)
+            let destinationTIme = moment(self.tripToShow.destinatonTime + " " + self.tripToShow.destinatonDate, dateFormateDate)
             let routeTime = destinationTIme.diff(originTIme, "minutes")
-            let boardTime =  moment(self.tripToShow.legs[0].originTime, dateFormate)
+            let boardTime =  moment(self.tripToShow.legs[0].originTime + " " + self.tripToShow.legs[0].originDate, dateFormate)
             self.boardWait =  boardTime.fromNow(true)
             print(routeTime, destinationTIme.format(), originTIme.format(), "route time", wait)
             self.routeTime = routeTime.stringValue + "  min"
@@ -88,6 +88,6 @@ struct TripDetailView: View {
 struct TripDetailView_Previews: PreviewProvider {
     
     static var previews: some View {
-        TripDetailView(modalShow: .constant(true), tripToShow: .constant(TripInfo(origin: "", destination: "", legs: [], originTime: "21:00", destinatonTime: "21:30", tripTIme: 0.0, leavesIn: 5))).environmentObject(AppData())
+        TripDetailView(modalShow: .constant(true), tripToShow: .constant(TripInfo(origin: "", destination: "", legs: [], originTime: "21:00", originDate: "", destinatonTime: "21:30", destinatonDate: "", tripTIme: 0.0, leavesIn: 5))).environmentObject(AppData())
     }
 }

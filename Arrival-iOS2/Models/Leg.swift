@@ -14,7 +14,9 @@ struct Leg: Identifiable, Codable {
     var origin: String
     var destination: String
     var originTime: String
+    var originDate: String
     var destinationTime: String
+    var destDate: String
     var line: String
     var route: Int
     var trainDestination: String
