@@ -362,31 +362,6 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         } else {
             self.toStationSuggestions = self.stations
         }
-        /*
-         let brainJSSource: String = Bundle.main.path(forResource: "brain", ofType: "js") as! String
-         if let jsSourcePath = Bundle.main.path(forResource: "toStations", ofType: "js") {
-         do {
-         // Load its contents to a String variable.
-         let jsSourceContents = try String(contentsOfFile: jsSourcePath)
-         let brainContents = try String(contentsOfFile: brainJSSource)
-         // Add the Javascript code that currently exists in the jsSourceContents to the Javascript Runtime through the jsContext object.
-         jsContext.evaluateScript(brainContents)
-         jsContext.evaluateScript(jsSourceContents)
-         
-         
-         if let functionCompute = jsContext.objectForKeyedSubscript("getToStations") {
-         if let results = functionCompute.call(withArguments: [self.netJSON, day, hour, self.fromStation.abbr]) {
-         print(results, "brain ai")
-         }
-         }
-         }
-         catch {
-         print(error.localizedDescription, "brain ai error")
-         }
-         }
-         */
-        
-        
         
     }
     func setFromStation(station: Station) {
@@ -671,9 +646,12 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         }
         
     }
+    func  requestLocation() {
+        locationManager.requestWhenInUseAuthorization()
+    }
     private func start() {
         
-        locationManager.requestWhenInUseAuthorization()
+       
         
         // If location services is enabled get the users location
         if CLLocationManager.locationServicesEnabled() {

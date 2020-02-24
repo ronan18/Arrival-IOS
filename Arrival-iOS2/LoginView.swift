@@ -126,7 +126,7 @@ struct LoginView: View {
                         Spacer()
                         TermsOfSeriviceView()
                         Button(action: {
-                            
+                            self.appData.requestLocation()
                             print("trying to create new account", self.newPass)
                             Analytics.logEvent(AnalyticsEventSignUp, parameters: [
                                 AnalyticsParameterMethod: "authScreen"
