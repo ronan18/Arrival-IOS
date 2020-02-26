@@ -650,9 +650,6 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         locationManager.requestWhenInUseAuthorization()
     }
     private func start() {
-        
-       
-        
         // If location services is enabled get the users location
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
