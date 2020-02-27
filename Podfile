@@ -6,7 +6,7 @@ target 'Arrival-iOS2' do
   use_frameworks!
 
   # Pods for Arrival-iOS2
-pod 'Alamofire'
+pod 'Alamofire', '4.9.1'
 pod 'SwiftyJSON'
 pod 'Firebase/Analytics'
 #pod 'Fabric', '~> 1.10.2'

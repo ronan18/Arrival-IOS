@@ -112,9 +112,11 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         self.onboardingMessages["onboarding1Heading"] = JSON(self.remoteConfig["onboarding1Heading"].stringValue!)
                         self.onboardingMessages["onboarding2Heading"] = JSON(self.remoteConfig["onboarding2Heading"].stringValue!)
                         self.onboardingMessages["onboarding3Heading"] = JSON(self.remoteConfig["onboarding3Heading"].stringValue!)
+                         self.onboardingMessages["onboarding4Heading"] = JSON(self.remoteConfig["onboarding4Heading"].stringValue!)
                         self.onboardingMessages["onboarding1Tagline"] = JSON(self.remoteConfig["onboarding1Tagline"].stringValue!)
                         self.onboardingMessages["onboarding2Tagline"] = JSON(self.remoteConfig["onboarding2Tagline"].stringValue!)
                         self.onboardingMessages["onboarding3Tagline"] = JSON(self.remoteConfig["onboarding3Tagline"].stringValue!)
+                        self.onboardingMessages["onboarding4Tagline"] = JSON(self.remoteConfig["onboarding4Tagline"].stringValue!)
                         print(self.onboardingMessages.dictionaryObject, "config  onboarding messages")
                         self.onboardingLoaded = true
                         self.aboutText = self.remoteConfig["aboutText"].stringValue!
@@ -145,26 +147,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             } else {
                 self.network = false
             }
-            /*
-             
-             switch status {
-             
-             case .reachable(_:):
-             print("The network is reachable over the WiFi or cellular connection")
-             self.network = true
-             if (!self.ready) {
-             self.login()
-             }
-             case .notReachable:
-             print("The network is not reachable")
-             self.network = false
-             
-             case .unknown :
-             print("It is unknown whether the network is reachable")
-             self.network = false
-             
-             }
-             */
+            
             
         }
         
@@ -173,9 +156,11 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     }
     func testNetwork() {
         print("network status:", self.net?.isReachable)
-        if (self.net?.isReachable ?? false) {
-            self.network = true
+        if let unwrapped = self.net?.isReachable {
+            print("network unwrapped", unwrapped)
+            self.network = unwrapped
         } else {
+            print("network no value")
             self.network = false
         }
         //self.networkTestStatus = "checking..."

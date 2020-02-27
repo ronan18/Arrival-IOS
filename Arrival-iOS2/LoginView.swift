@@ -77,13 +77,14 @@ struct LoginView: View {
                         Text(self.appData.onboardingMessages["onboarding2Heading"].stringValue)
                             .font(.largeTitle)
                             .fontWeight(.heavy)
+                            .multilineTextAlignment(.center)
                         Text(self.appData.onboardingMessages["onboarding2Tagline"].stringValue)
                             .font(.subheadline)
-                            .multilineTextAlignment(.center)
+                            .multilineTextAlignment(.center).padding()
                         Spacer()
                         
                         Button(action: {
-                            self.onboard = 1
+                            self.onboard = 5
                         }) {
                             HStack {
                                 Spacer()
@@ -100,7 +101,7 @@ struct LoginView: View {
                     } else if (self.onboard == 1) {
                         HStack {
                             Button(action: {
-                                self.onboard = 4
+                                self.onboard = 5
                             }) {
                                 Text("Back")
                                     .font(.headline)
@@ -120,13 +121,14 @@ struct LoginView: View {
                         Text(self.appData.onboardingMessages["onboarding3Heading"].stringValue)
                             .font(.largeTitle)
                             .fontWeight(.heavy)
+                        .multilineTextAlignment(.center)
                         Text(self.appData.onboardingMessages["onboarding3Tagline"].stringValue)
                             .font(.subheadline)
-                            .multilineTextAlignment(.center)
+                            .multilineTextAlignment(.center).padding()
                         Spacer()
                         TermsOfSeriviceView()
                         Button(action: {
-                            self.appData.requestLocation()
+                          
                             print("trying to create new account", self.newPass)
                             Analytics.logEvent(AnalyticsEventSignUp, parameters: [
                                 AnalyticsParameterMethod: "authScreen"
@@ -146,44 +148,12 @@ struct LoginView: View {
                             }.padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
                             Spacer()
                         }.background(/*@START_MENU_TOKEN@*/Color.blue/*@END_MENU_TOKEN@*/).cornerRadius(CGFloat(/*@START_MENU_TOKEN@*/10.0/*@END_MENU_TOKEN@*/)).foregroundColor(/*@START_MENU_TOKEN@*/.white/*@END_MENU_TOKEN@*/)
-                        /*
-                         Button(action: {
-                         self.onboard = 3
-                         }) {
-                         HStack {
-                         Spacer()
-                         Text("CREATE NEW ACCOUNT")
-                         .font(.body)
-                         .fontWeight(.bold)
-                         .multilineTextAlignment(.center)
-                         .lineLimit(nil)
-                         Spacer()
-                         }.padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-                         }.background(/*@START_MENU_TOKEN@*/Color.blue/*@END_MENU_TOKEN@*/).cornerRadius(/*@START_MENU_TOKEN@*/10.0/*@END_MENU_TOKEN@*/).foregroundColor(/*@START_MENU_TOKEN@*/.white/*@END_MENU_TOKEN@*/)
-                         Spacer()
-                         .frame(height: 10.0)
-                         Button(action: {
-                         self.onboard = 2
-                         }) {
-                         HStack {
-                         Spacer()
-                         Text("I HAVE AN ACCOUNT")
-                         .font(.body)
-                         .fontWeight(.bold)
-                         .multilineTextAlignment(.center)
-                         .lineLimit(nil)
-                         Spacer()
-                         }.padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-                         }.background(Color.whiteBG).cornerRadius(10.0).foregroundColor(.blackBorder).overlay(
-                         RoundedRectangle(cornerRadius: 10)
-                         .stroke(Color.blackBorder, lineWidth: 3)
-                         )
-                         */
+                       
                         
-                    } else if (self.onboard == 2) {
+                    } else if (self.onboard == 5) {
                         HStack {
                             Button(action: {
-                                self.onboard = 1
+                                self.onboard = 4
                             }) {
                                 Text("Back")
                                     .font(.headline)
@@ -192,96 +162,38 @@ struct LoginView: View {
                             }
                             Spacer()
                         }
-                        
                         Spacer()
-                        VStack {
-                            TextField("Enter Your Passphrase", text: self.$passphrase, onCommit: {
-                                if (!self.passphrase.isEmpty) {
-                                    Analytics.logEvent(AnalyticsEventLogin, parameters: [
-                                        AnalyticsParameterMethod: "authScreen"
-                                    ])
-                                    self.appData.loginFromWeb(passphrase: self.passphrase)
-                                }
-                            }).autocapitalization(.none)
-                            Rectangle().fill(Color("arrivalBlue")).frame(height: 5)
-                            
+                        GeometryReader { geo in
+                            Image("location")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: geo.size.width - 10)
                         }
-                        
-                        
-                        Text("enter your passphrase")
+                        .frame(height: 250)
+                        Text(self.appData.onboardingMessages["onboarding4Heading"].stringValue)
+                            .font(.largeTitle)
+                            .fontWeight(.heavy)
+                            .multilineTextAlignment(.center)
+                        Text(self.appData.onboardingMessages["onboarding4Tagline"].stringValue)
                             .font(.subheadline)
-                            .multilineTextAlignment(.center)
-                        Text(self.appData.loginError).foregroundColor(.red)
+                            .multilineTextAlignment(.center).padding()
                         Spacer()
-                        TermsOfSeriviceView()
                         
                         Button(action: {
-                            if (!self.passphrase.isEmpty) {
-                                Analytics.logEvent(AnalyticsEventLogin, parameters: [
-                                    AnalyticsParameterMethod: "authScreen"
-                                ])
-                                self.appData.loginFromWeb(passphrase: self.passphrase)
-                            }
-                            
+                            self.appData.requestLocation()
+                            self.onboard = 1
                         }) {
                             HStack {
                                 Spacer()
-                                Text("LOGIN")
+                                Text("CONTINUE")
                                     .font(.body)
                                     .fontWeight(.bold)
                                     .multilineTextAlignment(.center)
                                     .lineLimit(nil)
                                 Spacer()
                             }.padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-                        }.background(/*@START_MENU_TOKEN@*/Color.blue/*@END_MENU_TOKEN@*/).cornerRadius(CGFloat(/*@START_MENU_TOKEN@*/10.0/*@END_MENU_TOKEN@*/)).foregroundColor(/*@START_MENU_TOKEN@*/.white/*@END_MENU_TOKEN@*/)
+                        }.background(/*@START_MENU_TOKEN@*/Color.blue/*@END_MENU_TOKEN@*/).cornerRadius(/*@START_MENU_TOKEN@*/10.0/*@END_MENU_TOKEN@*/).foregroundColor(/*@START_MENU_TOKEN@*/.white/*@END_MENU_TOKEN@*/)
                         
-                    } else if (self.onboard == 3) {
-                        HStack {
-                            Button(action: {
-                                self.onboard = 1
-                            }) {
-                                Text("Back")
-                                    .font(.headline)
-                                    .fontWeight(.bold)
-                                    .multilineTextAlignment(.leading)
-                            }
-                            Spacer()
-                        }
-                        
-                        Spacer()
-                        Text(self.newPass)
-                            .font(.headline)
-                            .fontWeight(.bold)
-                            .foregroundColor(Color.arrivalBlue)
-                        
-                        Spacer()
-                            .frame(height: 14.0)
-                        Text("Arrival’s syncing is a little different. We generate your passphrase randomly. This allows us to ensure that none of the data we collect can be directly linked to you. In order to transfer or retrieve your data just enter this passphrase when you first start the app. You might want to write this down. If you forget it all of your data will be lost")
-                            .font(.footnote)
-                            .multilineTextAlignment(.center)
-                        Spacer()
-                        TermsOfSeriviceView()
-                        Button(action: {
-                            
-                            print("trying to create new account", self.newPass)
-                            Analytics.logEvent(AnalyticsEventSignUp, parameters: [
-                                AnalyticsParameterMethod: "authScreen"
-                            ])
-                            self.appData.createNewAccount(passphrase: self.newPass)
-                            
-                            
-                        }) {
-                            HStack {
-                                Spacer()
-                                Text("CONFIRM")
-                                    .font(.body)
-                                    .fontWeight(.bold)
-                                    .multilineTextAlignment(.center)
-                                    .lineLimit(nil)
-                                Spacer()
-                            }.padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-                            Spacer()
-                        }.background(/*@START_MENU_TOKEN@*/Color.blue/*@END_MENU_TOKEN@*/).cornerRadius(CGFloat(/*@START_MENU_TOKEN@*/10.0/*@END_MENU_TOKEN@*/)).foregroundColor(/*@START_MENU_TOKEN@*/.white/*@END_MENU_TOKEN@*/)
                         
                     }
                     

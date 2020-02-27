@@ -64,8 +64,8 @@ struct SettingsView: View {
                     }
                     
                     Spacer()
-                    
-                    /* HStack {
+                    #if DEBUG
+                    HStack {
                      Spacer()
                      Button(action: {
                      self.appData.logOut()
@@ -82,7 +82,8 @@ struct SettingsView: View {
                      }.padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
                      }
                      Spacer()
-                     } */
+                     }
+                    #endif
                     Spacer().frame(height: 20)
                     
                     Text(self.appData.aboutText)

@@ -49,7 +49,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func sceneDidBecomeActive(_ scene: UIScene) {
-        
+         appData.testNetwork()
        // print("cycling from did become active", appData.fromStation)
       //  appData.cylce()
         
@@ -67,6 +67,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
         print("cycling from enter forground", appData.fromStation)
+        appData.testNetwork()
         appData.cylce()
     }
     
