@@ -57,7 +57,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var termsOfService = ""
     @Published var remoteConfig = RemoteConfig.remoteConfig()
     @Published var cycleTimer: Double = 30
-    private let net = Alamofire.NetworkReachabilityManager(host: "api.arrival.city")
+    let net = Alamofire.NetworkReachabilityManager(host: "api.arrival.city")
     private let locationManager = CLLocationManager()
     private var lat = 0.0
     private var long = 0.0
@@ -112,7 +112,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         self.onboardingMessages["onboarding1Heading"] = JSON(self.remoteConfig["onboarding1Heading"].stringValue!)
                         self.onboardingMessages["onboarding2Heading"] = JSON(self.remoteConfig["onboarding2Heading"].stringValue!)
                         self.onboardingMessages["onboarding3Heading"] = JSON(self.remoteConfig["onboarding3Heading"].stringValue!)
-                         self.onboardingMessages["onboarding4Heading"] = JSON(self.remoteConfig["onboarding4Heading"].stringValue!)
+                        self.onboardingMessages["onboarding4Heading"] = JSON(self.remoteConfig["onboarding4Heading"].stringValue!)
                         self.onboardingMessages["onboarding1Tagline"] = JSON(self.remoteConfig["onboarding1Tagline"].stringValue!)
                         self.onboardingMessages["onboarding2Tagline"] = JSON(self.remoteConfig["onboarding2Tagline"].stringValue!)
                         self.onboardingMessages["onboarding3Tagline"] = JSON(self.remoteConfig["onboarding3Tagline"].stringValue!)
@@ -141,17 +141,19 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         getStations()
         
         net?.listener = { status in
-            print("network status:", self.net?.isReachable, status, self.net?.flags)
-            if (self.net?.isReachable ?? false) {
-                self.network = true
+            print("network status from listener:", self.net?.isReachable, status, self.net?.flags)
+            if let unwrapped = self.net?.isReachable {
+                print("network unwrapped", unwrapped)
+                self.network = unwrapped
             } else {
+                print("network no value")
                 self.network = false
             }
             
             
         }
         
-        self.net?.startListening()
+       
         
     }
     func testNetwork() {
@@ -584,7 +586,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                                     let enrouteTime = moment(leg["@destTimeMin"].stringValue  + " " + leg["@destTimeDate"].stringValue, dateFormateDate).diff(moment(leg["@origTimeMin"].stringValue + " " + leg["@origTimeDate"].stringValue, dateFormateDate), "minutes")
                                     let enrouteTimeString = enrouteTime.stringValue + " min"
                                     print(leg["@destTimeMin"].stringValue  + " " + leg["@destTimeDate"].stringValue, dateFormateDate, "leg time")
-                                     print(leg["@origTimeMin"].stringValue  + " " + leg["@origTimeDate"].stringValue, dateFormateDate, "leg time")
+                                    print(leg["@origTimeMin"].stringValue  + " " + leg["@origTimeDate"].stringValue, dateFormateDate, "leg time")
                                     // print(routeJSON.dictionaryObject, "route for route", routeNum, "color", routeJSON["color"].stringValue)
                                     
                                     legs.append(Leg(order: leg["@order"].intValue, origin: origin, destination: destination, originTime: leg["@origTimeMin"].stringValue, originDate: leg["@origTimeDate"].stringValue, destinationTime: leg["@destTimeMin"].stringValue, destDate: leg["@origTimeDate"].stringValue, line: leg["@line"].stringValue, route: leg["route"].intValue, trainDestination: leg["@trainHeadStation"].stringValue,  color:routeJSON.color, stops: stopCount, type: type, enrouteTime: enrouteTimeString, transferWait: transferWait))

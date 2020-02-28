@@ -36,6 +36,7 @@
 		C5B5A53723FA62B00046CCF5 /* TripComponentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B5A53523FA62B00046CCF5 /* TripComponentView.swift */; };
 		C5B5A53823FA62B00046CCF5 /* TripDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B5A53623FA62B00046CCF5 /* TripDetailView.swift */; };
 		C5B5A53A23FA642D0046CCF5 /* TripWaitTimeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B5A53923FA642D0046CCF5 /* TripWaitTimeView.swift */; };
+		C5D2891B2407744600568C5B /* NotificationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5D2891A2407744600568C5B /* NotificationCard.swift */; };
 		C5DF911523F87EA800701D3F /* NoNetworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DF911423F87EA800701D3F /* NoNetworkView.swift */; };
 		C5E46EC623F3C53E00979DBB /* Route.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E46EC523F3C53E00979DBB /* Route.swift */; };
 		C5E5768C23EFB9E300A3A7BD /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E5768B23EFB9E300A3A7BD /* Trip.swift */; };
@@ -78,6 +79,7 @@
 		C5B5A53523FA62B00046CCF5 /* TripComponentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripComponentView.swift; sourceTree = "<group>"; };
 		C5B5A53623FA62B00046CCF5 /* TripDetailView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripDetailView.swift; sourceTree = "<group>"; };
 		C5B5A53923FA642D0046CCF5 /* TripWaitTimeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripWaitTimeView.swift; sourceTree = "<group>"; };
+		C5D2891A2407744600568C5B /* NotificationCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCard.swift; sourceTree = "<group>"; };
 		C5DF911423F87EA800701D3F /* NoNetworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoNetworkView.swift; sourceTree = "<group>"; };
 		C5E46EC523F3C53E00979DBB /* Route.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Route.swift; sourceTree = "<group>"; };
 		C5E5768B23EFB9E300A3A7BD /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 		C58F248023CC1438003882F3 /* Arrival-iOS2 */ = {
 			isa = PBXGroup;
 			children = (
+				C5D2891A2407744600568C5B /* NotificationCard.swift */,
 				C5751DA523F702F70071F224 /* Arrival.entitlements */,
 				C512BCC423E4FBA80079F49C /* TimePlayground.playground */,
 				C568C3FE23D8B98400AB9E67 /* Models */,
@@ -343,6 +346,7 @@
 				C568C40423D95FA000AB9E67 /* LoadingView.swift in Sources */,
 				C58F248223CC1438003882F3 /* AppDelegate.swift in Sources */,
 				C5A517A523CCED0F003E616E /* TrainComponent.swift in Sources */,
+				C5D2891B2407744600568C5B /* NotificationCard.swift in Sources */,
 				C58F248923CC1438003882F3 /* ContentView.swift in Sources */,
 				C5E5768E23EFBB0A00A3A7BD /* Leg.swift in Sources */,
 				C5E46EC623F3C53E00979DBB /* Route.swift in Sources */,
@@ -506,7 +510,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.27;
+				MARKETING_VERSION = 1.28;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival;
 				PRODUCT_NAME = Arrival;
 				SWIFT_VERSION = 5.0;
@@ -529,7 +533,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.27;
+				MARKETING_VERSION = 1.28;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival;
 				PRODUCT_NAME = Arrival;
 				SWIFT_VERSION = 5.0;
