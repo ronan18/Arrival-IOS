@@ -57,6 +57,9 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var termsOfService = ""
     @Published var remoteConfig = RemoteConfig.remoteConfig()
     @Published var cycleTimer: Double = 30
+    @Published var reviewCard = false
+    @Published var debug = false
+    @Published var showTripDetailFeature = true
     let net = Alamofire.NetworkReachabilityManager(host: "api.arrival.city")
     private let locationManager = CLLocationManager()
     private var lat = 0.0
@@ -70,7 +73,8 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     private var prioritizeLineSubscriber: Any?
     private var closestStationsSuscriber: Any?
     private var initialTrainsTrace: Trace?
-    
+    private var lastShownReviewCard = ""
+    private var daysBetweenReviewAsk = 7
     private var initialTrainsTraceDone: Bool = false
     
     private let settings = RemoteConfigSettings()
@@ -80,6 +84,10 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         super.init()
         print("init function")
         settings.minimumFetchInterval = 43200
+        
+        #if DEBUG
+        self.debug = true
+        #endif
         
         remoteConfig.configSettings = settings
         remoteConfig.setDefaults(fromPlist: "RemoteConfigDefaults")
@@ -121,9 +129,12 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         self.onboardingLoaded = true
                         self.aboutText = self.remoteConfig["aboutText"].stringValue!
                         self.realtimeTripNotice = self.remoteConfig["realtimeTripsNotice"].stringValue!
+                        self.daysBetweenReviewAsk = Int(self.remoteConfig["daysBetweenReviewAsk"].stringValue!)!
                         self.privacyPolicy = self.remoteConfig["privacyPolicyUrl"].stringValue!
                         self.termsOfService = self.remoteConfig["termsOfServiceUrl"].stringValue!
                         print(self.onboardingLoaded, "config onboarding loaded")
+                        
+                        
                     }
                 })
             } else {
@@ -153,8 +164,94 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             
         }
         
-       
         
+        
+    }
+    func showTripDetailFeatureCard() {
+        if (self.remoteConfig["showTripDetailFeature"].boolValue || self.debug) {
+            print("showTripDetailFeature", true)
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+            do {
+                let result = try context.fetch(fetchRequest)
+                for data in result as! [NSManagedObject] {
+                  print("detailCardLastShown", data.value(forKey: "detailCardLastShown"))
+                    if let detailCardLastShown = data.value(forKey: "detailCardLastShown") {
+                        if (moment.utc(detailCardLastShown).isBefore(moment().subtract(self.daysBetweenReviewAsk, "days"))) {
+                            print("detailCardLastShown is before the limit")
+                            
+                        } else {
+                             print("detailCardLastShown is not before the limit")
+                             self.showTripDetailFeature = false
+                        }
+                    }
+                    
+                }
+                
+            } catch {
+                
+            }
+        } else {
+            print("no show showTripDetailFeature card")
+            self.showTripDetailFeature = false
+        }
+        
+        
+    }
+    func hideDetailCard() {
+        self.showTripDetailFeature = false
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+        do {
+            let result = try context.fetch(fetchRequest)
+            for data in result as! [NSManagedObject] {
+                if let user = data.value(forKey: "pass") {
+                    print(user as! String)
+                    if (user as! String == self.passphrase) {
+                        data.setValue(moment.utc().toString(), forKey: "detailCardLastShown")
+                    }
+                }
+                
+            }
+            do {
+                try context.save()
+                print("saved detailCardLastShown")
+            } catch {
+                
+            }
+        } catch {
+            
+        }
+    }
+    func showReviewCard() {
+        print("lastShownReviewCard", self.lastShownReviewCard)
+        if (self.lastShownReviewCard.isEmpty || moment.utc(lastShownReviewCard).isBefore(moment().subtract(self.daysBetweenReviewAsk, "days"))) {
+            self.reviewCard = true
+        } else {
+            self.reviewCard = false
+        }
+        
+    }
+    func hideReviewCard() {
+        self.reviewCard = false
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
+        do {
+            let result = try context.fetch(fetchRequest)
+            for data in result as! [NSManagedObject] {
+                if let user = data.value(forKey: "pass") {
+                    print(user as! String)
+                    if (user as! String == self.passphrase) {
+                        data.setValue(moment.utc().toString(), forKey: "reviewCardLastShown")
+                    }
+                }
+                
+            }
+            do {
+                try context.save()
+            } catch {
+                
+            }
+        } catch {
+            
+        }
     }
     func testNetwork() {
         print("network status:", self.net?.isReachable)
@@ -654,6 +751,13 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         authSubscriber = $passphrase.sink {value in
             print(value, "auth subscriber")
             if (self.auth) {
+                if (self.remoteConfig["asktoreview"].boolValue || self.debug) {
+                    self.showReviewCard()
+                } else {
+                    print("no show review card")
+                }
+                self.showTripDetailFeatureCard()
+                
                 print("passphrase changed and auth settings from auth", value)
                 
                 self.computeToSuggestions(pass: value)
@@ -690,6 +794,8 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                                 sortTrainsByTimeSetting = false
                                 
                             }
+                            
+                            
                             
                             if (sortTrainsByTimeSetting == nil) {
                                 sortTrainsByTimeSetting = false
@@ -1031,6 +1137,13 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                                 self.netJSON = jsonResponse["net"].dictionaryObject as! [String: Any?]
                                 //print(self.netJSON, "brain ai json")
                             }
+                            if let reviewCardLastShown = nsResult[0].value(forKey: "reviewCardLastShown") {
+                                self.lastShownReviewCard = reviewCardLastShown as! String
+                                print("lastShownReviewCard", reviewCardLastShown)
+                            } else {
+                                print("reviewCardLastShown none")
+                            }
+                            
                             self.passphrase = passphraseToTest
                         } else {
                             print("user not authorized")

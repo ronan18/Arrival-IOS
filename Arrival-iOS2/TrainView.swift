@@ -38,99 +38,40 @@ struct TrainView: View {
                 if (self.appData.sortTrainsByTime || self.appData.toStation.abbr != "none") {
                     if (self.appData.toStation.abbr != "none") {
                         
-                        List(self.appData.trips) { trip in
-                            
-                            
-                            Button(action: {
-                                self.tripToShow = trip
-                                self.showTransfers = true
-                                Analytics.logEvent("trip_details_viewed", parameters: [
-                                    "user": self.appData.passphrase as NSObject,
-                                    "toStation": self.appData.toStation.abbr as NSObject,
-                                    "fromStation": self.appData.fromStation.abbr as NSObject
-                                ])
-                            }) {
-                                TrainComponent(type: "train",  name: trip.destination, departs: String(trip.leavesIn), unit: "min", color: self.appData.convertColor(color: trip.legs[0].color), eta: trip.destinatonTime).listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                        List {
+                            if (self.appData.showTripDetailFeature) {
+                                NotificationCard(type: "tripDetail").padding([.top, .leading, .trailing]).padding(.bottom, 3).environmentObject(self.appData).listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                            }
+                            ForEach(self.appData.trips) {trip in
+                                
+                                
+                                Button(action: {
+                                    self.tripToShow = trip
+                                    self.showTransfers = true
+                                    Analytics.logEvent("trip_details_viewed", parameters: [
+                                        "user": self.appData.passphrase as NSObject,
+                                        "toStation": self.appData.toStation.abbr as NSObject,
+                                        "fromStation": self.appData.fromStation.abbr as NSObject
+                                    ])
+                                }) {
+                                    TrainComponent(type: "train",  name: trip.destination, departs: String(trip.leavesIn), unit: "min", color: self.appData.convertColor(color: trip.legs[0].color), eta: trip.destinatonTime).listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                                }
+                                
+                                
                             }
                             
-                            
+                            Text(self.appData.realtimeTripNotice)
+                                .font(.caption)
+                                .foregroundColor(Color.gray)
+                                .multilineTextAlignment(.center).padding()
                             
                         }.sheet(isPresented: $showTransfers) {
                             TripDetailView(modalShow: self.$showTransfers, tripToShow: self.$tripToShow).environmentObject(self.appData).edgesIgnoringSafeArea(.bottom)
-                            /*
-                             VStack {
-                             HStack {
-                             Text("Trip Details")
-                             .font(.largeTitle)
-                             .fontWeight(.bold)
-                             
-                             Spacer()
-                             Button(action: {
-                             self.showTransfers = false
-                             }) {
-                             Text("Close")
-                             }
-                             }
-                             
-                             
-                             ForEach(self.tripToShow.legs) { leg in
-                             HStack {
-                             
-                             Rectangle().frame(width: 8.0, height: 160).foregroundColor(self.appData.convertColor(color: leg.color))
-                             
-                             VStack(alignment: .leading) {
-                             HStack(alignment: .center) {
-                             VStack(alignment: .leading) {
-                             HStack {
-                             Text(leg.trainDestination).font(.headline)
-                             Text("train").font(.caption)
-                             }.lineLimit(Int(self.appData.remoteConfig["tripviewStationLineLimit"].stringValue!))
-                             Text(leg.origin).font(.subheadline)
-                             }.lineLimit(Int(self.appData.remoteConfig["tripviewStationLineLimit"].stringValue!))
-                             Spacer()
-                             Text(leg.originTime).font(.subheadline)
-                             }
-                             Spacer().frame(height: 15)
-                             
-                             HStack {
-                             
-                             Text(String(leg.stops)).font(.caption) +
-                             Text(" " + leg.type).font(.caption)
-                             }
-                             
-                             
-                             Spacer().frame(height: 15)
-                             HStack(alignment: .center) {
-                             HStack {
-                             Text(leg.destination).font(.headline)
-                             Text("station").font(.caption)
-                             }.lineLimit(Int(self.appData.remoteConfig["tripviewStationLineLimit"].stringValue!))
-                             
-                             
-                             Spacer()
-                             Text(leg.destinationTime).font(.subheadline)
-                             
-                             }.lineLimit(Int(self.appData.remoteConfig["tripviewStationLineLimit"].stringValue!))
-                             
-                             }.padding()
-                             
-                             }.cornerRadius(10).background(Color.background).overlay(
-                             RoundedRectangle(cornerRadius: CGFloat(10.0)).stroke(Color(.sRGB, red:170/255, green: 170/255, blue: 170/255, opacity: 0.1), lineWidth:3)
-                             ).cornerRadius(10.0)
-                             
-                             }
-                             
-                             Spacer()
-                             
-                             }.padding()
-                             */
+                            
                         }
-                        Spacer().frame(height: 1)
-                        Text(self.appData.realtimeTripNotice)
-                            .font(.caption)
-                            .foregroundColor(Color.gray)
-                            .multilineTextAlignment(.center).padding()
+                        
                     } else {
+                        
                         List(self.appData.trains) { train in
                             
                             

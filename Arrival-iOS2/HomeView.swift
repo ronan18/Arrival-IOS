@@ -177,6 +177,9 @@ struct HomeView: View {
                             }.background(Color.red)
                         }
                         if (self.appData.fromStation.abbr != "load" || !self.locationTimeout && self.appData.locationAcess) {
+                            if (self.appData.reviewCard) {
+                                NotificationCard(type: "review").padding([.top, .leading, .trailing]).padding(.bottom, 3).environmentObject(self.appData)
+                            }
                             TrainView()
                         } else {
                             Spacer()
