@@ -174,16 +174,16 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             do {
                 let result = try context.fetch(fetchRequest)
                 for data in result as! [NSManagedObject] {
-                  print("detailCardLastShown", data.value(forKey: "detailCardLastShown"))
-                    if let detailCardLastShown = data.value(forKey: "detailCardLastShown") {
-                        if (moment.utc(detailCardLastShown).isBefore(moment().subtract(self.daysBetweenReviewAsk, "days"))) {
-                            print("detailCardLastShown is before the limit")
-                            
-                        } else {
-                             print("detailCardLastShown is not before the limit")
-                             self.showTripDetailFeature = false
-                        }
+                    print("detailCardLastShown", data.value(forKey: "detailCardLastShown"))
+                    let detailCardLastShown = data.value(forKey: "detailCardLastShown")
+                    if (detailCardLastShown != nil) {
+                        print("detailCardLastShown has been shown")
+                        self.showTripDetailFeature = false
+                    } else {
+                        print("detailCardLastShown hasn't been shown")
+                        self.showTripDetailFeature = true
                     }
+                    
                     
                 }
                 
@@ -194,6 +194,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             print("no show showTripDetailFeature card")
             self.showTripDetailFeature = false
         }
+        self.showTripDetailFeature = true
         
         
     }
@@ -228,6 +229,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         } else {
             self.reviewCard = false
         }
+        self.reviewCard = true
         
     }
     func hideReviewCard() {
@@ -770,48 +772,69 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         print("fetching settings from auth")
                         for data in result as! [NSManagedObject] {
                             
-                            var sortTrainsByTimeSetting: Bool
-                            let user: String
-                            do {
-                                let testUser = try data.value(forKey: "user")
-                                if testUser == nil {
-                                    user = ""
+                            var sortTrainsByTimeSetting = false
+                            
+                            /*
+                             do {
+                             let testUser = try data.value(forKey: "user")
+                             if testUser == nil {
+                             user = ""
+                             } else {
+                             user = testUser as! String
+                             }
+                             } catch {
+                             user  =  ""
+                             }*/
+                            if let user = data.value(forKey: "user") {
+                                if (user as! String == value) {
+                            if  let tempSetting = data.value(forKey: "sortTrainsByTime") {
+                                print("sortTrainsByTime setting", tempSetting)
+                                if (tempSetting as! Bool) {
+                                    self.sortTrainsByTime = true
+                                    print("sortTrainsByTime settings result true")
                                 } else {
-                                    user = testUser as! String
+                                    self.sortTrainsByTime = false
+                                    print("sortTrainsByTime settings result false")
                                 }
-                            } catch {
-                                user  =  ""
+                                    }
                             }
-                            do {
-                                
-                                let tempSetting  =  try data.value(forKey: "sortTrainsByTime")
-                                if (tempSetting == nil) {
-                                    sortTrainsByTimeSetting = false
-                                } else {
-                                    sortTrainsByTimeSetting = tempSetting as! Bool
-                                }
-                            } catch {
-                                sortTrainsByTimeSetting = false
-                                
                             }
                             
                             
                             
-                            if (sortTrainsByTimeSetting == nil) {
-                                sortTrainsByTimeSetting = false
-                            }
-                            print(data.value(forKey: "prioritizeTrain"), "setting")
-                            //   let prioritizeTrainSettingValue = data.value(forKey: "prioritizeTrain")
+                            /*
+                             do {
+                             
+                             let tempSetting  =  try data.value(forKey: "sortTrainsByTime")
+                             if (tempSetting == nil) {
+                             sortTrainsByTimeSetting = false
+                             } else {
+                             sortTrainsByTimeSetting = tempSetting as! Bool
+                             }
+                             } catch {
+                             sortTrainsByTimeSetting = false
+                             
+                             }
+                             */
                             
-                            print(user, value, "user settings from auth")
-                            //   print( prioritizeTrainSettingValue, "sort t b t settings from auth")
-                            if (user == value) {
-                                self.sortTrainsByTime = sortTrainsByTimeSetting
-                                
-                                
-                                
-                                print("set stbt settings from auth to", sortTrainsByTimeSetting)
-                            }
+                            /*
+                             if (sortTrainsByTimeSetting == nil) {
+                             sortTrainsByTimeSetting = false
+                             }
+                             print(data.value(forKey: "prioritizeTrain"), "setting")
+                             //   let prioritizeTrainSettingValue = data.value(forKey: "prioritizeTrain")
+                             
+                             print(user, value, "user settings from auth")
+                             //   print( prioritizeTrainSettingValue, "sort t b t settings from auth")
+                             
+                             if (user == value) {
+                             self.sortTrainsByTime = sortTrainsByTimeSetting
+                             
+                             
+                             
+                             
+                             print("set stbt settings from auth to", sortTrainsByTimeSetting)
+                             }*/
                             
                         }
                     } else {
@@ -828,7 +851,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         
         settingsSuscriber = $sortTrainsByTime.sink {value in
             print(value, "settings change")
-            if (self.auth){
+            if (self.auth && !self.passphrase.isEmpty){
                 Analytics.setUserProperty(String(value), forName: "sortTrainsByTime")
                 let managedContext =  appDelegate.persistentContainer.viewContext
                 let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "Preferences")
@@ -838,38 +861,24 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     if (!result.isEmpty) {
                         print("fetching old settings")
                         for data in result as! [NSManagedObject] {
-                            var user = ""
-                            do {
-                                var temp =  try data.value(forKey: "user")
-                                if (temp != nil) {
-                                    user = temp as! String
-                                }
-                            } catch {
-                                user = ""
-                            }
                             
-                            
-                            var sortTrainsByTimeSetting = false
-                            do {
-                                var temp = try data.value(forKey: "sortTrainsByTime")
-                                if  (temp != nil) {
-                                    sortTrainsByTimeSetting = temp as! Bool
+                            if let user = data.value(forKey: "user") {
+                                if (user as! String == self.passphrase) {
+                                    data.setValue(value, forKey: "sortTrainsByTime")
+                                    print("settings set for user", user)
                                 }
-                                
-                            } catch {
-                                sortTrainsByTimeSetting = false
-                            }
-                            print(user, "user setting")
-                            print(sortTrainsByTimeSetting, "sort t b t setting")
-                            if (user == self.passphrase) {
+                            } else {
+                                data.setValue(self.passphrase, forKey: "user")
                                 data.setValue(value, forKey: "sortTrainsByTime")
-                                do {
-                                    try context.save()
-                                    print("saved updated settings")
-                                } catch {
-                                    print("Failed saving")
-                                }
+                                print("settings set for new user")
                             }
+                            do {
+                                try context.save()
+                                print("saved updated settings", value)
+                            } catch {
+                                print("Failed saving")
+                            }
+                           
                             
                         }
                     } else {
