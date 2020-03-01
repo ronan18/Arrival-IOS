@@ -10,7 +10,9 @@ import SwiftUI
 
 struct NotificationCard: View {
     @EnvironmentObject private var appData: AppData
+
     var type = "tripDetail"
+    
     var body: some View {
         
         HStack {

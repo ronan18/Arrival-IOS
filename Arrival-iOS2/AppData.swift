@@ -194,7 +194,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             print("no show showTripDetailFeature card")
             self.showTripDetailFeature = false
         }
-        self.showTripDetailFeature = true
+        //self.showTripDetailFeature = true
         
         
     }
@@ -226,10 +226,12 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         print("lastShownReviewCard", self.lastShownReviewCard)
         if (self.lastShownReviewCard.isEmpty || moment.utc(lastShownReviewCard).isBefore(moment().subtract(self.daysBetweenReviewAsk, "days"))) {
             self.reviewCard = true
+            print("lastShownReviewCard is beofre last time")
         } else {
             self.reviewCard = false
+             print("lastShownReviewCard is bnot beofre last time")
         }
-        self.reviewCard = true
+       // self.reviewCard = true
         
     }
     func hideReviewCard() {

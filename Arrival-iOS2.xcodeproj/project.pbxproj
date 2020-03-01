@@ -17,6 +17,7 @@
 		C51B3EDD23ED26330021EBE0 /* KNearestNeighborsClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B3EDC23ED26330021EBE0 /* KNearestNeighborsClassifier.swift */; };
 		C524E7B223FAEC87002BC9A5 /* moment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524E7B023FAEC85002BC9A5 /* moment.swift */; };
 		C524E7B323FAEC87002BC9A5 /* moment-with-locales.min.js in Resources */ = {isa = PBXBuildFile; fileRef = C524E7B123FAEC86002BC9A5 /* moment-with-locales.min.js */; };
+		C52F1EBB240C13CA00503995 /* ShareScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52F1EBA240C13C900503995 /* ShareScreen.swift */; };
 		C55640F723CF8439003BCB91 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55640F623CF8438003BCB91 /* AppData.swift */; };
 		C55BC25C23EE7FCC008E12AB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C55BC25B23EE7FCB008E12AB /* GoogleService-Info.plist */; };
 		C5612DCD23FE3B59002A8E20 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5612DCC23FE3B58002A8E20 /* Helpers.swift */; };
@@ -56,6 +57,7 @@
 		C51B3EDC23ED26330021EBE0 /* KNearestNeighborsClassifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KNearestNeighborsClassifier.swift; sourceTree = "<group>"; };
 		C524E7B023FAEC85002BC9A5 /* moment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = moment.swift; sourceTree = "<group>"; };
 		C524E7B123FAEC86002BC9A5 /* moment-with-locales.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "moment-with-locales.min.js"; sourceTree = "<group>"; };
+		C52F1EBA240C13C900503995 /* ShareScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareScreen.swift; sourceTree = "<group>"; };
 		C55640F623CF8438003BCB91 /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
 		C55BC25B23EE7FCB008E12AB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C5612DCC23FE3B58002A8E20 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 				C5B5A53623FA62B00046CCF5 /* TripDetailView.swift */,
 				C5B5A53923FA642D0046CCF5 /* TripWaitTimeView.swift */,
 				C5612DCC23FE3B58002A8E20 /* Helpers.swift */,
+				C52F1EBA240C13C900503995 /* ShareScreen.swift */,
 			);
 			path = "Arrival-iOS2";
 			sourceTree = "<group>";
@@ -359,6 +362,7 @@
 				C524E7B223FAEC87002BC9A5 /* moment.swift in Sources */,
 				C5166C3923F610AC001F0254 /* TermsOfSeriviceView.swift in Sources */,
 				C58F248423CC1438003882F3 /* SceneDelegate.swift in Sources */,
+				C52F1EBB240C13CA00503995 /* ShareScreen.swift in Sources */,
 				C5612DCD23FE3B59002A8E20 /* Helpers.swift in Sources */,
 				C55640F723CF8439003BCB91 /* AppData.swift in Sources */,
 				34CD87F723EA8A24004F8024 /* SettingsView.swift in Sources */,
@@ -510,7 +514,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.29;
+				MARKETING_VERSION = 1.30;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival;
 				PRODUCT_NAME = Arrival;
 				SWIFT_VERSION = 5.0;
@@ -533,7 +537,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.29;
+				MARKETING_VERSION = 1.30;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival;
 				PRODUCT_NAME = Arrival;
 				SWIFT_VERSION = 5.0;

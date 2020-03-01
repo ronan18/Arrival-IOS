@@ -14,6 +14,8 @@ struct TripDetailView: View {
     @Binding  var tripToShow: TripInfo
     @State var routeTime = ""
     @State var boardWait = ""
+    @State var showShareSheet = false
+    @State var shareString = ""
     @EnvironmentObject private var appData: AppData
     var body: some View {
         VStack(spacing: 0) {
@@ -39,7 +41,7 @@ struct TripDetailView: View {
                         .font(.caption)
                     Text(self.routeTime).font(.subheadline).fontWeight(.bold)
                 }
-
+                
                 
                 Spacer()
                 VStack(alignment: .trailing) {
@@ -51,31 +53,48 @@ struct TripDetailView: View {
             }.padding([.top, .bottom])
             Divider()
             List {
-               
-                    
-                    ForEach(self.tripToShow.legs) {leg in
-                        VStack {
-                         
-                            if (leg.order == 1) {
-                                TripWaitTimeView(type: "board", time: self.boardWait).padding(.top)
-                            } else {
-                                TripWaitTimeView(type: "transfer", time: leg.transferWait ?? "").padding(.top)
-                            }
-                            
-                            TripComponentView(fromStationName: leg.origin, trainName: leg.trainDestination, stops: leg.stops, type: leg.type, destinationStationName: leg.destination, fromStationTime: leg.originTime, toStationTime: leg.destinationTime, enrouteTime: leg.enrouteTime, color: self.appData.convertColor(color: leg.color))
-                            if (leg.order == self.tripToShow.legs.count) {
-                                TripWaitTimeView(type: "arrive", time: timeDisplay(time:self.tripToShow.destinatonTime))
-                            }
-                        }.listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
-                    }
-                 
-            }.edgesIgnoringSafeArea(.bottom)
+                
+                
+                ForEach(self.tripToShow.legs) {leg in
+                    VStack {
+                        
+                        if (leg.order == 1) {
+                            TripWaitTimeView(type: "board", time: self.boardWait).padding(.top)
+                        } else {
+                            TripWaitTimeView(type: "transfer", time: leg.transferWait ?? "").padding(.top)
+                        }
+                        
+                        TripComponentView(fromStationName: leg.origin, trainName: leg.trainDestination, stops: leg.stops, type: leg.type, destinationStationName: leg.destination, fromStationTime: leg.originTime, toStationTime: leg.destinationTime, enrouteTime: leg.enrouteTime, color: self.appData.convertColor(color: leg.color))
+                        if (leg.order == self.tripToShow.legs.count) {
+                            TripWaitTimeView(type: "arrive", time: timeDisplay(time:self.tripToShow.destinatonTime))
+                        }
+                    }.listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                }
+                
+            }
             Spacer()
+            Button(action: {
+                self.showShareSheet = true
+            }) {
+                HStack {
+                    Spacer()
+                    Text("SHARE ETA")
+                        .font(.body)
+                        .fontWeight(.bold)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(nil)
+                    Spacer()
+                }.padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+            }.background(/*@START_MENU_TOKEN@*/Color.blue/*@END_MENU_TOKEN@*/).cornerRadius(/*@START_MENU_TOKEN@*/10.0/*@END_MENU_TOKEN@*/).foregroundColor(/*@START_MENU_TOKEN@*/.white/*@END_MENU_TOKEN@*/).sheet(isPresented:  $showShareSheet) {
+              
+                ShareSheet(sharing: [self.shareString])
+            }
+            Spacer().frame(height: 4.0)
             
-     
-        }.edgesIgnoringSafeArea(.bottom).padding().onAppear {
+        }.padding().onAppear {
             let originTIme = moment(self.tripToShow.originTime + " " + self.tripToShow.originDate, dateFormateDate)
             let destinationTIme = moment(self.tripToShow.destinatonTime + " " + self.tripToShow.destinatonDate, dateFormateDate)
+            self.shareString = destinationTIme.format("h:mma") + " eta at " + self.tripToShow.legs[self.tripToShow.legs.count - 1].destination + " station"
             let routeTime = destinationTIme.diff(originTIme, "minutes")
             let boardTime =  moment(self.tripToShow.legs[0].originTime + " " + self.tripToShow.legs[0].originDate, dateFormate)
             self.boardWait =  boardTime.fromNow(true)
