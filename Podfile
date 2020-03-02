@@ -14,6 +14,7 @@ pod 'Firebase/Analytics'
 pod 'Firebase/Crashlytics'
 pod 'Firebase/Performance'
 pod 'Firebase/RemoteConfig'
+pod 'Firebase/DynamicLinks'
 #pod 'SwiftMoment'
 
 

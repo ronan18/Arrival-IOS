@@ -7,7 +7,8 @@
 //
 
 import SwiftUI
-
+import Foundation
+import FirebaseDynamicLinks
 
 struct TripDetailView: View {
     @Binding var modalShow: Bool
@@ -16,6 +17,7 @@ struct TripDetailView: View {
     @State var boardWait = ""
     @State var showShareSheet = false
     @State var shareString = ""
+    @State var shareUrl: URL = URL(string:"https://google.com")!
     @EnvironmentObject private var appData: AppData
     var body: some View {
         VStack(spacing: 0) {
@@ -74,6 +76,18 @@ struct TripDetailView: View {
             }
             Spacer()
             Button(action: {
+               guard let link = URL(string: "https://arrival.city/trip/tripid") else { return }
+               let dynamicLinksDomainURIPrefix = "https://link.arrival.city"
+                let linkBuilder = DynamicLinkComponents(link: link, domainURIPrefix: dynamicLinksDomainURIPrefix)
+linkBuilder!.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.ronanfuruta.arrival")
+                linkBuilder!.iOSParameters!.appStoreID = "7M5JDZSYX7"
+                linkBuilder!.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
+                linkBuilder!.socialMetaTagParameters!.title = self.shareString
+                linkBuilder!.socialMetaTagParameters!.descriptionText = "Tap to view trip details"
+                linkBuilder!.socialMetaTagParameters!.imageURL = URL(string: "https://arrival.city/images/logo.png")
+               guard let longDynamicLink = linkBuilder!.url else { return }
+               print("The long URL is: \(longDynamicLink)")
+                self.shareUrl = longDynamicLink
                 self.showShareSheet = true
             }) {
                 HStack {
@@ -87,7 +101,7 @@ struct TripDetailView: View {
                 }.padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
             }.background(/*@START_MENU_TOKEN@*/Color.blue/*@END_MENU_TOKEN@*/).cornerRadius(/*@START_MENU_TOKEN@*/10.0/*@END_MENU_TOKEN@*/).foregroundColor(/*@START_MENU_TOKEN@*/.white/*@END_MENU_TOKEN@*/).sheet(isPresented:  $showShareSheet) {
               
-                ShareSheet(sharing: [self.shareString])
+                ShareSheet(sharing: [self.shareUrl])
             }
             Spacer().frame(height: 4.0)
             
