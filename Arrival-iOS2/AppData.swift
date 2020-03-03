@@ -204,7 +204,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     let leg = trip["leg"].arrayValue[i]
                     let legRoute = routes[leg["route"].stringValue]!
                     let origin = self.stationsByAbbr[leg["@origin"].stringValue]!.name
-                                                   let destination = self.stationsByAbbr[leg["@destination"].stringValue]!.name
+                    let destination = self.stationsByAbbr[leg["@destination"].stringValue]!.name
                     var type: String
                     if (i == trip["leg"].arrayValue.count - 1) {
                         type = "destination"
@@ -218,7 +218,15 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     
                     
                     
-                    let stopCount = abs(toStationIndex! - fromStationIndex!)
+                    //TODO Make this smarter with more graceful fallbacks
+                    
+                    var stopCount = 0
+                    if let toStationIndex = toStationIndex {
+                        if let fromStationIndex = fromStationIndex {
+                            stopCount = abs(toStationIndex - fromStationIndex)
+                        }
+                        
+                    }
                     var transferWait: String?
                     if (i != 0) {
                         let lastTrainString = trip["leg"][i - 1]["@destTimeMin"].stringValue
@@ -737,9 +745,15 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                                     let fromStationIndex = routeJSON.stations.firstIndex(of: leg["@origin"].stringValue)
                                     let toStationIndex = routeJSON.stations.firstIndex(of: leg["@destination"].stringValue)
                                     print(fromStationIndex, toStationIndex, origin, destination)
+                                    //TODO Make this smarter with more graceful fallbacks
                                     
-                                    
-                                    let stopCount = abs(toStationIndex! - fromStationIndex!)
+                                    var stopCount = 0
+                                    if let toStationIndex = toStationIndex {
+                                        if let fromStationIndex = fromStationIndex {
+                                            stopCount = abs(toStationIndex - fromStationIndex)
+                                        }
+                                        
+                                    }
                                     
                                     
                                     print(stopCount, "route stop count")
