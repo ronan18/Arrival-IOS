@@ -203,10 +203,13 @@ struct HomeView: View {
                     }
                 }
             }
-        }.edgesIgnoringSafeArea(.top).onAppear(){
+        }.sheet(isPresented: self.$appData.showTripDetailsFromLink) {
+            Text("Trip Details")
+             }.edgesIgnoringSafeArea(.top).onAppear(){
             print("home Appeared")
             // Analytics.setScreenName("home", screenClass: "home")
             self.appData.cylce()
+           
             Timer.scheduledTimer(withTimeInterval: self.appData.cycleTimer, repeats: true) { timer in
                 self.appData.cylce()
             }

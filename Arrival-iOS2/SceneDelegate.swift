@@ -18,7 +18,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     let appData  = AppData()
     func handleIncomingLink(dynamicLink: DynamicLink) {
-        print("handeling link", dynamicLink.url )
+        print("handled link", dynamicLink.url )
+        if let url = dynamicLink.url {
+            let tripId = (url.absoluteString as NSString).lastPathComponent
+            print("trip id handled link", tripId)
+            appData.dynamicLinkTripId = tripId
+            appData.showTripDetailsFromLink(tripId)
+        }
         
     }
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {

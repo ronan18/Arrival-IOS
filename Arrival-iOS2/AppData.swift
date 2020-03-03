@@ -60,6 +60,8 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var reviewCard = false
     @Published var debug = false
     @Published var showTripDetailFeature = true
+    @Published var dynamicLinkTripId: String? = nil
+    @Published var showTripDetailsFromLink = false
     let net = Alamofire.NetworkReachabilityManager(host: "api.arrival.city")
     private let locationManager = CLLocationManager()
     private var lat = 0.0
@@ -166,6 +168,12 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         
         
         
+    }
+    func showTripDetailsFromLink(_ tripId: String) {
+        print(tripId, "dynamic link on load")
+        self.showTripDetailsFromLink = true
+        
+               
     }
     func showTripDetailFeatureCard() {
         if (self.remoteConfig["showTripDetailFeature"].boolValue || self.debug) {
@@ -707,7 +715,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                             let now = moment()
                             let difference = originTime.diff(now, "minutes").intValue
                             results.append(Train(id: UUID(), direction: direction, time: etd, unit: "", color: "none", cars: 0, hex: "0", eta: eta))
-                            trips.append(TripInfo(origin: self.fromStation.abbr, destination: direction, legs: legs, originTime: thisTrain["@origTimeMin"].stringValue, originDate: originDate, destinatonTime: thisTrain["@destTimeMin"].stringValue, destinatonDate: destDate, tripTIme: thisTrain["@tripTime"].doubleValue, leavesIn: difference))
+                            trips.append(TripInfo(origin: self.fromStation.abbr, destination: direction, legs: legs, originTime: thisTrain["@origTimeMin"].stringValue, originDate: originDate, destinatonTime: thisTrain["@destTimeMin"].stringValue, destinatonDate: destDate, tripTIme: thisTrain["@tripTime"].doubleValue, leavesIn: difference, tripId: thisTrain["tripId"].stringValue))
                         }
                         
                         results.sort {

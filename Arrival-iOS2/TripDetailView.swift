@@ -12,7 +12,7 @@ import FirebaseDynamicLinks
 
 struct TripDetailView: View {
     @Binding var modalShow: Bool
-    @Binding  var tripToShow: TripInfo
+    @Binding var tripToShow: TripInfo
     @State var routeTime = ""
     @State var boardWait = ""
     @State var showShareSheet = false
@@ -76,19 +76,28 @@ struct TripDetailView: View {
             }
             Spacer()
             Button(action: {
-               guard let link = URL(string: "https://arrival.city/trip/tripid") else { return }
-               let dynamicLinksDomainURIPrefix = "https://link.arrival.city"
+                guard let link = URL(string: "https://arrival.city/trip/" + self.tripToShow.tripId) else { return }
+                let dynamicLinksDomainURIPrefix = "https://link.arrival.city"
                 let linkBuilder = DynamicLinkComponents(link: link, domainURIPrefix: dynamicLinksDomainURIPrefix)
-linkBuilder!.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.ronanfuruta.arrival")
-                linkBuilder!.iOSParameters!.appStoreID = "7M5JDZSYX7"
+                linkBuilder!.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.ronanfuruta.arrival")
+                linkBuilder!.iOSParameters!.appStoreID = "1497229798"
                 linkBuilder!.socialMetaTagParameters = DynamicLinkSocialMetaTagParameters()
                 linkBuilder!.socialMetaTagParameters!.title = self.shareString
                 linkBuilder!.socialMetaTagParameters!.descriptionText = "Tap to view trip details"
                 linkBuilder!.socialMetaTagParameters!.imageURL = URL(string: "https://arrival.city/images/logo.png")
-               guard let longDynamicLink = linkBuilder!.url else { return }
-               print("The long URL is: \(longDynamicLink)")
-                self.shareUrl = longDynamicLink
-                self.showShareSheet = true
+                guard let longDynamicLink = linkBuilder!.url else { return }
+                print("The long URL is: \(longDynamicLink)")
+                linkBuilder!.shorten() { url, warnings, error in
+                    guard let url = url, error != nil else {
+                        self.shareUrl = longDynamicLink
+                        self.showShareSheet = true
+                        return
+                    }
+                    print("The short URL link is: \(url)")
+                    self.shareUrl = url
+                    self.showShareSheet = true
+                }
+                
             }) {
                 HStack {
                     Spacer()
@@ -100,7 +109,7 @@ linkBuilder!.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.ronanfuruta
                     Spacer()
                 }.padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
             }.background(/*@START_MENU_TOKEN@*/Color.blue/*@END_MENU_TOKEN@*/).cornerRadius(/*@START_MENU_TOKEN@*/10.0/*@END_MENU_TOKEN@*/).foregroundColor(/*@START_MENU_TOKEN@*/.white/*@END_MENU_TOKEN@*/).sheet(isPresented:  $showShareSheet) {
-              
+                
                 ShareSheet(sharing: [self.shareUrl])
             }
             Spacer().frame(height: 4.0)
@@ -121,6 +130,6 @@ linkBuilder!.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.ronanfuruta
 struct TripDetailView_Previews: PreviewProvider {
     
     static var previews: some View {
-        TripDetailView(modalShow: .constant(true), tripToShow: .constant(TripInfo(origin: "", destination: "", legs: [], originTime: "21:00", originDate: "", destinatonTime: "21:30", destinatonDate: "", tripTIme: 0.0, leavesIn: 5))).environmentObject(AppData())
+        TripDetailView(modalShow: .constant(true), tripToShow: .constant(TripInfo(origin: "", destination: "", legs: [], originTime: "21:00", originDate: "", destinatonTime: "21:30", destinatonDate: "", tripTIme: 0.0, leavesIn: 5, tripId: "test"))).environmentObject(AppData())
     }
 }

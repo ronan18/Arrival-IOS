@@ -18,5 +18,6 @@ struct TripInfo: Identifiable, Codable {
     var destinatonDate: String
     var tripTIme: Double
     var leavesIn: Int
+    var tripId: String
    
 }
