@@ -19,6 +19,18 @@ struct TripDetailView: View {
     @State var shareString = ""
     @State var shareUrl: URL = URL(string:"https://google.com")!
     @EnvironmentObject private var appData: AppData
+    func intalize()  {
+        
+        let originTIme = moment(self.tripToShow.originTime + " " + self.tripToShow.originDate, dateFormateDate)
+        let destinationTIme = moment(self.tripToShow.destinatonTime + " " + self.tripToShow.destinatonDate, dateFormateDate)
+        self.shareString = destinationTIme.format("h:mma") + " eta at " + self.tripToShow.legs[self.tripToShow.legs.count - 1].destination + " station"
+        let routeTime = destinationTIme.diff(originTIme, "minutes")
+        let boardTime =  moment(self.tripToShow.legs[0].originTime + " " + self.tripToShow.legs[0].originDate, dateFormate)
+        self.boardWait =  boardTime.fromNow(true)
+        print(routeTime, destinationTIme.format(), originTIme.format(), "route time", wait)
+        self.routeTime = routeTime.stringValue + "  min"
+        
+    }
     var body: some View {
         VStack(spacing: 0) {
             HStack {
@@ -115,14 +127,9 @@ struct TripDetailView: View {
             Spacer().frame(height: 4.0)
             
         }.padding().onAppear {
-            let originTIme = moment(self.tripToShow.originTime + " " + self.tripToShow.originDate, dateFormateDate)
-            let destinationTIme = moment(self.tripToShow.destinatonTime + " " + self.tripToShow.destinatonDate, dateFormateDate)
-            self.shareString = destinationTIme.format("h:mma") + " eta at " + self.tripToShow.legs[self.tripToShow.legs.count - 1].destination + " station"
-            let routeTime = destinationTIme.diff(originTIme, "minutes")
-            let boardTime =  moment(self.tripToShow.legs[0].originTime + " " + self.tripToShow.legs[0].originDate, dateFormate)
-            self.boardWait =  boardTime.fromNow(true)
-            print(routeTime, destinationTIme.format(), originTIme.format(), "route time", wait)
-            self.routeTime = routeTime.stringValue + "  min"
+         
+            self.intalize()
+            
         }
     }
 }

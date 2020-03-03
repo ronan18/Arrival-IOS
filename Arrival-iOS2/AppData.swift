@@ -61,6 +61,8 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var debug = false
     @Published var showTripDetailFeature = true
     @Published var dynamicLinkTripId: String? = nil
+    @Published var dynamicLinkTripData: TripInfo = TripInfo(origin: "", destination: "", legs: [Leg](), originTime: "", originDate: "", destinatonTime: "", destinatonDate: "", tripTIme: 0.0, leavesIn: 0, tripId: "")
+    @Published var dynamicLinkTripDataShow: Bool = false
     @Published var showTripDetailsFromLink = false
     let net = Alamofire.NetworkReachabilityManager(host: "api.arrival.city")
     private let locationManager = CLLocationManager()
@@ -170,10 +172,78 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         
     }
     func showTripDetailsFromLink(_ tripId: String) {
+        self.dynamicLinkTripDataShow = false
         print(tripId, "dynamic link on load")
         self.showTripDetailsFromLink = true
+        let headers: HTTPHeaders = [
+            "Authorization": self.passphrase,
+            "Accept": "application/json"
+        ]
+        Alamofire.request(apiUrl + "/api/v3/trip/" + tripId, headers: headers).responseJSON { response in
+            print("dynamic link trip data:", JSON(response.value))
+            if let error = JSON(response.value)["error"].string {
+                self.showTripDetailsFromLink = false
+            } else {
+                let trip = JSON(response.value)["trip"]
+                var routes: [String: Route] = [:]
+                for (id, route) in JSON(response.value)["routes"].dictionaryObject! {
+                    //  print(id, route)
+                    let routeJSON = JSON(route)
+                    let stations = routeJSON["config"]["station"].arrayValue.map { $0.stringValue}
+                    //  print(stations, "route stations")
+                    routes[id] = Route(name: routeJSON["name"].stringValue, abbr: routeJSON["abbr"].stringValue, routeID: routeJSON["routeID"].stringValue, origin: routeJSON["origin"].stringValue, destination: routeJSON["destination"].stringValue, direction: routeJSON["direction"].stringValue, color: routeJSON["color"].stringValue, stations: stations)
+                }
+                let originDate = trip["@origTimeDate"].stringValue
+                let destDate = trip["@destTimeDate"].stringValue
+                
+                let originTime = moment(trip["@origTimeMin"].stringValue + " " + originDate, dateFormateDate)
+                let now = moment()
+                let difference = originTime.diff(now, "minutes").intValue
+                var legs: [Leg] = []
+                for i in 0...trip["leg"].arrayValue.count - 1 {
+                    let leg = trip["leg"].arrayValue[i]
+                    let legRoute = routes[leg["route"].stringValue]!
+                    let origin = self.stationsByAbbr[leg["@origin"].stringValue]!.name
+                                                   let destination = self.stationsByAbbr[leg["@destination"].stringValue]!.name
+                    var type: String
+                    if (i == trip["leg"].arrayValue.count - 1) {
+                        type = "destination"
+                    } else if (i == 0) {
+                        type = "board"
+                    }   else {
+                        type = "transfer"
+                    }
+                    let fromStationIndex = legRoute.stations.firstIndex(of: leg["@origin"].stringValue)
+                    let toStationIndex = legRoute.stations.firstIndex(of: leg["@destination"].stringValue)
+                    
+                    
+                    
+                    let stopCount = abs(toStationIndex! - fromStationIndex!)
+                    var transferWait: String?
+                    if (i != 0) {
+                        let lastTrainString = trip["leg"][i - 1]["@destTimeMin"].stringValue
+                        let originTimeString = leg["@origTimeMin"].stringValue
+                        let lastTrainTime = moment(lastTrainString + " " + trip["leg"][i - 1]["@destTimeDate"].stringValue, dateFormateDate)
+                        let originTime = moment(originTimeString + " " + leg["@origTimeDate"].stringValue, dateFormateDate)
+                        let difference = originTime.diff(lastTrainTime, "minutes")
+                        transferWait = difference.stringValue + " min"
+                        print(lastTrainTime.format(), originTime.format(), difference, transferWait, "transfer wait")
+                    }
+                    let enrouteTime = moment(leg["@destTimeMin"].stringValue  + " " + leg["@destTimeDate"].stringValue, dateFormateDate).diff(moment(leg["@origTimeMin"].stringValue + " " + leg["@origTimeDate"].stringValue, dateFormateDate), "minutes")
+                    let enrouteTimeString = enrouteTime.stringValue + " min"
+                    print(leg["@destTimeMin"].stringValue  + " " + leg["@destTimeDate"].stringValue, dateFormateDate, "leg time")
+                    print(leg["@origTimeMin"].stringValue  + " " + leg["@origTimeDate"].stringValue, dateFormateDate, "leg time")
+                    legs.append(Leg(order: leg["@order"].intValue, origin:origin, destination: destination, originTime: leg["@origTimeMin"].stringValue, originDate: leg["@origTimeDate"].stringValue, destinationTime: leg["@destTimeMin"].stringValue, destDate: leg["@destTimeDate"].stringValue, line: leg["@line"].stringValue, route: leg["route"].intValue, trainDestination: leg["@trainHeadStation"].stringValue, color: legRoute.color, stops: stopCount, type: type, enrouteTime: enrouteTimeString, transferWait: transferWait))
+                    
+                }
+                self.dynamicLinkTripData = TripInfo(origin: trip["@origin"].stringValue, destination: trip["@destination"].stringValue, legs: legs, originTime: trip["@origTimeMin"].stringValue, originDate: trip["@origTimeDate"].stringValue, destinatonTime: trip["@destTimeMin"].stringValue, destinatonDate: trip["@destTimeDate"].stringValue, tripTIme: trip["@tripTime"].doubleValue, leavesIn: difference, tripId: trip["tripId"].stringValue)
+                print(self.dynamicLinkTripData, "dynamic link trip data")
+                self.dynamicLinkTripDataShow = true
+            }
+            
+        }
         
-               
+        
     }
     func showTripDetailFeatureCard() {
         if (self.remoteConfig["showTripDetailFeature"].boolValue || self.debug) {
@@ -237,9 +307,9 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             print("lastShownReviewCard is beofre last time")
         } else {
             self.reviewCard = false
-             print("lastShownReviewCard is bnot beofre last time")
+            print("lastShownReviewCard is bnot beofre last time")
         }
-       // self.reviewCard = true
+        // self.reviewCard = true
         
     }
     func hideReviewCard() {
@@ -797,17 +867,17 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                              }*/
                             if let user = data.value(forKey: "user") {
                                 if (user as! String == value) {
-                            if  let tempSetting = data.value(forKey: "sortTrainsByTime") {
-                                print("sortTrainsByTime setting", tempSetting)
-                                if (tempSetting as! Bool) {
-                                    self.sortTrainsByTime = true
-                                    print("sortTrainsByTime settings result true")
-                                } else {
-                                    self.sortTrainsByTime = false
-                                    print("sortTrainsByTime settings result false")
-                                }
+                                    if  let tempSetting = data.value(forKey: "sortTrainsByTime") {
+                                        print("sortTrainsByTime setting", tempSetting)
+                                        if (tempSetting as! Bool) {
+                                            self.sortTrainsByTime = true
+                                            print("sortTrainsByTime settings result true")
+                                        } else {
+                                            self.sortTrainsByTime = false
+                                            print("sortTrainsByTime settings result false")
+                                        }
                                     }
-                            }
+                                }
                             }
                             
                             
@@ -888,7 +958,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                             } catch {
                                 print("Failed saving")
                             }
-                           
+                            
                             
                         }
                     } else {

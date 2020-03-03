@@ -43,7 +43,15 @@ struct HomeView: View {
                                 }
                             }
                         }
-                    }.padding().frame(height: geometry.safeAreaInsets.top + 60).background(Color("arrivalBlue"))
+                    }.padding().frame(height: geometry.safeAreaInsets.top + 60).background(Color("arrivalBlue")).sheet(isPresented: self.$appData.showTripDetailsFromLink) {
+                        if (!self.appData.dynamicLinkTripDataShow) {
+                               Text("Loading Trip Info")
+                        } else {
+                            
+                            TripDetailView(modalShow: self.$appData.showTripDetailsFromLink, tripToShow: self.$appData.dynamicLinkTripData).environmentObject(self.appData).edgesIgnoringSafeArea(.bottom)
+                        }
+                 
+                     }
                     
                     VStack(spacing: 0) {
                         HStack {
@@ -176,6 +184,7 @@ struct HomeView: View {
                                 Spacer()
                             }.background(Color.red)
                         }
+                        
                         if (self.appData.fromStation.abbr != "load" || !self.locationTimeout && self.appData.locationAcess) {
                          
                             TrainView()
@@ -200,12 +209,12 @@ struct HomeView: View {
                             Spacer()
                         }
                         
+                        
+                        
                     }
                 }
             }
-        }.sheet(isPresented: self.$appData.showTripDetailsFromLink) {
-            Text("Trip Details")
-             }.edgesIgnoringSafeArea(.top).onAppear(){
+        }.edgesIgnoringSafeArea(.top).onAppear(){
             print("home Appeared")
             // Analytics.setScreenName("home", screenClass: "home")
             self.appData.cylce()
