@@ -9,7 +9,7 @@
 import SwiftUI
 import Foundation
 import FirebaseDynamicLinks
-
+import FirebaseAnalytics
 struct TripDetailView: View {
     @Binding var modalShow: Bool
     @Binding var tripToShow: TripInfo
@@ -108,6 +108,7 @@ struct TripDetailView: View {
                     print("The short URL link is: \(url)")
                     self.shareUrl = url
                     self.showShareSheet = true
+                    Analytics.logEvent("sharing_trip_link", parameters: [:])
                 }
                 
             }) {

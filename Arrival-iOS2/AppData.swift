@@ -179,6 +179,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             "Authorization": self.passphrase,
             "Accept": "application/json"
         ]
+        Analytics.logEvent("showing_trip_link", parameters: [:])
         Alamofire.request(apiUrl + "/api/v3/trip/" + tripId, headers: headers).responseJSON { response in
             print("dynamic link trip data:", JSON(response.value))
             if let error = JSON(response.value)["error"].string {
@@ -392,19 +393,19 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     func convertColor(color: String) -> Color {
         
         switch (color.lowercased()) {
-        case "red" :
+        case "red", "RD-N".lowercased() :
             return Color.red
-        case "yellow" :
+        case "yellow", "yl-n",  "YL-S".lowercased() :
             return Color.yellow
-        case "green" :
+        case "green", "GN-S".lowercased(), "GN-N".lowercased() :
             return Color.green
-        case "orange" :
+        case "orange", "OR-N".lowercased(),  "OR-S".lowercased() :
             return Color.orange
-        case "purple" :
+        case "purple", "PR-N".lowercased(), "PR-N".lowercased() :
             return Color.purple
-        case "blue" :
+        case "blue", "BL-N".lowercased(),  "BL-N".lowercased() :
             return Color.blue
-        case "white" :
+        case "white","WT-N".lowercased(), "WT-S".lowercased() :
             return Color(UIColor.systemIndigo)
         case "none" :
             return Color.white
