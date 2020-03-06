@@ -23,6 +23,8 @@ struct TripWaitTimeView: View {
                     Text("\(time) transfer window")
                 } else if (type == "board") {
                      Text("Board in \(time)")
+                } else if (type == "boarded") {
+                Text("Boarded")
                 } else {
                     Text("Wait \(time)")
                 }

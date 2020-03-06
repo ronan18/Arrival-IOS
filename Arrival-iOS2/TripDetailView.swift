@@ -17,6 +17,7 @@ struct TripDetailView: View {
     @State var boardWait = ""
     @State var showShareSheet = false
     @State var shareString = ""
+    @State var boarded = false
     @State var shareUrl: URL = URL(string:"https://google.com")!
     @EnvironmentObject private var appData: AppData
     func intalize()  {
@@ -26,7 +27,12 @@ struct TripDetailView: View {
         self.shareString = destinationTIme.format("h:mma") + " eta at " + self.tripToShow.legs[self.tripToShow.legs.count - 1].destination + " station"
         let routeTime = destinationTIme.diff(originTIme, "minutes")
         let boardTime =  moment(self.tripToShow.legs[0].originTime + " " + self.tripToShow.legs[0].originDate, dateFormate)
+        
         self.boardWait =  boardTime.fromNow(true)
+        if (boardTime.isSameOrAfter(moment())) {
+            self.boarded = true
+        }
+      
         print(routeTime, destinationTIme.format(), originTIme.format(), "route time", wait)
         self.routeTime = routeTime.stringValue + "  min"
         
@@ -73,7 +79,11 @@ struct TripDetailView: View {
                     VStack {
                         
                         if (leg.order == 1) {
+                            if (self.boarded) {
+                                TripWaitTimeView(type: "boarded", time: self.boardWait).padding(.top)
+                            } else {
                             TripWaitTimeView(type: "board", time: self.boardWait).padding(.top)
+                            }
                         } else {
                             TripWaitTimeView(type: "transfer", time: leg.transferWait ?? "").padding(.top)
                         }
