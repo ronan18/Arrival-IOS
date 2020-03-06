@@ -393,7 +393,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     func convertColor(color: String) -> Color {
         
         switch (color.lowercased()) {
-        case "red", "RD-N".lowercased() :
+        case "red", "RD-N".lowercased(), "RD-S".lowercased():
             return Color.red
         case "yellow", "yl-n",  "YL-S".lowercased() :
             return Color.yellow
