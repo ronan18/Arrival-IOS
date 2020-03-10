@@ -109,17 +109,16 @@ struct TripDetailView: View {
                 linkBuilder!.socialMetaTagParameters!.imageURL = URL(string: "https://arrival.city/images/logo.png")
                 guard let longDynamicLink = linkBuilder!.url else { return }
                 print("The long URL is: \(longDynamicLink)")
-                linkBuilder!.shorten() { url, warnings, error in
-                    guard let url = url, error != nil else {
+        
                         self.shareUrl = longDynamicLink
                         self.showShareSheet = true
-                        return
-                    }
-                    print("The short URL link is: \(url)")
-                    self.shareUrl = url
-                    self.showShareSheet = true
-                    Analytics.logEvent("sharing_trip_link", parameters: [:])
-                }
+                        Analytics.logEvent("sharing_trip_link", parameters: [
+                            "url": longDynamicLink as! NSObject
+                        ])
+                        
+                    
+                   
+                
                 
             }) {
                 HStack {

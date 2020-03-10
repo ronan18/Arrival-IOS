@@ -25,6 +25,7 @@ struct HomeView: View {
         UITableView.appearance().separatorStyle = .none
     }
     var body: some View {
+     
         
         VStack(spacing: 0) {
             GeometryReader { geometry in
@@ -230,6 +231,7 @@ struct HomeView: View {
             }
             
         }
+  
     }
 }
 
