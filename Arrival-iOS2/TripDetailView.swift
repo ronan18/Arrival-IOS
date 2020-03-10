@@ -29,7 +29,7 @@ struct TripDetailView: View {
         let boardTime =  moment(self.tripToShow.legs[0].originTime + " " + self.tripToShow.legs[0].originDate, dateFormate)
         
         self.boardWait =  boardTime.fromNow(true)
-        if (boardTime.isSameOrAfter(moment())) {
+        if (boardTime.isSameOrBefore(moment())) {
             self.boarded = true
         }
       
