@@ -401,9 +401,9 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             return Color.green
         case "orange", "OR-N".lowercased(),  "OR-S".lowercased() :
             return Color.orange
-        case "purple", "PR-N".lowercased(), "PR-N".lowercased() :
+        case "purple", "PR-N".lowercased(), "PR-S".lowercased() :
             return Color.purple
-        case "blue", "BL-N".lowercased(),  "BL-N".lowercased() :
+        case "blue", "BL-N".lowercased(),  "BL-S".lowercased() :
             return Color.blue
         case "white","WT-N".lowercased(), "WT-S".lowercased() :
             return Color(UIColor.systemIndigo)

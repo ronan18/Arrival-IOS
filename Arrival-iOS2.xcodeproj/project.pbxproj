@@ -13,6 +13,7 @@
 		34EF38B123CC2692000DE4AF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EF38B023CC2692000DE4AF /* HomeView.swift */; };
 		34EF38B323CC2AC1000DE4AF /* StationChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EF38B223CC2AC1000DE4AF /* StationChooserView.swift */; };
 		64BB2D2FF3AB6F51B9399F08 /* Pods_Arrival_iOS2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74ACA5CF5B67BD66D8845E5D /* Pods_Arrival_iOS2.framework */; };
+		C509BA83241BEC1A00920BC5 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C509BA82241BEC1A00920BC5 /* SearchBar.swift */; };
 		C5166C3923F610AC001F0254 /* TermsOfSeriviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5166C3823F610AB001F0254 /* TermsOfSeriviceView.swift */; };
 		C51B3EDD23ED26330021EBE0 /* KNearestNeighborsClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B3EDC23ED26330021EBE0 /* KNearestNeighborsClassifier.swift */; };
 		C524E7B223FAEC87002BC9A5 /* moment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524E7B023FAEC85002BC9A5 /* moment.swift */; };
@@ -52,6 +53,7 @@
 		34EF38B223CC2AC1000DE4AF /* StationChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationChooserView.swift; sourceTree = "<group>"; };
 		74ACA5CF5B67BD66D8845E5D /* Pods_Arrival_iOS2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Arrival_iOS2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		751A431627D2482AE13CFE9F /* Pods-Arrival-iOS2Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Arrival-iOS2Tests.release.xcconfig"; path = "Target Support Files/Pods-Arrival-iOS2Tests/Pods-Arrival-iOS2Tests.release.xcconfig"; sourceTree = "<group>"; };
+		C509BA82241BEC1A00920BC5 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		C512BCC423E4FBA80079F49C /* TimePlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = TimePlayground.playground; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C5166C3823F610AB001F0254 /* TermsOfSeriviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfSeriviceView.swift; sourceTree = "<group>"; };
 		C51B3EDC23ED26330021EBE0 /* KNearestNeighborsClassifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KNearestNeighborsClassifier.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 				C5166C3823F610AB001F0254 /* TermsOfSeriviceView.swift */,
 				C5B5A53523FA62B00046CCF5 /* TripComponentView.swift */,
 				C5B5A53623FA62B00046CCF5 /* TripDetailView.swift */,
+				C509BA82241BEC1A00920BC5 /* SearchBar.swift */,
 				C5B5A53923FA642D0046CCF5 /* TripWaitTimeView.swift */,
 				C5612DCC23FE3B58002A8E20 /* Helpers.swift */,
 				C52F1EBA240C13C900503995 /* ShareScreen.swift */,
@@ -357,6 +360,7 @@
 				C568C40023D8B99400AB9E67 /* Station.swift in Sources */,
 				C5B5A53A23FA642D0046CCF5 /* TripWaitTimeView.swift in Sources */,
 				C568C40623D95FA800AB9E67 /* LoginView.swift in Sources */,
+				C509BA83241BEC1A00920BC5 /* SearchBar.swift in Sources */,
 				C5DF911523F87EA800701D3F /* NoNetworkView.swift in Sources */,
 				C5B5A53823FA62B00046CCF5 /* TripDetailView.swift in Sources */,
 				C524E7B223FAEC87002BC9A5 /* moment.swift in Sources */,
@@ -514,7 +518,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.34;
+				MARKETING_VERSION = 1.34.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival;
 				PRODUCT_NAME = Arrival;
 				SWIFT_VERSION = 5.0;
@@ -537,7 +541,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.34;
+				MARKETING_VERSION = 1.34.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival;
 				PRODUCT_NAME = Arrival;
 				SWIFT_VERSION = 5.0;

@@ -73,7 +73,7 @@ struct HomeView: View {
                                 }
                                 
                             }.sheet(isPresented: self.$fromModalDisplayed) {
-                                VStack(alignment: .leading) {
+                                VStack(alignment: .leading, spacing: 0) {
                                     HStack(alignment: .center) {
                                         Text("From Station")
                                             .font(.largeTitle)
@@ -85,12 +85,13 @@ struct HomeView: View {
                                             Text("Close")
                                         }
                                     }
-                                    VStack(alignment: .leading) {
-                                        
+                                    VStack(alignment: .leading, spacing: 0) {
+                                        /*
                                         TextField("Search for a Station", text: self.$fromStationSearch)
                                             .padding()
                                             .background(Color.inputBackground)
-                                            .cornerRadius(10)
+                                            .cornerRadius(10)*/
+                                        SearchBar(text: self.$fromStationSearch).padding(0).padding([.leading, .trailing], -10)
                                         Spacer().frame(height: 10)
                                         Text("suggested")
                                             .font(.subheadline)
@@ -128,7 +129,7 @@ struct HomeView: View {
                                     Text(stationDisplay(self.appData.toStation.name)).font(.headline)
                                 }.lineLimit(1)
                             }.sheet(isPresented: self.$toModalDisplayed) {
-                                VStack(alignment: .leading) {
+                                VStack(alignment: .leading, spacing: 0) {
                                     HStack(alignment: .center) {
                                         Text("To Station")
                                             .font(.largeTitle)
@@ -140,13 +141,10 @@ struct HomeView: View {
                                             Text("Close")
                                         }
                                     }
-                                    VStack(alignment: .leading) {
+                                    VStack(alignment: .leading, spacing: 0) {
                                         
-                                        TextField("Search for a Station", text: self.$fromStationSearch)
-                                            .padding()
-                                            .background(Color.inputBackground)
-                                            .cornerRadius(10)
-                                        Spacer().frame(height: 10)
+                                        SearchBar(text: self.$fromStationSearch).padding(0).padding([.leading, .trailing], -10)
+                                                                               Spacer().frame(height: 10)
                                         Text("suggested")
                                             .font(.subheadline)
                                         List { ForEach(self.appData.toStationSuggestions.filter {
