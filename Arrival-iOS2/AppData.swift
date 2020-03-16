@@ -64,6 +64,9 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var dynamicLinkTripData: TripInfo = TripInfo(origin: "", destination: "", legs: [Leg](), originTime: "", originDate: "", destinatonTime: "", destinatonDate: "", tripTIme: 0.0, leavesIn: 0, tripId: "")
     @Published var dynamicLinkTripDataShow: Bool = false
     @Published var showTripDetailsFromLink = false
+    @Published var trainLeaveTimeType: TrainTimeType = .now
+    @Published var leaveDate = Date()
+    @Published var arriveDate = Date()
     let net = Alamofire.NetworkReachabilityManager(host: "api.arrival.city")
     private let locationManager = CLLocationManager()
     private var lat = 0.0

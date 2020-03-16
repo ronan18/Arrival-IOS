@@ -15,6 +15,7 @@
 		64BB2D2FF3AB6F51B9399F08 /* Pods_Arrival_iOS2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74ACA5CF5B67BD66D8845E5D /* Pods_Arrival_iOS2.framework */; };
 		C509BA83241BEC1A00920BC5 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C509BA82241BEC1A00920BC5 /* SearchBar.swift */; };
 		C5166C3923F610AC001F0254 /* TermsOfSeriviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5166C3823F610AB001F0254 /* TermsOfSeriviceView.swift */; };
+		C516BD21241F316B00ED03FB /* TrainTimeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C516BD20241F316B00ED03FB /* TrainTimeType.swift */; };
 		C51B3EDD23ED26330021EBE0 /* KNearestNeighborsClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B3EDC23ED26330021EBE0 /* KNearestNeighborsClassifier.swift */; };
 		C524E7B223FAEC87002BC9A5 /* moment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524E7B023FAEC85002BC9A5 /* moment.swift */; };
 		C524E7B323FAEC87002BC9A5 /* moment-with-locales.min.js in Resources */ = {isa = PBXBuildFile; fileRef = C524E7B123FAEC86002BC9A5 /* moment-with-locales.min.js */; };
@@ -56,6 +57,7 @@
 		C509BA82241BEC1A00920BC5 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		C512BCC423E4FBA80079F49C /* TimePlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = TimePlayground.playground; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C5166C3823F610AB001F0254 /* TermsOfSeriviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfSeriviceView.swift; sourceTree = "<group>"; };
+		C516BD20241F316B00ED03FB /* TrainTimeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainTimeType.swift; sourceTree = "<group>"; };
 		C51B3EDC23ED26330021EBE0 /* KNearestNeighborsClassifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KNearestNeighborsClassifier.swift; sourceTree = "<group>"; };
 		C524E7B023FAEC85002BC9A5 /* moment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = moment.swift; sourceTree = "<group>"; };
 		C524E7B123FAEC86002BC9A5 /* moment-with-locales.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "moment-with-locales.min.js"; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 				C5E5768D23EFBB0A00A3A7BD /* Leg.swift */,
 				C5E46EC523F3C53E00979DBB /* Route.swift */,
 				C5A9B79C23F5C3BD004E8C5C /* RemoteConfigDefaults.plist */,
+				C516BD20241F316B00ED03FB /* TrainTimeType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -369,6 +372,7 @@
 				C52F1EBB240C13CA00503995 /* ShareScreen.swift in Sources */,
 				C5612DCD23FE3B59002A8E20 /* Helpers.swift in Sources */,
 				C55640F723CF8439003BCB91 /* AppData.swift in Sources */,
+				C516BD21241F316B00ED03FB /* TrainTimeType.swift in Sources */,
 				34CD87F723EA8A24004F8024 /* SettingsView.swift in Sources */,
 				C5B5A53723FA62B00046CCF5 /* TripComponentView.swift in Sources */,
 			);

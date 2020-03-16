@@ -11,13 +11,58 @@ import UIKit
 import Firebase
 import FirebaseAnalytics
 import FirebaseCrashlytics
-
+let tripOptionsMultiplier = 3.3
 struct HomeView: View {
     @State var fromModalDisplayed = false
     @State var toModalDisplayed = false
     @State var fromStationSearch = ""
     @State var locationTimeout = false
+    @State var timeModalDisplayed = false
     @EnvironmentObject private var appData: AppData
+    var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.timeStyle = .long
+        return formatter
+    }
+    func formateTime(_ time: Date) -> String {
+        switch self.appData.trainLeaveTimeType {
+        case .now:
+            return "Now"
+        case .leave:
+            let timeString = self.dateFormatter.string(from: time)
+            print("Time string \(timeString)")
+            let momentTime = moment(timeString, "MMM D, YYYY at h:mm:22 A")
+            print("time string moment", momentTime.format("MMM D, h:mm a"), momentTime.isValid())
+            if (momentTime.isSame(moment(), "day")) {
+                  return momentTime.format("h:mm a")
+            } else if (momentTime.isSame(moment(), "week")) {
+                  return momentTime.format("ddd h:mm a")
+            } else if (momentTime.isValid()) {
+                return  momentTime.format("MMM D, h:mm a")
+            } else {
+                  return "Date Error"
+            }
+           
+        case .arrive:
+            let timeString = self.dateFormatter.string(from: time)
+            print("Time string \(timeString)")
+            let momentTime = moment(timeString, "MMM D, YYYY at h:mm:22 A")
+                       print("time string moment", momentTime.format("MMM D, h:mm a"), momentTime.isValid())
+                       if (momentTime.isSame(moment(), "day")) {
+                             return momentTime.format("h:mm a")
+                       } else if (momentTime.isSame(moment(), "week")) {
+                             return momentTime.format("ddd h:mm a")
+                       } else if (momentTime.isValid()) {
+                           return  momentTime.format("MMM D, h:mm a")
+                       } else {
+                             return "Date Error"
+                       }
+            return "test"
+            
+            
+        }
+    }
     
     let lightGreyColor = Color(red: 239.0/255.0, green: 243.0/255.0, blue: 244.0/255.0, opacity: 1.0)
     init() {
@@ -25,7 +70,7 @@ struct HomeView: View {
         UITableView.appearance().separatorStyle = .none
     }
     var body: some View {
-     
+        
         
         VStack(spacing: 0) {
             GeometryReader { geometry in
@@ -46,33 +91,40 @@ struct HomeView: View {
                         }
                     }.padding().frame(height: geometry.safeAreaInsets.top + 60).background(Color("arrivalBlue")).sheet(isPresented: self.$appData.showTripDetailsFromLink) {
                         if (!self.appData.dynamicLinkTripDataShow) {
-                               Text("Loading Trip Info")
+                            Text("Loading Trip Info")
                         } else {
                             
                             TripDetailView(modalShow: self.$appData.showTripDetailsFromLink, tripToShow: self.$appData.dynamicLinkTripData).environmentObject(self.appData).edgesIgnoringSafeArea(.bottom)
                         }
-                 
-                     }
+                        
+                    }
                     
                     VStack(spacing: 0) {
-                        HStack {
+                        
+                        HStack(spacing: 0) {
                             Button  (action: {
                                 self.fromStationSearch = ""
                                 self.fromModalDisplayed = true
                             }) {
                                 if (self.appData.fromStation.id != "loading") {
-                                    VStack(alignment: .leading) {
-                                        Text("from").font(.caption)
+                                    VStack(alignment: .leading, spacing: 0) {
+                                        HStack {
+                                            Text("from").font(.caption)
+                                            Spacer()
+                                        }
                                         Text(stationDisplay(self.appData.fromStation.name)).font(.headline)
-                                    }.lineLimit(1)
+                                    }.lineLimit(1).frame(width: geometry.size.width / 3.3)
                                 } else {
-                                    VStack(alignment: .leading) {
-                                        Text("from").font(.caption)
+                                    VStack(alignment: .leading, spacing: 0) {
+                                        HStack {
+                                            Text("from").font(.caption)
+                                            Spacer()
+                                        }
                                         Text("Station").font(.headline)
-                                    }.lineLimit(1)
+                                    }.lineLimit(1).frame(width: geometry.size.width / 3.4)
                                 }
                                 
-                            }.sheet(isPresented: self.$fromModalDisplayed) {
+                            }.frame(width: geometry.size.width / 3.4).sheet(isPresented: self.$fromModalDisplayed) {
                                 VStack(alignment: .leading, spacing: 0) {
                                     HStack(alignment: .center) {
                                         Text("From Station")
@@ -86,11 +138,6 @@ struct HomeView: View {
                                         }
                                     }
                                     VStack(alignment: .leading, spacing: 0) {
-                                        /*
-                                        TextField("Search for a Station", text: self.$fromStationSearch)
-                                            .padding()
-                                            .background(Color.inputBackground)
-                                            .cornerRadius(10)*/
                                         SearchBar(text: self.$fromStationSearch).padding(0).padding([.leading, .trailing], -10)
                                         Spacer().frame(height: 10)
                                         Text("suggested")
@@ -120,15 +167,114 @@ struct HomeView: View {
                             Button  (action: {
                                 self.fromStationSearch = ""
                                 if (self.appData.fromStation.id != "loading") {
+                                    self.timeModalDisplayed = true
+                                }
+                                
+                            }) {
+                                VStack(alignment: .center) {
+                                    if (self.appData.trainLeaveTimeType == .now) {
+                                        Text("leave").font(.caption)
+                                        Text("now").font(.headline)
+                                    } else if (self.appData.trainLeaveTimeType == .leave) {
+                                        Text("leave").font(.caption)
+                                        Text(self.formateTime(self.appData.leaveDate)).font(.headline)
+                                    } else {
+                                        Text("arrive").font(.caption)
+                                        Text(self.formateTime(self.appData.arriveDate)).font(.headline)
+                                    }
+                                    
+                                }.multilineTextAlignment(.center)
+                            }.sheet(isPresented: self.$timeModalDisplayed) {
+                                VStack(alignment: .leading, spacing: 0) {
+                                    HStack(alignment: .center) {
+                                        Text("Choose a time")
+                                            .font(.largeTitle)
+                                            .fontWeight(.bold)
+                                        Spacer()
+                                        Button(action: {
+                                            self.timeModalDisplayed = false
+                                        }) {
+                                            Text("Close")
+                                        }
+                                    }
+                                    VStack {
+                                        Button(action: {
+                                            self.appData.trainLeaveTimeType = .now
+                                        }) {
+                                            HStack {
+                                                if (self.appData.trainLeaveTimeType == .now) {
+                                                    Image(systemName: "largecircle.fill.circle")
+                                                } else {
+                                                    Image(systemName: "circle").foregroundColor(.black)
+                                                }
+                                                Text("Leave now").foregroundColor(.black)
+                                                Spacer()
+                                                
+                                            }
+                                        }
+                                        Button(action: {
+                                            self.appData.trainLeaveTimeType = .leave
+                                        }) {
+                                            HStack {
+                                                if (self.appData.trainLeaveTimeType == .leave) {
+                                                    Image(systemName: "largecircle.fill.circle")
+                                                } else {
+                                                    Image(systemName: "circle").foregroundColor(.black)
+                                                }
+                                                Text("Leave at").foregroundColor(.black)
+                                                Spacer()
+                                                
+                                            }
+                                        }
+                                        if (self.appData.trainLeaveTimeType == .leave) {
+                                            DatePicker(selection: self.$appData.leaveDate, in: Date()..., displayedComponents: [.date, .hourAndMinute]) {
+                                                Text("")
+                                            }
+                                        }
+                                        
+                                        Button(action: {
+                                            self.appData.trainLeaveTimeType = .arrive
+                                        }) {
+                                            HStack {
+                                                if (self.appData.trainLeaveTimeType == .arrive) {
+                                                    Image(systemName: "largecircle.fill.circle")
+                                                } else {
+                                                    Image(systemName: "circle").foregroundColor(.black)
+                                                }
+                                                Text("Arrive by").foregroundColor(.black)
+                                                Spacer()
+                                                
+                                            }
+                                        }
+                                        if (self.appData.trainLeaveTimeType == .arrive) {
+                                            DatePicker(selection: self.$appData.arriveDate, in: Date()..., displayedComponents: [.date, .hourAndMinute]) {
+                                                Text("")
+                                            }
+                                        }
+                                        
+                                        
+                                    }.padding(.top)
+                                    Spacer()
+                                    
+                                }.padding()
+                            }
+                            Spacer()
+                            Button  (action: {
+                                self.fromStationSearch = ""
+                                if (self.appData.fromStation.id != "loading") {
                                     self.toModalDisplayed = true
                                 }
                                 
                             }) {
-                                VStack(alignment: .trailing) {
-                                    Text("to").font(.caption)
+                                VStack(alignment: .trailing, spacing: 0) {
+                                    HStack {
+                                        Spacer()
+                                        Text("to").font(.caption)
+                                    }
+                                    
                                     Text(stationDisplay(self.appData.toStation.name)).font(.headline)
-                                }.lineLimit(1)
-                            }.sheet(isPresented: self.$toModalDisplayed) {
+                                }.padding(0).lineLimit(1).frame(width: geometry.size.width / 3.4)
+                            }.frame(width: geometry.size.width / 3.4).sheet(isPresented: self.$toModalDisplayed) {
                                 VStack(alignment: .leading, spacing: 0) {
                                     HStack(alignment: .center) {
                                         Text("To Station")
@@ -144,7 +290,7 @@ struct HomeView: View {
                                     VStack(alignment: .leading, spacing: 0) {
                                         
                                         SearchBar(text: self.$fromStationSearch).padding(0).padding([.leading, .trailing], -10)
-                                                                               Spacer().frame(height: 10)
+                                        Spacer().frame(height: 10)
                                         Text("suggested")
                                             .font(.subheadline)
                                         List { ForEach(self.appData.toStationSuggestions.filter {
@@ -172,7 +318,9 @@ struct HomeView: View {
                                     }
                                 }.padding().edgesIgnoringSafeArea(.bottom)
                             }
+                            
                         }.padding().foregroundColor(.white).background(Color.blackBG)
+                        
                         if (!self.appData.network) {
                             HStack {
                                 Spacer()
@@ -185,7 +333,7 @@ struct HomeView: View {
                         }
                         
                         if (self.appData.fromStation.abbr != "load" || !self.locationTimeout && self.appData.locationAcess) {
-                         
+                            
                             TrainView()
                         } else {
                             Spacer()
@@ -217,7 +365,7 @@ struct HomeView: View {
             print("home Appeared")
             // Analytics.setScreenName("home", screenClass: "home")
             self.appData.cylce()
-           
+            
             Timer.scheduledTimer(withTimeInterval: self.appData.cycleTimer, repeats: true) { timer in
                 self.appData.cylce()
             }
@@ -229,7 +377,7 @@ struct HomeView: View {
             }
             
         }
-  
+        
     }
 }
 
@@ -240,10 +388,11 @@ struct HomeView_Previews: PreviewProvider {
                 HomeView().environment(\.colorScheme, .light).environmentObject(AppData())
                 HomeView().environment(\.colorScheme, .dark).environmentObject(AppData())
             }
-            Group {
-                HomeView().environment(\.colorScheme, .light).environmentObject(AppData()).previewDevice(PreviewDevice(rawValue: "iPhone 8"))
-                HomeView().environment(\.colorScheme, .dark).environmentObject(AppData()).previewDevice(PreviewDevice(rawValue: "iPhone 8"))
-            }
+            /*
+             Group {
+             HomeView().environment(\.colorScheme, .light).environmentObject(AppData()).previewDevice(PreviewDevice(rawValue: "iPhone 8"))
+             HomeView().environment(\.colorScheme, .dark).environmentObject(AppData()).previewDevice(PreviewDevice(rawValue: "iPhone 8"))
+             }*/
         }
     }
 }
