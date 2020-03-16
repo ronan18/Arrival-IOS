@@ -113,7 +113,7 @@ struct HomeView: View {
                                             Spacer()
                                         }
                                         Text(stationDisplay(self.appData.fromStation.name)).font(.headline)
-                                    }.lineLimit(1).frame(width: geometry.size.width / 3.3)
+                                    }.lineLimit(1).frame(width: geometry.size.width / 3.25)
                                 } else {
                                     VStack(alignment: .leading, spacing: 0) {
                                         HStack {
@@ -121,10 +121,10 @@ struct HomeView: View {
                                             Spacer()
                                         }
                                         Text("Station").font(.headline)
-                                    }.lineLimit(1).frame(width: geometry.size.width / 3.4)
+                                    }.lineLimit(1).frame(width: geometry.size.width / 3.25)
                                 }
                                 
-                            }.frame(width: geometry.size.width / 3.4).sheet(isPresented: self.$fromModalDisplayed) {
+                            }.frame(width: geometry.size.width / 3.25).sheet(isPresented: self.$fromModalDisplayed) {
                                 VStack(alignment: .leading, spacing: 0) {
                                     HStack(alignment: .center) {
                                         Text("From Station")
@@ -183,8 +183,8 @@ struct HomeView: View {
                                         Text(self.formateTime(self.appData.arriveDate)).font(.headline)
                                     }
                                     
-                                    }.multilineTextAlignment(.center).lineLimit(1)
-                            }.sheet(isPresented: self.$timeModalDisplayed) {
+                                }.multilineTextAlignment(.center).lineLimit(1).frame(width: geometry.size.width / 4)
+                            }.frame(width: geometry.size.width / 4).sheet(isPresented: self.$timeModalDisplayed) {
                                 VStack(alignment: .leading, spacing: 0) {
                                     HStack(alignment: .center) {
                                         Text("Choose a time")
@@ -205,9 +205,9 @@ struct HomeView: View {
                                                 if (self.appData.trainLeaveTimeType == .now) {
                                                     Image(systemName: "largecircle.fill.circle")
                                                 } else {
-                                                    Image(systemName: "circle").foregroundColor(.black)
+                                                    Image(systemName: "circle").foregroundColor(.blackBorder)
                                                 }
-                                                Text("Leave now").foregroundColor(.black)
+                                                Text("Leave now").foregroundColor(.blackBorder)
                                                 Spacer()
                                                 
                                             }
@@ -220,9 +220,9 @@ struct HomeView: View {
                                                 if (self.appData.trainLeaveTimeType == .leave) {
                                                     Image(systemName: "largecircle.fill.circle")
                                                 } else {
-                                                    Image(systemName: "circle").foregroundColor(.black)
+                                                    Image(systemName: "circle").foregroundColor(.blackBorder)
                                                 }
-                                                Text("Leave at").foregroundColor(.black)
+                                                Text("Leave at").foregroundColor(.blackBorder)
                                                 Spacer()
                                                 
                                             }
@@ -241,9 +241,9 @@ struct HomeView: View {
                                                 if (self.appData.trainLeaveTimeType == .arrive) {
                                                     Image(systemName: "largecircle.fill.circle")
                                                 } else {
-                                                    Image(systemName: "circle").foregroundColor(.black)
+                                                    Image(systemName: "circle").foregroundColor(.blackBorder)
                                                 }
-                                                Text("Arrive by").foregroundColor(.black)
+                                                Text("Arrive by").foregroundColor(.blackBorder)
                                                 Spacer()
                                                 
                                             }
@@ -276,8 +276,8 @@ struct HomeView: View {
                                     }
                                     
                                     Text(stationDisplay(self.appData.toStation.name)).font(.headline)
-                                }.padding(0).lineLimit(1).frame(width: geometry.size.width / 3.4)
-                            }.frame(width: geometry.size.width / 3.4).sheet(isPresented: self.$toModalDisplayed) {
+                                }.padding(0).lineLimit(1).frame(width: geometry.size.width / 3.25)
+                            }.frame(width: geometry.size.width / 3.25).sheet(isPresented: self.$toModalDisplayed) {
                                 VStack(alignment: .leading, spacing: 0) {
                                     HStack(alignment: .center) {
                                         Text("To Station")
