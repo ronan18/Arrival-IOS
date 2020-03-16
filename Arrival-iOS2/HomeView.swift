@@ -35,29 +35,29 @@ struct HomeView: View {
             let momentTime = moment(timeString, "MMM D, YYYY at h:mm:22 A")
             print("time string moment", momentTime.format("MMM D, h:mm a"), momentTime.isValid())
             if (momentTime.isSame(moment(), "day")) {
-                  return momentTime.format("h:mm a")
+                return momentTime.format("h:mm a")
             } else if (momentTime.isSame(moment(), "week")) {
-                  return momentTime.format("ddd h:mm a")
+                return momentTime.format("ddd h:mm a")
             } else if (momentTime.isValid()) {
                 return  momentTime.format("MMM D, h:mm a")
             } else {
-                  return "Date Error"
+                return "Date Error"
             }
-           
+            
         case .arrive:
             let timeString = self.dateFormatter.string(from: time)
             print("Time string \(timeString)")
             let momentTime = moment(timeString, "MMM D, YYYY at h:mm:22 A")
-                       print("time string moment", momentTime.format("MMM D, h:mm a"), momentTime.isValid())
-                       if (momentTime.isSame(moment(), "day")) {
-                             return momentTime.format("h:mm a")
-                       } else if (momentTime.isSame(moment(), "week")) {
-                             return momentTime.format("ddd h:mm a")
-                       } else if (momentTime.isValid()) {
-                           return  momentTime.format("MMM D, h:mm a")
-                       } else {
-                             return "Date Error"
-                       }
+            print("time string moment", momentTime.format("MMM D, h:mm a"), momentTime.isValid())
+            if (momentTime.isSame(moment(), "day")) {
+                return momentTime.format("h:mm a")
+            } else if (momentTime.isSame(moment(), "week")) {
+                return momentTime.format("ddd h:mm a")
+            } else if (momentTime.isValid()) {
+                return  momentTime.format("MMM D, h:mm a")
+            } else {
+                return "Date Error"
+            }
             return "test"
             
             
@@ -173,17 +173,29 @@ struct HomeView: View {
                             }) {
                                 VStack(alignment: .center) {
                                     if (self.appData.trainLeaveTimeType == .now) {
-                                        Text("leave").font(.caption)
+                                        HStack {
+                                            Spacer()
+                                            Text("leave").font(.caption)
+                                            Spacer()
+                                        }
                                         Text("now").font(.headline)
                                     } else if (self.appData.trainLeaveTimeType == .leave) {
-                                        Text("leave").font(.caption)
-                                        Text(self.formateTime(self.appData.leaveDate)).font(.headline)
+                                        HStack {
+                                            Spacer()
+                                            Text("leave").font(.caption)
+                                            Spacer()
+                                        }
+                                        Text(self.formateTime(self.appData.leaveDate)).font(.headline).lineLimit(1)
                                     } else {
-                                        Text("arrive").font(.caption)
-                                        Text(self.formateTime(self.appData.arriveDate)).font(.headline)
+                                        HStack {
+                                            Spacer()
+                                            Text("arrive").font(.caption)
+                                            Spacer()
+                                        }
+                                        Text(self.formateTime(self.appData.arriveDate)).font(.headline).lineLimit(1)
                                     }
                                     
-                                }.multilineTextAlignment(.center).lineLimit(1).frame(width: geometry.size.width / 4)
+                                }.multilineTextAlignment(.center).frame(width: geometry.size.width / 4)
                             }.frame(width: geometry.size.width / 4).sheet(isPresented: self.$timeModalDisplayed) {
                                 VStack(alignment: .leading, spacing: 0) {
                                     HStack(alignment: .center) {
@@ -212,7 +224,7 @@ struct HomeView: View {
                                                 
                                             }
                                         }
-                                      
+                                        
                                         Button(action: {
                                             self.appData.trainLeaveTimeType = .leave
                                         }) {
@@ -233,26 +245,26 @@ struct HomeView: View {
                                             }
                                         }
                                         
-                                          if (self.appData.toStation.name != "none") {
-                                        Button(action: {
-                                            self.appData.trainLeaveTimeType = .arrive
-                                        }) {
-                                            HStack {
-                                                if (self.appData.trainLeaveTimeType == .arrive) {
-                                                    Image(systemName: "largecircle.fill.circle")
-                                                } else {
-                                                    Image(systemName: "circle").foregroundColor(.blackBorder)
+                                        if (self.appData.toStation.name != "none") {
+                                            Button(action: {
+                                                self.appData.trainLeaveTimeType = .arrive
+                                            }) {
+                                                HStack {
+                                                    if (self.appData.trainLeaveTimeType == .arrive) {
+                                                        Image(systemName: "largecircle.fill.circle")
+                                                    } else {
+                                                        Image(systemName: "circle").foregroundColor(.blackBorder)
+                                                    }
+                                                    Text("Arrive by").foregroundColor(.blackBorder)
+                                                    Spacer()
+                                                    
                                                 }
-                                                Text("Arrive by").foregroundColor(.blackBorder)
-                                                Spacer()
-                                                
                                             }
-                                        }
-                                        if (self.appData.trainLeaveTimeType == .arrive) {
-                                            DatePicker(selection: self.$appData.arriveDate, in: Date()..., displayedComponents: [.date, .hourAndMinute]) {
-                                                Text("")
+                                            if (self.appData.trainLeaveTimeType == .arrive) {
+                                                DatePicker(selection: self.$appData.arriveDate, in: Date()..., displayedComponents: [.date, .hourAndMinute]) {
+                                                    Text("")
+                                                }
                                             }
-                                        }
                                         }
                                         
                                         
