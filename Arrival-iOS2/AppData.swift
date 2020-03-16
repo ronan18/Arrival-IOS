@@ -569,6 +569,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         self.noTrains = false
         self.toStation = station
         self.cylce()
+        if (station.name != "none") {
         let day = Calendar.current.component(.weekday, from: Date())
         let hour = Calendar.current.component(.hour, from: Date())
         
@@ -579,16 +580,22 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         trip.setValue(day, forKeyPath: "day")
         trip.setValue(hour, forKeyPath: "hour")
         trip.setValue(self.passphrase, forKeyPath: "user")
-        Analytics.logEvent("set_toStation", parameters: [
-            "station": station.abbr as NSObject,
-            "fromStation": self.fromStation.abbr as NSObject
-        ])
+      
         do {
             try context.save()
             computeToSuggestions()
         } catch let error as NSError {
             print(error)
         }
+        } else {
+            if (self.trainLeaveTimeType == .arrive) {
+            self.trainLeaveTimeType = .now
+            }
+        }
+        Analytics.logEvent("set_toStation", parameters: [
+                  "station": station.abbr as NSObject,
+                  "fromStation": self.fromStation.abbr as NSObject
+              ])
         
         
     }

@@ -183,7 +183,7 @@ struct HomeView: View {
                                         Text(self.formateTime(self.appData.arriveDate)).font(.headline)
                                     }
                                     
-                                }.multilineTextAlignment(.center)
+                                    }.multilineTextAlignment(.center).lineLimit(1)
                             }.sheet(isPresented: self.$timeModalDisplayed) {
                                 VStack(alignment: .leading, spacing: 0) {
                                     HStack(alignment: .center) {
@@ -212,6 +212,7 @@ struct HomeView: View {
                                                 
                                             }
                                         }
+                                      
                                         Button(action: {
                                             self.appData.trainLeaveTimeType = .leave
                                         }) {
@@ -232,6 +233,7 @@ struct HomeView: View {
                                             }
                                         }
                                         
+                                          if (self.appData.toStation.name != "none") {
                                         Button(action: {
                                             self.appData.trainLeaveTimeType = .arrive
                                         }) {
@@ -250,6 +252,7 @@ struct HomeView: View {
                                             DatePicker(selection: self.$appData.arriveDate, in: Date()..., displayedComponents: [.date, .hourAndMinute]) {
                                                 Text("")
                                             }
+                                        }
                                         }
                                         
                                         
