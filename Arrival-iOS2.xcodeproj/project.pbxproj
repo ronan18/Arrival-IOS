@@ -20,6 +20,7 @@
 		C524E7B223FAEC87002BC9A5 /* moment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524E7B023FAEC85002BC9A5 /* moment.swift */; };
 		C524E7B323FAEC87002BC9A5 /* moment-with-locales.min.js in Resources */ = {isa = PBXBuildFile; fileRef = C524E7B123FAEC86002BC9A5 /* moment-with-locales.min.js */; };
 		C52F1EBB240C13CA00503995 /* ShareScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52F1EBA240C13C900503995 /* ShareScreen.swift */; };
+		C55174B3242062B90075C362 /* routes.csv in Resources */ = {isa = PBXBuildFile; fileRef = C55174B2242062B90075C362 /* routes.csv */; };
 		C55640F723CF8439003BCB91 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55640F623CF8438003BCB91 /* AppData.swift */; };
 		C55BC25C23EE7FCC008E12AB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C55BC25B23EE7FCB008E12AB /* GoogleService-Info.plist */; };
 		C5612DCD23FE3B59002A8E20 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5612DCC23FE3B58002A8E20 /* Helpers.swift */; };
@@ -62,6 +63,7 @@
 		C524E7B023FAEC85002BC9A5 /* moment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = moment.swift; sourceTree = "<group>"; };
 		C524E7B123FAEC86002BC9A5 /* moment-with-locales.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "moment-with-locales.min.js"; sourceTree = "<group>"; };
 		C52F1EBA240C13C900503995 /* ShareScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareScreen.swift; sourceTree = "<group>"; };
+		C55174B2242062B90075C362 /* routes.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = routes.csv; sourceTree = "<group>"; };
 		C55640F623CF8438003BCB91 /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
 		C55BC25B23EE7FCB008E12AB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C5612DCC23FE3B58002A8E20 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 				C512BCC423E4FBA80079F49C /* TimePlayground.playground */,
 				C568C3FE23D8B98400AB9E67 /* Models */,
 				C58F248123CC1438003882F3 /* AppDelegate.swift */,
+				C55174B2242062B90075C362 /* routes.csv */,
 				C58F248323CC1438003882F3 /* SceneDelegate.swift */,
 				C524E7B123FAEC86002BC9A5 /* moment-with-locales.min.js */,
 				C524E7B023FAEC85002BC9A5 /* moment.swift */,
@@ -270,6 +273,7 @@
 			files = (
 				C524E7B323FAEC87002BC9A5 /* moment-with-locales.min.js in Resources */,
 				C58F249123CC143A003882F3 /* LaunchScreen.storyboard in Resources */,
+				C55174B3242062B90075C362 /* routes.csv in Resources */,
 				C55BC25C23EE7FCC008E12AB /* GoogleService-Info.plist in Resources */,
 				C58F248E23CC143A003882F3 /* Preview Assets.xcassets in Resources */,
 				C5A9B79D23F5C3BD004E8C5C /* RemoteConfigDefaults.plist in Resources */,

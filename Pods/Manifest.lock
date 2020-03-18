@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (4.9.1)
+  - CSV.swift (2.4.3)
   - Firebase/Analytics (6.18.0):
     - Firebase/Core
   - Firebase/Core (6.18.0):
@@ -127,6 +128,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (= 4.9.1)
+  - CSV.swift (~> 2.4.3)
   - Firebase/Analytics
   - Firebase/Crashlytics
   - Firebase/DynamicLinks
@@ -137,6 +139,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - CSV.swift
     - Firebase
     - FirebaseABTesting
     - FirebaseAnalytics
@@ -163,6 +166,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  CSV.swift: d38741b349c067b4a6db42237cb0e2974d21ccac
   Firebase: 0490eca762a72e4f1582319539153897f1508dee
   FirebaseABTesting: 0d10f3cdc3fa00f3f175b5b56c1003c8e888299f
   FirebaseAnalytics: 058d71e714a1a6804d9e0f25e3bb18e377a51579
@@ -187,6 +191,6 @@ SPEC CHECKSUMS:
   Protobuf: 176220c526ad8bd09ab1fb40a978eac3fef665f7
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: b838d4b27881d209a4a8595947abe52720dc6bd5
+PODFILE CHECKSUM: b0eaf594835c23fac8175cec58fcecd43d613ace
 
 COCOAPODS: 1.8.4

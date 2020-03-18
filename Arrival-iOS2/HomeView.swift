@@ -197,7 +197,7 @@ struct HomeView: View {
                                     
                                 }.multilineTextAlignment(.center).frame(width: geometry.size.width / 4)
                             }.frame(width: geometry.size.width / 4).sheet(isPresented: self.$timeModalDisplayed) {
-                                VStack(alignment: .leading, spacing: 0) {
+                                VStack(alignment: .leading) {
                                     HStack(alignment: .center) {
                                         Text("Choose a time")
                                             .font(.largeTitle)
@@ -209,7 +209,7 @@ struct HomeView: View {
                                             Text("Close")
                                         }
                                     }
-                                    VStack {
+                                 
                                         Button(action: {
                                             self.appData.trainLeaveTimeType = .now
                                         }) {
@@ -242,7 +242,7 @@ struct HomeView: View {
                                         if (self.appData.trainLeaveTimeType == .leave) {
                                             DatePicker(selection: self.$appData.leaveDate, in: Date()..., displayedComponents: [.date, .hourAndMinute]) {
                                                 Text("")
-                                            }
+                                            }.padding(.all,0)
                                         }
                                         
                                         if (self.appData.toStation.name != "none") {
@@ -263,12 +263,12 @@ struct HomeView: View {
                                             if (self.appData.trainLeaveTimeType == .arrive) {
                                                 DatePicker(selection: self.$appData.arriveDate, in: Date()..., displayedComponents: [.date, .hourAndMinute]) {
                                                     Text("")
-                                                }
+                                                }.padding(.all,0)
                                             }
                                         }
                                         
                                         
-                                    }.padding(.top)
+                                    
                                     Spacer()
                                     
                                 }.padding()
