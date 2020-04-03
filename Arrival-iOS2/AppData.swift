@@ -67,6 +67,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var trainLeaveTimeType: TrainTimeType = .now
     @Published var leaveDate = Date()
     @Published var arriveDate = Date()
+    @Published var appMessage = ""
     let net = Alamofire.NetworkReachabilityManager(host: "api.arrival.city")
     private let locationManager = CLLocationManager()
     private var lat = 0.0
@@ -139,6 +140,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         self.daysBetweenReviewAsk = Int(self.remoteConfig["daysBetweenReviewAsk"].stringValue!)!
                         self.privacyPolicy = self.remoteConfig["privacyPolicyUrl"].stringValue!
                         self.termsOfService = self.remoteConfig["termsOfServiceUrl"].stringValue!
+                        self.appMessage = self.remoteConfig["inAppMessage"].stringValue!
                         print(self.onboardingLoaded, "config onboarding loaded")
                         
                         

@@ -164,52 +164,53 @@ struct HomeView: View {
                                 }.padding().edgesIgnoringSafeArea(.bottom)
                             }
                             Spacer()
-                            Button  (action: {
-                                self.fromStationSearch = ""
-                                if (self.appData.fromStation.id != "loading") {
-                                    self.timeModalDisplayed = true
-                                }
-                                
-                            }) {
-                                VStack(alignment: .center) {
-                                    if (self.appData.trainLeaveTimeType == .now) {
-                                        HStack {
-                                            Spacer()
-                                            Text("leave").font(.caption)
-                                            Spacer()
-                                        }
-                                        Text("now").font(.headline)
-                                    } else if (self.appData.trainLeaveTimeType == .leave) {
-                                        HStack {
-                                            Spacer()
-                                            Text("leave").font(.caption)
-                                            Spacer()
-                                        }
-                                        Text(self.formateTime(self.appData.leaveDate)).font(.headline).lineLimit(1)
-                                    } else {
-                                        HStack {
-                                            Spacer()
-                                            Text("arrive").font(.caption)
-                                            Spacer()
-                                        }
-                                        Text(self.formateTime(self.appData.arriveDate)).font(.headline).lineLimit(1)
+                            if (false) {
+                                Button  (action: {
+                                    self.fromStationSearch = ""
+                                    if (self.appData.fromStation.id != "loading") {
+                                        self.timeModalDisplayed = true
                                     }
                                     
-                                }.multilineTextAlignment(.center).frame(width: geometry.size.width / 4)
-                            }.frame(width: geometry.size.width / 4).sheet(isPresented: self.$timeModalDisplayed) {
-                                VStack(alignment: .leading) {
-                                    HStack(alignment: .center) {
-                                        Text("Choose a time")
-                                            .font(.largeTitle)
-                                            .fontWeight(.bold)
-                                        Spacer()
-                                        Button(action: {
-                                            self.timeModalDisplayed = false
-                                        }) {
-                                            Text("Close")
+                                }) {
+                                    VStack(alignment: .center) {
+                                        if (self.appData.trainLeaveTimeType == .now) {
+                                            HStack {
+                                                Spacer()
+                                                Text("leave").font(.caption)
+                                                Spacer()
+                                            }
+                                            Text("now").font(.headline)
+                                        } else if (self.appData.trainLeaveTimeType == .leave) {
+                                            HStack {
+                                                Spacer()
+                                                Text("leave").font(.caption)
+                                                Spacer()
+                                            }
+                                            Text(self.formateTime(self.appData.leaveDate)).font(.headline).lineLimit(1)
+                                        } else {
+                                            HStack {
+                                                Spacer()
+                                                Text("arrive").font(.caption)
+                                                Spacer()
+                                            }
+                                            Text(self.formateTime(self.appData.arriveDate)).font(.headline).lineLimit(1)
                                         }
-                                    }
-                                 
+                                        
+                                    }.multilineTextAlignment(.center).frame(width: geometry.size.width / 4)
+                                }.frame(width: geometry.size.width / 4).sheet(isPresented: self.$timeModalDisplayed) {
+                                    VStack(alignment: .leading) {
+                                        HStack(alignment: .center) {
+                                            Text("Choose a time")
+                                                .font(.largeTitle)
+                                                .fontWeight(.bold)
+                                            Spacer()
+                                            Button(action: {
+                                                self.timeModalDisplayed = false
+                                            }) {
+                                                Text("Close")
+                                            }
+                                        }
+                                        
                                         Button(action: {
                                             self.appData.trainLeaveTimeType = .now
                                         }) {
@@ -268,10 +269,11 @@ struct HomeView: View {
                                         }
                                         
                                         
-                                    
-                                    Spacer()
-                                    
-                                }.padding()
+                                        
+                                        Spacer()
+                                        
+                                    }.padding()
+                                }
                             }
                             Spacer()
                             Button  (action: {
@@ -346,7 +348,16 @@ struct HomeView: View {
                                 Spacer()
                             }.background(Color.red)
                         }
-                        
+                        if (!self.appData.appMessage.isEmpty) {
+                        HStack {
+                            Spacer()
+                            Text(self.appData.appMessage)
+                                .font(.callout)
+                                .foregroundColor(Color.white).padding()
+                            Spacer()
+                            
+                        }.background(Color("darkGrey"))
+                        }
                         if (self.appData.fromStation.abbr != "load" || !self.locationTimeout && self.appData.locationAcess) {
                             
                             TrainView()
