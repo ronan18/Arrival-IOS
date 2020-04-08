@@ -349,14 +349,30 @@ struct HomeView: View {
                             }.background(Color.red)
                         }
                         if (!self.appData.appMessage.isEmpty) {
-                        HStack {
-                            Spacer()
-                            Text(self.appData.appMessage)
-                                .font(.callout)
-                                .foregroundColor(Color.white).padding()
-                            Spacer()
-                            
-                        }.background(Color("darkGrey"))
+                            HStack {
+                                Spacer()
+                                VStack {
+                                    Text(self.appData.appMessage)
+                                        .font(.callout)
+                                        .foregroundColor(Color.white)
+                                    if (self.appData.appLink.count > 0) {
+                                        HStack {
+                                            Button(action: {
+                                                Analytics.logEvent("appMessageClicked", parameters: [
+                                                    "link": self.appData.appLink as NSObject])
+                                                if let url = URL(string: self.appData.appLink) {
+                                                    UIApplication.shared.open(url)
+                                                }
+                                            }) {
+                                                Text("Learn more")
+                                            }
+                                            Spacer()
+                                        }
+                                    }
+                                }
+                                Spacer()
+                                
+                            }.padding().background(Color("darkGrey"))
                         }
                         if (self.appData.fromStation.abbr != "load" || !self.locationTimeout && self.appData.locationAcess) {
                             

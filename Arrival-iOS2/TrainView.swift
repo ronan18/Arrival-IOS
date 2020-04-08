@@ -65,11 +65,14 @@ struct TrainView: View {
                                 
                                 
                             }
-                            
+                            HStack {
+                                Spacer()
                             Text(self.appData.realtimeTripNotice)
                                 .font(.caption)
                                 .foregroundColor(Color.gray)
                                 .multilineTextAlignment(.center).padding()
+                                Spacer()
+                            }
                             
                         }.sheet(isPresented: $showTransfers) {
                             TripDetailView(modalShow: self.$showTransfers, tripToShow: self.$tripToShow).environmentObject(self.appData).edgesIgnoringSafeArea(.bottom)

@@ -68,6 +68,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var leaveDate = Date()
     @Published var arriveDate = Date()
     @Published var appMessage = ""
+     @Published var appLink = ""
     let appVersion: String = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
     let net = Alamofire.NetworkReachabilityManager(host: "api.arrival.city")
     private let locationManager = CLLocationManager()
@@ -107,6 +108,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         self.privacyPolicy = self.remoteConfig["privacyPolicyUrl"].stringValue!
         self.termsOfService = self.remoteConfig["termsOfServiceUrl"].stringValue!
         self.appMessage = self.remoteConfig["inAppMessage"].stringValue ?? ""
+        self.appLink = self.remoteConfig["inAppLink"].stringValue ?? ""
         let preferencesEntity = NSEntityDescription.entity(forEntityName: "Preferences", in: context)!
         let newTestPref = NSManagedObject(entity: preferencesEntity, insertInto: context)
         newTestPref.setValue(false, forKey: "prioritizeTrain")
@@ -143,6 +145,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         self.privacyPolicy = self.remoteConfig["privacyPolicyUrl"].stringValue!
                         self.termsOfService = self.remoteConfig["termsOfServiceUrl"].stringValue!
                         self.appMessage = self.remoteConfig["inAppMessage"].stringValue!
+                         self.appLink = self.remoteConfig["inAppLink"].stringValue!
                         print(self.onboardingLoaded, "config onboarding loaded")
                         
                         
