@@ -49,46 +49,53 @@ struct SettingsView: View {
                     }.background(Color.red)
                 }
                 VStack {
-                    
-                    HStack {
-                        Text("Account ID")
-                        Spacer()
-                        Text(self.appData.passphrase)
-                            .fontWeight(.bold).foregroundColor(Color("arrivalBlue"))
+                    List {
+                        HStack {
+                            Text("Account ID")
+                            Spacer()
+                            Text(self.appData.passphrase)
+                                .fontWeight(.bold).foregroundColor(Color("arrivalBlue"))
+                        }.listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                        HStack {
+                            
+                            Toggle(isOn: self.$appData.sortTrainsByTime) {
+                                Text("Sort trains by time")
+                            }.padding(.trailing, 1.2)
+                        }.listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                        HStack {
+                            Text("App version")
+                            Spacer()
+                            Text(self.appData.appVersion)
+                                .fontWeight(.bold)
+                        }.listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
                     }
-                    HStack {
-                        
-                        Toggle(isOn: self.$appData.sortTrainsByTime) {
-                            Text("Sort trains by time")
-                        }
-                    }
-                    
                     Spacer()
                     #if DEBUG
                     HStack {
-                     Spacer()
-                     Button(action: {
-                     self.appData.logOut()
-                     }) {
-                     HStack {
-                     Spacer()
-                     Text("LOGOUT")
-                     .font(.body)
-                     .fontWeight(.bold)
-                     .multilineTextAlignment(.center)
-                     .lineLimit(nil)
-                     .foregroundColor(.red)
-                     Spacer()
-                     }.padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-                     }
-                     Spacer()
-                     }
+                        Spacer()
+                        Button(action: {
+                            self.appData.logOut()
+                        }) {
+                            HStack {
+                                Spacer()
+                                Text("LOGOUT")
+                                    .font(.body)
+                                    .fontWeight(.bold)
+                                    .multilineTextAlignment(.center)
+                                    .lineLimit(nil)
+                                    .foregroundColor(.red)
+                                Spacer()
+                            }.padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+                        }
+                        Spacer()
+                    }
                     #endif
                     Spacer().frame(height: 20)
                     
                     Text(self.appData.aboutText)
                         .multilineTextAlignment(.center).font(.subheadline).foregroundColor(.gray)
                     TermsOfSeriviceView()
+                    
                     
                     
                 }.padding()

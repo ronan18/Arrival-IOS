@@ -68,6 +68,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var leaveDate = Date()
     @Published var arriveDate = Date()
     @Published var appMessage = ""
+    let appVersion: String = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
     let net = Alamofire.NetworkReachabilityManager(host: "api.arrival.city")
     private let locationManager = CLLocationManager()
     private var lat = 0.0
