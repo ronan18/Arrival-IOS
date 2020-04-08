@@ -105,6 +105,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         self.realtimeTripNotice = self.remoteConfig["realtimeTripsNotice"].stringValue!
         self.privacyPolicy = self.remoteConfig["privacyPolicyUrl"].stringValue!
         self.termsOfService = self.remoteConfig["termsOfServiceUrl"].stringValue!
+        self.appMessage = self.remoteConfig["inAppMessage"].stringValue ?? ""
         let preferencesEntity = NSEntityDescription.entity(forEntityName: "Preferences", in: context)!
         let newTestPref = NSManagedObject(entity: preferencesEntity, insertInto: context)
         newTestPref.setValue(false, forKey: "prioritizeTrain")
