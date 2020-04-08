@@ -38,7 +38,7 @@ struct TrainView: View {
                 
                 
             } else {
-                if (self.appData.sortTrainsByTime || self.appData.toStation.abbr != "none") {
+                if (self.appData.sortTrainsByTime || self.appData.toStation.abbr != "none" || self.appData.southTrains.count == 0 || self.appData.northTrains.count == 0) {
                     if (self.appData.toStation.abbr != "none") {
                         
                         List {
