@@ -68,6 +68,12 @@ struct SettingsView: View {
                             Text(self.appData.appVersion)
                                 .fontWeight(.bold)
                         }.listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                        HStack {
+                                                Text("Debug mode")
+                                                Spacer()
+                                                Text(String(self.appData.debug))
+                                                    .fontWeight(.bold)
+                                            }.listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
                     }
                     Spacer()
                     #if DEBUG

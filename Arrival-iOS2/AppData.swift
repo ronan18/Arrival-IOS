@@ -60,7 +60,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var cycleTimer: Double = 30
     @Published var reviewCard = false
     @Published var debug = false
-    @Published var showTripDetailFeature = true
+    @Published var showTripDetailFeature = !defaults.bool(forKey: "shownDetailOnBoard")
     @Published var dynamicLinkTripId: String? = nil
     @Published var dynamicLinkTripData: TripInfo = TripInfo(origin: "", destination: "", legs: [Leg](), originTime: "", originDate: "", destinatonTime: "", destinatonDate: "", tripTIme: 0.0, leavesIn: 0, tripId: "")
     @Published var dynamicLinkTripDataShow: Bool = false
@@ -148,7 +148,12 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         self.appMessage = self.remoteConfig["inAppMessage"].stringValue!
                          self.appLink = self.remoteConfig["inAppLink"].stringValue!
                         print(self.onboardingLoaded, "config onboarding loaded")
-                        
+                        if (!defaults.bool(forKey: "shownDetailOnBoard") && self.remoteConfig["showTripDetailFeature"].boolValue || self.debug) {
+                              self.showTripDetailFeature = true
+                        } else {
+                              self.showTripDetailFeature = false
+                        }
+                      
                         
                     }
                 })
@@ -265,60 +270,9 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         
         
     }
-    func showTripDetailFeatureCard() {
-        if (self.remoteConfig["showTripDetailFeature"].boolValue || self.debug) {
-            print("showTripDetailFeature", true)
-            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
-            do {
-                let result = try context.fetch(fetchRequest)
-                for data in result as! [NSManagedObject] {
-                    print("detailCardLastShown", data.value(forKey: "detailCardLastShown"))
-                    let detailCardLastShown = data.value(forKey: "detailCardLastShown")
-                    if (detailCardLastShown != nil) {
-                        print("detailCardLastShown has been shown")
-                        self.showTripDetailFeature = false
-                    } else {
-                        print("detailCardLastShown hasn't been shown")
-                        self.showTripDetailFeature = true
-                    }
-                    
-                    
-                }
-                
-            } catch {
-                
-            }
-        } else {
-            print("no show showTripDetailFeature card")
-            self.showTripDetailFeature = false
-        }
-        //self.showTripDetailFeature = true
-        
-        
-    }
     func hideDetailCard() {
         self.showTripDetailFeature = false
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
-        do {
-            let result = try context.fetch(fetchRequest)
-            for data in result as! [NSManagedObject] {
-                if let user = data.value(forKey: "pass") {
-                    print(user as! String)
-                    if (user as! String == self.passphrase) {
-                        data.setValue(moment.utc().toString(), forKey: "detailCardLastShown")
-                    }
-                }
-                
-            }
-            do {
-                try context.save()
-                print("saved detailCardLastShown")
-            } catch {
-                
-            }
-        } catch {
-            
-        }
+        defaults.set(true, forKey: "shownDetailOnBoarding")
     }
     func showReviewCard() {
         print("lastShownReviewCard", self.lastShownReviewCard)
@@ -871,7 +825,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                 } else {
                     print("no show review card")
                 }
-                self.showTripDetailFeatureCard()
+         
                 
                 print("passphrase changed and auth settings from auth", value)
                 

@@ -20,9 +20,9 @@ struct ContentView: View {
                 
                 if (self.appData.auth) {
                     if (self.appData.screen == "home") {
-                        HomeView()
+                        HomeView().animation(.none)
                     } else if (self.appData.screen == "settings") {
-                        SettingsView()
+                        SettingsView().animation(.none)
                     }
                     
                 } else {

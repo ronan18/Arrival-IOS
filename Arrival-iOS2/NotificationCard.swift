@@ -16,9 +16,10 @@ struct NotificationCard: View {
     var body: some View {
         
         HStack {
+         
             VStack(alignment: .leading) {
                 if (self.type == "review") {
-                    Text("Enjoy using arrival?")
+                    Text("Enjoy using Arrival?")
                         .font(.subheadline)
                         .fontWeight(.bold)
                     Text("please consider giving us a review!")
@@ -31,9 +32,11 @@ struct NotificationCard: View {
                         .font(.caption)
                 }
             }
+            
             Spacer()
             HStack(alignment: .top) {
                 Button(action: {
+                     print("btn clicked")
                     if (self.type == "review") {
                         self.appData.hideReviewCard()
                     } else  if (self.type == "tripDetail") {
