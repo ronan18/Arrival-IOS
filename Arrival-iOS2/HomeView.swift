@@ -349,14 +349,15 @@ struct HomeView: View {
                             }.background(Color.red)
                         }
                         if (!self.appData.appMessage.isEmpty) {
+                          
                             HStack {
-                                Spacer()
+                                 Spacer()
                                 VStack {
                                     Text(self.appData.appMessage)
                                         .font(.callout)
                                         .foregroundColor(Color.white)
                                     if (self.appData.appLink.count > 0) {
-                                        HStack {
+                                       
                                             Button(action: {
                                                 Analytics.logEvent("appMessageClicked", parameters: [
                                                     "link": self.appData.appLink as NSObject])
@@ -366,11 +367,12 @@ struct HomeView: View {
                                             }) {
                                                 Text("Learn more")
                                             }
-                                            Spacer()
-                                        }
+                                      
+                                        
                                     }
                                 }
                                 Spacer()
+                          
                                 
                             }.padding().background(Color("darkGrey"))
                         }

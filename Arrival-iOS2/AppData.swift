@@ -1081,8 +1081,11 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         print ("load func ran")
     }
     func createNewAccount(passphrase: String) {
+        
         self.authLoading = true
         print("creating account", passphrase)
+
+        defaults.set(true, forKey: "defaultsEnabled")
         let headers: HTTPHeaders = [
             "Accept": "application/json"
         ]
