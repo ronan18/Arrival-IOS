@@ -376,6 +376,7 @@ struct HomeView: View {
                                 
                             }.padding().background(Color("darkGrey"))
                         }
+                       
                         if (self.appData.fromStation.abbr != "load" || !self.locationTimeout && self.appData.locationAcess) {
                             
                             TrainView()

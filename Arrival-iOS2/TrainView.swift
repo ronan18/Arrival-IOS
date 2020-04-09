@@ -24,30 +24,18 @@ struct TrainView: View {
                 Text("No Trains")
                 Spacer()
             } else if (self.appData.trains.isEmpty || !self.appData.loaded) {
-                
                 List {
-                    if (self.appData.reviewCard) {
-                        NotificationCard(type: "review").padding([.top, .leading, .trailing]).padding([.bottom, .top], 3).environmentObject(self.appData).listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
-                    }
+                    
                     TrainComponent(type: "skeleton")
                     TrainComponent(type: "skeleton")
                     TrainComponent(type: "skeleton")
                 }
-                
-                
-                
-                
             } else {
                 if (self.appData.sortTrainsByTime || self.appData.toStation.abbr != "none" || self.appData.southTrains.count == 0 || self.appData.northTrains.count == 0) {
                     if (self.appData.toStation.abbr != "none") {
                         
                         List {
-                            if (self.appData.reviewCard) {
-                                NotificationCard(type: "review").padding([.top, .leading, .trailing]).padding( [.bottom,.top], 3).environmentObject(self.appData).listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
-                            }
-                            if (self.appData.showTripDetailFeature) {
-                                NotificationCard(type: "tripDetail").padding([.leading, .trailing]).padding([.top,.bottom], 3).environmentObject(self.appData).listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
-                            }
+                            
                             ForEach(self.appData.trips) {trip in
                                 
                                 
@@ -67,10 +55,10 @@ struct TrainView: View {
                             }
                             HStack {
                                 Spacer()
-                            Text(self.appData.realtimeTripNotice)
-                                .font(.caption)
-                                .foregroundColor(Color.gray)
-                                .multilineTextAlignment(.center).padding()
+                                Text(self.appData.realtimeTripNotice)
+                                    .font(.caption)
+                                    .foregroundColor(Color.gray)
+                                    .multilineTextAlignment(.center).padding()
                                 Spacer()
                             }
                             
@@ -102,9 +90,6 @@ struct TrainView: View {
                         
                     }.pickerStyle(SegmentedPickerStyle()).padding([.top, .leading, .trailing])
                     List {
-                        if (self.appData.reviewCard) {
-                            NotificationCard(type: "review").padding([.leading, .trailing]).padding([.bottom, .top], 3).environmentObject(self.appData).listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
-                        }
                         if (self.direction == 0) {
                             ForEach(self.appData.northTrains) { train in
                                 TrainComponent(type: "train",  name: train.direction, cars: train.cars, departs: train.time,unit: train.unit, color: self.appData.convertColor(color: train.color), eta: train.eta)
