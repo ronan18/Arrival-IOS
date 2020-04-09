@@ -23,6 +23,7 @@ let dateFormateDate = "hh:mm A MM/DD/YYYY"
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
 let context = appDelegate.persistentContainer.viewContext
 var jsContext: JSContext!
+let defaults = UserDefaults.standard
 class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var screen: String = "home"
     @Published var trains: Array = [Train]()
@@ -39,7 +40,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var networkTestStatus = ""
     @Published var stationsByAbbr: [String: Station] = ["none": Station(id: "none", name: "none", lat: 0.0, long: 0.0, abbr: "none", version: 0)]
     @Published var network = true
-    @Published var sortTrainsByTime = false
+    @Published var sortTrainsByTime = defaults.bool(forKey: "sortTrainsByTime")
     @Published var goingOffClosestStation: Bool = true
     @Published var closestStations = [Station]()
     @Published var fromStationSuggestions = [Station]()
@@ -875,6 +876,9 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                 print("passphrase changed and auth settings from auth", value)
                 
                 self.computeToSuggestions(pass: value)
+                print("default setting" + String(defaults.bool(forKey: "defaultsEnabled")))
+                if (!defaults.bool(forKey: "defaultsEnabled")) {
+                    print("defaults off")
                 let managedContext =  appDelegate.persistentContainer.viewContext
                 let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "Preferences")
                 do {
@@ -885,27 +889,21 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         for data in result as! [NSManagedObject] {
                             
                             var sortTrainsByTimeSetting = false
-                            
-                            /*
-                             do {
-                             let testUser = try data.value(forKey: "user")
-                             if testUser == nil {
-                             user = ""
-                             } else {
-                             user = testUser as! String
-                             }
-                             } catch {
-                             user  =  ""
-                             }*/
                             if let user = data.value(forKey: "user") {
                                 if (user as! String == value) {
                                     if  let tempSetting = data.value(forKey: "sortTrainsByTime") {
                                         print("sortTrainsByTime setting", tempSetting)
                                         if (tempSetting as! Bool) {
                                             self.sortTrainsByTime = true
+                                            defaults.set(true, forKey: "sortTrainsByTime")
+                                            defaults.set(true, forKey: "defaultsEnabled")
                                             print("sortTrainsByTime settings result true")
+                                              print("defualts set", String(defaults.bool(forKey: "defaultsEnabled") ))
                                         } else {
                                             self.sortTrainsByTime = false
+                                             defaults.set(false, forKey: "sortTrainsByTime")
+                                             defaults.set(true, forKey: "defaultsEnabled")
+                                            print("defualts set", String(defaults.bool(forKey: "defaultsEnabled") ))
                                             print("sortTrainsByTime settings result false")
                                         }
                                     }
@@ -914,40 +912,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                             
                             
                             
-                            /*
-                             do {
-                             
-                             let tempSetting  =  try data.value(forKey: "sortTrainsByTime")
-                             if (tempSetting == nil) {
-                             sortTrainsByTimeSetting = false
-                             } else {
-                             sortTrainsByTimeSetting = tempSetting as! Bool
-                             }
-                             } catch {
-                             sortTrainsByTimeSetting = false
-                             
-                             }
-                             */
-                            
-                            /*
-                             if (sortTrainsByTimeSetting == nil) {
-                             sortTrainsByTimeSetting = false
-                             }
-                             print(data.value(forKey: "prioritizeTrain"), "setting")
-                             //   let prioritizeTrainSettingValue = data.value(forKey: "prioritizeTrain")
-                             
-                             print(user, value, "user settings from auth")
-                             //   print( prioritizeTrainSettingValue, "sort t b t settings from auth")
-                             
-                             if (user == value) {
-                             self.sortTrainsByTime = sortTrainsByTimeSetting
-                             
-                             
-                             
-                             
-                             print("set stbt settings from auth to", sortTrainsByTimeSetting)
-                             }*/
-                            
+                         
                         }
                     } else {
                         self.sortTrainsByTime = false
@@ -958,6 +923,9 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     print("failed to get settings")
                     
                 }
+                } else {
+                    print("defaults enabled")
+                }
             }
         }
         
@@ -965,53 +933,8 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             print(value, "settings change")
             if (self.auth && !self.passphrase.isEmpty){
                 Analytics.setUserProperty(String(value), forName: "sortTrainsByTime")
-                let managedContext =  appDelegate.persistentContainer.viewContext
-                let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "Preferences")
-                do {
-                    
-                    let result = try managedContext.fetch(fetchRequest)
-                    if (!result.isEmpty) {
-                        print("fetching old settings")
-                        for data in result as! [NSManagedObject] {
-                            
-                            if let user = data.value(forKey: "user") {
-                                if (user as! String == self.passphrase) {
-                                    data.setValue(value, forKey: "sortTrainsByTime")
-                                    print("settings set for user", user)
-                                }
-                            } else {
-                                data.setValue(self.passphrase, forKey: "user")
-                                data.setValue(value, forKey: "sortTrainsByTime")
-                                print("settings set for new user")
-                            }
-                            do {
-                                try context.save()
-                                print("saved updated settings", value)
-                            } catch {
-                                print("Failed saving")
-                            }
-                            
-                            
-                        }
-                    } else {
-                        print("creating new settings")
-                        let entity = NSEntityDescription.entity(forEntityName: "Preferences", in: context)
-                        let newPreference = NSManagedObject(entity: entity!, insertInto: context)
-                        newPreference.setValue(self.passphrase, forKey: "user")
-                        newPreference.setValue(value, forKey: "sortTrainsByTime")
-                        do {
-                            try context.save()
-                            print("saved new settings")
-                        } catch {
-                            print("Failed saving")
-                        }
-                    }
-                    
-                    
-                } catch {
-                    print("failed to get settings")
-                    
-                }
+                defaults.set(value, forKey: "sortTrainsByTime")
+                 defaults.set(true, forKey: "defaultsEnabled")
             }
         }
         
