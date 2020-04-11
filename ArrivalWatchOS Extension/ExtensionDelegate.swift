@@ -7,11 +7,31 @@
 //
 
 import WatchKit
-
+import CoreData
 class ExtensionDelegate: NSObject, WKExtensionDelegate {
-
+    lazy var persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "ArrivalWatchData")
+        container.loadPersistentStores { description, error in
+            if let error = error {
+                fatalError("Unable to load persistent stores: \(error)")
+            }
+        }
+        return container
+    }()
+    func saveContext () {
+        let context = persistentContainer.viewContext
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                // Show the error here
+            }
+        }
+    }
     func applicationDidFinishLaunching() {
         // Perform any final initialization of your application.
+   
+      
     }
 
     func applicationDidBecomeActive() {
