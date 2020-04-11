@@ -1077,6 +1077,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     self.passphrase = passphrase
                     self.authLoading = false
                     print("user authorized")
+                    defaults.set(passphrase, forKey: "passphrase")
                     let entity = NSEntityDescription.entity(forEntityName: "User", in: context)
                     let newUser = NSManagedObject(entity: entity!, insertInto: context)
                     newUser.setValue(passphrase, forKey: "pass")
@@ -1146,6 +1147,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                             }
                             
                             self.passphrase = passphraseToTest
+                             defaults.set(passphraseToTest, forKey: "passphrase")
                         } else {
                             print("user not authorized")
                             self.auth = false

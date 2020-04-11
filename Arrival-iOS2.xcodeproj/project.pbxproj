@@ -13,9 +13,21 @@
 		34EF38B123CC2692000DE4AF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EF38B023CC2692000DE4AF /* HomeView.swift */; };
 		34EF38B323CC2AC1000DE4AF /* StationChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EF38B223CC2AC1000DE4AF /* StationChooserView.swift */; };
 		64BB2D2FF3AB6F51B9399F08 /* Pods_Arrival_iOS2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74ACA5CF5B67BD66D8845E5D /* Pods_Arrival_iOS2.framework */; };
+		7DE0964F73DAB2C605BD4D5B /* Pods_ArrivalWatchOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B213047F9DAC0DB52591D815 /* Pods_ArrivalWatchOS.framework */; };
 		C509BA83241BEC1A00920BC5 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C509BA82241BEC1A00920BC5 /* SearchBar.swift */; };
 		C5166C3923F610AC001F0254 /* TermsOfSeriviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5166C3823F610AB001F0254 /* TermsOfSeriviceView.swift */; };
 		C516BD21241F316B00ED03FB /* TrainTimeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C516BD20241F316B00ED03FB /* TrainTimeType.swift */; };
+		C51A30EC24415DCD000CE5C9 /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C51A30EA24415DCD000CE5C9 /* Interface.storyboard */; };
+		C51A30EE24415DCF000CE5C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C51A30ED24415DCF000CE5C9 /* Assets.xcassets */; };
+		C51A30F524415DD0000CE5C9 /* ArrivalWatchOS Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C51A30F424415DD0000CE5C9 /* ArrivalWatchOS Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C51A30FA24415DD0000CE5C9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51A30F924415DD0000CE5C9 /* ContentView.swift */; };
+		C51A30FC24415DD0000CE5C9 /* HostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51A30FB24415DD0000CE5C9 /* HostingController.swift */; };
+		C51A30FE24415DD0000CE5C9 /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51A30FD24415DD0000CE5C9 /* ExtensionDelegate.swift */; };
+		C51A310024415DD0000CE5C9 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51A30FF24415DD0000CE5C9 /* ComplicationController.swift */; };
+		C51A310224415DD0000CE5C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C51A310124415DD0000CE5C9 /* Assets.xcassets */; };
+		C51A310524415DD0000CE5C9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C51A310424415DD0000CE5C9 /* Preview Assets.xcassets */; };
+		C51A310924415DD0000CE5C9 /* ArrivalWatchOS.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = C51A30E824415DCD000CE5C9 /* ArrivalWatchOS.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C51A311324415FAE000CE5C9 /* AppData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51A311224415FAE000CE5C9 /* AppData.swift */; };
 		C51B3EDD23ED26330021EBE0 /* KNearestNeighborsClassifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = C51B3EDC23ED26330021EBE0 /* KNearestNeighborsClassifier.swift */; };
 		C524E7B223FAEC87002BC9A5 /* moment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C524E7B023FAEC85002BC9A5 /* moment.swift */; };
 		C524E7B323FAEC87002BC9A5 /* moment-with-locales.min.js in Resources */ = {isa = PBXBuildFile; fileRef = C524E7B123FAEC86002BC9A5 /* moment-with-locales.min.js */; };
@@ -47,7 +59,51 @@
 		C5E5768E23EFBB0A00A3A7BD /* Leg.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5E5768D23EFBB0A00A3A7BD /* Leg.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		C51A30F624415DD0000CE5C9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C58F247623CC1438003882F3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C51A30F324415DD0000CE5C9;
+			remoteInfo = "ArrivalWatchOS Extension";
+		};
+		C51A310724415DD0000CE5C9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C58F247623CC1438003882F3 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C51A30E724415DCD000CE5C9;
+			remoteInfo = ArrivalWatchOS;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C51A310A24415DD0000CE5C9 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				C51A310924415DD0000CE5C9 /* ArrivalWatchOS.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C51A310D24415DD0000CE5C9 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				C51A30F524415DD0000CE5C9 /* ArrivalWatchOS Extension.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		213DC21C5CCFC33B8B913B4B /* Pods-ArrivalWatchOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArrivalWatchOS.release.xcconfig"; path = "Target Support Files/Pods-ArrivalWatchOS/Pods-ArrivalWatchOS.release.xcconfig"; sourceTree = "<group>"; };
+		34733DCA041A903775C491AA /* Pods-ArrivalWatchOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ArrivalWatchOS.debug.xcconfig"; path = "Target Support Files/Pods-ArrivalWatchOS/Pods-ArrivalWatchOS.debug.xcconfig"; sourceTree = "<group>"; };
 		34AF24A723DFD00400E66C34 /* Train.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Train.swift; sourceTree = "<group>"; };
 		34CD87F623EA8A24004F8024 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		34EF38AE23CC23D4000DE4AF /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -55,10 +111,24 @@
 		34EF38B223CC2AC1000DE4AF /* StationChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationChooserView.swift; sourceTree = "<group>"; };
 		74ACA5CF5B67BD66D8845E5D /* Pods_Arrival_iOS2.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Arrival_iOS2.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		751A431627D2482AE13CFE9F /* Pods-Arrival-iOS2Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Arrival-iOS2Tests.release.xcconfig"; path = "Target Support Files/Pods-Arrival-iOS2Tests/Pods-Arrival-iOS2Tests.release.xcconfig"; sourceTree = "<group>"; };
+		B213047F9DAC0DB52591D815 /* Pods_ArrivalWatchOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ArrivalWatchOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C509BA82241BEC1A00920BC5 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		C512BCC423E4FBA80079F49C /* TimePlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = TimePlayground.playground; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C5166C3823F610AB001F0254 /* TermsOfSeriviceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfSeriviceView.swift; sourceTree = "<group>"; };
 		C516BD20241F316B00ED03FB /* TrainTimeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainTimeType.swift; sourceTree = "<group>"; };
+		C51A30E824415DCD000CE5C9 /* ArrivalWatchOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArrivalWatchOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C51A30EB24415DCD000CE5C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
+		C51A30ED24415DCF000CE5C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C51A30EF24415DCF000CE5C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C51A30F424415DD0000CE5C9 /* ArrivalWatchOS Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "ArrivalWatchOS Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C51A30F924415DD0000CE5C9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		C51A30FB24415DD0000CE5C9 /* HostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HostingController.swift; sourceTree = "<group>"; };
+		C51A30FD24415DD0000CE5C9 /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
+		C51A30FF24415DD0000CE5C9 /* ComplicationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplicationController.swift; sourceTree = "<group>"; };
+		C51A310124415DD0000CE5C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C51A310424415DD0000CE5C9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		C51A310624415DD0000CE5C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C51A311224415FAE000CE5C9 /* AppData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppData.swift; sourceTree = "<group>"; };
 		C51B3EDC23ED26330021EBE0 /* KNearestNeighborsClassifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KNearestNeighborsClassifier.swift; sourceTree = "<group>"; };
 		C524E7B023FAEC85002BC9A5 /* moment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = moment.swift; sourceTree = "<group>"; };
 		C524E7B123FAEC86002BC9A5 /* moment-with-locales.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "moment-with-locales.min.js"; sourceTree = "<group>"; };
@@ -98,6 +168,21 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		554C001DAD508A2C1CA0AFFF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7DE0964F73DAB2C605BD4D5B /* Pods_ArrivalWatchOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C51A30F124415DD0000CE5C9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C58F247B23CC1438003882F3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -116,6 +201,8 @@
 				C82760030A0921AD836D9E8B /* Pods-Arrival-iOS2.release.xcconfig */,
 				C56D06D647AB3355D1B3247D /* Pods-Arrival-iOS2Tests.debug.xcconfig */,
 				751A431627D2482AE13CFE9F /* Pods-Arrival-iOS2Tests.release.xcconfig */,
+				34733DCA041A903775C491AA /* Pods-ArrivalWatchOS.debug.xcconfig */,
+				213DC21C5CCFC33B8B913B4B /* Pods-ArrivalWatchOS.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -125,8 +212,42 @@
 			children = (
 				74ACA5CF5B67BD66D8845E5D /* Pods_Arrival_iOS2.framework */,
 				FD5EABF0B8A45DB86870B80A /* Pods_Arrival_iOS2Tests.framework */,
+				B213047F9DAC0DB52591D815 /* Pods_ArrivalWatchOS.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C51A30E924415DCD000CE5C9 /* ArrivalWatchOS */ = {
+			isa = PBXGroup;
+			children = (
+				C51A30EA24415DCD000CE5C9 /* Interface.storyboard */,
+				C51A30ED24415DCF000CE5C9 /* Assets.xcassets */,
+				C51A30EF24415DCF000CE5C9 /* Info.plist */,
+			);
+			path = ArrivalWatchOS;
+			sourceTree = "<group>";
+		};
+		C51A30F824415DD0000CE5C9 /* ArrivalWatchOS Extension */ = {
+			isa = PBXGroup;
+			children = (
+				C51A30F924415DD0000CE5C9 /* ContentView.swift */,
+				C51A311224415FAE000CE5C9 /* AppData.swift */,
+				C51A30FB24415DD0000CE5C9 /* HostingController.swift */,
+				C51A30FD24415DD0000CE5C9 /* ExtensionDelegate.swift */,
+				C51A30FF24415DD0000CE5C9 /* ComplicationController.swift */,
+				C51A310124415DD0000CE5C9 /* Assets.xcassets */,
+				C51A310624415DD0000CE5C9 /* Info.plist */,
+				C51A310324415DD0000CE5C9 /* Preview Content */,
+			);
+			path = "ArrivalWatchOS Extension";
+			sourceTree = "<group>";
+		};
+		C51A310324415DD0000CE5C9 /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				C51A310424415DD0000CE5C9 /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 		C568C3FE23D8B98400AB9E67 /* Models */ = {
@@ -147,6 +268,8 @@
 			isa = PBXGroup;
 			children = (
 				C58F248023CC1438003882F3 /* Arrival-iOS2 */,
+				C51A30E924415DCD000CE5C9 /* ArrivalWatchOS */,
+				C51A30F824415DD0000CE5C9 /* ArrivalWatchOS Extension */,
 				C58F247F23CC1438003882F3 /* Products */,
 				00C597EED8EEB80419D0FD98 /* Pods */,
 				62C13BE24EC2CAFD0B93F477 /* Frameworks */,
@@ -157,6 +280,8 @@
 			isa = PBXGroup;
 			children = (
 				C58F247E23CC1438003882F3 /* Arrival.app */,
+				C51A30E824415DCD000CE5C9 /* ArrivalWatchOS.app */,
+				C51A30F424415DD0000CE5C9 /* ArrivalWatchOS Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -213,6 +338,42 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		C51A30E724415DCD000CE5C9 /* ArrivalWatchOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C51A311124415DD0000CE5C9 /* Build configuration list for PBXNativeTarget "ArrivalWatchOS" */;
+			buildPhases = (
+				4D9B48F9AF6300AF0B15A09A /* [CP] Check Pods Manifest.lock */,
+				C51A30E624415DCD000CE5C9 /* Resources */,
+				C51A310D24415DD0000CE5C9 /* Embed App Extensions */,
+				554C001DAD508A2C1CA0AFFF /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C51A30F724415DD0000CE5C9 /* PBXTargetDependency */,
+			);
+			name = ArrivalWatchOS;
+			productName = ArrivalWatchOS;
+			productReference = C51A30E824415DCD000CE5C9 /* ArrivalWatchOS.app */;
+			productType = "com.apple.product-type.application.watchapp2";
+		};
+		C51A30F324415DD0000CE5C9 /* ArrivalWatchOS Extension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C51A311024415DD0000CE5C9 /* Build configuration list for PBXNativeTarget "ArrivalWatchOS Extension" */;
+			buildPhases = (
+				C51A30F024415DD0000CE5C9 /* Sources */,
+				C51A30F124415DD0000CE5C9 /* Frameworks */,
+				C51A30F224415DD0000CE5C9 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ArrivalWatchOS Extension";
+			productName = "ArrivalWatchOS Extension";
+			productReference = C51A30F424415DD0000CE5C9 /* ArrivalWatchOS Extension.appex */;
+			productType = "com.apple.product-type.watchkit2-extension";
+		};
 		C58F247D23CC1438003882F3 /* Arrival-iOS2 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C58F24A023CC143A003882F3 /* Build configuration list for PBXNativeTarget "Arrival-iOS2" */;
@@ -223,10 +384,12 @@
 				C58F247C23CC1438003882F3 /* Resources */,
 				E17C82A52DBE2323B5D7E277 /* [CP] Embed Pods Frameworks */,
 				C538A11423F661BD00DDF811 /* ShellScript */,
+				C51A310A24415DD0000CE5C9 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				C51A310824415DD0000CE5C9 /* PBXTargetDependency */,
 			);
 			name = "Arrival-iOS2";
 			productName = "Arrival-iOS2";
@@ -239,10 +402,16 @@
 		C58F247623CC1438003882F3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1130;
+				LastSwiftUpdateCheck = 1140;
 				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = "Stomp Rocket";
 				TargetAttributes = {
+					C51A30E724415DCD000CE5C9 = {
+						CreatedOnToolsVersion = 11.4;
+					};
+					C51A30F324415DD0000CE5C9 = {
+						CreatedOnToolsVersion = 11.4;
+					};
 					C58F247D23CC1438003882F3 = {
 						CreatedOnToolsVersion = 11.3;
 					};
@@ -262,11 +431,31 @@
 			projectRoot = "";
 			targets = (
 				C58F247D23CC1438003882F3 /* Arrival-iOS2 */,
+				C51A30E724415DCD000CE5C9 /* ArrivalWatchOS */,
+				C51A30F324415DD0000CE5C9 /* ArrivalWatchOS Extension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		C51A30E624415DCD000CE5C9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C51A30EE24415DCF000CE5C9 /* Assets.xcassets in Resources */,
+				C51A30EC24415DCD000CE5C9 /* Interface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C51A30F224415DD0000CE5C9 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C51A310524415DD0000CE5C9 /* Preview Assets.xcassets in Resources */,
+				C51A310224415DD0000CE5C9 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C58F247C23CC1438003882F3 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -284,6 +473,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		4D9B48F9AF6300AF0B15A09A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ArrivalWatchOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		9CB92E37869FAD7A84D20D91 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -345,6 +556,18 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		C51A30F024415DD0000CE5C9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C51A30FC24415DD0000CE5C9 /* HostingController.swift in Sources */,
+				C51A310024415DD0000CE5C9 /* ComplicationController.swift in Sources */,
+				C51A30FA24415DD0000CE5C9 /* ContentView.swift in Sources */,
+				C51A30FE24415DD0000CE5C9 /* ExtensionDelegate.swift in Sources */,
+				C51A311324415FAE000CE5C9 /* AppData.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		C58F247A23CC1438003882F3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -384,7 +607,28 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		C51A30F724415DD0000CE5C9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C51A30F324415DD0000CE5C9 /* ArrivalWatchOS Extension */;
+			targetProxy = C51A30F624415DD0000CE5C9 /* PBXContainerItemProxy */;
+		};
+		C51A310824415DD0000CE5C9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C51A30E724415DCD000CE5C9 /* ArrivalWatchOS */;
+			targetProxy = C51A310724415DD0000CE5C9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
+		C51A30EA24415DCD000CE5C9 /* Interface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C51A30EB24415DCD000CE5C9 /* Base */,
+			);
+			name = Interface.storyboard;
+			sourceTree = "<group>";
+		};
 		C58F248F23CC143A003882F3 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -396,6 +640,96 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		C51A310B24415DD0000CE5C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 34733DCA041A903775C491AA /* Pods-ArrivalWatchOS.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = 7M5JDZSYX7;
+				IBSC_MODULE = ArrivalWatchOS_Extension;
+				INFOPLIST_FILE = ArrivalWatchOS/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 6.2;
+			};
+			name = Debug;
+		};
+		C51A310C24415DD0000CE5C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 213DC21C5CCFC33B8B913B4B /* Pods-ArrivalWatchOS.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7M5JDZSYX7;
+				IBSC_MODULE = ArrivalWatchOS_Extension;
+				INFOPLIST_FILE = ArrivalWatchOS/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival.watchkitapp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 6.2;
+			};
+			name = Release;
+		};
+		C51A310E24415DD0000CE5C9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_STYLE = Automatic;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_ASSET_PATHS = "\"ArrivalWatchOS Extension/Preview Content\"";
+				DEVELOPMENT_TEAM = 7M5JDZSYX7;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "ArrivalWatchOS Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 6.2;
+			};
+			name = Debug;
+		};
+		C51A310F24415DD0000CE5C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_ASSET_PATHS = "\"ArrivalWatchOS Extension/Preview Content\"";
+				DEVELOPMENT_TEAM = 7M5JDZSYX7;
+				ENABLE_PREVIEWS = YES;
+				INFOPLIST_FILE = "ArrivalWatchOS Extension/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival.watchkitapp.watchkitextension;
+				PRODUCT_NAME = "${TARGET_NAME}";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 6.2;
+			};
+			name = Release;
+		};
 		C58F249E23CC143A003882F3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -560,6 +894,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		C51A311024415DD0000CE5C9 /* Build configuration list for PBXNativeTarget "ArrivalWatchOS Extension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C51A310E24415DD0000CE5C9 /* Debug */,
+				C51A310F24415DD0000CE5C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C51A311124415DD0000CE5C9 /* Build configuration list for PBXNativeTarget "ArrivalWatchOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C51A310B24415DD0000CE5C9 /* Debug */,
+				C51A310C24415DD0000CE5C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C58F247923CC1438003882F3 /* Build configuration list for PBXProject "Arrival-iOS2" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
