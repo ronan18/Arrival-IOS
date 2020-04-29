@@ -5,11 +5,6 @@
         <attribute name="sortTrainsByTime" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="user" optional="YES" attributeType="String"/>
     </entity>
-    <entity name="Preferences1" representedClassName="Preferences" syncable="YES" codeGenerationType="class">
-        <attribute name="prioritizeTrain" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="sortTrainsByTime" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
-        <attribute name="user" optional="YES" attributeType="String"/>
-    </entity>
     <entity name="StationModel" representedClassName="StationModel" syncable="YES" codeGenerationType="class">
         <attribute name="abbr" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="String"/>
@@ -35,6 +30,5 @@
         <element name="StationModel" positionX="-36" positionY="18" width="128" height="133"/>
         <element name="Trip" positionX="-45" positionY="45" width="128" height="118"/>
         <element name="User" positionX="-63" positionY="-18" width="128" height="88"/>
-        <element name="Preferences1" positionX="-45" positionY="54" width="128" height="88"/>
     </elements>
 </model>

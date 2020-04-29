@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		340D38CB245A1DBF00EDE8DD /* Arrival_iOS2.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = C58F248523CC1438003882F3 /* Arrival_iOS2.xcdatamodeld */; };
 		34AF24A823DFD00400E66C34 /* Train.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AF24A723DFD00400E66C34 /* Train.swift */; };
 		34CD87F723EA8A24004F8024 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CD87F623EA8A24004F8024 /* SettingsView.swift */; };
 		34EF38AF23CC23D4000DE4AF /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34EF38AE23CC23D4000DE4AF /* Colors.swift */; };
@@ -264,6 +265,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				340D38CB245A1DBF00EDE8DD /* Arrival_iOS2.xcdatamodeld in Resources */,
 				C524E7B323FAEC87002BC9A5 /* moment-with-locales.min.js in Resources */,
 				C58F249123CC143A003882F3 /* LaunchScreen.storyboard in Resources */,
 				C55174B3242062B90075C362 /* routes.csv in Resources */,
