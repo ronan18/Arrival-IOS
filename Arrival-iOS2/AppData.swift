@@ -120,7 +120,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             print("failed so save testing pref")
         }
         let expirationDuration: TimeInterval = 43200
-        
+        print(getRouteData("1"))
         remoteConfig.fetch(withExpirationDuration: TimeInterval(expirationDuration)) { (status, error) -> Void in
             if status == .success {
                 print("Config fetched!")
