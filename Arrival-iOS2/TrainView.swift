@@ -11,11 +11,11 @@ import SwiftyJSON
 import FirebaseAnalytics
 import FirebaseCrashlytics
 extension AnyTransition {
-  static var trainCardTransition: AnyTransition {
-    let transition = AnyTransition.asymmetric(insertion: AnyTransition.offset(x: 0, y: 50)
-      .combined(with: AnyTransition.opacity), removal: AnyTransition.opacity)
-    return transition
-  }
+    static var trainCardTransition: AnyTransition {
+        let transition = AnyTransition.asymmetric(insertion: AnyTransition.offset(x: 0, y: 50)
+            .combined(with: AnyTransition.opacity), removal: AnyTransition.opacity)
+        return transition
+    }
 }
 let sampleData = [1,2,3,4,5]
 struct TrainView: View {
@@ -33,8 +33,8 @@ struct TrainView: View {
             } else if (self.appData.trains.isEmpty || !self.appData.loaded) {
                 Spacer().frame(height: 8)
                 TrainComponent(type: "skeleton").padding(.horizontal)
-                    TrainComponent(type: "skeleton").padding(.horizontal)
-                    TrainComponent(type: "skeleton").padding(.horizontal)
+                TrainComponent(type: "skeleton").padding(.horizontal)
+                TrainComponent(type: "skeleton").padding(.horizontal)
                 Spacer()
             } else {
                 if (self.appData.sortTrainsByTime || self.appData.toStation.abbr != "none" || self.appData.southTrains.count == 0 || self.appData.northTrains.count == 0) {
@@ -91,6 +91,11 @@ struct TrainView: View {
                                 
                                 TrainComponent(type: "train",  name: train.direction, cars: train.cars, departs: train.time,unit: train.unit, color: self.appData.convertColor(color: train.color), eta: train.eta).padding(.horizontal)
                             }.animation(.none)
+                            if (self.appData.trainLeaveTimeType == .leave) {
+                                Text(self.appData.leaveTrainRealtimeNotice).font(.caption)
+                                    .foregroundColor(Color.gray)
+                                    .multilineTextAlignment(.center).padding().animation(.none)
+                            }
                             
                         }.transition(.trainCardTransition).animation(.spring())
                     }
@@ -107,11 +112,20 @@ struct TrainView: View {
                             ForEach(self.appData.northTrains) { train in
                                 TrainComponent(type: "train",  name: train.direction, cars: train.cars, departs: train.time,unit: train.unit, color: self.appData.convertColor(color: train.color), eta: train.eta).padding(.horizontal)
                             }.animation(.none)
-                            
+                              if (self.appData.trainLeaveTimeType == .leave) {
+                            Text(self.appData.leaveTrainRealtimeNotice).font(.caption)
+                                .foregroundColor(Color.gray)
+                                .multilineTextAlignment(.center).padding().animation(.none)
+                            }
                         } else {
                             ForEach(self.appData.southTrains) { train in
                                 TrainComponent(type: "train",  name: train.direction, cars: train.cars, departs: train.time,unit: train.unit, color: self.appData.convertColor(color: train.color), eta: train.eta).padding(.horizontal)
                             }.animation(.none)
+                              if (self.appData.trainLeaveTimeType == .leave) {
+                            Text(self.appData.leaveTrainRealtimeNotice).font(.caption)
+                                .foregroundColor(Color.gray)
+                                .multilineTextAlignment(.center).padding().animation(.none)
+                            }
                         }
                     }.transition(.trainCardTransition).animation(.spring())
                 }

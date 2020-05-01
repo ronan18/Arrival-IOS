@@ -54,6 +54,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var onboardingLoaded = false
     @Published var aboutText = ""
     @Published var realtimeTripNotice = ""
+    @Published var leaveTrainRealtimeNotice = ""
     @Published var privacyPolicy = ""
     @Published var termsOfService = ""
     @Published var remoteConfig = RemoteConfig.remoteConfig()
@@ -69,7 +70,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var leaveDate = Date()
     @Published var arriveDate = Date()
     @Published var appMessage = ""
-     @Published var appLink = ""
+    @Published var appLink = ""
     let appVersion: String = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
     let net = Alamofire.NetworkReachabilityManager(host: "api.arrival.city")
     private let locationManager = CLLocationManager()
@@ -142,18 +143,19 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         self.onboardingLoaded = true
                         self.aboutText = self.remoteConfig["aboutText"].stringValue!
                         self.realtimeTripNotice = self.remoteConfig["realtimeTripsNotice"].stringValue!
+                        self.leaveTrainRealtimeNotice = self.remoteConfig["leaveTrainRealtimeNotice"].stringValue!
                         self.daysBetweenReviewAsk = Int(self.remoteConfig["daysBetweenReviewAsk"].stringValue!)!
                         self.privacyPolicy = self.remoteConfig["privacyPolicyUrl"].stringValue!
                         self.termsOfService = self.remoteConfig["termsOfServiceUrl"].stringValue!
                         self.appMessage = self.remoteConfig["inAppMessage"].stringValue!
-                         self.appLink = self.remoteConfig["inAppLink"].stringValue!
+                        self.appLink = self.remoteConfig["inAppLink"].stringValue!
                         print(self.onboardingLoaded, "config onboarding loaded")
                         if (!defaults.bool(forKey: "shownDetailOnBoard") && self.remoteConfig["showTripDetailFeature"].boolValue || self.debug) {
-                              self.showTripDetailFeature = true
+                            self.showTripDetailFeature = true
                         } else {
-                              self.showTripDetailFeature = false
+                            self.showTripDetailFeature = false
                         }
-                      
+                        
                         
                     }
                 })
@@ -532,38 +534,40 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         self.toStation = station
         self.cylce()
         if (station.name != "none") {
-        let day = Calendar.current.component(.weekday, from: Date())
-        let hour = Calendar.current.component(.hour, from: Date())
-        
-        let tripEntity = NSEntityDescription.entity(forEntityName: "Trip", in: context)!
-        let trip = NSManagedObject(entity: tripEntity, insertInto: context)
-        trip.setValue(self.fromStation.abbr, forKeyPath: "fromStation")
-        trip.setValue(self.toStation.abbr, forKeyPath: "toStation")
-        trip.setValue(day, forKeyPath: "day")
-        trip.setValue(hour, forKeyPath: "hour")
-        trip.setValue(self.passphrase, forKeyPath: "user")
-      
-        do {
-            try context.save()
-            computeToSuggestions()
-        } catch let error as NSError {
-            print(error)
-        }
+            self.trainLeaveTimeType = .now //just for before release of full time modes
+            let day = Calendar.current.component(.weekday, from: Date())
+            let hour = Calendar.current.component(.hour, from: Date())
+            
+            let tripEntity = NSEntityDescription.entity(forEntityName: "Trip", in: context)!
+            let trip = NSManagedObject(entity: tripEntity, insertInto: context)
+            trip.setValue(self.fromStation.abbr, forKeyPath: "fromStation")
+            trip.setValue(self.toStation.abbr, forKeyPath: "toStation")
+            trip.setValue(day, forKeyPath: "day")
+            trip.setValue(hour, forKeyPath: "hour")
+            trip.setValue(self.passphrase, forKeyPath: "user")
+            
+            do {
+                try context.save()
+                computeToSuggestions()
+            } catch let error as NSError {
+                print(error)
+            }
         } else {
             if (self.trainLeaveTimeType == .arrive) {
-            self.trainLeaveTimeType = .now
+                self.trainLeaveTimeType = .now
             }
         }
         Analytics.logEvent("set_toStation", parameters: [
-                  "station": station.abbr as NSObject,
-                  "fromStation": self.fromStation.abbr as NSObject
-              ])
+            "station": station.abbr as NSObject,
+            "fromStation": self.fromStation.abbr as NSObject
+        ])
         
         
     }
     @objc func cylce() {
+        let cycleLeaveType = self.trainLeaveTimeType
         self.testNetwork()
-        
+        // print(self.leaveDate, "leave time")
         getClosestStations()
         if (self.fromStation.name != "loading" && self.auth && self.ready && !self.passphrase.isEmpty && allowCycle) {
             
@@ -574,7 +578,17 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     "Authorization": self.passphrase,
                     "Accept": "application/json"
                 ]
-                Alamofire.request(apiUrl + "/api/v2/trains/" + self.fromStation.abbr, headers: headers).responseJSON { response in
+                var requestType = "now"
+                var time = "now"
+                if (cycleLeaveType == .leave) {
+                    requestType = "leave"
+                    let formatter = DateFormatter()
+                    formatter.timeZone = TimeZone(identifier: "PST")
+                    formatter.dateFormat = "dd-MM-yyyy hh:mm a"
+                    time = formatter.string(from: self.leaveDate) ?? "unknown"
+                    print(self.leaveDate, "leave date", time)
+                }
+                Alamofire.request( apiUrl + "/api/v3/trains/" + self.fromStation.abbr, method: .post, parameters: ["type": requestType, "time": time], headers: headers).responseJSON { response in
                     // print(JSON(response.value))
                     let estimates = JSON(JSON(response.value)["estimates"]["etd"].arrayValue)
                     //   print(estimates.count)
@@ -584,75 +598,103 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         var results: Array = [Train]()
                         var northResults: Array = [Train]()
                         var southResults: Array = [Train]()
-                        for i in 0...estimates.count - 1 {
-                            for x in 0...estimates[i]["estimate"].arrayValue.count - 1 {
-                                let thisTrain = estimates[i]["estimate"][x]
-                                let color = thisTrain["color"].stringValue
-                                if (thisTrain["direction"].stringValue == "North") {
-                                    northResults.append(Train(id: UUID(), direction: estimates[i]["destination"].stringValue, time: thisTrain["minutes"].stringValue, unit: "min", color: color, cars: thisTrain["length"].intValue, hex: thisTrain["hexcode"].stringValue, eta: ""))
+                        if (cycleLeaveType == .leave) {
+                            requestType = "leave"
+                            //  print(estimates, estimates.count, "leave estimates")
+                            for i in 0...estimates.count - 1 {
+                                let thisTrain = estimates[i]
+                                //  print(thisTrain)
+                                let destination = thisTrain["destination"].stringValue
+                                let time = thisTrain["time"].stringValue
+                                let bikeFlag = thisTrain["bikeFlag"].stringValue
+                                let load = thisTrain["load"].stringValue
+                                let route = thisTrain["route"].stringValue
+                                // print("route", route)
+                                let routeData = getRouteData(route)
+                                let direction = routeData.direction
+                                let color = routeData.color
+                                let hexColor = routeData.hexColor
+                                let train = Train(id: UUID(), direction: destination, time: time, unit: "", color: color, hex: hexColor, eta: "")
+                                print(train)
+                                results.append(train)
+                                if direction == "North" {
+                                    northResults.append(train)
                                 } else {
-                                    southResults.append(Train(id: UUID(), direction: estimates[i]["destination"].stringValue, time: thisTrain["minutes"].stringValue, unit: "min", color: color, cars: thisTrain["length"].intValue, hex: thisTrain["hexcode"].stringValue, eta: ""))
+                                    southResults.append(train)
                                 }
-                                results.append(Train(id: UUID(), direction: estimates[i]["destination"].stringValue, time: thisTrain["minutes"].stringValue, unit: "min", color: color, cars: thisTrain["length"].intValue, hex: thisTrain["hexcode"].stringValue, eta: ""))
+                            }
+                        } else if (cycleLeaveType == .now) {
+                            for i in 0...estimates.count - 1 {
+                                for x in 0...estimates[i]["estimate"].arrayValue.count - 1 {
+                                    let thisTrain = estimates[i]["estimate"][x]
+                                    let color = thisTrain["color"].stringValue
+                                    if (thisTrain["direction"].stringValue == "North") {
+                                        northResults.append(Train(id: UUID(), direction: estimates[i]["destination"].stringValue, time: thisTrain["minutes"].stringValue, unit: "min", color: color, cars: thisTrain["length"].intValue, hex: thisTrain["hexcode"].stringValue, eta: ""))
+                                    } else {
+                                        southResults.append(Train(id: UUID(), direction: estimates[i]["destination"].stringValue, time: thisTrain["minutes"].stringValue, unit: "min", color: color, cars: thisTrain["length"].intValue, hex: thisTrain["hexcode"].stringValue, eta: ""))
+                                    }
+                                    results.append(Train(id: UUID(), direction: estimates[i]["destination"].stringValue, time: thisTrain["minutes"].stringValue, unit: "min", color: color, cars: thisTrain["length"].intValue, hex: thisTrain["hexcode"].stringValue, eta: ""))
+                                }
+                            }
+                            results.sort {
+                                var time1: Int
+                                var time2: Int
+                                // print($0.time, $1.time)
+                                if ($0.time == "Leaving") {
+                                    time1 = 0
+                                } else {
+                                    time1 = Int($0.time)  as! Int
+                                }
+                                if ($1.time == "Leaving") {
+                                    time2 = 0
+                                } else {
+                                    time2 = Int($1.time) as! Int
+                                }
+                                
+                                
+                                //print(time1, time2)
+                                return time1 < time2
+                            }
+                            northResults.sort {
+                                var time1: Int
+                                var time2: Int
+                                // print($0.time, $1.time)
+                                if ($0.time == "Leaving") {
+                                    time1 = 0
+                                } else {
+                                    time1 = Int($0.time)  as! Int
+                                }
+                                if ($1.time == "Leaving") {
+                                    time2 = 0
+                                } else {
+                                    time2 = Int($1.time) as! Int
+                                }
+                                
+                                
+                                //print(time1, time2)
+                                return time1 < time2
+                            }
+                            southResults.sort {
+                                var time1: Int
+                                var time2: Int
+                                // print($0.time, $1.time)
+                                if ($0.time == "Leaving") {
+                                    time1 = 0
+                                } else {
+                                    time1 = Int($0.time)  as! Int
+                                }
+                                if ($1.time == "Leaving") {
+                                    time2 = 0
+                                } else {
+                                    time2 = Int($1.time) as! Int
+                                }
+                                
+                                
+                                //print(time1, time2)
+                                return time1 < time2
                             }
                         }
-                        results.sort {
-                            var time1: Int
-                            var time2: Int
-                            // print($0.time, $1.time)
-                            if ($0.time == "Leaving") {
-                                time1 = 0
-                            } else {
-                                time1 = Int($0.time)  as! Int
-                            }
-                            if ($1.time == "Leaving") {
-                                time2 = 0
-                            } else {
-                                time2 = Int($1.time) as! Int
-                            }
-                            
-                            
-                            //print(time1, time2)
-                            return time1 < time2
-                        }
-                        northResults.sort {
-                            var time1: Int
-                            var time2: Int
-                            // print($0.time, $1.time)
-                            if ($0.time == "Leaving") {
-                                time1 = 0
-                            } else {
-                                time1 = Int($0.time)  as! Int
-                            }
-                            if ($1.time == "Leaving") {
-                                time2 = 0
-                            } else {
-                                time2 = Int($1.time) as! Int
-                            }
-                            
-                            
-                            //print(time1, time2)
-                            return time1 < time2
-                        }
-                        southResults.sort {
-                            var time1: Int
-                            var time2: Int
-                            // print($0.time, $1.time)
-                            if ($0.time == "Leaving") {
-                                time1 = 0
-                            } else {
-                                time1 = Int($0.time)  as! Int
-                            }
-                            if ($1.time == "Leaving") {
-                                time2 = 0
-                            } else {
-                                time2 = Int($1.time) as! Int
-                            }
-                            
-                            
-                            //print(time1, time2)
-                            return time1 < time2
-                        }
+                        
                         self.noTrains = false
                         self.northTrains = northResults
                         self.southTrains = southResults
@@ -825,7 +867,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                 } else {
                     print("no show review card")
                 }
-         
+                
                 
                 print("passphrase changed and auth settings from auth", value)
                 
@@ -833,50 +875,50 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                 print("default setting" + String(defaults.bool(forKey: "defaultsEnabled")))
                 if (!defaults.bool(forKey: "defaultsEnabled")) {
                     print("defaults off")
-                let managedContext =  appDelegate.persistentContainer.viewContext
-                let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "Preferences")
-                do {
-                    
-                    let result = try managedContext.fetch(fetchRequest)
-                    if (!result.isEmpty) {
-                        print("fetching settings from auth")
-                        for data in result as! [NSManagedObject] {
-                            
-                            var sortTrainsByTimeSetting = false
-                            if let user = data.value(forKey: "user") {
-                                if (user as! String == value) {
-                                    if  let tempSetting = data.value(forKey: "sortTrainsByTime") {
-                                        print("sortTrainsByTime setting", tempSetting)
-                                        if (tempSetting as! Bool) {
-                                            self.sortTrainsByTime = true
-                                            defaults.set(true, forKey: "sortTrainsByTime")
-                                            defaults.set(true, forKey: "defaultsEnabled")
-                                            print("sortTrainsByTime settings result true")
-                                              print("defualts set", String(defaults.bool(forKey: "defaultsEnabled") ))
-                                        } else {
-                                            self.sortTrainsByTime = false
-                                             defaults.set(false, forKey: "sortTrainsByTime")
-                                             defaults.set(true, forKey: "defaultsEnabled")
-                                            print("defualts set", String(defaults.bool(forKey: "defaultsEnabled") ))
-                                            print("sortTrainsByTime settings result false")
+                    let managedContext =  appDelegate.persistentContainer.viewContext
+                    let fetchRequest =  NSFetchRequest<NSFetchRequestResult>(entityName: "Preferences")
+                    do {
+                        
+                        let result = try managedContext.fetch(fetchRequest)
+                        if (!result.isEmpty) {
+                            print("fetching settings from auth")
+                            for data in result as! [NSManagedObject] {
+                                
+                                var sortTrainsByTimeSetting = false
+                                if let user = data.value(forKey: "user") {
+                                    if (user as! String == value) {
+                                        if  let tempSetting = data.value(forKey: "sortTrainsByTime") {
+                                            print("sortTrainsByTime setting", tempSetting)
+                                            if (tempSetting as! Bool) {
+                                                self.sortTrainsByTime = true
+                                                defaults.set(true, forKey: "sortTrainsByTime")
+                                                defaults.set(true, forKey: "defaultsEnabled")
+                                                print("sortTrainsByTime settings result true")
+                                                print("defualts set", String(defaults.bool(forKey: "defaultsEnabled") ))
+                                            } else {
+                                                self.sortTrainsByTime = false
+                                                defaults.set(false, forKey: "sortTrainsByTime")
+                                                defaults.set(true, forKey: "defaultsEnabled")
+                                                print("defualts set", String(defaults.bool(forKey: "defaultsEnabled") ))
+                                                print("sortTrainsByTime settings result false")
+                                            }
                                         }
                                     }
                                 }
+                                
+                                
+                                
+                                
                             }
-                            
-                            
-                            
-                         
+                        } else {
+                            self.sortTrainsByTime = false
                         }
-                    } else {
-                        self.sortTrainsByTime = false
+                        
+                        
+                    } catch {
+                        print("failed to get settings")
+                        
                     }
-                    
-                    
-                } catch {
-                    print("failed to get settings")
-                    
-                }
                 } else {
                     print("defaults enabled")
                 }
@@ -888,7 +930,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             if (self.auth && !self.passphrase.isEmpty){
                 Analytics.setUserProperty(String(value), forName: "sortTrainsByTime")
                 defaults.set(value, forKey: "sortTrainsByTime")
-                 defaults.set(true, forKey: "defaultsEnabled")
+                defaults.set(true, forKey: "defaultsEnabled")
             }
         }
         
@@ -1038,7 +1080,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         
         self.authLoading = true
         print("creating account", passphrase)
-
+        
         defaults.set(true, forKey: "defaultsEnabled")
         let headers: HTTPHeaders = [
             "Accept": "application/json"
@@ -1147,7 +1189,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                             }
                             
                             self.passphrase = passphraseToTest
-                             defaults.set(passphraseToTest, forKey: "passphrase")
+                            defaults.set(passphraseToTest, forKey: "passphrase")
                         } else {
                             print("user not authorized")
                             self.auth = false

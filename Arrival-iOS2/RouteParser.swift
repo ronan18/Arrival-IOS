@@ -26,16 +26,22 @@ func getRouteData(_ route: String) -> SimpleRoute {
             let csv = CSwiftV(with: contents)
 
             let rows = csv.rows
-            let routeRow = rows[Int(route)! - 1]
-            let routeID = route
-            let routeShortName = routeRow[1]
-            let  hexColor = routeRow[6]
-            let color = routeShortName
-            var direction = "North"
-            if color.suffix(1) == "S" {
-                direction = "South"
+            if let index = rows.firstIndex(where: {$0[0] == route}) {
+                let routeRow = rows[index]
+                   let routeID = route
+                   let routeShortName = routeRow[1]
+                   let  hexColor = routeRow[6]
+                   let color = routeShortName
+                   var direction = "North"
+                   if color.suffix(1) == "S" {
+                       direction = "South"
+                   }
+                   print("route parser route", route, routeRow[0], routeRow[2], color)
+                   return SimpleRoute(routeShortName: routeShortName, routeID: routeID, direction: direction, color: color, hexColor: hexColor)
+            } else {
+                fatalError("route not found in data")
             }
-            return SimpleRoute(routeShortName: routeShortName, routeID: routeID, direction: direction, color: color, hexColor: hexColor)
+   
 
         } catch {
                 fatalError("no routes data")

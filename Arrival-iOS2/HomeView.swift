@@ -164,68 +164,71 @@ struct HomeView: View {
                                 }.padding().edgesIgnoringSafeArea(.bottom)
                             }
                             Spacer()
-                            if (false) {
-                                Button  (action: {
-                                    self.fromStationSearch = ""
-                                    if (self.appData.fromStation.id != "loading") {
-                                        self.timeModalDisplayed = true
+                            
+                            Button  (action: {
+                                self.fromStationSearch = ""
+                                if (self.appData.fromStation.id != "loading") {
+                                    self.timeModalDisplayed = true
+                                }
+                                
+                            }) {
+                                VStack(alignment: .center) {
+                                    if (self.appData.trainLeaveTimeType == .now) {
+                                        HStack {
+                                            Spacer()
+                                            Text("leave").font(.caption)
+                                            Spacer()
+                                        }
+                                        Text("now").font(.headline)
+                                    } else if (self.appData.trainLeaveTimeType == .leave) {
+                                        HStack {
+                                            Spacer()
+                                            Text("leave").font(.caption)
+                                            Spacer()
+                                        }
+                                        Text(self.formateTime(self.appData.leaveDate)).font(.headline).lineLimit(1)
+                                    } else {
+                                        HStack {
+                                            Spacer()
+                                            Text("arrive").font(.caption)
+                                            Spacer()
+                                        }
+                                        Text(self.formateTime(self.appData.arriveDate)).font(.headline).lineLimit(1)
                                     }
                                     
-                                }) {
-                                    VStack(alignment: .center) {
-                                        if (self.appData.trainLeaveTimeType == .now) {
-                                            HStack {
-                                                Spacer()
-                                                Text("leave").font(.caption)
-                                                Spacer()
-                                            }
-                                            Text("now").font(.headline)
-                                        } else if (self.appData.trainLeaveTimeType == .leave) {
-                                            HStack {
-                                                Spacer()
-                                                Text("leave").font(.caption)
-                                                Spacer()
-                                            }
-                                            Text(self.formateTime(self.appData.leaveDate)).font(.headline).lineLimit(1)
-                                        } else {
-                                            HStack {
-                                                Spacer()
-                                                Text("arrive").font(.caption)
-                                                Spacer()
-                                            }
-                                            Text(self.formateTime(self.appData.arriveDate)).font(.headline).lineLimit(1)
-                                        }
-                                        
-                                    }.multilineTextAlignment(.center).frame(width: geometry.size.width / 4)
-                                }.frame(width: geometry.size.width / 4).sheet(isPresented: self.$timeModalDisplayed) {
-                                    VStack(alignment: .leading) {
-                                        HStack(alignment: .center) {
-                                            Text("Choose a time")
-                                                .font(.largeTitle)
-                                                .fontWeight(.bold)
-                                            Spacer()
-                                            Button(action: {
-                                                self.timeModalDisplayed = false
-                                            }) {
-                                                Text("Close")
-                                            }
-                                        }
-                                        
+                                }.multilineTextAlignment(.center).frame(width: geometry.size.width / 4)
+                            }.frame(width: geometry.size.width / 4).sheet(isPresented: self.$timeModalDisplayed) {
+                                VStack(alignment: .leading) {
+                                    HStack(alignment: .center) {
+                                        Text("Choose a time")
+                                            .font(.largeTitle)
+                                            .fontWeight(.bold)
+                                        Spacer()
                                         Button(action: {
-                                            self.appData.trainLeaveTimeType = .now
+                                            self.appData.loaded = false
+                                            self.appData.noTrains = false
+                                            self.appData.cylce()
+                                            self.timeModalDisplayed = false
                                         }) {
-                                            HStack {
-                                                if (self.appData.trainLeaveTimeType == .now) {
-                                                    Image(systemName: "largecircle.fill.circle")
-                                                } else {
-                                                    Image(systemName: "circle").foregroundColor(.blackBorder)
-                                                }
-                                                Text("Leave now").foregroundColor(.blackBorder)
-                                                Spacer()
-                                                
-                                            }
+                                            Text("Close")
                                         }
-                                        
+                                    }
+                                    
+                                    Button(action: {
+                                        self.appData.trainLeaveTimeType = .now
+                                    }) {
+                                        HStack {
+                                            if (self.appData.trainLeaveTimeType == .now) {
+                                                Image(systemName: "largecircle.fill.circle")
+                                            } else {
+                                                Image(systemName: "circle").foregroundColor(.blackBorder)
+                                            }
+                                            Text("Leave now").foregroundColor(.blackBorder)
+                                            Spacer()
+                                            
+                                        }
+                                    }
+                                    if (self.appData.toStation.name == "none") { // just before release of full time modes
                                         Button(action: {
                                             self.appData.trainLeaveTimeType = .leave
                                         }) {
@@ -240,41 +243,51 @@ struct HomeView: View {
                                                 
                                             }
                                         }
-                                        if (self.appData.trainLeaveTimeType == .leave) {
+                                    }
+                                    GeometryReader { geo in
+                                        VStack(alignment: .center, spacing: 0) {
+                                            
                                             DatePicker(selection: self.$appData.leaveDate, in: Date()..., displayedComponents: [.date, .hourAndMinute]) {
+                                                EmptyView()
+                                            }.labelsHidden().disabled(self.appData.trainLeaveTimeType != .leave).frame(maxWidth: geo.size.width - 2)
+                                            Spacer()
+                                        }
+                                        
+                                        
+                                    }
+                                    
+                                    
+                                    Spacer()
+                            
+                                    if (self.appData.toStation.name != "none" && false) {
+                                        Button(action: {
+                                            self.appData.trainLeaveTimeType = .arrive
+                                        }) {
+                                            HStack {
+                                                if (self.appData.trainLeaveTimeType == .arrive) {
+                                                    Image(systemName: "largecircle.fill.circle")
+                                                } else {
+                                                    Image(systemName: "circle").foregroundColor(.blackBorder)
+                                                }
+                                                Text("Arrive by").foregroundColor(.blackBorder)
+                                                Spacer()
+                                                
+                                            }
+                                        }
+                                        if (self.appData.trainLeaveTimeType == .arrive) {
+                                            DatePicker(selection: self.$appData.arriveDate, in: Date()..., displayedComponents: [.date, .hourAndMinute]) {
                                                 Text("")
                                             }.padding(.all,0)
                                         }
-                                        
-                                        if (self.appData.toStation.name != "none") {
-                                            Button(action: {
-                                                self.appData.trainLeaveTimeType = .arrive
-                                            }) {
-                                                HStack {
-                                                    if (self.appData.trainLeaveTimeType == .arrive) {
-                                                        Image(systemName: "largecircle.fill.circle")
-                                                    } else {
-                                                        Image(systemName: "circle").foregroundColor(.blackBorder)
-                                                    }
-                                                    Text("Arrive by").foregroundColor(.blackBorder)
-                                                    Spacer()
-                                                    
-                                                }
-                                            }
-                                            if (self.appData.trainLeaveTimeType == .arrive) {
-                                                DatePicker(selection: self.$appData.arriveDate, in: Date()..., displayedComponents: [.date, .hourAndMinute]) {
-                                                    Text("")
-                                                }.padding(.all,0)
-                                            }
-                                        }
-                                        
-                                        
-                                        
-                                        Spacer()
-                                        
-                                    }.padding()
-                                }
+                                    }
+                                    
+                                    
+                                    
+                                    Spacer()
+                                    
+                                }.padding()
                             }
+                            
                             Spacer()
                             Button  (action: {
                                 self.fromStationSearch = ""
@@ -349,34 +362,34 @@ struct HomeView: View {
                             }.background(Color.red)
                         }
                         if (!self.appData.appMessage.isEmpty) {
-                          
+                            
                             HStack {
-                                 Spacer()
+                                Spacer()
                                 VStack {
                                     Text(self.appData.appMessage)
                                         .font(.callout)
                                         .foregroundColor(Color.white)
                                     if (self.appData.appLink.count > 0) {
-                                       
-                                            Button(action: {
-                                                Analytics.logEvent("appMessageClicked", parameters: [
-                                                    "link": self.appData.appLink as NSObject])
-                                                if let url = URL(string: self.appData.appLink) {
-                                                    UIApplication.shared.open(url)
-                                                }
-                                            }) {
-                                                Text("Learn more")
+                                        
+                                        Button(action: {
+                                            Analytics.logEvent("appMessageClicked", parameters: [
+                                                "link": self.appData.appLink as NSObject])
+                                            if let url = URL(string: self.appData.appLink) {
+                                                UIApplication.shared.open(url)
                                             }
-                                      
+                                        }) {
+                                            Text("Learn more")
+                                        }
+                                        
                                         
                                     }
                                 }
                                 Spacer()
-                          
+                                
                                 
                             }.padding().background(Color("darkGrey"))
                         }
-                       
+                        
                         if (self.appData.fromStation.abbr != "load" || !self.locationTimeout && self.appData.locationAcess) {
                             
                             TrainView()

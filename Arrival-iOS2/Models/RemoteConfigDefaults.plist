@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>leaveTrainRealtimeNotice</key>
+	<string>Train data based off of BART&apos;s scheduled departures not realtime data</string>
 	<key>showTripDetailFeature</key>
 	<string>true</string>
 	<key>daysBetweenReviewAsk</key>
