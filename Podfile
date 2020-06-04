@@ -15,6 +15,7 @@ pod 'Firebase/Performance'
 pod 'Firebase/RemoteConfig'
 pod 'Firebase/DynamicLinks'
 pod 'CSV.swift', '~> 2.4.3'
+pod 'Disk', '~> 0.6.4'
 #pod 'SwiftMoment'
 
 

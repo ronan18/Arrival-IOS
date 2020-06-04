@@ -19,6 +19,7 @@ struct HomeView: View {
     @State var locationTimeout = false
     @State var timeModalDisplayed = false
     @EnvironmentObject private var appData: AppData
+    private var leaveTimesEnabled = false
     var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
@@ -164,7 +165,7 @@ struct HomeView: View {
                                 }.padding().edgesIgnoringSafeArea(.bottom)
                             }
                             Spacer()
-                            
+                            if (self.leaveTimesEnabled) {
                             Button  (action: {
                                 self.fromStationSearch = ""
                                 if (self.appData.fromStation.id != "loading") {
@@ -287,7 +288,7 @@ struct HomeView: View {
                                     
                                 }.padding()
                             }
-                            
+                            }
                             Spacer()
                             Button  (action: {
                                 self.fromStationSearch = ""

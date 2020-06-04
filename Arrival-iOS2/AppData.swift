@@ -18,6 +18,7 @@ import FirebasePerformance
 import FirebaseAnalytics
 import FirebaseRemoteConfig
 import FirebaseCrashlytics
+import Disk
 let dateFormate = "hh:mm A"
 let dateFormateDate = "hh:mm A MM/DD/YYYY"
 let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -71,6 +72,9 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var arriveDate = Date()
     @Published var appMessage = ""
     @Published var appLink = ""
+    @Published var currentStationVersion:Int = 0
+    @Published var serverStationVersion:Int = 0
+    
     let appVersion: String = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
     let net = Alamofire.NetworkReachabilityManager(host: "api.arrival.city")
     private let locationManager = CLLocationManager()
@@ -91,6 +95,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     
     private let settings = RemoteConfigSettings()
     private var apiUrl = "https://api.arrival.city"
+   //  private var apiUrl = "http://192.168.1.70:3000"
     
     override init() {
         super.init()
@@ -130,7 +135,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         print("This is run on the main queue, after the previous code in outer block config")
                         print(self.remoteConfig["apiurl"].stringValue, "remote config api value")
                         print(self.remoteConfig["onboarding1Heading"].stringValue, "remote config onboarding1Heading value")
-                        self.apiUrl = self.remoteConfig["apiurl"].stringValue!
+                       self.apiUrl = self.remoteConfig["apiurl"].stringValue!
                         self.onboardingMessages["onboarding1Heading"] = JSON(self.remoteConfig["onboarding1Heading"].stringValue!)
                         self.onboardingMessages["onboarding2Heading"] = JSON(self.remoteConfig["onboarding2Heading"].stringValue!)
                         self.onboardingMessages["onboarding3Heading"] = JSON(self.remoteConfig["onboarding3Heading"].stringValue!)
@@ -960,7 +965,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         }
     }
     func getClosestStations() {
-        if (!stations.isEmpty && lat != 0.0 && long != 0.0) {
+        if (!self.stations.isEmpty && lat != 0.0 && long != 0.0) {
             let locChange = lat != lastLat || long != lastLong
             if locChange {
                 lastLong = long
@@ -992,11 +997,11 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             }
             
         } else {
-            print("getting nearest station FAILED due to lack of info")
+            print("getting nearest station FAILED due to lack of info", self.stations.isEmpty)
         }
     }
     func getStationsFromApi() {
-        print("getting stations from api")
+        print("getting stations from api", apiUrl)
         Alamofire.request(apiUrl + "/api/v3/stations")
             .responseJSON{
                 response in print(response)
@@ -1004,7 +1009,10 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     let stationJSON = JSON(response.value)
                     let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "StationModel")
                     let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-                    
+                    var stationsList: [Station] = []
+                    self.stations = []
+                    self.stationsByAbbr = [:]
+                    print("requesting stations v", stationJSON["version"].intValue)
                     for i in 0..<stationJSON["stations"].arrayValue.count {
                         let json = stationJSON["stations"][i]
                         let id = json["_id"].stringValue
@@ -1012,25 +1020,33 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         let abbr = json["abbr"].stringValue
                         let lat = json["gtfs_latitude"].doubleValue
                         let long = json["gtfs_longitude"].doubleValue
-                        let entity = NSEntityDescription.entity(forEntityName: "StationModel", in: context)
-                        let newStation = NSManagedObject(entity: entity!, insertInto: context)
-                        newStation.setValue(name, forKey: "name")
-                        newStation.setValue(id, forKey: "id")
-                        newStation.setValue(abbr, forKey: "abbr")
-                        newStation.setValue(lat, forKey: "lat")
-                        newStation.setValue(long, forKey: "long")
-                        newStation.setValue(stationJSON["version"].intValue, forKey: "version")
-                        do {
-                            try context.save()
-                        } catch {
-                            print("Failed saving")
-                        }
+                        stationsList.append(Station(id: id, name: name, lat: lat, long: long, abbr: abbr, version: stationJSON["version"].intValue))
+                        /* let entity = NSEntityDescription.entity(forEntityName: "StationModel", in: context)
+                         let newStation = NSManagedObject(entity: entity!, insertInto: context)
+                         newStation.setValue(name, forKey: "name")
+                         newStation.setValue(id, forKey: "id")
+                         newStation.setValue(abbr, forKey: "abbr")
+                         newStation.setValue(lat, forKey: "lat")
+                         newStation.setValue(long, forKey: "long")
+                         newStation.setValue(stationJSON["version"].intValue, forKey: "version")
+                         do {
+                         try context.save()
+                         } catch {
+                         print("Failed saving")
+                         } */
                         self.stations.append(Station(id:id, name: name, lat: lat, long: long, abbr: abbr, version: stationJSON["version"].intValue))
                         self.stationsByAbbr[abbr] = Station(id:id, name: name, lat: lat, long: long, abbr: abbr, version: stationJSON["version"].intValue)
                     }
+                    print(stationsList)
+                    do {
+                        try Disk.save(stationsList, to: .applicationSupport, as: "stations.json")
+                        try Disk.save(self.stationsByAbbr, to: .applicationSupport, as: "stationsByAbbr.json")
+                    } catch {
+                        print("error saving data")
+                    }
                     //   print(self.stations)
                     self.fromStationSuggestions = self.stations
-                    print("got stations from server")
+                    print("got stations from server version", self.stations[0].version)
                     self.getClosestStations()
                     
                 } else {
@@ -1040,32 +1056,51 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         }
     }
     func getStations() {
+        
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "StationModel")
         request.returnsObjectsAsFaults = false
         do {
-            let result = try context.fetch(request)
-            var stations: [Station] = []
-            var version: Int = 0
-            for data in result as! [NSObject] {
-                let name = data.value(forKey: "name") as! String
-                let abbr = data.value(forKey: "abbr") as! String
-                let id = data.value(forKey: "id") as! String
-                let lat = data.value(forKey: "lat") as! Double
-                let long = data.value(forKey: "long") as! Double
-                stations.append(Station(id: id,name: name,lat: lat,long: long,abbr: abbr, version: data.value(forKey: "version") as! Int))
-                version = data.value(forKey: "version") as! Int
-                self.stationsByAbbr[abbr] = Station(id: id,name: name,lat: lat,long: long,abbr: abbr, version: data.value(forKey: "version") as! Int)
-            }
-            print(stations, version)
-            if (stations.isEmpty) {
-                print("no coredata stations")
-                getStationsFromApi()
+            let retrievedStationList = try Disk.retrieve("stations.json", from: .applicationSupport, as: [Station].self)
+            let retrievedStationListByABBR = try Disk.retrieve("stationsByAbbr.json", from: .applicationSupport, as: [String: Station].self)
+            if (retrievedStationList.count >= 1 && retrievedStationListByABBR.count >= 1) {
+                print(retrievedStationList, retrievedStationListByABBR, "retrived station list")
+                self.stations = retrievedStationList
+                self.stationsByAbbr = retrievedStationListByABBR
+                self.currentStationVersion = self.stations[0].version
+                    print("got stations", self.stations[0].version, self.serverStationVersion)
+                    self.fromStationSuggestions = self.stations
+                    getClosestStations()
+                self.evaluateStationVersions()
+                
             } else {
-                self.stations = stations
-                self.fromStationSuggestions = self.stations
-                print("got stations from core data")
-                getClosestStations()
+                print("unable to retrive station list")
+                getStationsFromApi()
             }
+            /*
+             let result = try context.fetch(request)
+             var stations: [Station] = []
+             var version: Int = 0
+             for data in result as! [NSObject] {
+             let name = data.value(forKey: "name") as! String
+             let abbr = data.value(forKey: "abbr") as! String
+             let id = data.value(forKey: "id") as! String
+             let lat = data.value(forKey: "lat") as! Double
+             let long = data.value(forKey: "long") as! Double
+             stations.append(Station(id: id,name: name,lat: lat,long: long,abbr: abbr, version: data.value(forKey: "version") as! Int))
+             version = data.value(forKey: "version") as! Int
+             self.stationsByAbbr[abbr] = Station(id: id,name: name,lat: lat,long: long,abbr: abbr, version: data.value(forKey: "version") as! Int)
+             }
+             //print(stations, version)
+             if (stations.isEmpty) {
+             print("no coredata stations")
+             getStationsFromApi()
+             } else {
+             self.stations = stations
+             self.fromStationSuggestions = self.stations
+             print("got stations from core data")
+             getClosestStations()
+             }
+             */
         }
         catch {
             print("failed to get stations from core data")
@@ -1146,6 +1181,20 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             }
         }
     }
+    func evaluateStationVersions() {
+        if (self.currentStationVersion != 0 && self.serverStationVersion != 0) {
+        if (self.currentStationVersion != self.serverStationVersion) {
+            print(" stations no version match", self.currentStationVersion, self.serverStationVersion)
+            getStationsFromApi()
+            getClosestStations()
+        } else {
+            print("stations up to date")
+        }
+        } else {
+            print("request to check station version not fufilled,")
+        }
+        
+    }
     func login() {
         print("logging in")
         let request = NSFetchRequest<NSFetchRequestResult>(entityName: "User")
@@ -1180,6 +1229,15 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                             if (!jsonResponse["net"].isEmpty) {
                                 self.netJSON = jsonResponse["net"].dictionaryObject as! [String: Any?]
                                 //print(self.netJSON, "brain ai json")
+                            }
+                            if (jsonResponse["stationVersion"].intValue != nil) {
+                                print("set server stations version", jsonResponse["stationVersion"].intValue)
+                                self.serverStationVersion = jsonResponse["stationVersion"].intValue
+                                self.evaluateStationVersions()
+                                
+                                
+                            } else {
+                                print("no server stations version data", jsonResponse["stationVersion"].stringValue)
                             }
                             if let reviewCardLastShown = nsResult[0].value(forKey: "reviewCardLastShown") {
                                 self.lastShownReviewCard = reviewCardLastShown as! String
