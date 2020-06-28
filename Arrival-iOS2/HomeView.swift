@@ -19,7 +19,7 @@ struct HomeView: View {
     @State var locationTimeout = false
     @State var timeModalDisplayed = false
     @EnvironmentObject private var appData: AppData
-    private var leaveTimesEnabled = false
+    private var leaveTimesEnabled = true
     var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
@@ -169,7 +169,7 @@ struct HomeView: View {
                             Button  (action: {
                                 self.fromStationSearch = ""
                                 if (self.appData.fromStation.id != "loading") {
-                                    self.timeModalDisplayed = true
+                                    self.appData.timeModalDisplayed = true
                                 }
                                 
                             }) {
@@ -198,8 +198,11 @@ struct HomeView: View {
                                     }
                                     
                                 }.multilineTextAlignment(.center).frame(width: geometry.size.width / 4)
-                            }.frame(width: geometry.size.width / 4).sheet(isPresented: self.$timeModalDisplayed) {
+                            }.frame(width: geometry.size.width / 4).sheet(isPresented: self.$appData.timeModalDisplayed) {
+                                   GeometryReader { geo in
                                 VStack(alignment: .leading) {
+                                 
+
                                     HStack(alignment: .center) {
                                         Text("Choose a time")
                                             .font(.largeTitle)
@@ -209,7 +212,7 @@ struct HomeView: View {
                                             self.appData.loaded = false
                                             self.appData.noTrains = false
                                             self.appData.cylce()
-                                            self.timeModalDisplayed = false
+                                          self.appData.timeModalDisplayed = false
                                         }) {
                                             Text("Close")
                                         }
@@ -229,7 +232,7 @@ struct HomeView: View {
                                             
                                         }
                                     }
-                                    if (self.appData.toStation.name == "none") { // just before release of full time modes
+                                 //   if (self.appData.toStation.name == "none") { // just before release of full time modes
                                         Button(action: {
                                             self.appData.trainLeaveTimeType = .leave
                                         }) {
@@ -243,24 +246,22 @@ struct HomeView: View {
                                                 Spacer()
                                                 
                                             }
-                                        }
+                                      //  }
                                     }
-                                    GeometryReader { geo in
-                                        VStack(alignment: .center, spacing: 0) {
+                                                                            
                                             
                                             DatePicker(selection: self.$appData.leaveDate, in: Date()..., displayedComponents: [.date, .hourAndMinute]) {
                                                 EmptyView()
                                             }.labelsHidden().disabled(self.appData.trainLeaveTimeType != .leave).frame(maxWidth: geo.size.width - 2)
-                                            Spacer()
-                                        }
+                                         
                                         
-                                        
-                                    }
                                     
                                     
-                                    Spacer()
+                                    
+                                    
+                              
                             
-                                    if (self.appData.toStation.name != "none" && false) {
+                                    if (self.appData.toStation.name != "none") {
                                         Button(action: {
                                             self.appData.trainLeaveTimeType = .arrive
                                         }) {
@@ -275,11 +276,12 @@ struct HomeView: View {
                                                 
                                             }
                                         }
-                                        if (self.appData.trainLeaveTimeType == .arrive) {
+                                  
                                             DatePicker(selection: self.$appData.arriveDate, in: Date()..., displayedComponents: [.date, .hourAndMinute]) {
-                                                Text("")
-                                            }.padding(.all,0)
-                                        }
+                                                EmptyView()
+                                            }.labelsHidden().disabled(self.appData.trainLeaveTimeType != .arrive).frame(maxWidth: geo.size.width - 2)
+                                         
+                                        
                                     }
                                     
                                     
@@ -287,6 +289,7 @@ struct HomeView: View {
                                     Spacer()
                                     
                                 }.padding()
+                                }
                             }
                             }
                             Spacer()

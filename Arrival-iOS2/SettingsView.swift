@@ -69,14 +69,20 @@ struct SettingsView: View {
                                 .fontWeight(.bold)
                         }.listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
                         HStack {
-                                                Text("Debug mode")
-                                                Spacer()
-                                                Text(String(self.appData.debug))
-                                                    .fontWeight(.bold)
-                                            }.listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                            Text("Station version")
+                            Spacer()
+                            Text(String(self.appData.currentStationVersion))
+                                .fontWeight(.bold)
+                        }.listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
                     }
                     Spacer()
                     #if DEBUG
+                    HStack {
+                        Text("Debug mode")
+                        Spacer()
+                        Text(String(self.appData.debug))
+                            .fontWeight(.bold)
+                    }.listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
                     HStack {
                         Spacer()
                         Button(action: {

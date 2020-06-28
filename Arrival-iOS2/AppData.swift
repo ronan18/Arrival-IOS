@@ -74,6 +74,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     @Published var appLink = ""
     @Published var currentStationVersion:Int = 0
     @Published var serverStationVersion:Int = 0
+    @Published var timeModalDisplayed: Bool = false
     
     let appVersion: String = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
     let net = Alamofire.NetworkReachabilityManager(host: "api.arrival.city")
@@ -86,20 +87,24 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     private var netJSON: [String: Any?] = [:]
     private var settingsSuscriber: Any?
     private var authSubscriber: Any?
+    private var leaveTimeSubscriber: Any?
     private var prioritizeLineSubscriber: Any?
     private var closestStationsSuscriber: Any?
     private var initialTrainsTrace: Trace?
     private var lastShownReviewCard = ""
     private var daysBetweenReviewAsk = 7
     private var initialTrainsTraceDone: Bool = false
-    
+    private var betaAPI = true
     private let settings = RemoteConfigSettings()
-    private var apiUrl = "https://api.arrival.city"
-   //  private var apiUrl = "http://192.168.1.70:3000"
+    // private var apiUrl =  "https://api.arrival.city"
+    private var apiUrl = "http://192.168.1.70:3000"
     
     override init() {
         super.init()
         print("init function")
+        if (betaAPI) {
+            self.apiUrl = "http://192.168.1.70:3000"
+        }
         settings.minimumFetchInterval = 43200
         
         #if DEBUG
@@ -108,7 +113,10 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         
         remoteConfig.configSettings = settings
         remoteConfig.setDefaults(fromPlist: "RemoteConfigDefaults")
-        self.apiUrl = self.remoteConfig["apiurl"].stringValue!
+        if (!betaAPI) {
+            self.apiUrl = self.remoteConfig["apiurl"].stringValue!
+        }
+        
         self.cycleTimer = Double(self.remoteConfig["cycleTimer"].stringValue!)!
         self.aboutText = self.remoteConfig["aboutText"].stringValue!
         self.realtimeTripNotice = self.remoteConfig["realtimeTripsNotice"].stringValue!
@@ -135,7 +143,10 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                         print("This is run on the main queue, after the previous code in outer block config")
                         print(self.remoteConfig["apiurl"].stringValue, "remote config api value")
                         print(self.remoteConfig["onboarding1Heading"].stringValue, "remote config onboarding1Heading value")
-                       self.apiUrl = self.remoteConfig["apiurl"].stringValue!
+                        if (!self.betaAPI) {
+                            self.apiUrl = self.remoteConfig["apiurl"].stringValue!
+                        }
+                        
                         self.onboardingMessages["onboarding1Heading"] = JSON(self.remoteConfig["onboarding1Heading"].stringValue!)
                         self.onboardingMessages["onboarding2Heading"] = JSON(self.remoteConfig["onboarding2Heading"].stringValue!)
                         self.onboardingMessages["onboarding3Heading"] = JSON(self.remoteConfig["onboarding3Heading"].stringValue!)
@@ -539,7 +550,10 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
         self.toStation = station
         self.cylce()
         if (station.name != "none") {
-            self.trainLeaveTimeType = .now //just for before release of full time modes
+            // self.trainLeaveTimeType = .now //just for before release of full time modes
+            if (self.trainLeaveTimeType == .arrive) {
+                self.trainLeaveTimeType = .now
+            }
             let day = Calendar.current.component(.weekday, from: Date())
             let hour = Calendar.current.component(.hour, from: Date())
             
@@ -723,8 +737,27 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     "Authorization": self.passphrase,
                     "Accept": "application/json"
                 ]
-                print(apiUrl + "/api/v3/routes/" + self.fromStation.abbr + "/" + self.toStation.abbr)
-                Alamofire.request(apiUrl + "/api/v3/routes/" + self.fromStation.abbr + "/" + self.toStation.abbr, headers: headers).responseJSON { response in
+                var requestType = "now"
+                var time = "now"
+                if (cycleLeaveType == .leave) {
+                    requestType = "leave"
+                    let formatter = DateFormatter()
+                    formatter.timeZone = TimeZone(identifier: "PST")
+                    formatter.dateFormat = "dd-MM-yyyy hh:mm a"
+                    time = formatter.string(from: self.leaveDate) ?? "unknown"
+                    print(self.leaveDate, "leave date", time)
+                }
+                if (cycleLeaveType == .arrive) {
+                    requestType = "arrive"
+                    let formatter = DateFormatter()
+                    formatter.timeZone = TimeZone(identifier: "PST")
+                    formatter.dateFormat = "dd-MM-yyyy hh:mm a"
+                    time = formatter.string(from: self.arriveDate) ?? "unknown"
+                    print(self.arriveDate, "leave date", time)
+                }
+                print("v4 route", time, requestType)
+                print(apiUrl + "/api/v4/routes/" + self.fromStation.abbr + "/" + self.toStation.abbr)
+                Alamofire.request(apiUrl + "/api/v4/routes/" + self.fromStation.abbr + "/" + self.toStation.abbr, method: .post, parameters: ["type": requestType, "time": time], headers: headers).responseJSON { response in
                     
                     
                     let estimates = JSON(JSON(response.value)["trips"].arrayValue)
@@ -818,18 +851,27 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                             let originTime = moment(thisTrain["@origTimeMin"].stringValue + " " + originDate, dateFormateDate)
                             let now = moment()
                             let difference = originTime.diff(now, "minutes").intValue
-                            results.append(Train(id: UUID(), direction: direction, time: etd, unit: "", color: "none", cars: 0, hex: "0", eta: eta))
-                            trips.append(TripInfo(origin: self.fromStation.abbr, destination: direction, legs: legs, originTime: thisTrain["@origTimeMin"].stringValue, originDate: originDate, destinatonTime: thisTrain["@destTimeMin"].stringValue, destinatonDate: destDate, tripTIme: thisTrain["@tripTime"].doubleValue, leavesIn: difference, tripId: thisTrain["tripId"].stringValue))
+                            print("route v4", originTime, etd, difference)
+                            if (difference >= 0) {
+                                results.append(Train(id: UUID(), direction: direction, time: etd, unit: "", color: "none", cars: 0, hex: "0", eta: eta))
+                                trips.append(TripInfo(origin: self.fromStation.abbr, destination: direction, legs: legs, originTime: thisTrain["@origTimeMin"].stringValue, originDate: originDate, destinatonTime: thisTrain["@destTimeMin"].stringValue, destinatonDate: destDate, tripTIme: thisTrain["@tripTime"].doubleValue, leavesIn: difference, tripId: thisTrain["tripId"].stringValue))
+                            }
+                            
                         }
                         
                         results.sort {
                             $0.time < $1.time
                         }
+                        if (results.count >= 1) {
+                            self.noTrains = false
+                            self.trains = results
+                            self.trips = trips
+                            self.loaded = true
+                        } else {
+                            self.loaded = true
+                            self.noTrains = true
+                        }
                         
-                        self.noTrains = false
-                        self.trains = results
-                        self.trips = trips
-                        self.loaded = true
                         
                     } else {
                         self.loaded = true
@@ -863,6 +905,13 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
             } else {
                 self.fromStationSuggestions = value
             }
+        }
+        leaveTimeSubscriber = $timeModalDisplayed.sink {value in
+            if (value == false) {
+                self.loaded = false
+                self.cylce()
+            }
+        
         }
         authSubscriber = $passphrase.sink {value in
             print(value, "auth subscriber")
@@ -1046,6 +1095,7 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                     }
                     //   print(self.stations)
                     self.fromStationSuggestions = self.stations
+                    self.currentStationVersion = self.stations[0].version
                     print("got stations from server version", self.stations[0].version)
                     self.getClosestStations()
                     
@@ -1067,9 +1117,9 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
                 self.stations = retrievedStationList
                 self.stationsByAbbr = retrievedStationListByABBR
                 self.currentStationVersion = self.stations[0].version
-                    print("got stations", self.stations[0].version, self.serverStationVersion)
-                    self.fromStationSuggestions = self.stations
-                    getClosestStations()
+                print("got stations", self.stations[0].version, self.serverStationVersion)
+                self.fromStationSuggestions = self.stations
+                getClosestStations()
                 self.evaluateStationVersions()
                 
             } else {
@@ -1183,13 +1233,13 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     }
     func evaluateStationVersions() {
         if (self.currentStationVersion != 0 && self.serverStationVersion != 0) {
-        if (self.currentStationVersion != self.serverStationVersion) {
-            print(" stations no version match", self.currentStationVersion, self.serverStationVersion)
-            getStationsFromApi()
-            getClosestStations()
-        } else {
-            print("stations up to date")
-        }
+            if (self.currentStationVersion != self.serverStationVersion) {
+                print(" stations no version match", self.currentStationVersion, self.serverStationVersion)
+                getStationsFromApi()
+                getClosestStations()
+            } else {
+                print("stations up to date")
+            }
         } else {
             print("request to check station version not fufilled,")
         }

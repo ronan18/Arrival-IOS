@@ -24,3 +24,25 @@ func stationDisplay(_ station: String) -> String {
         return station
     }
 }
+func tripLeaveTimeDisplay(_ trip: TripInfo) -> String {
+    
+    if (trip.leavesIn > 60 || trip.leavesIn < 0) {
+        print("leave in more than 60")
+        return timeDisplay(time: trip.originTime)
+    } else {
+        print("leave in less than 60")
+        return String(trip.leavesIn)
+    }
+    
+}
+func tripLeaveUnitDisplay(_ trip: TripInfo) -> String {
+    
+    if (trip.leavesIn > 60 || trip.leavesIn < 0) {
+        
+        return ""
+    } else {
+        
+        return "min"
+    }
+    
+}

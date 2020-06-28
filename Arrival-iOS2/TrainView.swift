@@ -60,7 +60,7 @@ struct TrainView: View {
                                         "fromStation": self.appData.fromStation.abbr as NSObject
                                     ])
                                 }) {
-                                    TrainComponent(type: "train",  name: trip.destination, departs: String(trip.leavesIn), unit: "min", color: self.appData.convertColor(color: trip.legs[0].color), eta: trip.destinatonTime).foregroundColor(Color("Text")).listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                                    TrainComponent(type: "train",  name: trip.destination, departs: String(tripLeaveTimeDisplay(trip)), unit: tripLeaveUnitDisplay(trip), color: self.appData.convertColor(color: trip.legs[0].color), eta: trip.destinatonTime).foregroundColor(Color("Text")).listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                                 }
                                 
                                 
@@ -112,19 +112,19 @@ struct TrainView: View {
                             ForEach(self.appData.northTrains) { train in
                                 TrainComponent(type: "train",  name: train.direction, cars: train.cars, departs: train.time,unit: train.unit, color: self.appData.convertColor(color: train.color), eta: train.eta).padding(.horizontal)
                             }.animation(.none)
-                              if (self.appData.trainLeaveTimeType == .leave) {
-                            Text(self.appData.leaveTrainRealtimeNotice).font(.caption)
-                                .foregroundColor(Color.gray)
-                                .multilineTextAlignment(.center).padding().animation(.none)
+                            if (self.appData.trainLeaveTimeType == .leave) {
+                                Text(self.appData.leaveTrainRealtimeNotice).font(.caption)
+                                    .foregroundColor(Color.gray)
+                                    .multilineTextAlignment(.center).padding().animation(.none)
                             }
                         } else {
                             ForEach(self.appData.southTrains) { train in
                                 TrainComponent(type: "train",  name: train.direction, cars: train.cars, departs: train.time,unit: train.unit, color: self.appData.convertColor(color: train.color), eta: train.eta).padding(.horizontal)
                             }.animation(.none)
-                              if (self.appData.trainLeaveTimeType == .leave) {
-                            Text(self.appData.leaveTrainRealtimeNotice).font(.caption)
-                                .foregroundColor(Color.gray)
-                                .multilineTextAlignment(.center).padding().animation(.none)
+                            if (self.appData.trainLeaveTimeType == .leave) {
+                                Text(self.appData.leaveTrainRealtimeNotice).font(.caption)
+                                    .foregroundColor(Color.gray)
+                                    .multilineTextAlignment(.center).padding().animation(.none)
                             }
                         }
                     }.transition(.trainCardTransition).animation(.spring())
