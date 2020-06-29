@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		340D38CB245A1DBF00EDE8DD /* Arrival_iOS2.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = C58F248523CC1438003882F3 /* Arrival_iOS2.xcdatamodeld */; };
+		3448B99324A970D100C3FE57 /* DestinationButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3448B99224A970D100C3FE57 /* DestinationButtons.swift */; };
 		3454082D245B358700896639 /* CSwiftV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3454082C245B358600896639 /* CSwiftV.swift */; };
 		3454082F245B35A300896639 /* RouteParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3454082E245B35A300896639 /* RouteParser.swift */; };
 		34AF24A823DFD00400E66C34 /* Train.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34AF24A723DFD00400E66C34 /* Train.swift */; };
@@ -51,6 +52,8 @@
 
 /* Begin PBXFileReference section */
 		20996F4BAC6EA7274AE358BE /* Pods-Arrival-iOS2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Arrival-iOS2.debug.xcconfig"; path = "Target Support Files/Pods-Arrival-iOS2/Pods-Arrival-iOS2.debug.xcconfig"; sourceTree = "<group>"; };
+		3448B99224A970D100C3FE57 /* DestinationButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationButtons.swift; sourceTree = "<group>"; };
+		3448B99424A9A08500C3FE57 /* SwiftyJSON.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SwiftyJSON.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3454082C245B358600896639 /* CSwiftV.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CSwiftV.swift; sourceTree = "<group>"; };
 		3454082E245B35A300896639 /* RouteParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteParser.swift; sourceTree = "<group>"; };
 		34AF24A723DFD00400E66C34 /* Train.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Train.swift; sourceTree = "<group>"; };
@@ -122,6 +125,7 @@
 		5F87BF5CF39897D1DAF61776 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3448B99424A9A08500C3FE57 /* SwiftyJSON.framework */,
 				E8CB2BA01336A022C6C172CC /* Pods_Arrival_iOS2.framework */,
 			);
 			name = Frameworks;
@@ -181,6 +185,7 @@
 				C58F24A623CC14D1003882F3 /* TrainView.swift */,
 				34EF38AE23CC23D4000DE4AF /* Colors.swift */,
 				34EF38B023CC2692000DE4AF /* HomeView.swift */,
+				3448B99224A970D100C3FE57 /* DestinationButtons.swift */,
 				34CD87F623EA8A24004F8024 /* SettingsView.swift */,
 				34EF38B223CC2AC1000DE4AF /* StationChooserView.swift */,
 				C55BC25B23EE7FCB008E12AB /* GoogleService-Info.plist */,
@@ -354,6 +359,7 @@
 				C58F24A723CC14D1003882F3 /* TrainView.swift in Sources */,
 				34EF38B123CC2692000DE4AF /* HomeView.swift in Sources */,
 				34AF24A823DFD00400E66C34 /* Train.swift in Sources */,
+				3448B99324A970D100C3FE57 /* DestinationButtons.swift in Sources */,
 				34EF38AF23CC23D4000DE4AF /* Colors.swift in Sources */,
 				34EF38B323CC2AC1000DE4AF /* StationChooserView.swift in Sources */,
 				C568C40423D95FA000AB9E67 /* LoadingView.swift in Sources */,
@@ -519,6 +525,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Arrival-iOS2/Arrival.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Arrival-iOS2/Preview Content\"";
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
@@ -528,7 +535,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.39;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival;
 				PRODUCT_NAME = Arrival;
 				SWIFT_VERSION = 5.0;
@@ -543,6 +550,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Arrival-iOS2/Arrival.entitlements";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"Arrival-iOS2/Preview Content\"";
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				ENABLE_PREVIEWS = YES;
@@ -551,7 +559,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.39;
+				MARKETING_VERSION = 2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival;
 				PRODUCT_NAME = Arrival;
 				SWIFT_VERSION = 5.0;

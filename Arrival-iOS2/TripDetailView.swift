@@ -73,7 +73,7 @@ struct TripDetailView: View {
                 }
             }.padding([.top, .bottom])
             Divider()
-            List {
+            ScrollView {
                 
                 
                 ForEach(self.tripToShow.legs) {leg in
@@ -93,7 +93,7 @@ struct TripDetailView: View {
                         if (leg.order == self.tripToShow.legs.count) {
                             TripWaitTimeView(type: "arrive", time: timeDisplay(time:self.tripToShow.destinatonTime))
                         }
-                    }.listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                    }.listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0)).padding(.top, 1)
                 }
                 
             }

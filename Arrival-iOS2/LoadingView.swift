@@ -10,7 +10,7 @@ import SwiftUI
 
 struct LoadingView: View {
     var body: some View {
-        VStack {
+        VStack(alignment:.center) {
             Spacer()
              Image("arrivalLogo").resizable().frame(width: 200.0, height: 200.0).edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
             Spacer()

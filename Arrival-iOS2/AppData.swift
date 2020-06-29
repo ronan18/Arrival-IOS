@@ -94,10 +94,10 @@ class AppData: NSObject, ObservableObject,CLLocationManagerDelegate {
     private var lastShownReviewCard = ""
     private var daysBetweenReviewAsk = 7
     private var initialTrainsTraceDone: Bool = false
-    private var betaAPI = true
+    private var betaAPI = false
     private let settings = RemoteConfigSettings()
-    // private var apiUrl =  "https://api.arrival.city"
-    private var apiUrl = "http://192.168.1.70:3000"
+     private var apiUrl =  "https://api.arrival.city"
+  //  private var apiUrl = "http://192.168.1.70:3000"
     
     override init() {
         super.init()

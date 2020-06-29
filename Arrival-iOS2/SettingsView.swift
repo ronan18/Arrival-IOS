@@ -11,9 +11,17 @@ import FirebaseAnalytics
 import FirebaseCrashlytics
 struct SettingsView: View {
     @EnvironmentObject private var appData: AppData
+    var navSpace: CGFloat = 100
     init() {
         // To remove all separators including the actual ones:
-        
+        UITableView.appearance().separatorStyle = .none
+        if #available(iOS 14.0, *) {
+            // modern code
+            navSpace = 100
+        } else {
+            // Fallback on earlier versions
+            navSpace = 60
+        }
     }
     var body: some View {
         GeometryReader { geometry in
@@ -37,7 +45,7 @@ struct SettingsView: View {
                             
                         }
                     }
-                }.padding().frame(height: geometry.safeAreaInsets.top + 60).background(Color("arrivalBlue"))
+                }.padding().frame(height: geometry.safeAreaInsets.top + self.navSpace).background(Color("arrivalBlue"))
                 if (!self.appData.network) {
                     HStack {
                         Spacer()
@@ -49,31 +57,31 @@ struct SettingsView: View {
                     }.background(Color.red)
                 }
                 VStack {
-                    List {
+                    VStack {
                         HStack {
                             Text("Account ID")
                             Spacer()
                             Text(self.appData.passphrase)
                                 .fontWeight(.bold).foregroundColor(Color("arrivalBlue"))
-                        }.listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                        }.listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0)).padding(.vertical, 4)
                         HStack {
                             
                             Toggle(isOn: self.$appData.sortTrainsByTime) {
                                 Text("Sort trains by time")
                             }.padding(.trailing, 1.2)
-                        }.listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                        }.listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0)).padding(.vertical, 4)
                         HStack {
                             Text("App version")
                             Spacer()
                             Text(self.appData.appVersion)
                                 .fontWeight(.bold)
-                        }.listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                        }.listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0)).padding(.vertical, 4)
                         HStack {
                             Text("Station version")
                             Spacer()
                             Text(String(self.appData.currentStationVersion))
                                 .fontWeight(.bold)
-                        }.listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+                        }.listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0)).padding(.vertical, 4)
                     }
                     Spacer()
                     #if DEBUG
