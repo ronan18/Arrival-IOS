@@ -20,13 +20,13 @@ struct ContentView: View {
         }.onAppear() {
             let api = ApiService()
             print("pre stations")
-            DispatchQueue.global(qos: .utility).async {
+            var stations: [Station]
+           api.getStations(handleComplete: { stationList in
+                print(stationList)
 
-            let stations =  api.getStations()
-                DispatchQueue.main.async {
-                      print("post stations", stations)
-                }
-            }
+            })
+               
+      
           print("post stations not in async")
            /* api.login(key: "test", handleComplete: {
                 api.getTrainsFrom(from: "ROCK", type: "now", time: "now")

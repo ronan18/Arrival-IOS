@@ -15,30 +15,29 @@ class ApiService {
     
     var auth: String?
     let apiUrl = "https://api.arrival.city"
-    func  getStations() -> [Station] {
+    func  getStations(handleComplete: @escaping (([Station])->())) {
         print("get stations")
         var result:JSON = []
-        let semaphore = DispatchSemaphore(value: 0)
+       
         AF.request("\(apiUrl)/api/v3/stations").responseJSON { response in
             switch response.result {
             case .success(let value):
                 result = JSON(value)
                // print(result)
-                semaphore.signal()
+                var stations: [Station] = []
+                     result["stations"].arrayValue.forEach { station in
+                         stations.append(Station(id: station["_id"].stringValue, name: station["name"].stringValue, abbr: station["abbr"].stringValue, lat: station["gtfs_latitude"].doubleValue, long: station["gtfs_longitude"].doubleValue))
+                     }
+                
+                handleComplete(stations)
             case .failure(let error):
                 print(error)
             }
             
         }
         
-        _ = semaphore.wait(wallTimeout: .distantFuture)
-        print("done with stations")
-       
-        var stations: [Station] = []
-        result["stations"].arrayValue.forEach { station in
-            stations.append(Station(id: station["_id"].stringValue, name: station["name"].stringValue, abbr: station["abbr"].stringValue, lat: station["gtfs_latitude"].doubleValue, long: station["gtfs_longitude"].doubleValue))
-        }
-        return stations
+      
+     
         
         
     }
