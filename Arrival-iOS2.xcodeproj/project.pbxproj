@@ -10,6 +10,9 @@
 		340D38CB245A1DBF00EDE8DD /* Arrival_iOS2.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = C58F248523CC1438003882F3 /* Arrival_iOS2.xcdatamodeld */; };
 		340D9E1325035671008878E4 /* Station Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 340D9E1225035671008878E4 /* Station Model.swift */; };
 		34ACF58C2502A40100D56C0C /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34ACF58B2502A40100D56C0C /* ApiService.swift */; };
+		34DB0D072504015000BF8401 /* TrainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DB0D062504015000BF8401 /* TrainModel.swift */; };
+		34DB0D0A25041E6800BF8401 /* TripModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DB0D0925041E6800BF8401 /* TripModel.swift */; };
+		34DB0D0C2504282000BF8401 /* TimeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DB0D0B2504282000BF8401 /* TimeUtils.swift */; };
 		7F3FB46EE0C79BCEF246DB71 /* Pods_Arrival_iOS2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABD505B1C9543A96072A696 /* Pods_Arrival_iOS2.framework */; };
 		C55BC25C23EE7FCC008E12AB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C55BC25B23EE7FCB008E12AB /* GoogleService-Info.plist */; };
 		C58F248223CC1438003882F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58F248123CC1438003882F3 /* AppDelegate.swift */; };
@@ -26,6 +29,9 @@
 		340D9E1225035671008878E4 /* Station Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Station Model.swift"; sourceTree = "<group>"; };
 		34ACF58B2502A40100D56C0C /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
 		34ACF58D2502E3B100D56C0C /* ArrivalAPITests.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = ArrivalAPITests.playground; path = ../ArrivalAPITests.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		34DB0D062504015000BF8401 /* TrainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainModel.swift; sourceTree = "<group>"; };
+		34DB0D0925041E6800BF8401 /* TripModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripModel.swift; sourceTree = "<group>"; };
+		34DB0D0B2504282000BF8401 /* TimeUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeUtils.swift; sourceTree = "<group>"; };
 		C55BC25B23EE7FCB008E12AB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C5751DA523F702F70071F224 /* Arrival.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Arrival.entitlements; sourceTree = "<group>"; };
 		C58F247E23CC1438003882F3 /* Arrival.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Arrival.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -57,9 +63,20 @@
 			children = (
 				34ACF58D2502E3B100D56C0C /* ArrivalAPITests.playground */,
 				34ACF58B2502A40100D56C0C /* ApiService.swift */,
-				340D9E1225035671008878E4 /* Station Model.swift */,
+				34DB0D082504082900BF8401 /* Models */,
+				34DB0D0B2504282000BF8401 /* TimeUtils.swift */,
 			);
 			path = ArrivalCore;
+			sourceTree = "<group>";
+		};
+		34DB0D082504082900BF8401 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				340D9E1225035671008878E4 /* Station Model.swift */,
+				34DB0D062504015000BF8401 /* TrainModel.swift */,
+				34DB0D0925041E6800BF8401 /* TripModel.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		464C45EFAF3300C507CA1634 /* Frameworks */ = {
@@ -242,6 +259,9 @@
 			files = (
 				C58F248223CC1438003882F3 /* AppDelegate.swift in Sources */,
 				C58F248923CC1438003882F3 /* ContentView.swift in Sources */,
+				34DB0D0C2504282000BF8401 /* TimeUtils.swift in Sources */,
+				34DB0D072504015000BF8401 /* TrainModel.swift in Sources */,
+				34DB0D0A25041E6800BF8401 /* TripModel.swift in Sources */,
 				340D9E1325035671008878E4 /* Station Model.swift in Sources */,
 				34ACF58C2502A40100D56C0C /* ApiService.swift in Sources */,
 				C58F248423CC1438003882F3 /* SceneDelegate.swift in Sources */,

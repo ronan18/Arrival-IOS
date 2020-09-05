@@ -12,7 +12,7 @@ struct Station: Identifiable {
     let id: String
     let name: String
     let abbr: String
-    let lat: Double
-    let long: Double
+    var lat: Double? = nil
+    var long: Double? = nil
     
 }

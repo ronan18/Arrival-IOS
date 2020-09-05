@@ -19,18 +19,31 @@ struct ContentView: View {
             
         }.onAppear() {
             let api = ApiService()
-            print("pre stations")
-            var stations: [Station]
+           // print("pre stations")
+            var stations: [Station] = []
            api.getStations(handleComplete: { stationList in
-                print(stationList)
+           //     print(stationList)
+            stations = stationList
 
             })
                
       
-          print("post stations not in async")
-           /* api.login(key: "test", handleComplete: {
-                api.getTrainsFrom(from: "ROCK", type: "now", time: "now")
-            })*/
+         // print("post stations not in async")
+            api.login(key: "test", handleComplete: { authorized in
+                if (authorized) {
+                    print("logged in")
+                    api.getTrainsFrom(from: Station(id: "asd", name: "Rockridge", abbr: "ROCK", lat: 123.2, long: 123.2), type: "now", time: "now", handleComplete: {result in
+                        print("done trains")
+                    })
+                    api.getTrip(byID: "57926122-1284-4ebf-894d-75e1843f0181", handleComplete: { route in
+                        print(route, "route")
+                        
+                    })
+                } else {
+                    print("logged out")
+                }
+               
+            })
             
         }
         
