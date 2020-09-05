@@ -35,10 +35,15 @@ struct ContentView: View {
                     api.getTrainsFrom(from: Station(id: "asd", name: "Rockridge", abbr: "ROCK", lat: 123.2, long: 123.2), type: "now", time: "now", handleComplete: {result in
                         print("done trains")
                     })
-                    api.getTrip(byID: "57926122-1284-4ebf-894d-75e1843f0181", handleComplete: { route in
-                        print(route, "route")
+                    api.getTrip(byID: "9ecf8fdc-1422-48b3-8dd6-efb2a25a59f6", handleComplete: { route in
+                        print("done trip by ID")
                         
                     })
+                    api.getTrips(from: Station(id: "WARM", name: "WARM", abbr: "WARM"), to: Station(id: "BALB", name: "ANTC", abbr: "ANTC"), type: "now", time: "now", handleComplete: {trips in
+                        print("done trips from")
+                    })
+                    
+                    
                 } else {
                     print("logged out")
                 }

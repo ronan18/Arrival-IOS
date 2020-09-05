@@ -66,7 +66,7 @@ class ApiService {
             
         }
     }
-    func getTrainsFrom(from: Station, type: String, time: String, handleComplete: @escaping (([Train])->())) {
+    func getTrainsFrom(from: Station, type: String, time: String, handleComplete: @escaping (([Train]?)->())) {
         if let auth = auth {
             let headers: HTTPHeaders = [
                 "Authorization": auth,
@@ -141,57 +141,98 @@ class ApiService {
             ]
         }
         AF.request("\(apiUrl)/api/v3/trip/\(byID)", headers: headers).responseJSON { response in
-          //  print(response)
+            //  print(response)
             switch response.result {
             case .success(let value):
                 let result = JSON(value)
-              //  print(result)
+                //  print(result)
                 var routes: [Int: Route] = [:]
                 var trip: Trip
                 var legs: [TripLeg] = []
-                for (key, route) in result["routes"] {
-                  //  print(key, route)
-                    var stations: [String] = []
-                    route["config"]["station"].arrayValue.forEach({station in
-                        stations.append(station.stringValue)
+                if (result["trip"]["leg"].arrayValue.count > 0) {
+                    for (key, route) in result["routes"] {
+                        //  print(key, route)
+                        var stations: [String] = []
+                        route["config"]["station"].arrayValue.forEach({station in
+                            stations.append(station.stringValue)
+                        })
+                        routes[route["number"].intValue] = Route(routeNumber: route["number"].intValue, name: route["name"].stringValue, abbr: route["abbr"].stringValue, origin: route["oirgin"].stringValue, destination: route["destination"].stringValue, direction: determineTrainDirection(route["direction"].stringValue), color: determineTrainColor(route["color"].stringValue), stationCount: route["num_stns"].intValue, stations: stations)
+                        
+                    }
+                    
+                    //  print(routes, "routes")
+                    
+                    
+                    result["trip"]["leg"].arrayValue.forEach({leg in
+                        //print(leg)
+                        /*  print(convertBartDate(time: leg["@origTimeMin"].stringValue, date: leg["@origTimeDate"].stringValue))*/
+                        
+                        legs.append(TripLeg(order: leg["@order"].intValue, origin: leg["@origin"].stringValue, destination: leg["@destination"].stringValue, originTime: convertBartDate(time: leg["@origTimeMin"].stringValue, date: leg["@origTimeDate"].stringValue)!, destinationTime: convertBartDate(time: leg["@destTimeMin"].stringValue, date: leg["@destTimeDate"].stringValue)!, route: routes[leg["route"].intValue]!))
+                        
                     })
-                    routes[route["number"].intValue] = Route(routeNumber: route["number"].intValue, name: route["name"].stringValue, abbr: route["abbr"].stringValue, origin: route["oirgin"].stringValue, destination: route["destination"].stringValue, direction: determineTrainDirection(route["direction"].stringValue), color: determineTrainColor(route["color"].stringValue), stationCount: route["num_stns"].intValue, stations: stations)
+                    let originTime = convertBartDate(time: result["trip"]["@origTimeMin"].stringValue, date: result["trip"]["@origTimeDate"].stringValue)!
                     
+                    let destTime = convertBartDate(time: result["trip"]["@destTimeMin"].stringValue, date: result["trip"]["@destTimeDate"].stringValue)!
+                    
+                    let resultTrip = Trip(id: byID, origin: Station(id: result["trip"]["@origin"].stringValue, name: result["trip"]["@origin"].stringValue, abbr: result["trip"]["@origin"].stringValue), destination: Station(id: result["trip"]["@destination"].stringValue, name: result["trip"]["@destination"].stringValue, abbr: result["trip"]["@destination"].stringValue), originTime: originTime , destinationTime: destTime, tripTime: destTime.timeIntervalSince(originTime), legs: legs)
+                    
+                    handleComplete(resultTrip)
+                } else {
+                    handleComplete(nil)
                 }
-                
-          //  print(routes, "routes")
-                
-                
-                result["trip"]["leg"].arrayValue.forEach({leg in
-                    //print(leg)
-                  /*  print(convertBartDate(time: leg["@origTimeMin"].stringValue, date: leg["@origTimeDate"].stringValue))*/
-                    
-                    legs.append(TripLeg(order: leg["@order"].intValue, origin: leg["@origin"].stringValue, destination: leg["@destination"].stringValue, originTime: convertBartDate(time: leg["@origTimeMin"].stringValue, date: leg["@origTimeDate"].stringValue)!, destinationTime: convertBartDate(time: leg["@destTimeMin"].stringValue, date: leg["@destTimeDate"].stringValue)!, route: routes[leg["route"].intValue]!))
-                    
-                })
-                let originTime = convertBartDate(time: result["trip"]["@origTimeMin"].stringValue, date: result["trip"]["@origTimeDate"].stringValue)!
-                
-                let destTime = convertBartDate(time: result["trip"]["@destTimeMin"].stringValue, date: result["trip"]["@destTimeDate"].stringValue)!
-                
-                let resultTrip = Trip(id: byID, origin: Station(id: result["trip"]["@origin"].stringValue, name: result["trip"]["@origin"].stringValue, abbr: result["trip"]["@origin"].stringValue), destination: Station(id: result["trip"]["@destination"].stringValue, name: result["trip"]["@destination"].stringValue, abbr: result["trip"]["@destination"].stringValue), originTime: originTime , destinationTime: destTime, tripTime: destTime.timeIntervalSince(originTime), legs: legs)
-
-                handleComplete(resultTrip)
-                
             case .failure(let error):
                 print(error)
                 handleComplete(nil)
             }
         }
     }
-    func getRoute(from: String, to: String, type: String, time: String, handleComplete: @escaping (()->())) {
+    func getTrips(from: Station, to: Station, type: String, time: String, handleComplete: @escaping (([Trip]?)->())) {
         if let auth = auth {
             let headers: HTTPHeaders = [
                 "Authorization": auth,
                 "Accept": "application/json"
             ]
-            AF.request("\(apiUrl)/api/v4/routes/\(from)/\(to)", method: .post, parameters: ["type": type, "time": time], headers: headers).responseJSON{ response in
-                print(response)
-                handleComplete()
+            AF.request("\(apiUrl)/api/v4/routes/\(from.abbr)/\(to.abbr)", method: .post, parameters: ["type": type, "time": time], headers: headers).responseJSON{ response in
+                switch response.result {
+                case .success(let value):
+                    let result = JSON(value)
+                    let tripsJSON = result["trips"]
+                    if (tripsJSON.arrayValue.count > 0) {
+                        var resultTrips: [Trip] = []
+                        var routes: [Int: Route] = [:]
+                        for (key, route) in result["routes"] {
+                            //  print(key, route)
+                            var stations: [String] = []
+                            route["config"]["station"].arrayValue.forEach({station in
+                                stations.append(station.stringValue)
+                            })
+                            routes[route["number"].intValue] = Route(routeNumber: route["number"].intValue, name: route["name"].stringValue, abbr: route["abbr"].stringValue, origin: route["oirgin"].stringValue, destination: route["destination"].stringValue, direction: determineTrainDirection(route["direction"].stringValue), color: determineTrainColor(route["color"].stringValue), stationCount: route["num_stns"].intValue, stations: stations)
+                            
+                        }
+                        tripsJSON.arrayValue.forEach({trip in
+                            var legs: [TripLeg] = []
+                            trip["leg"].arrayValue.forEach({leg in
+                                //print(leg)
+                                /*  print(convertBartDate(time: leg["@origTimeMin"].stringValue, date: leg["@origTimeDate"].stringValue))*/
+                                
+                                legs.append(TripLeg(order: leg["@order"].intValue, origin: leg["@origin"].stringValue, destination: leg["@destination"].stringValue, originTime: convertBartDate(time: leg["@origTimeMin"].stringValue, date: leg["@origTimeDate"].stringValue)!, destinationTime: convertBartDate(time: leg["@destTimeMin"].stringValue, date: leg["@destTimeDate"].stringValue)!, route: routes[leg["route"].intValue]!))
+                                
+                            })
+                            let originTime = convertBartDate(time: trip["@origTimeMin"].stringValue, date: trip["@origTimeDate"].stringValue)!
+                            
+                            let destTime = convertBartDate(time: trip["@destTimeMin"].stringValue, date: trip["@destTimeDate"].stringValue)!
+                            
+                            let resultTrip = Trip(id: trip["tripId"].stringValue, origin: Station(id: trip["@origin"].stringValue, name: trip["@origin"].stringValue, abbr: trip["@origin"].stringValue), destination: Station(id: trip["@destination"].stringValue, name: trip["@destination"].stringValue, abbr: trip["@destination"].stringValue), originTime: originTime , destinationTime: destTime, tripTime: destTime.timeIntervalSince(originTime), legs: legs)
+                            resultTrips.append(resultTrip)
+                        })
+                        handleComplete(resultTrips)
+                    } else {
+                        handleComplete(nil)
+                    }
+                case .failure(let error):
+                    print(error)
+                    handleComplete(nil)
+                }
             }
         } else {
             print("no auth", auth)

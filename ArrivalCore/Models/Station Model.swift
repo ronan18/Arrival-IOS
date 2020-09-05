@@ -10,8 +10,8 @@ import Foundation
 
 struct Station: Identifiable {
     let id: String
-    let name: String
-    let abbr: String
+    var name: String
+    var abbr: String
     var lat: Double? = nil
     var long: Double? = nil
     
