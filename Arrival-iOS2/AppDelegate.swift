@@ -8,9 +8,7 @@
 
 import UIKit
 import CoreData
-import Firebase
-import FirebaseCrashlytics
-import FirebaseDynamicLinks
+
 import Foundation
 var dynamicLinkOpened = false
 
@@ -22,8 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        DynamicLinks.performDiagnostics(completion: nil)
-        FirebaseApp.configure()
+       // DynamicLinks.performDiagnostics(completion: nil)
+      //  FirebaseApp.configure()
         
         return true
     }

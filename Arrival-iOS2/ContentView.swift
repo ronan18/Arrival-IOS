@@ -8,46 +8,22 @@
 
 import SwiftUI
 import Combine
-import FirebaseCrashlytics
+
 
 struct ContentView: View {
-    @EnvironmentObject private var appData: AppData
     
     var body: some View {
         VStack {
-            
-            if (self.appData.ready) {
-                
-                if (self.appData.auth) {
-                    if (self.appData.screen == "home") {
-                        HomeView().animation(.none)
-                    } else if (self.appData.screen == "settings") {
-                        SettingsView().animation(.none)
-                    }
-                    
-                } else {
-                    if  (self.appData.network) {
-                        
-                        LoginView()
-                    } else {
-                        NoNetworkView()
-                    }
-                }
-                
-                
-            } else {
-                if  (self.appData.network) {
-                    LoadingView()
-                } else {
-                    NoNetworkView()
-                }
-                
-            }
+            Text("welcome")
             
             
-        }.onAppear(){
-            print("main Appeared")
-            self.appData.login()
+        }.onAppear() {
+            let api = ApiService()
+            //  api.getStations()
+            api.login(key: "test", handleComplete: {
+                api.getTrainsFrom(from: "ROCK", type: "now", time: "now")
+            })
+            
         }
         
     }
@@ -55,6 +31,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView().environmentObject(AppData())
+        ContentView()
     }
 }
