@@ -14,5 +14,10 @@ struct Station: Identifiable {
     var abbr: String
     var lat: Double? = nil
     var long: Double? = nil
-    
+}
+
+struct StationStorage {
+    var stations: [Station]
+    var byAbbr: [String: Station]
+    var version: Double
 }

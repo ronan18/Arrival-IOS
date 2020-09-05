@@ -15,8 +15,7 @@ class ApiService {
     
     var auth: String?
     let apiUrl = "https://api.arrival.city"
-    func  getStations(handleComplete: @escaping (([Station])->())) {
-        print("get stations")
+    func  getStations(handleComplete: @escaping ((StationStorage)->())) {
         var result:JSON = []
         
         AF.request("\(apiUrl)/api/v3/stations").responseJSON { response in
@@ -25,11 +24,15 @@ class ApiService {
                 result = JSON(value)
                 // print(result)
                 var stations: [Station] = []
+                var stationsByAbbr: [String: Station] = [:]
                 result["stations"].arrayValue.forEach { station in
                     stations.append(Station(id: station["_id"].stringValue, name: station["name"].stringValue, abbr: station["abbr"].stringValue, lat: station["gtfs_latitude"].doubleValue, long: station["gtfs_longitude"].doubleValue))
                 }
+                stations.forEach( {station in
+                    stationsByAbbr[station.abbr] = station
+                })
                 
-                handleComplete(stations)
+                handleComplete(StationStorage(stations: stations, byAbbr: stationsByAbbr, version: result["version"].doubleValue))
             case .failure(let error):
                 print(error)
             }

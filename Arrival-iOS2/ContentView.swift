@@ -11,18 +11,26 @@ import Combine
 import NotificationCenter
 
 struct ContentView: View {
-    
+    @State var loaded = false
     var body: some View {
         VStack {
-            Text("welcome")
+            if (!loaded) {
+         Loading()
+            } else {
+                VStack(spacing: 0) {
+                    HomeScreen()
+                }
+            }
             
             
         }.onAppear() {
+          //  self.loaded = false
             let api = ApiService()
            // print("pre stations")
-            var stations: [Station] = []
+            var stations: StationStorage?
            api.getStations(handleComplete: { stationList in
-           //     print(stationList)
+             //   print(stationList)
+            print("done stations")
             stations = stationList
 
             })
@@ -41,6 +49,7 @@ struct ContentView: View {
                     })
                     api.getTrips(from: Station(id: "WARM", name: "WARM", abbr: "WARM"), to: Station(id: "BALB", name: "ANTC", abbr: "ANTC"), type: "now", time: "now", handleComplete: {trips in
                         print("done trips from")
+                        self.loaded = true
                     })
                     
                     
