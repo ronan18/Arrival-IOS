@@ -8,7 +8,7 @@
 
 import SwiftUI
 import Combine
-
+import NotificationCenter
 
 struct ContentView: View {
     
@@ -19,10 +19,18 @@ struct ContentView: View {
             
         }.onAppear() {
             let api = ApiService()
-            //  api.getStations()
-            api.login(key: "test", handleComplete: {
+            print("pre stations")
+            DispatchQueue.global(qos: .utility).async {
+
+            let stations =  api.getStations()
+                DispatchQueue.main.async {
+                      print("post stations", stations)
+                }
+            }
+          print("post stations not in async")
+           /* api.login(key: "test", handleComplete: {
                 api.getTrainsFrom(from: "ROCK", type: "now", time: "now")
-            })
+            })*/
             
         }
         

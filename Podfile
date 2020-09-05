@@ -7,6 +7,7 @@ target 'Arrival-iOS2' do
   
   # Pods for Arrival-iOS2
   pod 'Alamofire', '~> 5.2'
+  pod “SwiftyJSON”
 
 end
 

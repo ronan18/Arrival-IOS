@@ -8,22 +8,46 @@
 
 import Foundation
 import Alamofire
-
+import Combine
+import NotificationCenter
+import SwiftyJSON
 class ApiService {
     
     var auth: String?
     let apiUrl = "https://api.arrival.city"
-    func  getStations() {
-        Alamofire.request("\(apiUrl)/api/v3/stations").responseJSON { response in
-            print(response)
+    func  getStations() -> [Station] {
+        print("get stations")
+        var result:JSON = []
+        let semaphore = DispatchSemaphore(value: 0)
+        AF.request("\(apiUrl)/api/v3/stations").responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                result = JSON(value)
+               // print(result)
+                semaphore.signal()
+            case .failure(let error):
+                print(error)
+            }
+            
         }
+        
+        _ = semaphore.wait(wallTimeout: .distantFuture)
+        print("done with stations")
+       
+        var stations: [Station] = []
+        result["stations"].arrayValue.forEach { station in
+            stations.append(Station(id: station["_id"].stringValue, name: station["name"].stringValue, abbr: station["abbr"].stringValue, lat: station["gtfs_latitude"].doubleValue, long: station["gtfs_longitude"].doubleValue))
+        }
+        return stations
+        
+        
     }
     func login(key: String, handleComplete: @escaping (()->())) {
         let headers: HTTPHeaders = [
             "Authorization": key,
             "Accept": "application/json"
         ]
-        Alamofire.request("\(apiUrl)/api/v2/login", headers: headers).responseJSON { response in
+        AF.request("\(apiUrl)/api/v2/login", headers: headers).responseJSON { response in
             print(response)
             self.auth = key
             handleComplete()
@@ -35,7 +59,7 @@ class ApiService {
                 "Authorization": auth,
                 "Accept": "application/json"
             ]
-            Alamofire.request("\(apiUrl)/api/v3/trains/\(from)", method: .post, parameters: ["type": type, "time": time], headers: headers).responseJSON{ response in
+            AF.request("\(apiUrl)/api/v3/trains/\(from)", method: .post, parameters: ["type": type, "time": time], headers: headers).responseJSON{ response in
                 print(response)
             }
         } else {
@@ -48,7 +72,7 @@ class ApiService {
             "Authorization": key,
             "Accept": "application/json"
         ]
-        Alamofire.request("\(apiUrl)/api/v2/createaccount", method: .post, parameters: ["passphrase":key], headers: headers).responseJSON{ response in
+        AF.request("\(apiUrl)/api/v2/createaccount", method: .post, parameters: ["passphrase":key], headers: headers).responseJSON{ response in
             print(response)
             handleComplete()
         }
@@ -66,7 +90,7 @@ class ApiService {
                 "Accept": "application/json"
             ]
         }
-        Alamofire.request("\(apiUrl)/api/v3/trip/tripid", headers: headers).responseJSON { response in
+        AF.request("\(apiUrl)/api/v3/trip/tripid", headers: headers).responseJSON { response in
             print(response)
             
             handleComplete()
@@ -78,7 +102,7 @@ class ApiService {
                 "Authorization": auth,
                 "Accept": "application/json"
             ]
-            Alamofire.request("\(apiUrl)/api/v4/routes/\(from)/\(to)", method: .post, parameters: ["type": type, "time": time], headers: headers).responseJSON{ response in
+            AF.request("\(apiUrl)/api/v4/routes/\(from)/\(to)", method: .post, parameters: ["type": type, "time": time], headers: headers).responseJSON{ response in
                 print(response)
                 handleComplete()
             }

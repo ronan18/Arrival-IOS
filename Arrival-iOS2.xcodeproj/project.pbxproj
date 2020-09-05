@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		340D38CB245A1DBF00EDE8DD /* Arrival_iOS2.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = C58F248523CC1438003882F3 /* Arrival_iOS2.xcdatamodeld */; };
+		340D9E1325035671008878E4 /* Station Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 340D9E1225035671008878E4 /* Station Model.swift */; };
 		34ACF58C2502A40100D56C0C /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34ACF58B2502A40100D56C0C /* ApiService.swift */; };
 		7F3FB46EE0C79BCEF246DB71 /* Pods_Arrival_iOS2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABD505B1C9543A96072A696 /* Pods_Arrival_iOS2.framework */; };
 		C55BC25C23EE7FCC008E12AB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C55BC25B23EE7FCB008E12AB /* GoogleService-Info.plist */; };
@@ -22,6 +23,7 @@
 /* Begin PBXFileReference section */
 		1AD3928D1B7E4397CE310CFF /* Pods-Arrival-iOS2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Arrival-iOS2.debug.xcconfig"; path = "Target Support Files/Pods-Arrival-iOS2/Pods-Arrival-iOS2.debug.xcconfig"; sourceTree = "<group>"; };
 		2A3AD8E966A6229ACB2248A4 /* Pods-Arrival-iOS2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Arrival-iOS2.release.xcconfig"; path = "Target Support Files/Pods-Arrival-iOS2/Pods-Arrival-iOS2.release.xcconfig"; sourceTree = "<group>"; };
+		340D9E1225035671008878E4 /* Station Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Station Model.swift"; sourceTree = "<group>"; };
 		34ACF58B2502A40100D56C0C /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
 		34ACF58D2502E3B100D56C0C /* ArrivalAPITests.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = ArrivalAPITests.playground; path = ../ArrivalAPITests.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		C55BC25B23EE7FCB008E12AB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -55,6 +57,7 @@
 			children = (
 				34ACF58D2502E3B100D56C0C /* ArrivalAPITests.playground */,
 				34ACF58B2502A40100D56C0C /* ApiService.swift */,
+				340D9E1225035671008878E4 /* Station Model.swift */,
 			);
 			path = ArrivalCore;
 			sourceTree = "<group>";
@@ -239,6 +242,7 @@
 			files = (
 				C58F248223CC1438003882F3 /* AppDelegate.swift in Sources */,
 				C58F248923CC1438003882F3 /* ContentView.swift in Sources */,
+				340D9E1325035671008878E4 /* Station Model.swift in Sources */,
 				34ACF58C2502A40100D56C0C /* ApiService.swift in Sources */,
 				C58F248423CC1438003882F3 /* SceneDelegate.swift in Sources */,
 			);
