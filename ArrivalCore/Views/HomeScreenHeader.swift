@@ -10,6 +10,17 @@ import Foundation
 import SwiftUI
 struct HomeScreenHeader: View {
     var geometry: GeometryProxy
+    var navSpace: CGFloat = 60
+    init(geometry: GeometryProxy) {
+        self.geometry = geometry
+        if #available(iOS 14.0, *) {
+                  // modern code
+                  navSpace = 100
+              } else {
+                  // Fallback on earlier versions
+                  navSpace = 60
+              }
+    }
     var body: some View {
         VStack {
             Spacer()
@@ -20,6 +31,6 @@ struct HomeScreenHeader: View {
                     Image(systemName: "gear").font(.headline).foregroundColor(.white).padding(5)
                 }
             }
-        }.edgesIgnoringSafeArea(.top).padding().frame(height: geometry.safeAreaInsets.top + 60).background(LinearGradient(gradient: Gradient(colors: [Color("arrivalBlueBG"),Color("arrivalBlueBG"), Color("arrivalBlueBGDark")]), startPoint: .topLeading, endPoint: .bottomTrailing))
+        }.edgesIgnoringSafeArea(.top).padding().frame(height: geometry.safeAreaInsets.top + navSpace).background(LinearGradient(gradient: Gradient(colors: [Color("arrivalBlueBG"),Color("arrivalBlueBG"), Color("arrivalBlueBGDark")]), startPoint: .topLeading, endPoint: .bottomTrailing))
     }
 }

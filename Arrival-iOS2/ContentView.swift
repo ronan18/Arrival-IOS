@@ -12,6 +12,9 @@ import NotificationCenter
 
 struct ContentView: View {
     @State var loaded = false
+    init() {
+        UITableView.appearance().separatorStyle = .none
+    }
     var body: some View {
         VStack {
             if (!loaded) {
@@ -24,7 +27,7 @@ struct ContentView: View {
             
             
         }.onAppear() {
-           self.loaded = true
+        //   self.loaded = true
             let api = ApiService()
            // print("pre stations")
             var stations: StationStorage?

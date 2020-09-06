@@ -8,7 +8,7 @@
 
 import SwiftUI
 struct HomeScreen: View {
-    @State var stationModalPresented = true
+    @State var stationModalPresented = false
     @State var stationModalType: StationType = .from
     
     init() {

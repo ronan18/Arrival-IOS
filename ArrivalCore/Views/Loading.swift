@@ -12,30 +12,35 @@ struct Loading: View {
     let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
     var body: some View {
         VStack {
-            Spacer()
-                  Spacer()
-            HStack {
+            GeometryReader { geometry in
+                VStack {
+                    Spacer().frame(height: (geometry.size.height / 2)-100)
+               
+                HStack {
+                    Spacer()
+                    Image("Splash Screen").resizable().frame(width: 200, height: 200)
+                    Spacer()
+                }
                 Spacer()
-                Image("Splash Screen").resizable().frame(width: 200, height: 200)
-                Spacer()
-            }
-                  Spacer()
-            Text("Arrival")
-                .font(.headline)
-                .fontWeight(.bold)
+                Text("Arrival")
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .foregroundColor(Color.white)
+                HStack(alignment: .lastTextBaseline, spacing: 0) {
+                    Spacer()
+                    Text("v").font(.system(size: 13))
+                    Text("\(version)")
+                        .font(.footnote)
+                    Spacer()
+                }
+                
+                
                 .foregroundColor(Color.white)
-            HStack(alignment: .lastTextBaseline, spacing: 0) {
+                
                 Spacer()
-                Text("v").font(.system(size: 13))
-                Text("\(version)")
-                       .font(.footnote)
-                Spacer()
+                }
             }
-   
            
-            .foregroundColor(Color.white)
-   
-            Spacer()
         }.background(LinearGradient(gradient: Gradient(colors: [Color("arrivalBlueBG"), Color("arrivalBlueBGDark")]), startPoint: .topLeading, endPoint: .bottomTrailing)).edgesIgnoringSafeArea(.all)
     }
 }
