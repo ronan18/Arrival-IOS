@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3401C40825055E2C0032906E /* TimeOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3401C40725055E2C0032906E /* TimeOptions.swift */; };
 		340D38CB245A1DBF00EDE8DD /* Arrival_iOS2.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = C58F248523CC1438003882F3 /* Arrival_iOS2.xcdatamodeld */; };
 		340D9E1325035671008878E4 /* Station Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 340D9E1225035671008878E4 /* Station Model.swift */; };
 		34ACF58C2502A40100D56C0C /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34ACF58B2502A40100D56C0C /* ApiService.swift */; };
@@ -37,6 +38,7 @@
 /* Begin PBXFileReference section */
 		1AD3928D1B7E4397CE310CFF /* Pods-Arrival-iOS2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Arrival-iOS2.debug.xcconfig"; path = "Target Support Files/Pods-Arrival-iOS2/Pods-Arrival-iOS2.debug.xcconfig"; sourceTree = "<group>"; };
 		2A3AD8E966A6229ACB2248A4 /* Pods-Arrival-iOS2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Arrival-iOS2.release.xcconfig"; path = "Target Support Files/Pods-Arrival-iOS2/Pods-Arrival-iOS2.release.xcconfig"; sourceTree = "<group>"; };
+		3401C40725055E2C0032906E /* TimeOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeOptions.swift; sourceTree = "<group>"; };
 		340D9E1225035671008878E4 /* Station Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Station Model.swift"; sourceTree = "<group>"; };
 		34ACF58B2502A40100D56C0C /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
 		34DB0D062504015000BF8401 /* TrainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainModel.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				34DB0D0F25043BDB00BF8401 /* Loading.swift */,
 				34DB0D132504484C00BF8401 /* HomeScreen.swift */,
 				34DB0D1F2504782100BF8401 /* StationChooser.swift */,
+				3401C40725055E2C0032906E /* TimeOptions.swift */,
 				34DB0D26250483FB00BF8401 /* StationCard.swift */,
 				34DB0D212504796300BF8401 /* SearchBar.swift */,
 				34DB0D1B25045C4500BF8401 /* TrainCard.swift */,
@@ -327,6 +330,7 @@
 				34DB0D142504484C00BF8401 /* HomeScreen.swift in Sources */,
 				34DB0D202504782100BF8401 /* StationChooser.swift in Sources */,
 				340D9E1325035671008878E4 /* Station Model.swift in Sources */,
+				3401C40825055E2C0032906E /* TimeOptions.swift in Sources */,
 				34ACF58C2502A40100D56C0C /* ApiService.swift in Sources */,
 				34DB0D222504796300BF8401 /* SearchBar.swift in Sources */,
 				34DB0D25250480B600BF8401 /* MockupData.swift in Sources */,

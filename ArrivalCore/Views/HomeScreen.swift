@@ -10,6 +10,7 @@ import SwiftUI
 struct HomeScreen: View {
     @State var stationModalPresented = false
     @State var stationModalType: StationType = .from
+    @State var timeModal = false
     
     init() {
         UITableView.appearance().separatorStyle = .none
@@ -19,7 +20,7 @@ struct HomeScreen: View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
                 HomeScreenHeader(geometry: geometry)
-                StationChooserBar(leftAction: {self.stationModalType = .from; self.stationModalPresented = true}, centerAction: {print("center")}, rightAction: {self.stationModalType = .to; self.stationModalPresented = true})
+                StationChooserBar(leftAction: {self.stationModalType = .from;  self.timeModal = false; self.stationModalPresented = true}, centerAction: {self.stationModalPresented = true; self.timeModal = true}, rightAction: {self.stationModalType = .to; self.timeModal = false; self.stationModalPresented = true})
                 AlertView(text: "California is under a mandatory shelter at home order during the Covid-19 pandemic. All non-essential travel should be avoided. BART is operating under a modified schedule and closes at 9pm. Weekday trains run every 30 minutes. Face coverings are required.", link: URL(string:"https://google.com"))
                 Spacer()
                 List {
@@ -27,7 +28,14 @@ struct HomeScreen: View {
                     TrainCard(direction: "Antioch", color: TrainColor.yellow, departs: Date(timeIntervalSinceNow: 500),  arrives: Date(timeIntervalSinceNow: 1800))
                 }
             }.sheet(isPresented: self.$stationModalPresented) {
+                if (self.timeModal) {
+                    TimeOptions(close: {
+                        self.stationModalPresented = false
+                        self.timeModal = false
+                    })
+                } else {
                 StationChooser(stations: mockData.stations, type: self.stationModalType, close: {self.stationModalPresented = false}, choose: {station in print("choose",StationTypeName(self.stationModalType), station.name) ; self.stationModalPresented = false})
+                }
             }
             
         }.edgesIgnoringSafeArea(.top)

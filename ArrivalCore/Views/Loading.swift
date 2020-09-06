@@ -29,7 +29,7 @@ struct Loading: View {
                 HStack(alignment: .lastTextBaseline, spacing: 0) {
                     Spacer()
                     Text("v").font(.system(size: 13))
-                    Text("\(version)")
+                    Text("\(self.version)")
                         .font(.footnote)
                     Spacer()
                 }
