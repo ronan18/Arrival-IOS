@@ -127,19 +127,19 @@ struct TimeOptions: View {
             }.padding()
             if (self.timePickerPopoverPresented) {
                 VStack {
-            
+                    
                     Spacer()
                     HStack {
                         VStack {
                             HStack {
                                 if (self.timePickerType == .leave) {
                                     Text("Choose a departure time")
-                                                                     .font(.headline)
+                                        .font(.headline)
                                 } else {
                                     Text("Choose an arrival time")
-                                                                     .font(.headline)
+                                        .font(.headline)
                                 }
-                             
+                                
                                 Spacer()
                                 Button(action: {
                                     withAnimation {
@@ -153,16 +153,25 @@ struct TimeOptions: View {
                             DatePicker(selection: $selection, in: Date(timeIntervalSinceNow: 300)..., displayedComponents: .hourAndMinute) {
                                 Text("")
                             }
-                            Spacer()
+                            VStack {
+                                StyledButton(action: {
+                                    if (self.timePickerType == .leave) {
+                                        self.options.leaveChoose.action()
+                                    } else {
+                                        self.options.arriveChoose!.action()
+                                    }
+                                }, text: "Choose")
+                            }.padding()
+                            
                         }
-                        }.frame(height: 300).background(Color.white).cornerRadius(10).padding(20)
+                    }.frame(maxHeight: 370).background(Color.white).cornerRadius(10).padding(20)
                     Spacer()
-                    }.background(Color("modalBG")).edgesIgnoringSafeArea(.all).onTapGesture {
+                }.background(Color("modalBG")).edgesIgnoringSafeArea(.all).onTapGesture {
                     withAnimation {
                         self.timePickerPopoverPresented = false
                     }
                 }
-        
+                
             }
         }
     }
