@@ -59,13 +59,13 @@ struct TimeOptions: View {
         case arrive
     }
     @State private var timePickerType: timeType = .leave
-    @State var timePickerPopoverPresented = false
-    
+    @State var timePickerPopoverPresented = true
+    @State private var selection: Date = Date()
     var options: TimeOptionsInput
     var close: (() -> ())
     var body: some View {
         ZStack {
-            VStack(alignment: .leading, spacing: 0) {
+            VStack(alignment: .leading) {
                 HStack() {
                     Text("Time Options")
                         .font(.title)
@@ -75,7 +75,7 @@ struct TimeOptions: View {
                         Text("close")
                     }
                     
-                }.padding([.horizontal, .top])
+                }
                 
                 
                 VStack(alignment: .leading) {
@@ -120,25 +120,49 @@ struct TimeOptions: View {
                                     }
                                 } )
                             }.padding(.vertical)
-                        }.padding(.vertical)
+                        }
                     }
-                }.padding()
+                }
                 Spacer()
-            }
+            }.padding()
             if (self.timePickerPopoverPresented) {
                 VStack {
+            
                     Spacer()
                     HStack {
-                        Spacer()
-                        Text("modal")
-                        Spacer()
-                    }.frame(height: 300).background(Color.white).cornerRadius(10)
+                        VStack {
+                            HStack {
+                                if (self.timePickerType == .leave) {
+                                    Text("Choose a departure time")
+                                                                     .font(.headline)
+                                } else {
+                                    Text("Choose an arrival time")
+                                                                     .font(.headline)
+                                }
+                             
+                                Spacer()
+                                Button(action: {
+                                    withAnimation {
+                                        self.timePickerPopoverPresented = false
+                                    }}) {
+                                        Text("close")
+                                }
+                                
+                            }.padding([.horizontal, .top])
+                            Divider().padding([.horizontal])
+                            DatePicker(selection: $selection, in: Date(timeIntervalSinceNow: 300)..., displayedComponents: .hourAndMinute) {
+                                Text("")
+                            }
+                            Spacer()
+                        }
+                        }.frame(height: 300).background(Color.white).cornerRadius(10).padding(20)
                     Spacer()
-                }.padding().background(Color("modalBG")).onTapGesture {
+                    }.background(Color("modalBG")).edgesIgnoringSafeArea(.all).onTapGesture {
                     withAnimation {
                         self.timePickerPopoverPresented = false
                     }
-                }.edgesIgnoringSafeArea(.all)
+                }
+        
             }
         }
     }
