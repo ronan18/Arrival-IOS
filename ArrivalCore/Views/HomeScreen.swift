@@ -29,7 +29,7 @@ struct HomeScreen: View {
                 }
             }.sheet(isPresented: self.$stationModalPresented) {
                 if (self.timeModal) {
-                    TimeOptions(close: {
+                    TimeOptions(options: sampleTimeOptions, close: {
                         self.stationModalPresented = false
                         self.timeModal = false
                     })

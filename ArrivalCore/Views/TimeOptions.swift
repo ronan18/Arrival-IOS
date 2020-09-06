@@ -8,7 +8,36 @@
 
 import SwiftUI
 
+class TimeOptionInput: Identifiable {
+    let id = UUID()
+    var value: String? = nil
+    var unit: String? = nil
+    let selected: Bool
+    var action: (()->())
+    var type: TimeOptionType
+    init(value: String? = nil, unit: String? = nil, selected: Bool, action: @escaping (() -> ()), type: TimeOptionType) {
+        self.value = value
+        self.unit = unit
+        self.selected = selected
+        self.action = action
+        self.type = type
+    }
+    
+}
+
+
+class TimeOptionsInput {
+    let leave: [TimeOptionInput]
+    let arrive: [TimeOptionInput]?
+    init(leave: [TimeOptionInput], arrive: [TimeOptionInput]?) {
+        self.leave = leave
+        self.arrive = arrive
+    }
+}
+
 struct TimeOptions: View {
+    
+    var options: TimeOptionsInput
     var close: (() -> ())
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
@@ -30,33 +59,33 @@ struct TimeOptions: View {
                     Text("Leave:")
                         .font(.subheadline)
                     HStack {
-                        TimeOption(value: "now", selected: true)
+                        TimeOption(value: self.options.leave[0].value, selected: self.options.leave[0].selected, unit: self.options.leave[0].unit, type:self.options.leave[0].type, action: self.options.leave[0].action )
                         Spacer()
-                        TimeOption(value: "15", selected: false, unit: "min")
+                        TimeOption(value: self.options.leave[1].value, selected: self.options.leave[1].selected, unit: self.options.leave[1].unit, type:self.options.leave[1].type, action: self.options.leave[1].action )
                         Spacer()
-                        TimeOption(selected: false, type:.choose)
+                        TimeOption(value: self.options.leave[2].value, selected: self.options.leave[2].selected, unit: self.options.leave[2].unit, type:self.options.leave[2].type, action: self.options.leave[1].action )
                     }.padding(.vertical)
                 }.padding(.vertical)
-                VStack(alignment: .leading) {
-                    Text("Arrive:")
-                        .font(.subheadline)
-                    HStack {
-                        
-                        
-                        TimeOption(value: "9:00", selected: false, unit: "am")
-                        Spacer()
-                        TimeOption(value: "10:00", selected: false, unit: "am")
-                        Spacer()
-                        TimeOption(value: "12:000", selected: false, unit: "pm")
+                if (self.options.arrive != nil) {
+                    VStack(alignment: .leading) {
+                        Text("Arrive:")
+                            .font(.subheadline)
+                        HStack {
+                            TimeOption(value: self.options.arrive![0].value, selected: self.options.arrive![0].selected, unit: self.options.arrive![0].unit, type:self.options.arrive![0].type, action: self.options.arrive![0].action )
+                            Spacer()
+                            TimeOption(value: self.options.arrive![1].value, selected: self.options.arrive![1].selected, unit: self.options.arrive![1].unit, type:self.options.arrive![1].type, action: self.options.arrive![1].action )
+                            Spacer()
+                            TimeOption(value: self.options.arrive![2].value, selected: self.options.arrive![2].selected, unit: self.options.arrive![2].unit, type:self.options.arrive![2].type, action: self.options.arrive![1].action )
+                        }.padding(.vertical)
+                        HStack {
+                            TimeOption(value: self.options.arrive![3].value, selected: self.options.arrive![3].selected, unit: self.options.arrive![3].unit, type:self.options.arrive![3].type, action: self.options.arrive![3].action )
+                            Spacer()
+                            TimeOption(value: self.options.arrive![4].value, selected: self.options.arrive![4].selected, unit: self.options.arrive![4].unit, type:self.options.arrive![4].type, action: self.options.arrive![4].action )
+                            Spacer()
+                            TimeOption(value: self.options.arrive![5].value, selected: self.options.arrive![5].selected, unit: self.options.arrive![5].unit, type:self.options.arrive![5].type, action: self.options.arrive![5].action )
+                        }.padding(.vertical)
                     }.padding(.vertical)
-                    HStack {
-                        TimeOption(value: "4:00", selected: false, unit: "pm")
-                        Spacer()
-                        TimeOption(value: "6:00", selected: false, unit: "pm")
-                        Spacer()
-                        TimeOption(value: "9:00", selected: true, unit: "pm", type:.choose)
-                    }.padding(.vertical)
-                }.padding(.vertical)
+                }
             }.padding()
             Spacer()
         }
@@ -65,68 +94,9 @@ struct TimeOptions: View {
 
 struct TimeOptions_Previews: PreviewProvider {
     static var previews: some View {
-        TimeOptions(close: {print("close")})
-    }
-}
-
-enum TimeOptionType {
-    case preSet
-    case choose
-}
-
-struct TimeOption: View {
-    let value: String?
-    var selected = false
-    var unit: String? = nil
-    var type: TimeOptionType = .preSet
-    var borderWidth:CGFloat = 3
-    var borderColor: Color
-    init (value: String? = nil, selected: Bool, unit: String? = nil, type: TimeOptionType = .preSet) {
-        self.value = value
-        self.unit = unit
-        self.type = type
-        self.selected = selected
-        switch type {
-        case .choose:
-            borderWidth = 6
-        case .preSet:
-            borderWidth = 4
-        }
-        if (selected) {
-            borderColor = Color("arrivalBlue")
-        } else {
-            borderColor = Color(hex: "#CECECE")
-        }
-    }
-    var body: some View {
-        VStack {
-            if (self.type == .choose) {
-                HStack (alignment: .lastTextBaseline, spacing: 0) {
-                    Text(value ?? "choose")
-                        .font(.headline)
-                    if (unit != nil) {
-                        Text(unit ?? "")
-                            .font(.caption)
-                    }
-                    
-                }
-                if (value != nil) {
-                    Text("Tap to change")
-                        .font(.caption)
-                }
-            } else {
-                HStack (alignment: .lastTextBaseline, spacing: 0) {
-                    Text(value ?? "")
-                        .font(.headline)
-                    if (unit != nil) {
-                        Text(unit ?? "")
-                            .font(.caption)
-                    }
-                    
-                }
-            }
-        }.frame(width: 100, height: 100.0).cornerRadius(10).background(Color("cardBackground")).overlay(
-            RoundedRectangle(cornerRadius: CGFloat(10.0)).stroke(borderColor, lineWidth:borderWidth)
-        ).cornerRadius(10.0).padding(0)
+        
+        TimeOptions(options: sampleTimeOptions, close: {print("close")})
+        
+        
     }
 }
