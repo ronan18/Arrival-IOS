@@ -15,4 +15,6 @@ let leaveSampleOptions = [TimeOptionInput(value: "now", selected: true, action: 
 
 let arriveSampleOptions = [TimeOptionInput(value: "9:00", unit: "am", selected: false, action: {print("now")}, type:TimeOptionType.preSet),  TimeOptionInput(value: "10:00", unit: "am", selected: false, action: {print("now")}, type:TimeOptionType.preSet),  TimeOptionInput(value: "12:00", unit: "pm", selected: false, action: {print("now")}, type:TimeOptionType.preSet),  TimeOptionInput(value: "4:00", unit: "pm", selected: false, action: {print("now")}, type:TimeOptionType.preSet),  TimeOptionInput(value: "6:00", unit: "pm", selected: false, action: {print("now")}, type:TimeOptionType.preSet),  TimeOptionInput(value: "9:00", unit: "am", selected: false, action: {print("now")}, type:TimeOptionType.choose)]
 
-let sampleTimeOptions = TimeOptionsInput(leave: leaveSampleOptions, arrive: arriveSampleOptions)
+let sampleLeaveChoose = ChooseOption(selected: false, action: {print("choose")})
+let sampleArriveChoose = ChooseOption(value: "9:00", unit: "am", selected: false, action: {print("choose")})
+let sampleTimeOptions = TimeOptionsInput(leave: leaveSampleOptions,leaveChoose: sampleLeaveChoose, arrive: arriveSampleOptions, arriveChoose: sampleArriveChoose)
