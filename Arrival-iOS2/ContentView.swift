@@ -24,7 +24,7 @@ struct ContentView: View {
             
             
         }.onAppear() {
-          //  self.loaded = false
+           self.loaded = true
             let api = ApiService()
            // print("pre stations")
             var stations: StationStorage?

@@ -20,7 +20,7 @@ struct StationChooserBar: View {
             Spacer()
             StationChooserButton(title: "arrive", value: "Balboa Park",alignment: .trailing,action: rightAction)
             
-        }.padding().background(Color("darkGrey")).foregroundColor(.white)
+        }.padding().background(Color("blackBG")).foregroundColor(.white)
     }
 }
 struct StationChooserButton: View {

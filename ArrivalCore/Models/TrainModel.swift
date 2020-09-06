@@ -25,19 +25,6 @@ func determineTrainDirection(_ direction: String) -> TrainDirection {
     }
 }
 
-enum TrainColor {
-
-    case red
-    case green
-    case orange
-    case blue
-    case purple
-    case yellow
-    case white
-    case black
-    
-    
-}
 func determineTrainColor(_ color: String) -> TrainColor {
     switch color.lowercased() {
     case "yellow":

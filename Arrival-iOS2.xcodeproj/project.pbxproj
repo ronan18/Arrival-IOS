@@ -15,8 +15,16 @@
 		34DB0D0C2504282000BF8401 /* TimeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DB0D0B2504282000BF8401 /* TimeUtils.swift */; };
 		34DB0D1025043BDB00BF8401 /* Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DB0D0F25043BDB00BF8401 /* Loading.swift */; };
 		34DB0D1225043C0700BF8401 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C58F248A23CC143A003882F3 /* Assets.xcassets */; };
-		34DB0D142504484C00BF8401 /* HomeScreenHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DB0D132504484C00BF8401 /* HomeScreenHeader.swift */; };
+		34DB0D142504484C00BF8401 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DB0D132504484C00BF8401 /* HomeScreen.swift */; };
 		34DB0D1625044A9300BF8401 /* StationChooserBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DB0D1525044A9300BF8401 /* StationChooserBar.swift */; };
+		34DB0D1825044FFC00BF8401 /* HomeScreenHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DB0D1725044FFC00BF8401 /* HomeScreenHeader.swift */; };
+		34DB0D1A2504547B00BF8401 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DB0D192504547B00BF8401 /* AlertView.swift */; };
+		34DB0D1C25045C4500BF8401 /* TrainCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DB0D1B25045C4500BF8401 /* TrainCard.swift */; };
+		34DB0D1E250460DB00BF8401 /* ColorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DB0D1D250460DB00BF8401 /* ColorUtils.swift */; };
+		34DB0D202504782100BF8401 /* StationChooser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DB0D1F2504782100BF8401 /* StationChooser.swift */; };
+		34DB0D222504796300BF8401 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DB0D212504796300BF8401 /* SearchBar.swift */; };
+		34DB0D25250480B600BF8401 /* MockupData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DB0D232504806100BF8401 /* MockupData.swift */; };
+		34DB0D27250483FB00BF8401 /* StationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DB0D26250483FB00BF8401 /* StationCard.swift */; };
 		7F3FB46EE0C79BCEF246DB71 /* Pods_Arrival_iOS2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FABD505B1C9543A96072A696 /* Pods_Arrival_iOS2.framework */; };
 		C55BC25C23EE7FCC008E12AB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C55BC25B23EE7FCB008E12AB /* GoogleService-Info.plist */; };
 		C58F248223CC1438003882F3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58F248123CC1438003882F3 /* AppDelegate.swift */; };
@@ -35,8 +43,16 @@
 		34DB0D0925041E6800BF8401 /* TripModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripModel.swift; sourceTree = "<group>"; };
 		34DB0D0B2504282000BF8401 /* TimeUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeUtils.swift; sourceTree = "<group>"; };
 		34DB0D0F25043BDB00BF8401 /* Loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loading.swift; sourceTree = "<group>"; };
-		34DB0D132504484C00BF8401 /* HomeScreenHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenHeader.swift; sourceTree = "<group>"; };
+		34DB0D132504484C00BF8401 /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		34DB0D1525044A9300BF8401 /* StationChooserBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationChooserBar.swift; sourceTree = "<group>"; };
+		34DB0D1725044FFC00BF8401 /* HomeScreenHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenHeader.swift; sourceTree = "<group>"; };
+		34DB0D192504547B00BF8401 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		34DB0D1B25045C4500BF8401 /* TrainCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainCard.swift; sourceTree = "<group>"; };
+		34DB0D1D250460DB00BF8401 /* ColorUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorUtils.swift; sourceTree = "<group>"; };
+		34DB0D1F2504782100BF8401 /* StationChooser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationChooser.swift; sourceTree = "<group>"; };
+		34DB0D212504796300BF8401 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		34DB0D232504806100BF8401 /* MockupData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockupData.swift; sourceTree = "<group>"; };
+		34DB0D26250483FB00BF8401 /* StationCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationCard.swift; sourceTree = "<group>"; };
 		C55BC25B23EE7FCB008E12AB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C5751DA523F702F70071F224 /* Arrival.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Arrival.entitlements; sourceTree = "<group>"; };
 		C58F247E23CC1438003882F3 /* Arrival.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Arrival.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,6 +82,7 @@
 		34ACF58A2502A3B400D56C0C /* ArrivalCore */ = {
 			isa = PBXGroup;
 			children = (
+				34DB0D232504806100BF8401 /* MockupData.swift */,
 				34DB0D0E250439F500BF8401 /* Utils */,
 				34DB0D0D250439E300BF8401 /* Services */,
 				34DB0D082504082900BF8401 /* Models */,
@@ -96,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				34DB0D0B2504282000BF8401 /* TimeUtils.swift */,
+				34DB0D1D250460DB00BF8401 /* ColorUtils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -104,7 +122,13 @@
 			isa = PBXGroup;
 			children = (
 				34DB0D0F25043BDB00BF8401 /* Loading.swift */,
-				34DB0D132504484C00BF8401 /* HomeScreenHeader.swift */,
+				34DB0D132504484C00BF8401 /* HomeScreen.swift */,
+				34DB0D1F2504782100BF8401 /* StationChooser.swift */,
+				34DB0D26250483FB00BF8401 /* StationCard.swift */,
+				34DB0D212504796300BF8401 /* SearchBar.swift */,
+				34DB0D1B25045C4500BF8401 /* TrainCard.swift */,
+				34DB0D192504547B00BF8401 /* AlertView.swift */,
+				34DB0D1725044FFC00BF8401 /* HomeScreenHeader.swift */,
 				34DB0D1525044A9300BF8401 /* StationChooserBar.swift */,
 			);
 			path = Views;
@@ -291,13 +315,21 @@
 				C58F248223CC1438003882F3 /* AppDelegate.swift in Sources */,
 				34DB0D1025043BDB00BF8401 /* Loading.swift in Sources */,
 				34DB0D1625044A9300BF8401 /* StationChooserBar.swift in Sources */,
+				34DB0D27250483FB00BF8401 /* StationCard.swift in Sources */,
+				34DB0D1825044FFC00BF8401 /* HomeScreenHeader.swift in Sources */,
 				C58F248923CC1438003882F3 /* ContentView.swift in Sources */,
 				34DB0D0C2504282000BF8401 /* TimeUtils.swift in Sources */,
+				34DB0D1E250460DB00BF8401 /* ColorUtils.swift in Sources */,
+				34DB0D1C25045C4500BF8401 /* TrainCard.swift in Sources */,
 				34DB0D072504015000BF8401 /* TrainModel.swift in Sources */,
 				34DB0D0A25041E6800BF8401 /* TripModel.swift in Sources */,
-				34DB0D142504484C00BF8401 /* HomeScreenHeader.swift in Sources */,
+				34DB0D1A2504547B00BF8401 /* AlertView.swift in Sources */,
+				34DB0D142504484C00BF8401 /* HomeScreen.swift in Sources */,
+				34DB0D202504782100BF8401 /* StationChooser.swift in Sources */,
 				340D9E1325035671008878E4 /* Station Model.swift in Sources */,
 				34ACF58C2502A40100D56C0C /* ApiService.swift in Sources */,
+				34DB0D222504796300BF8401 /* SearchBar.swift in Sources */,
+				34DB0D25250480B600BF8401 /* MockupData.swift in Sources */,
 				C58F248423CC1438003882F3 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

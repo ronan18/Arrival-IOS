@@ -8,10 +8,15 @@
 
 import Foundation
 
+struct TimeDisplay {
+    let time: String
+    let a: String
+}
+
 func convertBartDate(time: String, date: String) -> Date? {
-     let dateString = time + " " + date
-  //  print("convert date", dateString)
-   
+    let dateString = time + " " + date
+    //  print("convert date", dateString)
+    
     let dateFormatter = DateFormatter()
     dateFormatter.locale = Locale(identifier: "en_US")
     
@@ -19,6 +24,26 @@ func convertBartDate(time: String, date: String) -> Date? {
     dateFormatter.timeStyle = .medium
     dateFormatter.dateFormat = "HH:mm a MM/dd/yyyy"
     let date = dateFormatter.date(from: dateString)
-   // print("date",dateFormatter.string(from: date!))
+    // print("date",dateFormatter.string(from: date!))
     return date
+}
+
+func displayMinutes(_ date: Date) -> Int {
+    // print(date)
+    let timeFromNow = date.timeIntervalSince(Date())
+    // print(timeFromNow)
+    return Int(round(timeFromNow / 60))
+}
+func displayTime(_ date: Date) -> TimeDisplay {
+    // print(date)
+    let dateFormatter = DateFormatter()
+    dateFormatter.locale = Locale(identifier: "en_US")
+    
+    dateFormatter.timeZone = TimeZone(abbreviation: "PST")
+    dateFormatter.timeStyle = .short
+    dateFormatter.dateStyle = .none
+    let time: String = dateFormatter.string(from: date)
+    
+    return TimeDisplay(time: String(time.dropLast(3)) , a: String(time.suffix(2).lowercased()))
+    
 }
