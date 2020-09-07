@@ -23,18 +23,19 @@ func StationTypeName (_ type: StationType) -> String {
 }
 func runFilter(station: Station, search: String) -> Bool {
     if (search.count >= 1) {
-        return station.abbr.lowercased().contains(search.lowercased())
+    
+        return station.name.lowercased().contains(search.lowercased())
     } else {return true}
 }
 
 struct StationChooser: View {
     var close: (() -> ())
-    var choose:  ((Station) -> ())
+    var choose:  ((Station?) -> ())
     @State var search: String = ""
     let stations: [Station]
     let type: StationType
     @State var filteredStations: [Station] = []
-    init(stations: [Station], type: StationType, close: @escaping (() -> ()), choose: @escaping ((Station) -> ())) {
+    init(stations: [Station], type: StationType, close: @escaping (() -> ()), choose: @escaping ((Station?) -> ())) {
         self.close = close
         self.stations = stations
         self.type = type
@@ -54,19 +55,26 @@ struct StationChooser: View {
                 Button(action: close) {
                     Text("close")
                 }
-                }.padding([.horizontal, .top])
-              
+            }.padding([.horizontal, .top])
+            
             SearchBar(text: $search).padding(.horizontal, 1)
             VStack(alignment: .leading) {
-            Text("suggested")
-                .font(.caption)
-                .multilineTextAlignment(.leading)
+                Text("suggested")
+                    .font(.caption)
+                    .multilineTextAlignment(.leading)
                 Divider()
-                List(stations.filter {runFilter(station: $0, search: self.search)}) {station in
-                    Button(action: {self.choose(station)}) {
-                    StationCard(station: station).padding(.horizontal, -15).listRowInsets(EdgeInsets(top: 0.0, leading: 0.0, bottom: 0.0, trailing: 0.0))
+                ScrollView {
+                    if (self.type == .to && self.search.count < 1) {
+                        Button(action: {self.choose(nil)}) {
+                            StationCard(station: nil)
+                        }.foregroundColor(.black)
                     }
-                }.listRowInsets(EdgeInsets(top: 0.0, leading: 0.0, bottom: 0.0, trailing: 0.0)).padding(0)
+                    ForEach(stations.filter {runFilter(station: $0, search: self.search)}) {station in
+                        Button(action: {self.choose(station)}) {
+                            StationCard(station: station)
+                        }.foregroundColor(.black)
+                    }.padding(.vertical, 5)
+                }
             }.padding(.horizontal)
             Spacer()
         }
@@ -75,6 +83,6 @@ struct StationChooser: View {
 
 struct FromStationChooser_Previews: PreviewProvider {
     static var previews: some View {
-        StationChooser(stations: mockData.stations, type: .from, close: {print("close")}, choose: {station in print("choose",station.abbr)})
+        StationChooser(stations: mockData.stations, type: .to, close: {print("close")}, choose: {station in print("choose", station?.abbr)})
     }
 }

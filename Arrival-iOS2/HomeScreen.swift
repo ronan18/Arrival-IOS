@@ -21,12 +21,11 @@ struct HomeScreen: View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
                 HomeScreenHeader(geometry: geometry)
-                StationChooserBar(leftAction: {self.stationModalType = .from;  self.timeModal = false; self.stationModalPresented = true}, centerAction: {self.stationModalPresented = true; self.timeModal = true}, rightAction: {self.stationModalType = .to; self.timeModal = false; self.stationModalPresented = true})
+                StationChooserBar(fromStation: self.appState.fromStation, toStation: self.appState.toStation, leftAction: {self.stationModalType = .from;  self.timeModal = false; self.stationModalPresented = true}, centerAction: {self.stationModalPresented = true; self.timeModal = true}, rightAction: {self.stationModalType = .to; self.timeModal = false; self.stationModalPresented = true}, skeleton:  self.appState.LocationServicesState == LocationServicesState.loading)
                 AlertView(text: "California is under a mandatory shelter at home order during the Covid-19 pandemic. All non-essential travel should be avoided. BART is operating under a modified schedule and closes at 9pm. Weekday trains run every 30 minutes. Face coverings are required.", link: URL(string:"https://google.com"))
                 Spacer()
-                List {
-                    TrainCard(direction: "Dublin/Pleasonton", color: TrainColor.blue, cars: 5, departs: Date(timeIntervalSinceNow: 600))
-                    TrainCard(direction: "Antioch", color: TrainColor.yellow, departs: Date(timeIntervalSinceNow: 500),  arrives: Date(timeIntervalSinceNow: 1800))
+                if (self.appState.LocationServicesState == LocationServicesState.askForLocation) {
+                    LocationAccessRequest(clicked: {self.stationModalType = .from;  self.timeModal = false; self.stationModalPresented = true})
                 }
             }.sheet(isPresented: self.$stationModalPresented) {
                 if (self.timeModal) {
@@ -35,7 +34,18 @@ struct HomeScreen: View {
                         self.timeModal = false
                     })
                 } else {
-                StationChooser(stations: mockData.stations, type: self.stationModalType, close: {self.stationModalPresented = false}, choose: {station in print("choose",StationTypeName(self.stationModalType), station.name) ; self.stationModalPresented = false})
+                    if (self.stationModalType == .from) {
+                        StationChooser(stations: self.appState.fromStationSuggestions, type: self.stationModalType, close: {self.stationModalPresented = false}, choose: ({station in
+                            print("choose",StationTypeName(self.stationModalType), station?.name);
+                            self.appState.fromStation = station
+                            self.stationModalPresented = false}))
+                    } else {
+                        StationChooser(stations: self.appState.toStationSuggestions, type: self.stationModalType, close: {self.stationModalPresented = false}, choose: ({station in
+                        print("choose",StationTypeName(self.stationModalType), station?.name);
+                        self.appState.chooseToStation(station)
+                        self.stationModalPresented = false}))
+                    }
+                    
                 }
             }
             

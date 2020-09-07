@@ -9,12 +9,12 @@
 import SwiftUI
 
 struct StationCard: View {
-    let station: Station
+    let station: Station?
     var body: some View {
            HStack(){
               
                 HStack(alignment: .lastTextBaseline) {
-                    Text(station.name)
+                    Text(station?.name ?? "none")
                                               .font(.headline)
                     Spacer()
                 }.padding()

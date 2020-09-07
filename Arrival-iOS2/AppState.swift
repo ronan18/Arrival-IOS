@@ -9,6 +9,7 @@
 import Foundation
 import SwiftyJSON
 import Disk
+import CoreLocation
 enum AppScreen {
     case loading
     case loadingIndicator
@@ -16,15 +17,36 @@ enum AppScreen {
     case settings
     case onBoarding
 }
-class AppState: ObservableObject {
+enum LocationServicesState {
+    case loading
+    case ready
+    case askForLocation
+}
+class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var screen: AppScreen = .loading
     @Published var stations: StationStorage? = nil
+    @Published var locationAccess = false
+    @Published var location: CLLocation? = nil
+    @Published var closestStations: [Station] = []
+    @Published var fromStation: Station? = nil
+    @Published var toStation: Station? = nil
+    @Published var LocationServicesState: LocationServicesState = .loading
+    @Published var toStationSuggestions: [Station] = []
+    @Published var fromStationSuggestions: [Station] = []
     var api = ApiService()
+    let stationService = StationService()
     let defaults = UserDefaults.standard
     var key: String = ""
     var authorized: Bool = false
-    init() {
-       
+    private var toStationEvents: [ToStationEvent] = []
+    private let locationManager = CLLocationManager()
+    private var lat = 0.0
+    private var long = 0.0
+    private var lastLocation: CLLocation? = nil
+    private var goingOffClosestStation = true
+    private var fromStationWatcher: Any? = nil
+    override init() {
+        super.init()
         let passphrase = defaults.string(forKey: "passphrase")
         if let passphrase = passphrase {
             print("authorized")
@@ -33,6 +55,7 @@ class AppState: ObservableObject {
                     print("auth valid")
                     self.key = passphrase
                     self.authorized = true
+                    self.fetchToStationEvents()
                     self.start()
                 } else {
                     print("auth invalid")
@@ -45,11 +68,20 @@ class AppState: ObservableObject {
         }
         
         do {
-        let stations = try Disk.retrieve("stations.json", from: .caches, as: StationStorage.self)
+            let stations = try Disk.retrieve("stations.json", from: .caches, as: StationStorage.self)
             self.stations = stations
             print("got stations from cache")
         } catch {
             self.fetchStations()
+        }
+    }
+    func fetchToStationEvents() {
+        do {
+            let toStationEvents = try Disk.retrieve("toStationEvents.json", from: .documents, as: [ToStationEvent].self)
+            self.toStationEvents = toStationEvents
+            print("got toStationEvents from disk", toStationEvents)
+        } catch {
+            print("erorr retreiving toStationEvents")
         }
     }
     func createAccount() {
@@ -76,8 +108,11 @@ class AppState: ObservableObject {
         self.authorized = false
         self.screen = .onBoarding
     }
+    func  requestLocation() {
+        locationManager.requestWhenInUseAuthorization()
+    }
     func fetchStations() {
-          print("fetching stations")
+        print("fetching stations")
         self.api.getStations(handleComplete: {stationData in
             print("fetched stations")
             do {
@@ -87,10 +122,117 @@ class AppState: ObservableObject {
                 print("error saving stations")
             }
             self.stations = stationData
+            
         })
     }
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("location updated")
+        if let location = locations.first {
+            //print(location.coordinate, "location", location)
+            lat = location.coordinate.latitude
+            long = location.coordinate.longitude
+            self.location = location
+            self.getClosestStations()
+        }
+    }
+    func locationManager(_ manager: CLLocationManager,
+                         didChangeAuthorization status: CLAuthorizationStatus) {
+        print("location auth status updated")
+        switch status {
+        case .notDetermined:
+            print("location access not determined")
+            self.LocationServicesState = .askForLocation
+            break
+        case .authorizedWhenInUse, .authorizedAlways:
+            if CLLocationManager.locationServicesEnabled() {
+                self.locationAccess = true
+                self.LocationServicesState = .loading
+                self.getClosestStations()
+                print(" location access")
+                // Analytics.setUserProperty("true", forName: "locationAccess")
+            }
+        case .restricted, .denied:
+            self.locationAccess = false
+            self.LocationServicesState = .askForLocation
+            print("no location access")
+            // Analytics.setUserProperty("false", forName: "locationAccess")
+        }
+    }
+    func getClosestStations(handleComplete: ((Bool)->())? = nil) {
+        if let stations = self.stations {
+            if let location = self.location {
+                self.stationService.getClosestStations(stations: stations.stations, location: location, handleComplete: { stations in
+                    self.closestStations = stations
+                    self.fromStationSuggestions =  stations
+                    if self.goingOffClosestStation {
+                        self.fromStation = stations[0]
+                        self.LocationServicesState = .ready
+                    }
+                    if let handleComplete = handleComplete {
+                        handleComplete(true)
+                    }
+                })
+            } else  {
+                self.closestStations = stations.stations
+                self.fromStationSuggestions =  stations.stations
+                
+                if let handleComplete = handleComplete {
+                    handleComplete(false)
+                }
+            }
+            
+        }
+        
+    }
+    func getToStationSuggestions(_ fromStation: Station) {
+        print("getting to station suggestions for:", fromStation.name)
+        self.toStationSuggestions = self.stationService.getToStationSuggestions(fromStation: fromStation, previousRequests: self.toStationEvents, stations: self.stations!)
+        
+    }
+    
     func start() {
         print("start")
+        self.requestLocation()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest // You can change the locaiton accuary here.
+            locationManager.startUpdatingLocation()
+            print("location access after start")
+        } else {
+            print("no location access")
+            self.fromStationSuggestions = self.stations?.stations ?? []
+            self.LocationServicesState = .askForLocation
+            self.requestLocation()
+            
+        }
+        self.fromStationWatcher = self.$fromStation.sink { value in
+            print("from station change", value)
+            if let station = value {
+                self.getToStationSuggestions(station)
+            }
+        }
+        self.getClosestStations(handleComplete: { success in
+            if (success) {
+                self.LocationServicesState = .ready
+            }
+            self.screen = .home
+            
+        })
         
+    }
+    func chooseToStation(_ station: Station?) {
+        self.toStation = station
+        let time = Date()
+        if let station = station {
+            let fromStation = self.fromStation
+            let newEvent = ToStationEvent(fromStation: fromStation!, toStation: station, time: time)
+            self.toStationEvents.append(newEvent)
+            do {
+                try Disk.append(newEvent, to: "toStationEvents.json", in: .documents)
+            } catch {
+                print("error saving toStationEvent")
+            }
+            
+        }
     }
 }

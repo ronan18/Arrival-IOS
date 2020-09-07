@@ -23,8 +23,12 @@ struct ContentView: View {
             } else if (self.appState.screen == .loadingIndicator) {
                 Loading(indicator: true)
             } else if(self.appState.screen == .onBoarding) {
-          
-                OnBoarding(next: {self.appState.createAccount()})
+                
+                OnBoarding(next: ({
+                    self.appState.requestLocation()
+                    self.appState.createAccount()
+                    
+                }))
                 
             } else if(self.appState.screen == .home) {
                 VStack(spacing: 0) {

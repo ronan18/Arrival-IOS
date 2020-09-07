@@ -31,8 +31,11 @@
 		34DB0D27250483FB00BF8401 /* StationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DB0D26250483FB00BF8401 /* StationCard.swift */; };
 		C54AD4A1250695AE00B653C1 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54AD4A0250695AE00B653C1 /* AppState.swift */; };
 		C54AD4A625069D3C00B653C1 /* Welcome.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54AD4A525069D3C00B653C1 /* Welcome.swift */; };
+		C559C1852506BEBD00EF70B4 /* LocationAccessRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559C1842506BEBD00EF70B4 /* LocationAccessRequest.swift */; };
+		C559C1872506CC5C00EF70B4 /* ToStationEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C559C1862506CC5C00EF70B4 /* ToStationEvent.swift */; };
 		C55BC25C23EE7FCC008E12AB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C55BC25B23EE7FCB008E12AB /* GoogleService-Info.plist */; };
 		C55EDBF82506A71300E45272 /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55EDBF72506A71300E45272 /* ActivityIndicator.swift */; };
+		C55EDBFA2506B43900E45272 /* StationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55EDBF92506B43900E45272 /* StationService.swift */; };
 		C560522925069EC70026A555 /* LowDataUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C560522825069EC70026A555 /* LowDataUsage.swift */; };
 		C560522B2506A02A0026A555 /* SmartSuggestions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C560522A2506A02A0026A555 /* SmartSuggestions.swift */; };
 		C560522D2506A0E30026A555 /* Anonymous.swift in Sources */ = {isa = PBXBuildFile; fileRef = C560522C2506A0E30026A555 /* Anonymous.swift */; };
@@ -70,8 +73,11 @@
 		66F659F07BA497284BB5DAA9 /* Pods-Arrival-iOS2.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Arrival-iOS2.release.xcconfig"; path = "Target Support Files/Pods-Arrival-iOS2/Pods-Arrival-iOS2.release.xcconfig"; sourceTree = "<group>"; };
 		C54AD4A0250695AE00B653C1 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		C54AD4A525069D3C00B653C1 /* Welcome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Welcome.swift; sourceTree = "<group>"; };
+		C559C1842506BEBD00EF70B4 /* LocationAccessRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationAccessRequest.swift; sourceTree = "<group>"; };
+		C559C1862506CC5C00EF70B4 /* ToStationEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToStationEvent.swift; sourceTree = "<group>"; };
 		C55BC25B23EE7FCB008E12AB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C55EDBF72506A71300E45272 /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
+		C55EDBF92506B43900E45272 /* StationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationService.swift; sourceTree = "<group>"; };
 		C560522825069EC70026A555 /* LowDataUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LowDataUsage.swift; sourceTree = "<group>"; };
 		C560522A2506A02A0026A555 /* SmartSuggestions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartSuggestions.swift; sourceTree = "<group>"; };
 		C560522C2506A0E30026A555 /* Anonymous.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Anonymous.swift; sourceTree = "<group>"; };
@@ -139,6 +145,7 @@
 				34DB0D192504547B00BF8401 /* AlertView.swift */,
 				34DB0D1525044A9300BF8401 /* StationChooserBar.swift */,
 				34DB0D1725044FFC00BF8401 /* HomeScreenHeader.swift */,
+				C559C1842506BEBD00EF70B4 /* LocationAccessRequest.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -168,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				340D9E1225035671008878E4 /* Station Model.swift */,
+				C559C1862506CC5C00EF70B4 /* ToStationEvent.swift */,
 				34DB0D062504015000BF8401 /* TrainModel.swift */,
 				34DB0D0925041E6800BF8401 /* TripModel.swift */,
 			);
@@ -178,6 +186,7 @@
 			isa = PBXGroup;
 			children = (
 				34ACF58B2502A40100D56C0C /* ApiService.swift */,
+				C55EDBF92506B43900E45272 /* StationService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -401,8 +410,10 @@
 				34DB0D1825044FFC00BF8401 /* HomeScreenHeader.swift in Sources */,
 				C58F248923CC1438003882F3 /* ContentView.swift in Sources */,
 				34DB0D0C2504282000BF8401 /* TimeUtils.swift in Sources */,
+				C559C1872506CC5C00EF70B4 /* ToStationEvent.swift in Sources */,
 				34DB0D1E250460DB00BF8401 /* ColorUtils.swift in Sources */,
 				34DB0D1C25045C4500BF8401 /* TrainCard.swift in Sources */,
+				C559C1852506BEBD00EF70B4 /* LocationAccessRequest.swift in Sources */,
 				34DB0D072504015000BF8401 /* TrainModel.swift in Sources */,
 				34DB0D0A25041E6800BF8401 /* TripModel.swift in Sources */,
 				34DB0D1A2504547B00BF8401 /* AlertView.swift in Sources */,
@@ -411,6 +422,7 @@
 				34DB0D202504782100BF8401 /* StationChooser.swift in Sources */,
 				C55EDBF82506A71300E45272 /* ActivityIndicator.swift in Sources */,
 				3481782225058A1F008C5F09 /* StyledButton.swift in Sources */,
+				C55EDBFA2506B43900E45272 /* StationService.swift in Sources */,
 				340D9E1325035671008878E4 /* Station Model.swift in Sources */,
 				3401C40825055E2C0032906E /* TimeOptions.swift in Sources */,
 				C54AD4A1250695AE00B653C1 /* AppState.swift in Sources */,
