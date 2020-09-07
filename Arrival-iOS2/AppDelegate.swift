@@ -10,6 +10,7 @@ import UIKit
 import CoreData
 
 import Foundation
+import Firebase
 var dynamicLinkOpened = false
 
 @UIApplicationMain
@@ -21,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
        // DynamicLinks.performDiagnostics(completion: nil)
-      //  FirebaseApp.configure()
+        FirebaseApp.configure()
         
         return true
     }

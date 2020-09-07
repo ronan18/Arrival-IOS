@@ -11,56 +11,27 @@ import Combine
 import NotificationCenter
 
 struct ContentView: View {
-    @State var loaded = false
+    @EnvironmentObject private var appState: AppState
+    
     init() {
         UITableView.appearance().separatorStyle = .none
     }
     var body: some View {
         VStack {
-            if (!loaded) {
-         Loading()
-            } else {
+            if (self.appState.screen == .loading) {
+                Loading()
+            } else if (self.appState.screen == .loadingIndicator) {
+                Loading(indicator: true)
+            } else if(self.appState.screen == .onBoarding) {
+          
+                OnBoarding(next: {self.appState.createAccount()})
+                
+            } else if(self.appState.screen == .home) {
                 VStack(spacing: 0) {
                     HomeScreen()
                 }
             }
             
-            
-        }.onAppear() {
-        //   self.loaded = true
-            let api = ApiService()
-           // print("pre stations")
-            var stations: StationStorage?
-           api.getStations(handleComplete: { stationList in
-             //   print(stationList)
-            print("done stations")
-            stations = stationList
-
-            })
-               
-      
-         // print("post stations not in async")
-            api.login(key: "test", handleComplete: { authorized in
-                if (authorized) {
-                    print("logged in")
-                    api.getTrainsFrom(from: Station(id: "asd", name: "Rockridge", abbr: "ROCK", lat: 123.2, long: 123.2), type: "now", time: "now", handleComplete: {result in
-                        print("done trains")
-                    })
-                    api.getTrip(byID: "9ecf8fdc-1422-48b3-8dd6-efb2a25a59f6", handleComplete: { route in
-                        print("done trip by ID")
-                        
-                    })
-                    api.getTrips(from: Station(id: "WARM", name: "WARM", abbr: "WARM"), to: Station(id: "BALB", name: "ANTC", abbr: "ANTC"), type: "now", time: "now", handleComplete: {trips in
-                        print("done trips from")
-                        self.loaded = true
-                    })
-                    
-                    
-                } else {
-                    print("logged out")
-                }
-               
-            })
             
         }
         

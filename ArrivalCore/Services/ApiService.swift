@@ -12,7 +12,6 @@ import Combine
 import NotificationCenter
 import SwiftyJSON
 class ApiService {
-    
     var auth: String?
     let apiUrl = "https://api.arrival.city"
     func  getStations(handleComplete: @escaping ((StationStorage)->())) {

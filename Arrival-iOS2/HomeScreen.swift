@@ -8,6 +8,7 @@
 
 import SwiftUI
 struct HomeScreen: View {
+    @EnvironmentObject private var appState: AppState
     @State var stationModalPresented = false
     @State var stationModalType: StationType = .from
     @State var timeModal = false

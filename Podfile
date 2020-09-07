@@ -8,6 +8,12 @@ target 'Arrival-iOS2' do
   # Pods for Arrival-iOS2
   pod 'Alamofire', '~> 5.2'
   pod “SwiftyJSON”
+  pod 'Disk', '~> 0.6.4'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/Crashlytics'
+  pod 'Firebase/Performance'
+  pod 'Firebase/RemoteConfig'
+  pod 'Firebase/DynamicLinks'
 
 end
 

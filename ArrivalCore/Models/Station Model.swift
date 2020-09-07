@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Station: Identifiable {
+struct Station: Identifiable, Codable {
     let id: String
     var name: String
     var abbr: String
@@ -16,7 +16,7 @@ struct Station: Identifiable {
     var long: Double? = nil
 }
 
-struct StationStorage {
+struct StationStorage: Codable {
     var stations: [Station]
     var byAbbr: [String: Station]
     var version: Double
