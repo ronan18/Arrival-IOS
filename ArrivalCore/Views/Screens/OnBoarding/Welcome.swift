@@ -10,14 +10,15 @@ import SwiftUI
 
 struct Welcome: View {
     var next: (()->())
+    var config: OnBoardingScreenConfig? = nil
     var body: some View {
         VStack {
             Spacer()
             Image("map").resizable().aspectRatio(contentMode: .fit).frame(maxWidth: 300)
-            Text("Welcome to Arrival")
+            Text(config?.title ?? "Welcome to Arrival")
                 .font(.largeTitle)
                 .fontWeight(.bold) .multilineTextAlignment(.center)
-            Text("The BART app for commuters")
+            Text(config?.description ?? "The BART app for commuters")
                 .font(.subheadline)
                 .multilineTextAlignment(.center)
             Spacer()

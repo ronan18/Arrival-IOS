@@ -10,6 +10,9 @@ import Foundation
 import SwiftyJSON
 import Disk
 import CoreLocation
+import FirebasePerformance
+import FirebaseAnalytics
+import FirebaseRemoteConfig
 enum AppScreen {
     case loading
     case loadingIndicator
@@ -33,6 +36,9 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var LocationServicesState: LocationServicesState = .loading
     @Published var toStationSuggestions: [Station] = []
     @Published var fromStationSuggestions: [Station] = []
+    @Published var remoteConfig = RemoteConfig.remoteConfig()
+    @Published var onBoardingConfig: OnBoardingConfig? = nil
+    @Published var configLoaded = false
     var api = ApiService()
     let stationService = StationService()
     let defaults = UserDefaults.standard
@@ -45,8 +51,32 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     private var lastLocation: CLLocation? = nil
     private var goingOffClosestStation = true
     private var fromStationWatcher: Any? = nil
+    private let settings = RemoteConfigSettings()
     override init() {
+        
         super.init()
+        settings.minimumFetchInterval = 43200
+        remoteConfig.configSettings = settings
+        remoteConfig.setDefaults(fromPlist: "RemoteConfigDefaults")
+           self.runRemoteConfigFetches()
+        remoteConfig.fetch(withExpirationDuration: TimeInterval(43200)) { (status, error) -> Void in
+                  if status == .success {
+                      print("Config fetched!")
+                      self.remoteConfig.activate(completionHandler: { (error) in
+                          DispatchQueue.main.async {
+                             
+                            self.runRemoteConfigFetches()
+                            self.configLoaded = true
+                              
+                          }
+                      })
+                  } else {
+                      print("Config not fetched")
+                      print("Error: \(error?.localizedDescription ?? "No error available.")")
+                  }
+                  
+              }
+     
         let passphrase = defaults.string(forKey: "passphrase")
         if let passphrase = passphrase {
             print("authorized")
@@ -74,6 +104,9 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         } catch {
             self.fetchStations()
         }
+    }
+    func runRemoteConfigFetches() {
+           self.onBoardingConfig = OnBoardingConfig(welcome: OnBoardingScreenConfig(title: self.remoteConfig["onboarding1Heading"].stringValue!, description: self.remoteConfig["onboarding1Tagline"].stringValue!), lowDataUsage: OnBoardingScreenConfig(title: self.remoteConfig["onboarding2Heading"].stringValue!, description: self.remoteConfig["onboarding2Tagline"].stringValue!), smartDataSuggestions: OnBoardingScreenConfig(title: self.remoteConfig["onboarding3Heading"].stringValue!, description: self.remoteConfig["onboarding3Tagline"].stringValue!), anonymous: OnBoardingScreenConfig(title: self.remoteConfig["onboarding4Heading"].stringValue!, description: self.remoteConfig["onboarding4Tagline"].stringValue!))
     }
     func fetchToStationEvents() {
         do {
@@ -191,6 +224,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     
     func start() {
+        
         print("start")
         self.requestLocation()
         if CLLocationManager.locationServicesEnabled() {
@@ -221,6 +255,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         
     }
     func chooseToStation(_ station: Station?) {
+       
         self.toStation = station
         let time = Date()
         if let station = station {

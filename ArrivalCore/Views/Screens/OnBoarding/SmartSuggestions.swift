@@ -11,6 +11,7 @@ import SwiftUI
 struct SmartSuggestions: View {
     var next: (()->())
         var back: (()->())
+      var config: OnBoardingScreenConfig? = nil
     var body: some View {
         VStack {
             HStack {
@@ -23,11 +24,11 @@ struct SmartSuggestions: View {
             }
             Spacer()
             Image("location").resizable().aspectRatio(contentMode: .fit).frame(maxWidth: 300, maxHeight: 200)
-            Text("Smart Suggestions")
+            Text(config?.title ??  "Smart Suggestions")
                 .font(.largeTitle)
                 .fontWeight(.bold).multilineTextAlignment(.center)
             Spacer().frame(height: 10)
-            Text("Arrival users your location to determine te closest BART station and automatically show realtime predictions. (We never store or share your location)").multilineTextAlignment(.center)
+            Text(config?.description ?? "Arrival uses your location to determine te closest BART station and automatically show realtime predictions. (We never store or share your location)").multilineTextAlignment(.center)
                 .font(.footnote)
             
             Spacer()

@@ -22,7 +22,15 @@ class StationService {
        handleComplete(sorted)
     }
     func getToStationSuggestions(fromStation: Station, previousRequests: [ToStationEvent], stations: StationStorage) -> [Station] {
-        return stations.stations.filter {$0.abbr != fromStation.abbr}
+        let ml = MLService()
+        let model = ml.train(previousRequests)
+        if model.model == nil {
+           return stations.stations.filter {$0.abbr != fromStation.abbr}
+        } else {
+           let predictions = ml.predict(fromStation: fromStation)
+             return stations.stations.filter {$0.abbr != fromStation.abbr}
+        }
+        
         
     }
 }

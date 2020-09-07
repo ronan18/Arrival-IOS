@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Station: Identifiable, Codable {
+struct Station: Identifiable, Codable, Hashable {
     let id: String
     var name: String
     var abbr: String

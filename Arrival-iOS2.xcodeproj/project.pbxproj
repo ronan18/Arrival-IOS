@@ -44,6 +44,10 @@
 		C58F248923CC1438003882F3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58F248823CC1438003882F3 /* ContentView.swift */; };
 		C58F248E23CC143A003882F3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C58F248D23CC143A003882F3 /* Preview Assets.xcassets */; };
 		C58F249123CC143A003882F3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C58F248F23CC143A003882F3 /* LaunchScreen.storyboard */; };
+		C59430EB2506E1EA00296278 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59430EA2506E1EA00296278 /* Config.swift */; };
+		C59430ED2506E5AB00296278 /* RemoteConfigDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = C59430EC2506E5AB00296278 /* RemoteConfigDefaults.plist */; };
+		C59430EF2506EA7E00296278 /* KNN.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59430EE2506EA7E00296278 /* KNN.swift */; };
+		C59430F22506EAB100296278 /* ML.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59430F12506EAB100296278 /* ML.swift */; };
 		C5A45BC72506A1D200E7993E /* TOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A45BC62506A1D200E7993E /* TOS.swift */; };
 		C5B706432506A2E100953108 /* OnBoarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B706422506A2E100953108 /* OnBoarding.swift */; };
 /* End PBXBuildFile section */
@@ -91,6 +95,10 @@
 		C58F248D23CC143A003882F3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C58F249023CC143A003882F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C58F249223CC143A003882F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C59430EA2506E1EA00296278 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		C59430EC2506E5AB00296278 /* RemoteConfigDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RemoteConfigDefaults.plist; sourceTree = "<group>"; };
+		C59430EE2506EA7E00296278 /* KNN.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KNN.swift; sourceTree = "<group>"; };
+		C59430F12506EAB100296278 /* ML.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ML.swift; sourceTree = "<group>"; };
 		C5A45BC62506A1D200E7993E /* TOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TOS.swift; sourceTree = "<group>"; };
 		C5B706422506A2E100953108 /* OnBoarding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnBoarding.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -162,6 +170,7 @@
 		34ACF58A2502A3B400D56C0C /* ArrivalCore */ = {
 			isa = PBXGroup;
 			children = (
+				C59430F02506EA9C00296278 /* Frameworks */,
 				34DB0D232504806100BF8401 /* MockupData.swift */,
 				34DB0D0E250439F500BF8401 /* Utils */,
 				34DB0D0D250439E300BF8401 /* Services */,
@@ -178,6 +187,7 @@
 				C559C1862506CC5C00EF70B4 /* ToStationEvent.swift */,
 				34DB0D062504015000BF8401 /* TrainModel.swift */,
 				34DB0D0925041E6800BF8401 /* TripModel.swift */,
+				C59430EA2506E1EA00296278 /* Config.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -187,6 +197,7 @@
 			children = (
 				34ACF58B2502A40100D56C0C /* ApiService.swift */,
 				C55EDBF92506B43900E45272 /* StationService.swift */,
+				C59430F12506EAB100296278 /* ML.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -253,6 +264,7 @@
 		C58F248023CC1438003882F3 /* Arrival-iOS2 */ = {
 			isa = PBXGroup;
 			children = (
+				C59430EC2506E5AB00296278 /* RemoteConfigDefaults.plist */,
 				C58F248A23CC143A003882F3 /* Assets.xcassets */,
 				C5751DA523F702F70071F224 /* Arrival.entitlements */,
 				C58F248123CC1438003882F3 /* AppDelegate.swift */,
@@ -275,6 +287,14 @@
 				C58F248D23CC143A003882F3 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		C59430F02506EA9C00296278 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C59430EE2506EA7E00296278 /* KNN.swift */,
+			);
+			path = Frameworks;
 			sourceTree = "<group>";
 		};
 		E7E978C5F6B8CCD978621C5E /* Frameworks */ = {
@@ -345,6 +365,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C59430ED2506E5AB00296278 /* RemoteConfigDefaults.plist in Resources */,
 				340D38CB245A1DBF00EDE8DD /* Arrival_iOS2.xcdatamodeld in Resources */,
 				C58F249123CC143A003882F3 /* LaunchScreen.storyboard in Resources */,
 				C55BC25C23EE7FCC008E12AB /* GoogleService-Info.plist in Resources */,
@@ -419,10 +440,13 @@
 				34DB0D1A2504547B00BF8401 /* AlertView.swift in Sources */,
 				C560522B2506A02A0026A555 /* SmartSuggestions.swift in Sources */,
 				34DB0D142504484C00BF8401 /* HomeScreen.swift in Sources */,
+				C59430EF2506EA7E00296278 /* KNN.swift in Sources */,
 				34DB0D202504782100BF8401 /* StationChooser.swift in Sources */,
 				C55EDBF82506A71300E45272 /* ActivityIndicator.swift in Sources */,
+				C59430F22506EAB100296278 /* ML.swift in Sources */,
 				3481782225058A1F008C5F09 /* StyledButton.swift in Sources */,
 				C55EDBFA2506B43900E45272 /* StationService.swift in Sources */,
+				C59430EB2506E1EA00296278 /* Config.swift in Sources */,
 				340D9E1325035671008878E4 /* Station Model.swift in Sources */,
 				3401C40825055E2C0032906E /* TimeOptions.swift in Sources */,
 				C54AD4A1250695AE00B653C1 /* AppState.swift in Sources */,

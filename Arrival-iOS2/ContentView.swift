@@ -18,28 +18,32 @@ struct ContentView: View {
     }
     var body: some View {
         VStack {
-            if (self.appState.screen == .loading) {
-                Loading()
-            } else if (self.appState.screen == .loadingIndicator) {
-                Loading(indicator: true)
-            } else if(self.appState.screen == .onBoarding) {
-                
-                OnBoarding(next: ({
-                    self.appState.requestLocation()
-                    self.appState.createAccount()
+            if (self.appState.configLoaded) {
+                if (self.appState.screen == .loading) {
+                    Loading()
+                } else if (self.appState.screen == .loadingIndicator) {
+                    Loading(indicator: true)
+                } else if(self.appState.screen == .onBoarding) {
                     
-                }))
-                
-            } else if(self.appState.screen == .home) {
-                VStack(spacing: 0) {
-                    HomeScreen()
+                    OnBoarding(next: ({
+                        self.appState.requestLocation()
+                        self.appState.createAccount()
+                        
+                    }), config: self.appState.onBoardingConfig)
+                    
+                } else if(self.appState.screen == .home) {
+                    VStack(spacing: 0) {
+                        HomeScreen()
+                    }
                 }
+                
+                
+            }else {
+                Loading()
             }
-            
-            
         }
-        
     }
+    
 }
 
 struct ContentView_Previews: PreviewProvider {

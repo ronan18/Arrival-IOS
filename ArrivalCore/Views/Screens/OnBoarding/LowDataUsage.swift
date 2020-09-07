@@ -11,6 +11,7 @@ import SwiftUI
 struct LowDataUsage: View {
      var next: (()->())
      var back: (()->())
+      var config: OnBoardingScreenConfig? = nil
     var body: some View {
         VStack {
             HStack {
@@ -23,11 +24,11 @@ struct LowDataUsage: View {
             }
             Spacer()
             Image("dataSync").resizable().aspectRatio(contentMode: .fit).frame(maxWidth: 300)
-            Text("Low Data Usage")
+            Text(config?.title ??  "Low Data Usage")
                 .font(.largeTitle)
                 .fontWeight(.bold).multilineTextAlignment(.center)
             Spacer().frame(height: 10)
-            Text("Arrival harnesses modern tecnologies in order to receive scedules and make predictions witout using tons of cellular data") .multilineTextAlignment(.center)
+            Text(config?.description ??  "Arrival harnesses modern technologies in order to receive schedules and make predictions witout using tons of cellular data") .multilineTextAlignment(.center)
                 .font(.footnote)
             Spacer()
             StyledButton(action: next, text: "CONTINUE")

@@ -11,6 +11,7 @@ import SwiftUI
 struct Anonymous: View {
     var next: (()->())
         var back: (()->())
+      var config: OnBoardingScreenConfig? = nil
     var body: some View {
         VStack {
                    HStack {
@@ -23,11 +24,11 @@ struct Anonymous: View {
                    }
                    Spacer()
                    Image("secure").resizable().aspectRatio(contentMode: .fit).frame(maxWidth: 300)
-                   Text("Anonymous")
+                   Text(config?.title ??  "Anonymous")
                        .font(.largeTitle)
                        .fontWeight(.bold).multilineTextAlignment(.center)
                    Spacer().frame(height: 10)
-                   Text("Because Arrival collects some pretty personal information, your daily commute, youe data is stored on device.") .multilineTextAlignment(.center)
+                   Text(config?.description ?? "Because Arrival collects some pretty personal information, your daily commute, your data is stored on device.") .multilineTextAlignment(.center)
                        .font(.footnote)
                    Spacer()
             TOS().padding()
