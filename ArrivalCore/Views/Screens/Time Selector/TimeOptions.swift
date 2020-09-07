@@ -59,7 +59,7 @@ struct TimeOptions: View {
         case arrive
     }
     @State private var timePickerType: timeType = .leave
-    @State var timePickerPopoverPresented = true
+    @State var timePickerPopoverPresented = false
     @State private var selection: Date = Date()
     var options: TimeOptionsInput
     var close: (() -> ())

@@ -85,6 +85,55 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3463C1A025068E0B0043F66F /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				34DB0D0F25043BDB00BF8401 /* Loading.swift */,
+				3463C1A325068E460043F66F /* Home */,
+				3463C1A425068E5D0043F66F /* Station Chooser */,
+				3463C1A225068E330043F66F /* Time Selector */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		3463C1A125068E240043F66F /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				3481782125058A1F008C5F09 /* StyledButton.swift */,
+				34DB0D212504796300BF8401 /* SearchBar.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		3463C1A225068E330043F66F /* Time Selector */ = {
+			isa = PBXGroup;
+			children = (
+				3401C40725055E2C0032906E /* TimeOptions.swift */,
+				3481781F25056FAD008C5F09 /* TimeOption.swift */,
+			);
+			path = "Time Selector";
+			sourceTree = "<group>";
+		};
+		3463C1A325068E460043F66F /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				34DB0D132504484C00BF8401 /* HomeScreen.swift */,
+				34DB0D192504547B00BF8401 /* AlertView.swift */,
+				34DB0D1525044A9300BF8401 /* StationChooserBar.swift */,
+				34DB0D1725044FFC00BF8401 /* HomeScreenHeader.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		3463C1A425068E5D0043F66F /* Station Chooser */ = {
+			isa = PBXGroup;
+			children = (
+				34DB0D1F2504782100BF8401 /* StationChooser.swift */,
+				34DB0D26250483FB00BF8401 /* StationCard.swift */,
+			);
+			path = "Station Chooser";
+			sourceTree = "<group>";
+		};
 		34ACF58A2502A3B400D56C0C /* ArrivalCore */ = {
 			isa = PBXGroup;
 			children = (
@@ -127,18 +176,9 @@
 		34DB0D1125043BE100BF8401 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				34DB0D0F25043BDB00BF8401 /* Loading.swift */,
-				34DB0D132504484C00BF8401 /* HomeScreen.swift */,
-				34DB0D1F2504782100BF8401 /* StationChooser.swift */,
-				3401C40725055E2C0032906E /* TimeOptions.swift */,
-				3481782125058A1F008C5F09 /* StyledButton.swift */,
-				3481781F25056FAD008C5F09 /* TimeOption.swift */,
-				34DB0D26250483FB00BF8401 /* StationCard.swift */,
-				34DB0D212504796300BF8401 /* SearchBar.swift */,
+				3463C1A025068E0B0043F66F /* Screens */,
+				3463C1A125068E240043F66F /* Components */,
 				34DB0D1B25045C4500BF8401 /* TrainCard.swift */,
-				34DB0D192504547B00BF8401 /* AlertView.swift */,
-				34DB0D1725044FFC00BF8401 /* HomeScreenHeader.swift */,
-				34DB0D1525044A9300BF8401 /* StationChooserBar.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
