@@ -11,8 +11,8 @@ import SwiftUI
 struct SettingsScreen: View {
     @EnvironmentObject private var appState: AppState
     @State var stationVersion: String = ""
- @State   var stationCount: String = ""
-   
+    @State   var stationCount: String = ""
+    
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
@@ -36,10 +36,10 @@ struct SettingsScreen: View {
                         Text(self.stationCount)
                     }
                     HStack() {
-                                           Text("To Station Events")
-                                           Spacer()
+                        Text("To Station Events")
+                        Spacer()
                         Text(String(self.appState.toStationEvents.count))
-                                       }
+                    }
                 }
                 Spacer()
             }

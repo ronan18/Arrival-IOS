@@ -21,6 +21,7 @@ enum StationChooserBarState {
 }
 
 class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
+    //MARK: Publishers
     @Published var screen: AppScreen = .loading
     @Published var stations: StationStorage? = nil
     @Published var locationAccess = false
@@ -55,6 +56,8 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     private var locationServiceStatusWatcher: Any? = nil
     private let settings = RemoteConfigSettings()
     private let timeService = TimeService()
+    
+    //MARK: Initilization
     override init() {
         
         super.init()
@@ -108,6 +111,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
             self.fetchStations()
         }
     }
+    // MARK: Fetch data stores
     func runRemoteConfigFetches() {
         self.onBoardingConfig = OnBoardingConfig(welcome: OnBoardingScreenConfig(title: self.remoteConfig["onboarding1Heading"].stringValue!, description: self.remoteConfig["onboarding1Tagline"].stringValue!), lowDataUsage: OnBoardingScreenConfig(title: self.remoteConfig["onboarding2Heading"].stringValue!, description: self.remoteConfig["onboarding2Tagline"].stringValue!), smartDataSuggestions: OnBoardingScreenConfig(title: self.remoteConfig["onboarding3Heading"].stringValue!, description: self.remoteConfig["onboarding3Tagline"].stringValue!), anonymous: OnBoardingScreenConfig(title: self.remoteConfig["onboarding4Heading"].stringValue!, description: self.remoteConfig["onboarding4Tagline"].stringValue!))
         
@@ -130,6 +134,21 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
             print("erorr retreiving toStationEvents")
         }
     }
+    func fetchStations() {
+        print("fetching stations")
+        self.api.getStations(handleComplete: {stationData in
+            print("fetched stations")
+            do {
+                try Disk.save(stationData, to: .caches, as: "stations.json")
+                print("saved stations")
+            } catch {
+                print("error saving stations")
+            }
+            self.stations = stationData
+            
+        })
+    }
+    // MARK: Account logic
     func createAccount() {
         
         self.screen = .loadingIndicator
@@ -154,22 +173,11 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         self.authorized = false
         self.screen = .onBoarding
     }
+
+
+// MARK: Location delegates
     func  requestLocation() {
         locationManager.requestWhenInUseAuthorization()
-    }
-    func fetchStations() {
-        print("fetching stations")
-        self.api.getStations(handleComplete: {stationData in
-            print("fetched stations")
-            do {
-                try Disk.save(stationData, to: .caches, as: "stations.json")
-                print("saved stations")
-            } catch {
-                print("error saving stations")
-            }
-            self.stations = stationData
-            
-        })
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         print("location updated")
@@ -204,6 +212,8 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
             // Analytics.setUserProperty("false", forName: "locationAccess")
         }
     }
+    
+    // MARK: Suggestions Proiders
     func getClosestStations(handleComplete: ((Bool)->())? = nil) {
         if let stations = self.stations {
             if let location = self.location {
@@ -234,6 +244,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         }
         
     }
+    
     func getToStationSuggestions(_ fromStation: Station? = nil, toStation: Station? = nil) {
         let finalFromStation = fromStation ?? self.fromStation
         let finalToStation = toStation ?? self.toStation
@@ -248,7 +259,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         print("getting time suggestions")
         let suggestions =  self.timeService.suggestTimes(fromStation: fromStation, toStation: toStation, time: Date())
     }
-    
+    // MARK: Start function
     func start() {
         
         print("start")
@@ -292,6 +303,8 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         
         
     }
+    
+    // MARK: Choose stations
     func chooseFromStation(_ station: Station) {
         self.fromStation = station
     }
