@@ -14,7 +14,7 @@ struct ContentView: View {
     @EnvironmentObject private var appState: AppState
     
     init() {
-        UITableView.appearance().separatorStyle = .none
+     //   UITableView.appearance().separatorStyle = .none
     }
     var body: some View {
         VStack {
@@ -35,6 +35,8 @@ struct ContentView: View {
                     VStack(spacing: 0) {
                         HomeScreen()
                     }
+                } else if (self.appState.screen == .settings) {
+                    SettingsScreen()
                 }
                 
                 

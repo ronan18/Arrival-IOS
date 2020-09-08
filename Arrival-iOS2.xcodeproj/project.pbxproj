@@ -13,6 +13,8 @@
 		3463C1A62507154D0043F66F /* TimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3463C1A52507154D0043F66F /* TimeService.swift */; };
 		3481782025056FAD008C5F09 /* TimeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3481781F25056FAD008C5F09 /* TimeOption.swift */; };
 		3481782225058A1F008C5F09 /* StyledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3481782125058A1F008C5F09 /* StyledButton.swift */; };
+		3482DD592507F08D00C2B8A2 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3482DD582507F08D00C2B8A2 /* SettingsScreen.swift */; };
+		3482DD5B2507F1E100C2B8A2 /* SettingsHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3482DD5A2507F1E100C2B8A2 /* SettingsHeader.swift */; };
 		34ACF58C2502A40100D56C0C /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34ACF58B2502A40100D56C0C /* ApiService.swift */; };
 		34DB0D072504015000BF8401 /* TrainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DB0D062504015000BF8401 /* TrainModel.swift */; };
 		34DB0D0A25041E6800BF8401 /* TripModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34DB0D0925041E6800BF8401 /* TripModel.swift */; };
@@ -61,6 +63,8 @@
 		3463C1A52507154D0043F66F /* TimeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeService.swift; sourceTree = "<group>"; };
 		3481781F25056FAD008C5F09 /* TimeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeOption.swift; sourceTree = "<group>"; };
 		3481782125058A1F008C5F09 /* StyledButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledButton.swift; sourceTree = "<group>"; };
+		3482DD582507F08D00C2B8A2 /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
+		3482DD5A2507F1E100C2B8A2 /* SettingsHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsHeader.swift; path = ArrivalCore/Views/Screens/Settings/SettingsHeader.swift; sourceTree = SOURCE_ROOT; };
 		34ACF58B2502A40100D56C0C /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
 		34DB0D062504015000BF8401 /* TrainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainModel.swift; sourceTree = "<group>"; };
 		34DB0D0925041E6800BF8401 /* TripModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripModel.swift; sourceTree = "<group>"; };
@@ -126,6 +130,7 @@
 			children = (
 				C54AD4A425069D2D00B653C1 /* OnBoarding */,
 				34DB0D0F25043BDB00BF8401 /* Loading.swift */,
+				3482DD5C2507F1E600C2B8A2 /* Settings */,
 				3463C1A325068E460043F66F /* Home */,
 				3463C1A425068E5D0043F66F /* Station Chooser */,
 				3463C1A225068E330043F66F /* Time Selector */,
@@ -171,6 +176,14 @@
 				34DB0D26250483FB00BF8401 /* StationCard.swift */,
 			);
 			path = "Station Chooser";
+			sourceTree = "<group>";
+		};
+		3482DD5C2507F1E600C2B8A2 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				3482DD5A2507F1E100C2B8A2 /* SettingsHeader.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		34ACF58A2502A3B400D56C0C /* ArrivalCore */ = {
@@ -288,6 +301,7 @@
 				C58F248323CC1438003882F3 /* SceneDelegate.swift */,
 				C58F248823CC1438003882F3 /* ContentView.swift */,
 				34DB0D132504484C00BF8401 /* HomeScreen.swift */,
+				3482DD582507F08D00C2B8A2 /* SettingsScreen.swift */,
 				C54AD4A0250695AE00B653C1 /* AppState.swift */,
 				C58F248F23CC143A003882F3 /* LaunchScreen.storyboard */,
 				C58F249223CC143A003882F3 /* Info.plist */,
@@ -432,6 +446,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3482DD5B2507F1E100C2B8A2 /* SettingsHeader.swift in Sources */,
 				C58F248223CC1438003882F3 /* AppDelegate.swift in Sources */,
 				34DB0D1025043BDB00BF8401 /* Loading.swift in Sources */,
 				34DB0D1625044A9300BF8401 /* StationChooserBar.swift in Sources */,
@@ -440,6 +455,7 @@
 				34DB0D1825044FFC00BF8401 /* HomeScreenHeader.swift in Sources */,
 				C58F248923CC1438003882F3 /* ContentView.swift in Sources */,
 				34DB0D0C2504282000BF8401 /* TimeUtils.swift in Sources */,
+				3482DD592507F08D00C2B8A2 /* SettingsScreen.swift in Sources */,
 				C59430F4250706AE00296278 /* AppStates.swift in Sources */,
 				C559C1872506CC5C00EF70B4 /* ToStationEvent.swift in Sources */,
 				3463C1A62507154D0043F66F /* TimeService.swift in Sources */,

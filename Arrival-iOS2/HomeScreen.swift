@@ -15,14 +15,14 @@ struct HomeScreen: View {
     @State var locationTimeout = false
     
     init() {
-        UITableView.appearance().separatorStyle = .none
+       // UITableView.appearance().separatorStyle = .none
     }
     var body: some View {
         
         GeometryReader { geometry in
             VStack(spacing: 0) {
-                HomeScreenHeader(geometry: geometry)
-                StationChooserBar(fromStation: self.appState.fromStation, toStation: self.appState.toStation, timeMode: self.appState.tripTimeConfig, leftAction: {self.stationModalType = .from;  self.timeModal = false; self.stationModalPresented = true}, centerAction: {self.stationModalPresented = true; self.timeModal = true}, rightAction: {self.stationModalType = .to; self.timeModal = false; self.stationModalPresented = true}, skeleton:  self.appState.locationServicesState == LocationServicesState.loading && !self.locationTimeout, geometry: geometry)
+                HomeScreenHeader(geometry: geometry, settings: {self.appState.screen = .settings})
+                StationChooserBar(fromStation: self.appState.fromStation, toStation: self.appState.toStation, timeMode: self.appState.tripTimeConfig, leftAction: {self.stationModalType = .from;  self.timeModal = false; self.stationModalPresented = true}, centerAction: {self.stationModalPresented = true; self.timeModal = true}, rightAction: {self.stationModalType = .to; self.timeModal = false; self.stationModalPresented = true}, skeleton:  self.appState.locationServicesState == LocationServicesState.loading && !self.locationTimeout && self.appState.fromStation == nil, geometry: geometry)
                 if (self.appState.bannerAlert != nil) {
                     AlertView(text: self.appState.bannerAlert?.content ?? "", link: self.appState.bannerAlert?.link)
                 }

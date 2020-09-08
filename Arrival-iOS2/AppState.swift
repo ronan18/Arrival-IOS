@@ -37,12 +37,14 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var configLoaded = false
     @Published var bannerAlert: AlertConfig? = nil
     @Published var stationChooserBarState: StationChooserBarState = .loading
+    @Published var key: String = ""
+    @Published  var toStationEvents: [ToStationEvent] = []
     var api = ApiService()
     let stationService = StationService()
     let defaults = UserDefaults.standard
-    var key: String = ""
+  
     var authorized: Bool = false
-    private var toStationEvents: [ToStationEvent] = []
+     
     private let locationManager = CLLocationManager()
     private var lat = 0.0
     private var long = 0.0
