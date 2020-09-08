@@ -363,8 +363,14 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
                 self.trains = nil
                 print("cycle: route mode")
                 self.api.getTrips(from: self.fromStation!, to: self.toStation!, timeConfig: self.tripTimeConfig, handleComplete: {trips in
-                    self.trips = trips
-                        //print("cycle: route response", trips)
+                    
+                    if let trips = trips {
+                        self.trips = self.trainService.sortTrips(trips)
+                    } else {
+                        self.trips = []
+                        
+                    }
+                    //print("cycle: route response", trips)
                 })
             }
         } else {

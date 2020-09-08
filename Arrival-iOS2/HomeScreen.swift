@@ -61,11 +61,22 @@ struct HomeScreen: View {
                             print("choose",StationTypeName(self.stationModalType), station?.name);
                             self.appState.chooseFromStation(station!)
                             self.stationModalPresented = false}))
-                    } else {
+                    } else if (self.stationModalType == .to) {
                         StationChooser(stations: self.appState.toStationSuggestions, type: self.stationModalType, close: {self.stationModalPresented = false}, choose: ({station in
                             print("choose",StationTypeName(self.stationModalType), station?.name);
                             self.appState.chooseToStation(station)
                             self.stationModalPresented = false}))
+                    } else {
+                        VStack {
+                            Spacer()
+                            HStack {
+                                Spacer()
+                                 Text("Loading")
+                                Spacer()
+                            }
+                          
+                            Spacer()
+                        }
                     }
                     
                 }

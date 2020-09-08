@@ -15,16 +15,16 @@ struct TimeDisplay {
 
 func convertBartDate(time: String, date: String) -> Date? {
     let dateString = time + " " + date
-    //  print("convert date", dateString)
+      print("convert date", dateString)
     
     let dateFormatter = DateFormatter()
     dateFormatter.locale = Locale(identifier: "en_US")
     
     dateFormatter.timeZone = TimeZone(abbreviation: "PST")
     dateFormatter.timeStyle = .medium
-    dateFormatter.dateFormat = "HH:mm a MM/dd/yyyy"
+    dateFormatter.dateFormat = "hh:mm a MM/dd/yyyy"
     let date = dateFormatter.date(from: dateString)
-    // print("date",dateFormatter.string(from: date!))
+     print("date",dateFormatter.string(from: date!))
     return date
 }
 

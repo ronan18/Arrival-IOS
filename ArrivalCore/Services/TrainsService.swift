@@ -14,4 +14,9 @@ class TrainsService {
             $0.etd < $1.etd
         })
     }
+    func sortTrips(_ trips: [Trip]) -> [Trip] {
+        return trips.sorted(by: {
+                   $0.originTime < $1.originTime
+               })
+    }
 }

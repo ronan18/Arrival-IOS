@@ -22,8 +22,7 @@ struct TrainCard: View {
             self.color = converTrainColor(train.color)
             self.departs = String(displayMinutes(train.etd))
         } else if let trip = trip  {
-            self.direction = trip.destination.name
-            self.cars = 12
+            self.direction = trip.legs[0].trainHeadSTN
             self.color = converTrainColor(trip.legs[0].route.color)
             self.departs = String(displayMinutes(trip.originTime))
              self.arrives = displayTime(trip.legs[0].destinationTime)

@@ -23,14 +23,14 @@ struct TripLeg: Identifiable {
     let id = UUID()
     let order: Int
     let origin: String
-    let destination: String
+    var destination: String
     let originTime: Date
     let destinationTime: Date
     let route: Route
-    var trainHeadSTN: Station? = nil
+    var trainHeadSTN: String
     var stopCount: Int
     var enrouteTime: TimeInterval
-    init(order: Int, origin: String, destination: String, originTime: Date, destinationTime: Date, route: Route) {
+    init(order: Int, origin: String, destination: String, originTime: Date, destinationTime: Date, route: Route, trainHeadSTN: String) {
         self.order = order
         self.origin = origin
         self.destination = destination
@@ -47,7 +47,7 @@ struct TripLeg: Identifiable {
             print("error generating stop count")
         }
         self.enrouteTime = destinationTime.timeIntervalSince(originTime)
-      
+        self.trainHeadSTN = trainHeadSTN
         
         
     }
