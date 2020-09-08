@@ -67,17 +67,17 @@ struct StationChooser: View {
                     if (self.type == .to && self.search.count < 1) {
                         Button(action: {self.choose(nil)}) {
                             StationCard(station: nil)
-                        }.foregroundColor(.black)
+                        }.foregroundColor(Color("Text")).padding(.vertical, 5)
                     }
                     ForEach(stations.filter {runFilter(station: $0, search: self.search)}) {station in
                         Button(action: {self.choose(station)}) {
                             StationCard(station: station)
-                        }.foregroundColor(.black)
-                    }.padding(.vertical, 5)
-                }
-            }.padding(.horizontal)
+                        }.foregroundColor(Color("Text")).padding(.vertical, 5)
+                    }
+                }.edgesIgnoringSafeArea(.bottom)
+            }.padding(.horizontal).edgesIgnoringSafeArea(.bottom)
             Spacer()
-        }
+        }.edgesIgnoringSafeArea(.bottom)
     }
 }
 

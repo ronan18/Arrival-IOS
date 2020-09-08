@@ -31,6 +31,6 @@ struct HomeScreenHeader: View {
                     Image(systemName: "gear").font(.headline).foregroundColor(.white).padding(5)
                 }
             }
-        }.edgesIgnoringSafeArea(.top).padding().frame(height: geometry.safeAreaInsets.top + navSpace).background(LinearGradient(gradient: Gradient(colors: [Color("arrivalBlueBG"),Color("arrivalBlueBG"), Color("arrivalBlueBGDark")]), startPoint: .topLeading, endPoint: .bottomTrailing))
+        }.edgesIgnoringSafeArea(.top).padding().frame(height: geometry.safeAreaInsets.top + navSpace).background(LinearGradient(gradient: Gradient(colors: [Color("arrivalBlue"),Color("arrivalBlue"), Color("arrivalBlueBGDark")]), startPoint: .topLeading, endPoint: .bottomTrailing))
     }
 }

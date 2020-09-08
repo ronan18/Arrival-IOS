@@ -29,6 +29,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var remoteConfig = RemoteConfig.remoteConfig()
     @Published var onBoardingConfig: OnBoardingConfig? = nil
     @Published var configLoaded = false
+    @Published var bannerAlert: AlertConfig? = nil
     var api = ApiService()
     let stationService = StationService()
     let defaults = UserDefaults.standard
@@ -43,6 +44,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     private var fromStationWatcher: Any? = nil
     private var toStationWatcher: Any? = nil
     private let settings = RemoteConfigSettings()
+    private let timeService = TimeService()
     override init() {
         
         super.init()
@@ -98,6 +100,16 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     func runRemoteConfigFetches() {
         self.onBoardingConfig = OnBoardingConfig(welcome: OnBoardingScreenConfig(title: self.remoteConfig["onboarding1Heading"].stringValue!, description: self.remoteConfig["onboarding1Tagline"].stringValue!), lowDataUsage: OnBoardingScreenConfig(title: self.remoteConfig["onboarding2Heading"].stringValue!, description: self.remoteConfig["onboarding2Tagline"].stringValue!), smartDataSuggestions: OnBoardingScreenConfig(title: self.remoteConfig["onboarding3Heading"].stringValue!, description: self.remoteConfig["onboarding3Tagline"].stringValue!), anonymous: OnBoardingScreenConfig(title: self.remoteConfig["onboarding4Heading"].stringValue!, description: self.remoteConfig["onboarding4Tagline"].stringValue!))
+        
+        if let alertContent = self.remoteConfig["inAppMessage"].stringValue {
+            if (alertContent.count > 1) {
+                var link: URL? = nil
+                if let linkString = self.remoteConfig["inAppLink"].stringValue {
+                    link = URL(string: linkString)
+                }
+                self.bannerAlert = AlertConfig(content: alertContent, link: link)
+            }
+        }
     }
     func fetchToStationEvents() {
         do {
@@ -200,11 +212,15 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
                 self.closestStations = stations.stations
                 self.fromStationSuggestions =  stations.stations
                 
-                if let handleComplete = handleComplete {
-                    handleComplete(false)
-                }
+               if let handleComplete = handleComplete {
+                                  handleComplete(false)
+                              }
             }
             
+        } else {
+           if let handleComplete = handleComplete {
+                               handleComplete(false)
+                           }
         }
         
     }
@@ -217,6 +233,9 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         }
         
         
+    }
+    func getTimeSuggestions(fromStation: Station, toStation: Station?) {
+        print("getting time suggestions")
     }
     
     func start() {
@@ -239,21 +258,24 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
             print("from station change", value)
             if let station = value {
                 self.getToStationSuggestions(station, toStation: self.toStation)
+                self.getTimeSuggestions(fromStation: station, toStation: self.toStation)
             }
         }
         self.toStationWatcher = self.$toStation.sink { value in
             print("to station change", value)
             if let station = value {
                 self.getToStationSuggestions(self.fromStation, toStation: value)
+                self.getTimeSuggestions(fromStation: self.fromStation!, toStation: station)
             }
         }
         self.getClosestStations(handleComplete: { success in
             if (success) {
                 self.LocationServicesState = .ready
             }
-            self.screen = .home
-            
+           
+             self.screen = .home
         })
+        
         
     }
     func chooseToStation(_ station: Station?) {

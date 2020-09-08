@@ -27,20 +27,32 @@ struct StationChooserBar: View {
     var centerAction: (()->())
     var rightAction: (()->())
     var skeleton: Bool = false
+    var geometry: GeometryProxy
     var body: some View {
+        
         HStack {
-            StationChooserButton(title: "from", value: fromStation?.name,alignment: .leading, action: leftAction, skelton: skeleton)
-            Spacer()
-            if (self.timeMode.timeMode == .now) {
-                  StationChooserButton(title: timeModeText(self.timeMode), value: "Now",alignment: .center, action: centerAction, skelton: skeleton)
-            } else {
-                StationChooserButton(title: timeModeText(self.timeMode), value: displayTime(self.timeMode.time).time, unit: displayTime(self.timeMode.time).a,alignment: .center, action: centerAction, skelton: skeleton)
-            }
-          
-            Spacer()
-            StationChooserButton(title: "to", value: toStation?.name ?? "none",alignment: .trailing,action: rightAction, skelton: skeleton)
+            HStack() {
+               StationChooserButton(title: "from", value: self.fromStation?.name,alignment: .leading, action: self.leftAction, skelton: self.skeleton)
+                Spacer()
+            }.frame(maxWidth: (geometry.size.width / 3) - 5)
+         
+            
+                Spacer()
+                if (self.timeMode.timeMode == .now) {
+                    StationChooserButton(title: "Leave", value: "Now",alignment: .center, action: self.centerAction, skelton: self.skeleton).multilineTextAlignment(.center)
+                } else {
+                    StationChooserButton(title: timeModeText(self.timeMode), value: displayTime(self.timeMode.time).time, unit: displayTime(self.timeMode.time).a,alignment: .center, action: self.centerAction, skelton: self.skeleton).multilineTextAlignment(.center)
+                }
+                
+                Spacer()
+            HStack {
+                Spacer()
+                StationChooserButton(title: "to", value: self.toStation?.name ?? "none",alignment: .trailing,action: self.rightAction, skelton: self.skeleton)
+             }.frame(maxWidth: (geometry.size.width / 3) - 5)
             
         }.padding().background(Color("blackBG")).foregroundColor(.white)
+        
+        
     }
 }
 struct StationChooserButton: View {
@@ -66,11 +78,11 @@ struct StationChooserButton: View {
                         Text(title)
                             .font(.caption)
                         HStack(alignment: .lastTextBaseline, spacing: 0) {
-                        Text(value ?? "Choose")
-                            .font(.headline)
+                            Text(value ?? "Choose")
+                                .font(.headline).lineLimit(1)
                             if (self.unit != nil) {
                                 Text(unit ?? "")
-                                .font(.caption)
+                                    .font(.caption)
                             }
                         }
                     }
@@ -83,6 +95,9 @@ struct StationChooserButton: View {
 
 struct StationChooser_Previews: PreviewProvider {
     static var previews: some View {
-        StationChooserBar(leftAction: {print("left")}, centerAction: {print("center")}, rightAction: {print("right")})
+        GeometryReader { geometry in
+            StationChooserBar(leftAction: {print("left")}, centerAction: {print("center")}, rightAction: {print("right")}, geometry: geometry)
+        }
+      
     }
 }

@@ -47,7 +47,7 @@ struct Loading: View {
                 }
             }
            
-        }.background(LinearGradient(gradient: Gradient(colors: [Color("arrivalBlueBG"), Color("arrivalBlueBGDark")]), startPoint: .topLeading, endPoint: .bottomTrailing)).edgesIgnoringSafeArea(.all)
+        }.background(LinearGradient(gradient: Gradient(colors: [Color("arrivalBlue"), Color("arrivalBlueBGDark")]), startPoint: .topLeading, endPoint: .bottomTrailing)).edgesIgnoringSafeArea(.all)
     }
 }
 

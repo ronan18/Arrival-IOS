@@ -21,8 +21,11 @@ struct HomeScreen: View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
                 HomeScreenHeader(geometry: geometry)
-                StationChooserBar(fromStation: self.appState.fromStation, toStation: self.appState.toStation, timeMode: self.appState.tripTimeConfig, leftAction: {self.stationModalType = .from;  self.timeModal = false; self.stationModalPresented = true}, centerAction: {self.stationModalPresented = true; self.timeModal = true}, rightAction: {self.stationModalType = .to; self.timeModal = false; self.stationModalPresented = true}, skeleton:  self.appState.LocationServicesState == LocationServicesState.loading)
-                AlertView(text: "California is under a mandatory shelter at home order during the Covid-19 pandemic. All non-essential travel should be avoided. BART is operating under a modified schedule and closes at 9pm. Weekday trains run every 30 minutes. Face coverings are required.", link: URL(string:"https://google.com"))
+                StationChooserBar(fromStation: self.appState.fromStation, toStation: self.appState.toStation, timeMode: self.appState.tripTimeConfig, leftAction: {self.stationModalType = .from;  self.timeModal = false; self.stationModalPresented = true}, centerAction: {self.stationModalPresented = true; self.timeModal = true}, rightAction: {self.stationModalType = .to; self.timeModal = false; self.stationModalPresented = true}, skeleton:  self.appState.LocationServicesState == LocationServicesState.loading, geometry: geometry)
+                if (self.appState.bannerAlert != nil) {
+                    AlertView(text: self.appState.bannerAlert?.content ?? "", link: self.appState.bannerAlert?.link)
+                }
+               
                 Spacer()
                 if (self.appState.LocationServicesState == LocationServicesState.askForLocation) {
                     LocationAccessRequest(clicked: {self.stationModalType = .from;  self.timeModal = false; self.stationModalPresented = true})

@@ -19,3 +19,8 @@ struct OnBoardingConfig {
      let smartDataSuggestions: OnBoardingScreenConfig
      let anonymous: OnBoardingScreenConfig
 }
+
+struct AlertConfig {
+    let content: String
+    let link: URL?
+}

@@ -75,7 +75,7 @@ struct TimeOption: View {
         }.frame(width: 100, height: 100.0).cornerRadius(10).background(Color("cardBackground")).overlay(
             RoundedRectangle(cornerRadius: CGFloat(10.0)).stroke(borderColor, lineWidth:borderWidth)
         ).cornerRadius(10.0).padding(0)
-             }.foregroundColor(Color.black)
+             }.foregroundColor(Color("Text"))
     }
 }
 
