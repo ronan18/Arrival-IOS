@@ -236,6 +236,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     func getTimeSuggestions(fromStation: Station, toStation: Station?) {
         print("getting time suggestions")
+        let suggestions =  self.timeService.suggestTimes(fromStation: fromStation, toStation: toStation, time: Date())
     }
     
     func start() {
