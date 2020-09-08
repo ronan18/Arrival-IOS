@@ -12,6 +12,7 @@ struct HomeScreen: View {
     @State var stationModalPresented = false
     @State var stationModalType: StationType = .from
     @State var timeModal = false
+    @State var locationTimeout = false
     
     init() {
         UITableView.appearance().separatorStyle = .none
@@ -21,14 +22,16 @@ struct HomeScreen: View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
                 HomeScreenHeader(geometry: geometry)
-                StationChooserBar(fromStation: self.appState.fromStation, toStation: self.appState.toStation, timeMode: self.appState.tripTimeConfig, leftAction: {self.stationModalType = .from;  self.timeModal = false; self.stationModalPresented = true}, centerAction: {self.stationModalPresented = true; self.timeModal = true}, rightAction: {self.stationModalType = .to; self.timeModal = false; self.stationModalPresented = true}, skeleton:  self.appState.LocationServicesState == LocationServicesState.loading, geometry: geometry)
+                StationChooserBar(fromStation: self.appState.fromStation, toStation: self.appState.toStation, timeMode: self.appState.tripTimeConfig, leftAction: {self.stationModalType = .from;  self.timeModal = false; self.stationModalPresented = true}, centerAction: {self.stationModalPresented = true; self.timeModal = true}, rightAction: {self.stationModalType = .to; self.timeModal = false; self.stationModalPresented = true}, skeleton:  self.appState.locationServicesState == LocationServicesState.loading && !self.locationTimeout, geometry: geometry)
                 if (self.appState.bannerAlert != nil) {
                     AlertView(text: self.appState.bannerAlert?.content ?? "", link: self.appState.bannerAlert?.link)
                 }
                
                 Spacer()
-                if (self.appState.LocationServicesState == LocationServicesState.askForLocation) {
-                    LocationAccessRequest(clicked: {self.stationModalType = .from;  self.timeModal = false; self.stationModalPresented = true})
+                if (self.appState.locationServicesState == LocationServicesState.askForLocation && self.appState.fromStation == nil) {
+                    PleaseChooseFromStation(locationAlert: true, clicked: {self.stationModalType = .from;  self.timeModal = false; self.stationModalPresented = true})
+                } else if (self.appState.fromStation == nil && self.locationTimeout) {
+                  PleaseChooseFromStation(locationAlert: false, clicked: {self.stationModalType = .from;  self.timeModal = false; self.stationModalPresented = true})
                 }
             }.sheet(isPresented: self.$stationModalPresented) {
                 if (self.timeModal) {
@@ -40,7 +43,7 @@ struct HomeScreen: View {
                     if (self.stationModalType == .from) {
                         StationChooser(stations: self.appState.fromStationSuggestions, type: self.stationModalType, close: {self.stationModalPresented = false}, choose: ({station in
                             print("choose",StationTypeName(self.stationModalType), station?.name);
-                            self.appState.fromStation = station
+                            self.appState.chooseFromStation(station!)
                             self.stationModalPresented = false}))
                     } else {
                         StationChooser(stations: self.appState.toStationSuggestions, type: self.stationModalType, close: {self.stationModalPresented = false}, choose: ({station in
@@ -52,7 +55,12 @@ struct HomeScreen: View {
                 }
             }
             
-        }.edgesIgnoringSafeArea(.top)
+        }.edgesIgnoringSafeArea(.top).onAppear {
+            Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { timer in
+                     self.locationTimeout = true
+                    
+                 }
+        }
         
     }
 }

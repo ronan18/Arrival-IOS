@@ -8,7 +8,8 @@
 
 import SwiftUI
 
-struct LocationAccessRequest: View {
+struct PleaseChooseFromStation: View {
+    var locationAlert = false
     var clicked: (()->())
     var body: some View {
         VStack {
@@ -16,9 +17,11 @@ struct LocationAccessRequest: View {
             Button(action: clicked) {
                 Text("Please choose a departure station")
             }.padding()
+            if (locationAlert) {
             Text("Enable location services to automatically determine your closest station.").font(.subheadline)
                 Text("(location data is never stored or shared)")
                     .font(.caption).padding(5)
+            }
             Spacer()
             }.padding().multilineTextAlignment(.center)
     }
@@ -26,6 +29,6 @@ struct LocationAccessRequest: View {
 
 struct LocationAccessRequest_Previews: PreviewProvider {
     static var previews: some View {
-        LocationAccessRequest(clicked: {})
+        PleaseChooseFromStation(clicked: {})
     }
 }

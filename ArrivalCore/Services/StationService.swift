@@ -25,16 +25,42 @@ class StationService {
         let ml = MLService()
         let frequentEvents = previousRequests.filter({event in event.toStation != fromStation})
         let model = ml.train(frequentEvents)
-        let cleanedStations = stations.stations.filter {$0.abbr != fromStation.abbr}
+      
+        var frequents: [Station] = []
+                   frequentEvents.forEach({event in
+                       frequents.append(event.toStation)
+                   })
         if model.model == nil {
-            return cleanedStations
+            var results = stations.stations
+            //    print("ml, pre frequents count", results.count)
+            results = results.filter({
+                let remove = !frequents.contains($0)
+                
+                if (!remove) {
+                    //          print("ml filter frequents", $0.abbr, remove)
+                }
+                return remove
+                
+            })
+            //     print("ml, post frequents count", results.count)
+            
+            frequents.forEach {prediction in
+                //      print("ml inserting frequent", prediction.abbr)
+                if (!results.contains(prediction)) {
+                    results.insert(prediction, at: 0)
+                }
+            }
+            print("ML added frequents")
+            if let currentToStation = currentToStation {
+                print("ML current to station overide")
+                results = results.filter {$0 != currentToStation}
+                results.insert(currentToStation, at: 0)
+            }
+            return results.filter {$0.abbr != fromStation.abbr}
         } else {
             let predictions = ml.predict(fromStation: fromStation)
             
-            var frequents: [Station] = []
-            frequentEvents.forEach({event in
-                frequents.append(event.toStation)
-            })
+           
             if let predictions = predictions {
                 var results = stations.stations
                 //    print("ml, pre frequents count", results.count)
@@ -93,7 +119,31 @@ class StationService {
                 
                 return results.filter {$0.abbr != fromStation.abbr}
             } else {
-                return cleanedStations
+                var results = stations.stations
+                //    print("ml, pre frequents count", results.count)
+                results = results.filter({
+                    let remove = !frequents.contains($0)
+                    
+                    if (!remove) {
+                        //          print("ml filter frequents", $0.abbr, remove)
+                    }
+                    return remove
+                    
+                })
+                //     print("ml, post frequents count", results.count)
+                
+                frequents.forEach {prediction in
+                    //      print("ml inserting frequent", prediction.abbr)
+                    if (!results.contains(prediction)) {
+                        results.insert(prediction, at: 0)
+                    }
+                }
+                if let currentToStation = currentToStation {
+                    print("ML current to station overide")
+                    results = results.filter {$0 != currentToStation}
+                    results.insert(currentToStation, at: 0)
+                }
+                return results.filter {$0.abbr != fromStation.abbr}
             }
             
             

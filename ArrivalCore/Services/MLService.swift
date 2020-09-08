@@ -92,6 +92,7 @@ class MLService {
                         return result
                     } catch {
                         print("ml prediction error", error)
+                        return nil
                     }
                 } else {
                     return nil

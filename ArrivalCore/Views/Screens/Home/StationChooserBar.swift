@@ -39,9 +39,9 @@ struct StationChooserBar: View {
             
                 Spacer()
                 if (self.timeMode.timeMode == .now) {
-                    StationChooserButton(title: "Leave", value: "Now",alignment: .center, action: self.centerAction, skelton: self.skeleton).multilineTextAlignment(.center)
+                    StationChooserButton(title: "Leave", value: "Now",alignment: .center, action: self.centerAction, skelton: self.skeleton).multilineTextAlignment(.center).disabled(self.fromStation == nil)
                 } else {
-                    StationChooserButton(title: timeModeText(self.timeMode), value: displayTime(self.timeMode.time).time, unit: displayTime(self.timeMode.time).a,alignment: .center, action: self.centerAction, skelton: self.skeleton).multilineTextAlignment(.center)
+                    StationChooserButton(title: timeModeText(self.timeMode), value: displayTime(self.timeMode.time).time, unit: displayTime(self.timeMode.time).a,alignment: .center, action: self.centerAction, skelton: self.skeleton).multilineTextAlignment(.center).disabled(self.fromStation == nil)
                 }
                 
                 Spacer()

@@ -14,6 +14,12 @@ import FirebasePerformance
 import FirebaseAnalytics
 import FirebaseRemoteConfig
 
+enum StationChooserBarState {
+    case loading
+    case choose
+    case ready
+}
+
 class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var screen: AppScreen = .loading
     @Published var stations: StationStorage? = nil
@@ -23,13 +29,14 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var fromStation: Station? = nil
     @Published var toStation: Station? = nil
     @Published var tripTimeConfig: TripTimeModel = TripTimeModel(timeMode: .now, time: Date())
-    @Published var LocationServicesState: LocationServicesState = .loading
+    @Published var locationServicesState: LocationServicesState = .loading
     @Published var toStationSuggestions: [Station] = []
     @Published var fromStationSuggestions: [Station] = []
     @Published var remoteConfig = RemoteConfig.remoteConfig()
     @Published var onBoardingConfig: OnBoardingConfig? = nil
     @Published var configLoaded = false
     @Published var bannerAlert: AlertConfig? = nil
+    @Published var stationChooserBarState: StationChooserBarState = .loading
     var api = ApiService()
     let stationService = StationService()
     let defaults = UserDefaults.standard
@@ -43,6 +50,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     private var goingOffClosestStation = true
     private var fromStationWatcher: Any? = nil
     private var toStationWatcher: Any? = nil
+    private var locationServiceStatusWatcher: Any? = nil
     private let settings = RemoteConfigSettings()
     private let timeService = TimeService()
     override init() {
@@ -177,19 +185,19 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         switch status {
         case .notDetermined:
             print("location access not determined")
-            self.LocationServicesState = .askForLocation
+            self.locationServicesState = .askForLocation
             break
         case .authorizedWhenInUse, .authorizedAlways:
             if CLLocationManager.locationServicesEnabled() {
                 self.locationAccess = true
-                self.LocationServicesState = .loading
+                self.locationServicesState = .loading
                 self.getClosestStations()
                 print(" location access")
                 // Analytics.setUserProperty("true", forName: "locationAccess")
             }
         case .restricted, .denied:
             self.locationAccess = false
-            self.LocationServicesState = .askForLocation
+            self.locationServicesState = .askForLocation
             print("no location access")
             // Analytics.setUserProperty("false", forName: "locationAccess")
         }
@@ -202,7 +210,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
                     self.fromStationSuggestions =  stations
                     if self.goingOffClosestStation {
                         self.fromStation = stations[0]
-                        self.LocationServicesState = .ready
+                        self.locationServicesState = .ready
                     }
                     if let handleComplete = handleComplete {
                         handleComplete(true)
@@ -251,7 +259,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         } else {
             print("no location access")
             self.fromStationSuggestions = self.stations?.stations ?? []
-            self.LocationServicesState = .askForLocation
+            self.locationServicesState = .askForLocation
             self.requestLocation()
             
         }
@@ -262,6 +270,9 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
                 self.getTimeSuggestions(fromStation: station, toStation: self.toStation)
             }
         }
+        self.locationServiceStatusWatcher = self.$locationServicesState.sink {value in
+            
+        }
         self.toStationWatcher = self.$toStation.sink { value in
             print("to station change", value)
             if let station = value {
@@ -271,13 +282,16 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         }
         self.getClosestStations(handleComplete: { success in
             if (success) {
-                self.LocationServicesState = .ready
+                self.locationServicesState = .ready
             }
            
              self.screen = .home
         })
         
         
+    }
+    func chooseFromStation(_ station: Station) {
+        self.fromStation = station
     }
     func chooseToStation(_ station: Station?) {
         
