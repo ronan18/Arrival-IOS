@@ -39,15 +39,15 @@ struct StationChooserBar: View {
             
                 Spacer()
                 if (self.timeMode.timeMode == .now) {
-                    StationChooserButton(title: "Leave", value: "Now",alignment: .center, action: self.centerAction, skelton: self.skeleton).multilineTextAlignment(.center).disabled(self.fromStation == nil)
+                    StationChooserButton(title: "Leave", value: "Now",alignment: .center, action: self.centerAction, skelton: self.skeleton, disabled: self.fromStation == nil).multilineTextAlignment(.center)
                 } else {
-                    StationChooserButton(title: timeModeText(self.timeMode), value: displayTime(self.timeMode.time).time, unit: displayTime(self.timeMode.time).a,alignment: .center, action: self.centerAction, skelton: self.skeleton).multilineTextAlignment(.center).disabled(self.fromStation == nil)
+                    StationChooserButton(title: timeModeText(self.timeMode), value: displayTime(self.timeMode.time).time, unit: displayTime(self.timeMode.time).a,alignment: .center, action: self.centerAction, skelton: self.skeleton, disabled: self.fromStation == nil).multilineTextAlignment(.center)
                 }
                 
                 Spacer()
             HStack {
                 Spacer()
-                StationChooserButton(title: "to", value: self.toStation?.name ?? "none",alignment: .trailing,action: self.rightAction, skelton: self.skeleton)
+                StationChooserButton(title: "to", value: self.toStation?.name ?? "none",alignment: .trailing,action: self.rightAction, skelton: self.skeleton, disabled: self.fromStation == nil)
              }.frame(maxWidth: (geometry.size.width / 3) - 5)
             
         }.padding().background(Color("blackBG")).foregroundColor(.white)
@@ -62,6 +62,7 @@ struct StationChooserButton: View {
     var alignment: HorizontalAlignment
     var action: (()->())
     var skelton: Bool = false
+    var disabled: Bool = false
     var body: some View {
         VStack {
             if (skelton) {
@@ -86,7 +87,7 @@ struct StationChooserButton: View {
                             }
                         }
                     }
-                }
+                }.disabled(disabled).foregroundColor(disabled ? Color("skeleton") : Color.white)
             }
         }
         
