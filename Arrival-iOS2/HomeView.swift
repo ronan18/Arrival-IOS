@@ -63,7 +63,7 @@ struct HomeView: View {
                                 VStack {
                                     Text(self.appData.appMessage)
                                         .font(.callout)
-                                        .foregroundColor(Color.white)
+                                        .foregroundColor(Color.white).multilineTextAlignment(.center)
                                     if (self.appData.appLink.count > 0) {
                                         
                                         Button(action: {

@@ -29,7 +29,7 @@ struct HomeDestinationChooser: View {
                             Spacer()
                         }
                         Text(stationDisplay(self.appData.fromStation.name)).font(.headline)
-                    }.lineLimit(1).frame(width: geometry.size.width / 3.25)
+                    }.lineLimit(1).frame(width: geometry.size.width / 2.5)
                 } else {
                     VStack(alignment: .leading, spacing: 0) {
                         HStack {
@@ -37,15 +37,15 @@ struct HomeDestinationChooser: View {
                             Spacer()
                         }
                         Text("Station").font(.headline)
-                    }.lineLimit(1).frame(width: geometry.size.width / 3.25)
+                    }.lineLimit(1).frame(width: geometry.size.width / 2.5)
                 }
                 
-            }.frame(width: geometry.size.width / 3.25).sheet(isPresented: self.$fromModalDisplayed) {
+            }.frame(width: geometry.size.width / 2.5).sheet(isPresented: self.$fromModalDisplayed) {
                 fromModal(fromStationSearch: self.$fromStationSearch, fromModalDisplayed: self.$fromModalDisplayed).environmentObject(self.appData)
             }
             Spacer()
         
-            LeaveButton(geometry:geometry).environmentObject(self.appData)
+            //LeaveButton(geometry:geometry).environmentObject(self.appData)
             
             Spacer()
             Button  (action: {
@@ -62,8 +62,8 @@ struct HomeDestinationChooser: View {
                     }
                     
                     Text(stationDisplay(self.appData.toStation.name)).font(.headline)
-                }.padding(0).lineLimit(1).frame(width: geometry.size.width / 3.25)
-            }.frame(width: geometry.size.width / 3.25).sheet(isPresented: self.$toModalDisplayed) {
+                }.padding(0).lineLimit(1).frame(width: geometry.size.width / 2.5)
+            }.frame(width: geometry.size.width / 2.5).sheet(isPresented: self.$toModalDisplayed) {
                 ToModal(toModalDisplayed: self.$toModalDisplayed, fromStationSearch: self.$fromStationSearch).environmentObject(self.appData)
             }
             
