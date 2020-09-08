@@ -8,9 +8,21 @@
 
 import SwiftUI
 
+func timeModeText(_ timeMode: TripTimeModel) -> String {
+    switch timeMode.timeMode {
+    case .now:
+        return "Now"
+    case .leave:
+        return "Leave"
+    case .arrive:
+        return "Arrive"
+    }
+}
+
 struct StationChooserBar: View {
     var fromStation: Station?  = nil
     var toStation: Station? = nil
+    var timeMode: TripTimeModel = TripTimeModel(timeMode: .now, time: Date())
     var leftAction: (()->())
     var centerAction: (()->())
     var rightAction: (()->())
@@ -19,7 +31,12 @@ struct StationChooserBar: View {
         HStack {
             StationChooserButton(title: "from", value: fromStation?.name,alignment: .leading, action: leftAction, skelton: skeleton)
             Spacer()
-            StationChooserButton(title: "leave", value: "Now",alignment: .center, action: centerAction, skelton: skeleton)
+            if (self.timeMode.timeMode == .now) {
+                  StationChooserButton(title: timeModeText(self.timeMode), value: "Now",alignment: .center, action: centerAction, skelton: skeleton)
+            } else {
+                StationChooserButton(title: timeModeText(self.timeMode), value: displayTime(self.timeMode.time).time, unit: displayTime(self.timeMode.time).a,alignment: .center, action: centerAction, skelton: skeleton)
+            }
+          
             Spacer()
             StationChooserButton(title: "to", value: toStation?.name ?? "none",alignment: .trailing,action: rightAction, skelton: skeleton)
             
@@ -29,6 +46,7 @@ struct StationChooserBar: View {
 struct StationChooserButton: View {
     var title: String
     var value: String?
+    var unit: String? = nil
     var alignment: HorizontalAlignment
     var action: (()->())
     var skelton: Bool = false
@@ -47,8 +65,14 @@ struct StationChooserButton: View {
                     VStack(alignment: alignment) {
                         Text(title)
                             .font(.caption)
+                        HStack(alignment: .lastTextBaseline, spacing: 0) {
                         Text(value ?? "Choose")
                             .font(.headline)
+                            if (self.unit != nil) {
+                                Text(unit ?? "")
+                                .font(.caption)
+                            }
+                        }
                     }
                 }
             }

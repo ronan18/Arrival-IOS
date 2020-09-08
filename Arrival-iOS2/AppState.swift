@@ -13,18 +13,7 @@ import CoreLocation
 import FirebasePerformance
 import FirebaseAnalytics
 import FirebaseRemoteConfig
-enum AppScreen {
-    case loading
-    case loadingIndicator
-    case home
-    case settings
-    case onBoarding
-}
-enum LocationServicesState {
-    case loading
-    case ready
-    case askForLocation
-}
+
 class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var screen: AppScreen = .loading
     @Published var stations: StationStorage? = nil
@@ -33,6 +22,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var closestStations: [Station] = []
     @Published var fromStation: Station? = nil
     @Published var toStation: Station? = nil
+    @Published var tripTimeConfig: TripTimeModel = TripTimeModel(timeMode: .now, time: Date())
     @Published var LocationServicesState: LocationServicesState = .loading
     @Published var toStationSuggestions: [Station] = []
     @Published var fromStationSuggestions: [Station] = []
