@@ -117,7 +117,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     // MARK: Fetch data stores
     func runRemoteConfigFetches() {
         self.onBoardingConfig = OnBoardingConfig(welcome: OnBoardingScreenConfig(title: self.remoteConfig["onboarding1Heading"].stringValue!, description: self.remoteConfig["onboarding1Tagline"].stringValue!), lowDataUsage: OnBoardingScreenConfig(title: self.remoteConfig["onboarding2Heading"].stringValue!, description: self.remoteConfig["onboarding2Tagline"].stringValue!), smartDataSuggestions: OnBoardingScreenConfig(title: self.remoteConfig["onboarding3Heading"].stringValue!, description: self.remoteConfig["onboarding3Tagline"].stringValue!), anonymous: OnBoardingScreenConfig(title: self.remoteConfig["onboarding4Heading"].stringValue!, description: self.remoteConfig["onboarding4Tagline"].stringValue!))
-         self.cycleTimer = Double(self.remoteConfig["cycleTimer"].stringValue!)!
+        self.cycleTimer = Double(self.remoteConfig["cycleTimer"].stringValue!)!
         if let alertContent = self.remoteConfig["inAppMessage"].stringValue {
             if (alertContent.count > 1) {
                 var link: URL? = nil
@@ -216,7 +216,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
     
-   
+    
     func getClosestStations(handleComplete: ((Bool)->())? = nil) {
         if let stations = self.stations {
             if let location = self.location {
@@ -248,7 +248,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         }
         
     }
-     // MARK: Suggestions Proiders
+    // MARK: Suggestions Proiders
     func getToStationSuggestions(_ fromStation: Station? = nil, toStation: Station? = nil) {
         let finalFromStation = fromStation ?? self.fromStation
         let finalToStation = toStation ?? self.toStation
@@ -304,10 +304,10 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
             
             self.screen = .home
         })
-          self.cylce()
+        self.cylce()
         Timer.scheduledTimer(withTimeInterval: self.cycleTimer, repeats: true) { timer in
-                  self.cylce()
-              }
+            self.cylce()
+        }
         
         
     }
@@ -337,7 +337,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
             }
             
         }
-         self.cylce()
+        self.cylce()
     }
     
     //MARK: Station Cycle
@@ -345,22 +345,27 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     @objc func cylce() {
         print("cycle: starting cycle")
         if (self.fromStation != nil && self.api.authorized) {
-             print("cycle: allowed to cycle")
+            print("cycle: allowed to cycle")
             if (self.toStation == nil) {
                 self.trips = nil
-                 print("cycle: train mode")
+                print("cycle: train mode")
                 self.api.getTrainsFrom(from: self.fromStation!, timeConfig: self.tripTimeConfig, handleComplete: {trains in
-               //    print("cycle: train response", trains)
+                    //    print("cycle: train response", trains)
                     if let trains = trains {
                         self.trains = self.trainService.sortTrains(trains)
                     } else {
-                          self.trains = []
+                        self.trains = []
+                        
                     }
-                  
+                    
                 })
             } else {
                 self.trains = nil
                 print("cycle: route mode")
+                self.api.getTrips(from: self.fromStation!, to: self.toStation!, timeConfig: self.tripTimeConfig, handleComplete: {trips in
+                    self.trips = trips
+                        //print("cycle: route response", trips)
+                })
             }
         } else {
             print("cycle: cycle not allowed")

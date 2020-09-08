@@ -70,54 +70,7 @@ class ApiService {
             
         }
     }
-    func getTrainsFrom(from: Station, timeConfig: TripTimeModel, handleComplete: @escaping (([Train]?)->())) {
-        if let auth = auth {
-            let headers: HTTPHeaders = [
-                "Authorization": auth,
-                "Accept": "application/json"
-            ]
-            var type: String
-            var time: String = convertDateToISO(timeConfig.time)
-            switch timeConfig.timeMode {
-            case .arrive:
-                type = "arrive"
-            case .leave:
-                type = "leave"
-            case .now:
-                type = "now"
-            }
-            
-            AF.request("\(apiUrl)/api/v3/trains/\(from.abbr)", method: .post, parameters: ["type": type, "time": time], headers: headers).responseJSON{ response in
-                switch response.result {
-                case .success(let value):
-                    let result = JSON(value)
-                    var trains: [Train] = []
-                    result["estimates"]["etd"].arrayValue.forEach {destinationTrains in
-                        let destinationTrainsJSON = JSON(destinationTrains)
-                        let destination = Station(id: destinationTrainsJSON["abbreviation"].stringValue, name: destinationTrainsJSON["destination"].stringValue, abbr: destinationTrainsJSON["abbreviation"].stringValue)
-                        //print(destination)
-                        let estimates = destinationTrainsJSON["estimate"].arrayValue
-                        //  print(estimates.count)
-                        estimates.forEach {trainEstimate in
-                          // print("API: train etd addition", trainEstimate["minutes"])
-                            let etd = Date(timeIntervalSinceNow: trainEstimate["minutes"].doubleValue * 60)
-                            let train = Train(departureStation: from, destinationStation: destination, etd: etd, platform: trainEstimate["platform"].intValue, direction: determineTrainDirection(trainEstimate["direction"].stringValue), delay: trainEstimate["delay"].doubleValue, bikeFlag: trainEstimate["bikeflag"].intValue, color: determineTrainColor(trainEstimate["color"].stringValue))
-                            //print(train)
-                            trains.append(train)
-                        }
-                    }
-                    handleComplete(trains)
-                    
-                case .failure(let error):
-                    print(error)
-                    handleComplete([])
-                }
-            }
-        } else {
-            print("no auth", auth)
-        }
-        
-    }
+    
     func createAccount(key: String, handleComplete: @escaping ((Bool)->())) {
         let headers: HTTPHeaders = [
             "Authorization": key,
@@ -202,12 +155,68 @@ class ApiService {
             }
         }
     }
-    func getTrips(from: Station, to: Station, type: String, time: String, handleComplete: @escaping (([Trip]?)->())) {
+    func conertTimeModelToAPIModel (_ timeConfig: TripTimeModel) -> [String] {
+        var type: String
+        var time: String = convertDateToISO(timeConfig.time)
+        switch timeConfig.timeMode {
+        case .arrive:
+            type = "arrive"
+        case .leave:
+            type = "leave"
+        case .now:
+            type = "now"
+        }
+        return [type, time]
+    }
+    func getTrainsFrom(from: Station, timeConfig: TripTimeModel, handleComplete: @escaping (([Train]?)->())) {
         if let auth = auth {
             let headers: HTTPHeaders = [
                 "Authorization": auth,
                 "Accept": "application/json"
             ]
+            var type: String = conertTimeModelToAPIModel(timeConfig)[0]
+            var time: String = conertTimeModelToAPIModel(timeConfig)[1]
+            
+            
+            AF.request("\(apiUrl)/api/v3/trains/\(from.abbr)", method: .post, parameters: ["type": type, "time": time], headers: headers).responseJSON{ response in
+                switch response.result {
+                case .success(let value):
+                    let result = JSON(value)
+                    var trains: [Train] = []
+                    result["estimates"]["etd"].arrayValue.forEach {destinationTrains in
+                        let destinationTrainsJSON = JSON(destinationTrains)
+                        let destination = Station(id: destinationTrainsJSON["abbreviation"].stringValue, name: destinationTrainsJSON["destination"].stringValue, abbr: destinationTrainsJSON["abbreviation"].stringValue)
+                        //print(destination)
+                        let estimates = destinationTrainsJSON["estimate"].arrayValue
+                        //  print(estimates.count)
+                        estimates.forEach {trainEstimate in
+                            // print("API: train etd addition", trainEstimate["minutes"])
+                            let etd = Date(timeIntervalSinceNow: trainEstimate["minutes"].doubleValue * 60)
+                            let train = Train(departureStation: from, destinationStation: destination, etd: etd, platform: trainEstimate["platform"].intValue, direction: determineTrainDirection(trainEstimate["direction"].stringValue), delay: trainEstimate["delay"].doubleValue, bikeFlag: trainEstimate["bikeflag"].intValue, color: determineTrainColor(trainEstimate["color"].stringValue))
+                            //print(train)
+                            trains.append(train)
+                        }
+                    }
+                    handleComplete(trains)
+                    
+                case .failure(let error):
+                    print(error)
+                    handleComplete([])
+                }
+            }
+        } else {
+            print("no auth", auth)
+        }
+        
+    }
+    func getTrips(from: Station, to: Station, timeConfig: TripTimeModel, handleComplete: @escaping (([Trip]?)->())) {
+        if let auth = auth {
+            let headers: HTTPHeaders = [
+                "Authorization": auth,
+                "Accept": "application/json"
+            ]
+            var type: String = conertTimeModelToAPIModel(timeConfig)[0]
+            var time: String = conertTimeModelToAPIModel(timeConfig)[1]
             AF.request("\(apiUrl)/api/v4/routes/\(from.abbr)/\(to.abbr)", method: .post, parameters: ["type": type, "time": time], headers: headers).responseJSON{ response in
                 switch response.result {
                 case .success(let value):

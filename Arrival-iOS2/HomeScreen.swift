@@ -15,7 +15,7 @@ struct HomeScreen: View {
     @State var locationTimeout = false
     
     init() {
-       // UITableView.appearance().separatorStyle = .none
+        // UITableView.appearance().separatorStyle = .none
     }
     var body: some View {
         
@@ -26,17 +26,28 @@ struct HomeScreen: View {
                 if (self.appState.bannerAlert != nil) {
                     AlertView(text: self.appState.bannerAlert?.content ?? "", link: self.appState.bannerAlert?.link)
                 }
-               
+                
                 Spacer()
                 if (self.appState.locationServicesState == LocationServicesState.askForLocation && self.appState.fromStation == nil) {
                     PleaseChooseFromStation(locationAlert: true, clicked: {self.stationModalType = .from;  self.timeModal = false; self.stationModalPresented = true})
                 } else if (self.appState.fromStation == nil && self.locationTimeout) {
-                  PleaseChooseFromStation(locationAlert: false, clicked: {self.stationModalType = .from;  self.timeModal = false; self.stationModalPresented = true})
+                    PleaseChooseFromStation(locationAlert: false, clicked: {self.stationModalType = .from;  self.timeModal = false; self.stationModalPresented = true})
                 }
                 if (self.appState.trains != nil) {
-                    List(self.appState.trains!) { train in
-                        TrainCard(train)
+                    ScrollView {
+                        ForEach(self.appState.trains!) { train in
+                            TrainCard(train: train).padding(.horizontal)
+                        }
                     }
+                    
+                }
+                if (self.appState.trips != nil) {
+                    ScrollView {
+                        ForEach(self.appState.trips!) { trip in
+                            TrainCard(trip: trip).padding(.horizontal)
+                        }
+                    }
+                    
                 }
             }.sheet(isPresented: self.$stationModalPresented) {
                 if (self.timeModal) {
@@ -52,9 +63,9 @@ struct HomeScreen: View {
                             self.stationModalPresented = false}))
                     } else {
                         StationChooser(stations: self.appState.toStationSuggestions, type: self.stationModalType, close: {self.stationModalPresented = false}, choose: ({station in
-                        print("choose",StationTypeName(self.stationModalType), station?.name);
-                        self.appState.chooseToStation(station)
-                        self.stationModalPresented = false}))
+                            print("choose",StationTypeName(self.stationModalType), station?.name);
+                            self.appState.chooseToStation(station)
+                            self.stationModalPresented = false}))
                     }
                     
                 }
@@ -63,9 +74,9 @@ struct HomeScreen: View {
         }.edgesIgnoringSafeArea(.top).onAppear {
             self.appState.cylce()
             Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { timer in
-                     self.locationTimeout = true
-                    
-                 }
+                self.locationTimeout = true
+                
+            }
         }
         
     }
