@@ -14,18 +14,32 @@ struct TrainCard: View {
     var cars: Int? = nil
     var departs: String
     var arrives: TimeDisplay?
+    var hideUnit: Bool = false
     private let latterAlignment: HorizontalAlignment = .leading
     init(train: Train? = nil, trip: Trip? = nil) {
         if let train = train {
             self.direction = train.destinationStation.name
-            self.cars = 12
+            self.cars = train.cars
             self.color = converTrainColor(train.color)
-            self.departs = String(displayMinutes(train.etd))
+            let departTime = displayMinutes(train.etd)
+            if departTime < 1 {
+                self.departs = "now"
+                self.hideUnit = true
+            } else {
+                self.departs = String(departTime)
+            }
         } else if let trip = trip  {
             self.direction = trip.legs[0].trainHeadSTN
             self.color = converTrainColor(trip.legs[0].route.color)
-            self.departs = String(displayMinutes(trip.originTime))
-             self.arrives = displayTime(trip.legs[0].destinationTime)
+            let departTime = displayMinutes(trip.originTime)
+            if departTime < 1 {
+                self.departs = "now"
+                self.hideUnit = true
+            } else {
+                self.departs = String(departTime)
+            }
+            
+            self.arrives = displayTime(trip.legs[0].destinationTime)
         } else {
             self.direction = ""
             self.color = .yellow
@@ -64,8 +78,11 @@ struct TrainCard: View {
                     HStack(alignment: .lastTextBaseline,spacing: 0) {
                         Text(self.departs)
                             .font(.headline)
-                        Text("min")
-                            .font(.caption)
+                        if(!self.hideUnit) {
+                            Text("min")
+                                .font(.caption)
+                        }
+                        
                     }
                     
                 }
@@ -91,7 +108,7 @@ struct TrainCard: View {
 struct TrainCard_Previews: PreviewProvider {
     static var previews: some View {
         
-        TrainCard(train: Train(departureStation: Station(id: "abbr", name: "Rockridge", abbr: "test"), destinationStation: Station(id: "abbr", name: "Rockridge", abbr: "test"), etd: Date(), platform: 1, direction: .north, delay: 0, bikeFlag: 1, color: TrainColor.red))
+        TrainCard(train: Train(departureStation: Station(id: "abbr", name: "Rockridge", abbr: "test"), destinationStation: Station(id: "abbr", name: "Rockridge", abbr: "test"), etd: Date(), platform: 1, direction: .north, delay: 0, bikeFlag: 1, color: TrainColor.red,  cars: 10))
         // TrainCard(direction: "Antioch", color: TrainColor.yellow, departs: Date(), arrives: Date())
         
         

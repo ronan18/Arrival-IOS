@@ -13,7 +13,7 @@ struct HomeScreen: View {
     @State var stationModalType: StationType = .from
     @State var timeModal = false
     @State var locationTimeout = false
-    
+    @State var tripToPresent: Trip?
     init() {
         // UITableView.appearance().separatorStyle = .none
     }
@@ -22,41 +22,36 @@ struct HomeScreen: View {
         GeometryReader { geometry in
             VStack(spacing: 0) {
                 HomeScreenHeader(geometry: geometry, settings: {self.appState.screen = .settings})
-                StationChooserBar(fromStation: self.appState.fromStation, toStation: self.appState.toStation, timeMode: self.appState.tripTimeConfig, leftAction: {self.stationModalType = .from;  self.timeModal = false; self.stationModalPresented = true}, centerAction: {self.stationModalPresented = true; self.timeModal = true}, rightAction: {self.stationModalType = .to; self.timeModal = false; self.stationModalPresented = true}, skeleton:  self.appState.locationServicesState == LocationServicesState.loading && !self.locationTimeout && self.appState.fromStation == nil, geometry: geometry)
+                StationChooserBar(fromStation: self.appState.fromStation, toStation: self.appState.toStation, timeMode: self.appState.tripTimeConfig, leftAction: {self.stationModalType = .from; self.tripToPresent = nil;  self.timeModal = false; self.stationModalPresented = true}, centerAction: {self.tripToPresent = nil;  self.timeModal = true; self.stationModalPresented = true;}, rightAction: {self.stationModalType = .to;self.tripToPresent = nil;  self.timeModal = false; self.stationModalPresented = true}, skeleton:  self.appState.locationServicesState == LocationServicesState.loading && !self.locationTimeout && self.appState.fromStation == nil, geometry: geometry)
                 if (self.appState.bannerAlert != nil) {
                     AlertView(text: self.appState.bannerAlert?.content ?? "", link: self.appState.bannerAlert?.link)
                 }
                 
-                Spacer()
+                
                 if (self.appState.locationServicesState == LocationServicesState.askForLocation && self.appState.fromStation == nil) {
                     PleaseChooseFromStation(locationAlert: true, clicked: {self.stationModalType = .from;  self.timeModal = false; self.stationModalPresented = true})
                 } else if (self.appState.fromStation == nil && self.locationTimeout) {
                     PleaseChooseFromStation(locationAlert: false, clicked: {self.stationModalType = .from;  self.timeModal = false; self.stationModalPresented = true})
                 }
                 if (self.appState.trains != nil) {
-                    ScrollView {
-                        ForEach(self.appState.trains!) { train in
-                            TrainCard(train: train).padding(.horizontal)
-                        }
-                    }
+                    TrainsView(trains: self.appState.trains!)
                     
                 }
                 if (self.appState.trips != nil) {
-                    ScrollView {
-                        ForEach(self.appState.trips!) { trip in
-                            TrainCard(trip: trip).padding(.horizontal)
-                        }
-                    }
+                    TripsView(trips: self.appState.trips!, presentTrip: {trip in self.tripToPresent = trip; self.stationModalPresented = true; print("showing trip")})
                     
                 }
+                Spacer()
             }.sheet(isPresented: self.$stationModalPresented) {
-                if (self.timeModal) {
-                    TimeOptions(options: sampleTimeOptions, close: {
-                        self.stationModalPresented = false
-                        self.timeModal = false
-                    })
-                } else {
-                    if (self.stationModalType == .from) {
+                VStack {
+                    if (self.timeModal) {
+                        TimeOptions(options: sampleTimeOptions, close: {
+                            self.stationModalPresented = false
+                            self.timeModal = false
+                        })
+                    } else if (self.tripToPresent != nil) {
+                        Text("trip")
+                    }else if (self.stationModalType == .from) {
                         StationChooser(stations: self.appState.fromStationSuggestions, type: self.stationModalType, close: {self.stationModalPresented = false}, choose: ({station in
                             print("choose",StationTypeName(self.stationModalType), station?.name);
                             self.appState.chooseFromStation(station!)
@@ -71,14 +66,15 @@ struct HomeScreen: View {
                             Spacer()
                             HStack {
                                 Spacer()
-                                 Text("Loading")
+                                Text("Loading")
                                 Spacer()
                             }
-                          
+                            
                             Spacer()
                         }
+                        
+                        
                     }
-                    
                 }
             }
             
@@ -98,5 +94,6 @@ struct HomeScreen_Previews: PreviewProvider {
         HomeScreen()
     }
 }
+
 
 

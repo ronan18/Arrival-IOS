@@ -56,4 +56,5 @@ struct Train: Identifiable {
     let delay: Double
     let bikeFlag: Int
     let color: TrainColor
+    let cars: Int
 }

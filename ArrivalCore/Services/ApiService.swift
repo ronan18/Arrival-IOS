@@ -192,7 +192,7 @@ class ApiService {
                         estimates.forEach {trainEstimate in
                             // print("API: train etd addition", trainEstimate["minutes"])
                             let etd = Date(timeIntervalSinceNow: trainEstimate["minutes"].doubleValue * 60)
-                            let train = Train(departureStation: from, destinationStation: destination, etd: etd, platform: trainEstimate["platform"].intValue, direction: determineTrainDirection(trainEstimate["direction"].stringValue), delay: trainEstimate["delay"].doubleValue, bikeFlag: trainEstimate["bikeflag"].intValue, color: determineTrainColor(trainEstimate["color"].stringValue))
+                            let train = Train(departureStation: from, destinationStation: destination, etd: etd, platform: trainEstimate["platform"].intValue, direction: determineTrainDirection(trainEstimate["direction"].stringValue), delay: trainEstimate["delay"].doubleValue, bikeFlag: trainEstimate["bikeflag"].intValue, color: determineTrainColor(trainEstimate["color"].stringValue), cars: trainEstimate["length"].intValue)
                             //print(train)
                             trains.append(train)
                         }
