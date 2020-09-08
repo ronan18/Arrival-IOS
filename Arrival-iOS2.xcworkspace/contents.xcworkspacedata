@@ -2,9 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:ArrivalCore/../ArrivalAPITests.playground">
-   </FileRef>
-   <FileRef
       location = "group:Arrival-iOS2.xcodeproj">
    </FileRef>
    <FileRef
