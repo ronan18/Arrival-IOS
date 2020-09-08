@@ -51,6 +51,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     private var lastLocation: CLLocation? = nil
     private var goingOffClosestStation = true
     private var fromStationWatcher: Any? = nil
+    private var toStationWatcher: Any? = nil
     private let settings = RemoteConfigSettings()
     override init() {
         
@@ -58,25 +59,25 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         settings.minimumFetchInterval = 43200
         remoteConfig.configSettings = settings
         remoteConfig.setDefaults(fromPlist: "RemoteConfigDefaults")
-           self.runRemoteConfigFetches()
+        self.runRemoteConfigFetches()
         remoteConfig.fetch(withExpirationDuration: TimeInterval(43200)) { (status, error) -> Void in
-                  if status == .success {
-                      print("Config fetched!")
-                      self.remoteConfig.activate(completionHandler: { (error) in
-                          DispatchQueue.main.async {
-                             
-                            self.runRemoteConfigFetches()
-                            self.configLoaded = true
-                              
-                          }
-                      })
-                  } else {
-                      print("Config not fetched")
-                      print("Error: \(error?.localizedDescription ?? "No error available.")")
-                  }
-                  
-              }
-     
+            if status == .success {
+                print("Config fetched!")
+                self.remoteConfig.activate(completionHandler: { (error) in
+                    DispatchQueue.main.async {
+                        
+                        self.runRemoteConfigFetches()
+                        self.configLoaded = true
+                        
+                    }
+                })
+            } else {
+                print("Config not fetched")
+                print("Error: \(error?.localizedDescription ?? "No error available.")")
+            }
+            
+        }
+        
         let passphrase = defaults.string(forKey: "passphrase")
         if let passphrase = passphrase {
             print("authorized")
@@ -106,7 +107,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
     func runRemoteConfigFetches() {
-           self.onBoardingConfig = OnBoardingConfig(welcome: OnBoardingScreenConfig(title: self.remoteConfig["onboarding1Heading"].stringValue!, description: self.remoteConfig["onboarding1Tagline"].stringValue!), lowDataUsage: OnBoardingScreenConfig(title: self.remoteConfig["onboarding2Heading"].stringValue!, description: self.remoteConfig["onboarding2Tagline"].stringValue!), smartDataSuggestions: OnBoardingScreenConfig(title: self.remoteConfig["onboarding3Heading"].stringValue!, description: self.remoteConfig["onboarding3Tagline"].stringValue!), anonymous: OnBoardingScreenConfig(title: self.remoteConfig["onboarding4Heading"].stringValue!, description: self.remoteConfig["onboarding4Tagline"].stringValue!))
+        self.onBoardingConfig = OnBoardingConfig(welcome: OnBoardingScreenConfig(title: self.remoteConfig["onboarding1Heading"].stringValue!, description: self.remoteConfig["onboarding1Tagline"].stringValue!), lowDataUsage: OnBoardingScreenConfig(title: self.remoteConfig["onboarding2Heading"].stringValue!, description: self.remoteConfig["onboarding2Tagline"].stringValue!), smartDataSuggestions: OnBoardingScreenConfig(title: self.remoteConfig["onboarding3Heading"].stringValue!, description: self.remoteConfig["onboarding3Tagline"].stringValue!), anonymous: OnBoardingScreenConfig(title: self.remoteConfig["onboarding4Heading"].stringValue!, description: self.remoteConfig["onboarding4Tagline"].stringValue!))
     }
     func fetchToStationEvents() {
         do {
@@ -217,9 +218,14 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         }
         
     }
-    func getToStationSuggestions(_ fromStation: Station) {
-        print("getting to station suggestions for:", fromStation.name)
-        self.toStationSuggestions = self.stationService.getToStationSuggestions(fromStation: fromStation, previousRequests: self.toStationEvents, stations: self.stations!)
+    func getToStationSuggestions(_ fromStation: Station? = nil, toStation: Station? = nil) {
+        let finalFromStation = fromStation ?? self.fromStation
+        let finalToStation = toStation ?? self.toStation
+        if let fromStation = finalFromStation {
+            print("getting to station suggestions for:", fromStation.name)
+            self.toStationSuggestions = self.stationService.getToStationSuggestions(fromStation: fromStation, previousRequests: self.toStationEvents, stations: self.stations!, currentToStation: toStation)
+        }
+        
         
     }
     
@@ -242,7 +248,13 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         self.fromStationWatcher = self.$fromStation.sink { value in
             print("from station change", value)
             if let station = value {
-                self.getToStationSuggestions(station)
+                self.getToStationSuggestions(station, toStation: self.toStation)
+            }
+        }
+        self.toStationWatcher = self.$toStation.sink { value in
+            print("to station change", value)
+            if let station = value {
+                self.getToStationSuggestions(self.fromStation, toStation: value)
             }
         }
         self.getClosestStations(handleComplete: { success in
@@ -255,7 +267,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         
     }
     func chooseToStation(_ station: Station?) {
-       
+        
         self.toStation = station
         let time = Date()
         if let station = station {

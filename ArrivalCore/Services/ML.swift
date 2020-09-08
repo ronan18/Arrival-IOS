@@ -56,7 +56,8 @@ class MLService {
         })
         var model:KNearestNeighborsClassifier?
         do {
-            model =  try KNearestNeighborsClassifier(data: trainingData, labels: trainingLabels, nNeighbors: trainingData.count - 1)
+            print("ml KNN count", trainingData.count - 1)
+            model =  try KNearestNeighborsClassifier(data: trainingData, labels: trainingLabels, nNeighbors: 1)
             self.model = model
             self.decodeTable = key
             self.encodeTable = conversionTableWorking
@@ -66,7 +67,7 @@ class MLService {
         }
         
         let result = MLObject(model: model, key: key)
-        print("trained ml", result)
+       // print("trained ml", result)
         return result
     }
     func predict(fromStation: Station, date: Date = Date()) -> [Station]? {
@@ -81,6 +82,7 @@ class MLService {
                         print(labels, "ml predicted labels")
                         var result: [Station] = []
                         labels.forEach({label in
+                            print("ml lable", label)
                             if let station = self.decodeTable?[label] {
                                    result.append(station)
                             }
