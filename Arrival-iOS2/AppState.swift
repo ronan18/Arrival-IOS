@@ -40,12 +40,15 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var stationChooserBarState: StationChooserBarState = .loading
     @Published var key: String = ""
     @Published  var toStationEvents: [ToStationEvent] = []
+    @Published var cycleTimer: Double = 30
+    @Published var trains: [Train]? = nil
+    @Published var trips: [Trip]? = nil
     var api = ApiService()
     let stationService = StationService()
     let defaults = UserDefaults.standard
-  
+    
     var authorized: Bool = false
-     
+    
     private let locationManager = CLLocationManager()
     private var lat = 0.0
     private var long = 0.0
@@ -56,7 +59,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     private var locationServiceStatusWatcher: Any? = nil
     private let settings = RemoteConfigSettings()
     private let timeService = TimeService()
-    
+    private let trainService = TrainsService()
     //MARK: Initilization
     override init() {
         
@@ -114,7 +117,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     // MARK: Fetch data stores
     func runRemoteConfigFetches() {
         self.onBoardingConfig = OnBoardingConfig(welcome: OnBoardingScreenConfig(title: self.remoteConfig["onboarding1Heading"].stringValue!, description: self.remoteConfig["onboarding1Tagline"].stringValue!), lowDataUsage: OnBoardingScreenConfig(title: self.remoteConfig["onboarding2Heading"].stringValue!, description: self.remoteConfig["onboarding2Tagline"].stringValue!), smartDataSuggestions: OnBoardingScreenConfig(title: self.remoteConfig["onboarding3Heading"].stringValue!, description: self.remoteConfig["onboarding3Tagline"].stringValue!), anonymous: OnBoardingScreenConfig(title: self.remoteConfig["onboarding4Heading"].stringValue!, description: self.remoteConfig["onboarding4Tagline"].stringValue!))
-        
+         self.cycleTimer = Double(self.remoteConfig["cycleTimer"].stringValue!)!
         if let alertContent = self.remoteConfig["inAppMessage"].stringValue {
             if (alertContent.count > 1) {
                 var link: URL? = nil
@@ -173,9 +176,9 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         self.authorized = false
         self.screen = .onBoarding
     }
-
-
-// MARK: Location delegates
+    
+    
+    // MARK: Location delegates
     func  requestLocation() {
         locationManager.requestWhenInUseAuthorization()
     }
@@ -213,7 +216,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
     
-    // MARK: Suggestions Proiders
+   
     func getClosestStations(handleComplete: ((Bool)->())? = nil) {
         if let stations = self.stations {
             if let location = self.location {
@@ -223,6 +226,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
                     if self.goingOffClosestStation {
                         self.fromStation = stations[0]
                         self.locationServicesState = .ready
+                        self.cylce()
                     }
                     if let handleComplete = handleComplete {
                         handleComplete(true)
@@ -232,19 +236,19 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
                 self.closestStations = stations.stations
                 self.fromStationSuggestions =  stations.stations
                 
-               if let handleComplete = handleComplete {
-                                  handleComplete(false)
-                              }
+                if let handleComplete = handleComplete {
+                    handleComplete(false)
+                }
             }
             
         } else {
-           if let handleComplete = handleComplete {
-                               handleComplete(false)
-                           }
+            if let handleComplete = handleComplete {
+                handleComplete(false)
+            }
         }
         
     }
-    
+     // MARK: Suggestions Proiders
     func getToStationSuggestions(_ fromStation: Station? = nil, toStation: Station? = nil) {
         let finalFromStation = fromStation ?? self.fromStation
         let finalToStation = toStation ?? self.toStation
@@ -297,9 +301,13 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
             if (success) {
                 self.locationServicesState = .ready
             }
-           
-             self.screen = .home
+            
+            self.screen = .home
         })
+          self.cylce()
+        Timer.scheduledTimer(withTimeInterval: self.cycleTimer, repeats: true) { timer in
+                  self.cylce()
+              }
         
         
     }
@@ -307,6 +315,12 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     // MARK: Choose stations
     func chooseFromStation(_ station: Station) {
         self.fromStation = station
+        if (station == closestStations[0]) {
+            self.goingOffClosestStation = true
+        } else {
+            self.goingOffClosestStation = false
+        }
+        self.cylce()
     }
     func chooseToStation(_ station: Station?) {
         
@@ -323,5 +337,36 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
             }
             
         }
+         self.cylce()
     }
+    
+    //MARK: Station Cycle
+    
+    @objc func cylce() {
+        print("cycle: starting cycle")
+        if (self.fromStation != nil && self.api.authorized) {
+             print("cycle: allowed to cycle")
+            if (self.toStation == nil) {
+                self.trips = nil
+                 print("cycle: train mode")
+                self.api.getTrainsFrom(from: self.fromStation!, timeConfig: self.tripTimeConfig, handleComplete: {trains in
+               //    print("cycle: train response", trains)
+                    if let trains = trains {
+                        self.trains = self.trainService.sortTrains(trains)
+                    } else {
+                          self.trains = []
+                    }
+                  
+                })
+            } else {
+                self.trains = nil
+                print("cycle: route mode")
+            }
+        } else {
+            print("cycle: cycle not allowed")
+        }
+        print("cycle: end cycle")
+        
+    }
+    
 }

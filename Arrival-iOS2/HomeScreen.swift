@@ -33,6 +33,11 @@ struct HomeScreen: View {
                 } else if (self.appState.fromStation == nil && self.locationTimeout) {
                   PleaseChooseFromStation(locationAlert: false, clicked: {self.stationModalType = .from;  self.timeModal = false; self.stationModalPresented = true})
                 }
+                if (self.appState.trains != nil) {
+                    List(self.appState.trains!) { train in
+                        TrainCard(train)
+                    }
+                }
             }.sheet(isPresented: self.$stationModalPresented) {
                 if (self.timeModal) {
                     TimeOptions(options: sampleTimeOptions, close: {
@@ -56,7 +61,8 @@ struct HomeScreen: View {
             }
             
         }.edgesIgnoringSafeArea(.top).onAppear {
-            Timer.scheduledTimer(withTimeInterval: 5, repeats: false) { timer in
+            self.appState.cylce()
+            Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { timer in
                      self.locationTimeout = true
                     
                  }

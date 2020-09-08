@@ -15,14 +15,14 @@ struct TrainCard: View {
     var departs: String
     var arrives: TimeDisplay?
     private let latterAlignment: HorizontalAlignment = .leading
-    init(direction: String, color: TrainColor, cars: Int? = nil, departs: Date, arrives: Date? = nil) {
-        self.direction = direction
-        self.cars = cars
-        self.color = converTrainColor(color)
-        self.departs = String(displayMinutes(departs))
-        if let arrives = arrives {
+    init(_ train: Train) {
+        self.direction = train.destinationStation.name
+        self.cars = 12
+        self.color = converTrainColor(train.color)
+        self.departs = String(displayMinutes(train.etd))
+       /* if let arrives = arrives {
                self.arrives = displayTime(arrives)
-        }
+        }*/
     
     }
     var body: some View {
@@ -79,7 +79,7 @@ struct TrainCard: View {
 struct TrainCard_Previews: PreviewProvider {
     static var previews: some View {
         
-        TrainCard(direction: "Antioch", color: TrainColor.yellow, cars: 5, departs: Date() + TimeInterval(600),  arrives: Date(timeIntervalSinceNow: 1800))
+        TrainCard(Train(departureStation: Station(id: "abbr", name: "Rockridge", abbr: "test"), destinationStation: Station(id: "abbr", name: "Rockridge", abbr: "test"), etd: Date(), platform: 1, direction: .north, delay: 0, bikeFlag: 1, color: TrainColor.red))
         // TrainCard(direction: "Antioch", color: TrainColor.yellow, departs: Date(), arrives: Date())
         
         

@@ -13,6 +13,7 @@ import NotificationCenter
 import SwiftyJSON
 class ApiService {
     var auth: String?
+    var authorized: Bool = false
     let apiUrl = "https://api.arrival.city"
     func  getStations(handleComplete: @escaping ((StationStorage)->())) {
         var result:JSON = []
@@ -55,6 +56,7 @@ class ApiService {
                 let result = JSON(value)
                 if (result["user"].boolValue) {
                     self.auth = key
+                    self.authorized = true
                     handleComplete(true)
                 } else {
                     self.auth = key
@@ -68,12 +70,23 @@ class ApiService {
             
         }
     }
-    func getTrainsFrom(from: Station, type: String, time: String, handleComplete: @escaping (([Train]?)->())) {
+    func getTrainsFrom(from: Station, timeConfig: TripTimeModel, handleComplete: @escaping (([Train]?)->())) {
         if let auth = auth {
             let headers: HTTPHeaders = [
                 "Authorization": auth,
                 "Accept": "application/json"
             ]
+            var type: String
+            var time: String = convertDateToISO(timeConfig.time)
+            switch timeConfig.timeMode {
+            case .arrive:
+                type = "arrive"
+            case .leave:
+                type = "leave"
+            case .now:
+                type = "now"
+            }
+            
             AF.request("\(apiUrl)/api/v3/trains/\(from.abbr)", method: .post, parameters: ["type": type, "time": time], headers: headers).responseJSON{ response in
                 switch response.result {
                 case .success(let value):
@@ -86,7 +99,8 @@ class ApiService {
                         let estimates = destinationTrainsJSON["estimate"].arrayValue
                         //  print(estimates.count)
                         estimates.forEach {trainEstimate in
-                            let etd = Date(timeIntervalSinceNow: trainEstimate["etd"].doubleValue * 60)
+                          // print("API: train etd addition", trainEstimate["minutes"])
+                            let etd = Date(timeIntervalSinceNow: trainEstimate["minutes"].doubleValue * 60)
                             let train = Train(departureStation: from, destinationStation: destination, etd: etd, platform: trainEstimate["platform"].intValue, direction: determineTrainDirection(trainEstimate["direction"].stringValue), delay: trainEstimate["delay"].doubleValue, bikeFlag: trainEstimate["bikeflag"].intValue, color: determineTrainColor(trainEstimate["color"].stringValue))
                             //print(train)
                             trains.append(train)

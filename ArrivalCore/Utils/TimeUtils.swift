@@ -47,3 +47,8 @@ func displayTime(_ date: Date) -> TimeDisplay {
     return TimeDisplay(time: String(time.dropLast(3)) , a: String(time.suffix(2).lowercased()))
     
 }
+
+func convertDateToISO(_ time: Date) -> String {
+   let formatter = ISO8601DateFormatter()
+    return formatter.string(from: time)
+}
