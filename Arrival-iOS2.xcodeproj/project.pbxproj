@@ -16,6 +16,9 @@
 		34166DD925084F0B0054980C /* TripDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34166DD825084F0B0054980C /* TripDetailView.swift */; };
 		34166DDB250873DD0054980C /* TripLegCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34166DDA250873DD0054980C /* TripLegCard.swift */; };
 		34166DDD250874160054980C /* TripTransferWinfowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34166DDC250874160054980C /* TripTransferWinfowView.swift */; };
+		34166DDF2508928E0054980C /* SkeletonTrainCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34166DDE2508928E0054980C /* SkeletonTrainCard.swift */; };
+		34166DE1250894990054980C /* SkeletonLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34166DE0250894990054980C /* SkeletonLoading.swift */; };
+		34166DE325089E5D0054980C /* NoTrains.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34166DE225089E5D0054980C /* NoTrains.swift */; };
 		3463C1A62507154D0043F66F /* TimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3463C1A52507154D0043F66F /* TimeService.swift */; };
 		3481782025056FAD008C5F09 /* TimeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3481781F25056FAD008C5F09 /* TimeOption.swift */; };
 		3481782225058A1F008C5F09 /* StyledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3481782125058A1F008C5F09 /* StyledButton.swift */; };
@@ -72,6 +75,9 @@
 		34166DD825084F0B0054980C /* TripDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailView.swift; sourceTree = "<group>"; };
 		34166DDA250873DD0054980C /* TripLegCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripLegCard.swift; sourceTree = "<group>"; };
 		34166DDC250874160054980C /* TripTransferWinfowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTransferWinfowView.swift; sourceTree = "<group>"; };
+		34166DDE2508928E0054980C /* SkeletonTrainCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonTrainCard.swift; sourceTree = "<group>"; };
+		34166DE0250894990054980C /* SkeletonLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonLoading.swift; sourceTree = "<group>"; };
+		34166DE225089E5D0054980C /* NoTrains.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoTrains.swift; sourceTree = "<group>"; };
 		3463C1A52507154D0043F66F /* TimeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeService.swift; sourceTree = "<group>"; };
 		3481781F25056FAD008C5F09 /* TimeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeOption.swift; sourceTree = "<group>"; };
 		3481782125058A1F008C5F09 /* StyledButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledButton.swift; sourceTree = "<group>"; };
@@ -252,8 +258,11 @@
 				3463C1A025068E0B0043F66F /* Screens */,
 				3463C1A125068E240043F66F /* Components */,
 				34DB0D1B25045C4500BF8401 /* TrainCard.swift */,
+				34166DDE2508928E0054980C /* SkeletonTrainCard.swift */,
+				34166DE0250894990054980C /* SkeletonLoading.swift */,
 				34166DD42508428C0054980C /* TripsView.swift */,
 				34166DD62508435A0054980C /* TrainsView.swift */,
+				34166DE225089E5D0054980C /* NoTrains.swift */,
 				34166DD825084F0B0054980C /* TripDetailView.swift */,
 				34166DDA250873DD0054980C /* TripLegCard.swift */,
 				34166DDC250874160054980C /* TripTransferWinfowView.swift */,
@@ -485,6 +494,7 @@
 				34DB0D0A25041E6800BF8401 /* TripModel.swift in Sources */,
 				34DB0D1A2504547B00BF8401 /* AlertView.swift in Sources */,
 				34166DD925084F0B0054980C /* TripDetailView.swift in Sources */,
+				34166DE325089E5D0054980C /* NoTrains.swift in Sources */,
 				34166DDB250873DD0054980C /* TripLegCard.swift in Sources */,
 				C560522B2506A02A0026A555 /* SmartSuggestions.swift in Sources */,
 				34DB0D142504484C00BF8401 /* HomeScreen.swift in Sources */,
@@ -510,7 +520,9 @@
 				3481782025056FAD008C5F09 /* TimeOption.swift in Sources */,
 				34DB0D25250480B600BF8401 /* MockupData.swift in Sources */,
 				C58F248423CC1438003882F3 /* SceneDelegate.swift in Sources */,
+				34166DE1250894990054980C /* SkeletonLoading.swift in Sources */,
 				34166DDD250874160054980C /* TripTransferWinfowView.swift in Sources */,
+				34166DDF2508928E0054980C /* SkeletonTrainCard.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

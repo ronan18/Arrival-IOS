@@ -32,14 +32,14 @@ struct HomeScreen: View {
                     PleaseChooseFromStation(locationAlert: true, clicked: {self.stationModalType = .from;  self.timeModal = false; self.modalPresented = true})
                 } else if (self.appState.fromStation == nil && self.locationTimeout) {
                     PleaseChooseFromStation(locationAlert: false, clicked: {self.stationModalType = .from;  self.timeModal = false; self.modalPresented = true})
-                }
-                if (self.appState.trains != nil) {
+                } else if (self.appState.trains != nil) {
                     TrainsView(trains: self.appState.trains!).edgesIgnoringSafeArea(.bottom)
                     
-                }
-                if (self.appState.trips != nil) {
-                    TripsView(trips: self.appState.trips!, presentTrip: {trip in self.tripToPresent = trip; self.modalPresented = true; print("showing trip")}).edgesIgnoringSafeArea(.bottom)
+                } else if (self.appState.trips != nil) {
+                    TripsView(trips: self.appState.trips!, presentTrip: {trip in self.tripToPresent = trip; self.modalPresented = true; self.appState.buttonHaptics(); print("showing trip")}).edgesIgnoringSafeArea(.bottom)
                     
+                } else {
+                    SkeletonLoading()
                 }
                 Spacer()
             }.edgesIgnoringSafeArea(.bottom).sheet(isPresented: self.$modalPresented) {

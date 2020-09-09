@@ -39,9 +39,13 @@ func displayTimeInterval(_ time: TimeInterval) -> TimeDisplay {
 func displayMinutes(_ date: Date) -> Int {
     // print(date)
     let timeFromNow = date.timeIntervalSince(Date())
+   
     // print(timeFromNow)
     return Int(round(timeFromNow / 60))
 }
+/*func displayMinutesString(_ date: Date) -> TimeDisplay{
+    
+}*/
 func timeIntervalUntil(_ date: Date) -> TimeInterval {
     return date.timeIntervalSince(Date())
 }

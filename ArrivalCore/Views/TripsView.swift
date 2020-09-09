@@ -7,15 +7,20 @@
 //
 
 import SwiftUI
+
 struct TripsView: View {
     var trips: [Trip]
     var presentTrip: ((Trip)->())
     var body: some View {
-        
+        ZStack {
+            if (trips.count == 0) {
+                NoTrains()
+            } else {
         ScrollView {
             Spacer().frame(height: 10)
             ForEach(trips) { trip in
                 Button(action: {
+                  
                     self.presentTrip(trip)
                 }) {
                     TrainCard(trip: trip).padding(.horizontal)
@@ -23,7 +28,8 @@ struct TripsView: View {
                 
             }
         }.edgesIgnoringSafeArea(.bottom)
-        
+            }
+        }
         
         
     }

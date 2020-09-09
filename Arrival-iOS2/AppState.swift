@@ -13,6 +13,9 @@ import CoreLocation
 import FirebasePerformance
 import FirebaseAnalytics
 import FirebaseRemoteConfig
+import SwiftUI
+import CoreHaptics
+import UIKit
 
 enum StationChooserBarState {
     case loading
@@ -326,17 +329,20 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         self.trains = nil
               self.trips = nil
         self.fromStation = station
+           self.buttonHaptics()
         if (station == closestStations[0]) {
             self.goingOffClosestStation = true
         } else {
             self.goingOffClosestStation = false
         }
+     
         self.cylce()
     }
     func chooseToStation(_ station: Station?) {
         self.trains = nil
         self.trips = nil
         self.toStation = station
+               self.buttonHaptics()
         let time = Date()
         if let station = station {
             let fromStation = self.fromStation
@@ -349,6 +355,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
             }
             
         }
+  
         self.cylce()
     }
     
@@ -390,6 +397,11 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         }
         print("cycle: end cycle")
         
+    }
+    
+    func buttonHaptics() {
+        let impactMed = UIImpactFeedbackGenerator(style: .medium)
+                          impactMed.impactOccurred()
     }
     
 }
