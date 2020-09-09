@@ -22,7 +22,7 @@ struct TripsView: View {
                 }.foregroundColor(Color("Text"))
                 
             }
-        }
+        }.edgesIgnoringSafeArea(.bottom)
         
         
         
@@ -32,6 +32,6 @@ struct TripsView: View {
 
 struct TripsView_Previews: PreviewProvider {
     static var previews: some View {
-        TripsView(trips:  Mockdata().trips, presentTrip: {trip in})
+        TripsView(trips:  MockData().trips, presentTrip: {trip in})
     }
 }

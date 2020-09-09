@@ -27,12 +27,26 @@ func convertBartDate(time: String, date: String) -> Date? {
      print("date",dateFormatter.string(from: date!))
     return date
 }
-
+func displayTimeInterval(_ time: TimeInterval) -> TimeDisplay {
+    let formatter = DateComponentsFormatter()
+    formatter.allowedUnits = [.minute]
+    formatter.unitsStyle = .abbreviated
+    formatter.maximumUnitCount = 1
+    var time = formatter.string(from: time)!
+   time = String(time.dropLast())
+    return TimeDisplay(time: time, a: "min")
+}
 func displayMinutes(_ date: Date) -> Int {
     // print(date)
     let timeFromNow = date.timeIntervalSince(Date())
     // print(timeFromNow)
     return Int(round(timeFromNow / 60))
+}
+func timeIntervalUntil(_ date: Date) -> TimeInterval {
+    return date.timeIntervalSince(Date())
+}
+func getTimeDifference(from: Date, to: Date) -> TimeInterval {
+    return to.timeIntervalSince(from)
 }
 func displayTime(_ date: Date) -> TimeDisplay {
     // print(date)

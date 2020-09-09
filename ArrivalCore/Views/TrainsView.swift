@@ -16,7 +16,7 @@ struct TrainsView: View {
             ForEach(trains) { train in
                 TrainCard(train: train).padding(.horizontal)
             }
-        }
+        }.edgesIgnoringSafeArea(.bottom)
     }
 }
 

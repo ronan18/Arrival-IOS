@@ -21,8 +21,8 @@ struct Trip: Identifiable {
 
 struct TripLeg: Identifiable {
     let id = UUID()
-    let order: Int
-    let origin: String
+    var order: Int
+    var origin: String
     var destination: String
     let originTime: Date
     let destinationTime: Date
@@ -30,7 +30,8 @@ struct TripLeg: Identifiable {
     var trainHeadSTN: String
     var stopCount: Int
     var enrouteTime: TimeInterval
-    init(order: Int, origin: String, destination: String, originTime: Date, destinationTime: Date, route: Route, trainHeadSTN: String) {
+    var finalLeg: Bool
+    init(order: Int, origin: String, destination: String, originTime: Date, destinationTime: Date, route: Route, trainHeadSTN: String, finalLeg: Bool = false) {
         self.order = order
         self.origin = origin
         self.destination = destination
@@ -48,7 +49,7 @@ struct TripLeg: Identifiable {
         }
         self.enrouteTime = destinationTime.timeIntervalSince(originTime)
         self.trainHeadSTN = trainHeadSTN
-        
+        self.finalLeg = finalLeg
         
     }
 }

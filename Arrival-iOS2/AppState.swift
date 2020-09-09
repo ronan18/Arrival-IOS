@@ -314,6 +314,8 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     
     // MARK: Choose stations
     func chooseFromStation(_ station: Station) {
+        self.trains = nil
+              self.trips = nil
         self.fromStation = station
         if (station == closestStations[0]) {
             self.goingOffClosestStation = true
@@ -323,7 +325,8 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         self.cylce()
     }
     func chooseToStation(_ station: Station?) {
-        
+        self.trains = nil
+        self.trips = nil
         self.toStation = station
         let time = Date()
         if let station = station {

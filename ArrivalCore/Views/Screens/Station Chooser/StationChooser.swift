@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-let mockData = Mockdata()
+let mockData = MockData()
 enum StationType {
     case from
     case to

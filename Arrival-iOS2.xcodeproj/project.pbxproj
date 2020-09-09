@@ -13,6 +13,7 @@
 		34166DD3250803150054980C /* TrainsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34166DD2250803150054980C /* TrainsService.swift */; };
 		34166DD52508428C0054980C /* TripsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34166DD42508428C0054980C /* TripsView.swift */; };
 		34166DD72508435A0054980C /* TrainsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34166DD62508435A0054980C /* TrainsView.swift */; };
+		34166DD925084F0B0054980C /* TripDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34166DD825084F0B0054980C /* TripDetailView.swift */; };
 		3463C1A62507154D0043F66F /* TimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3463C1A52507154D0043F66F /* TimeService.swift */; };
 		3481782025056FAD008C5F09 /* TimeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3481781F25056FAD008C5F09 /* TimeOption.swift */; };
 		3481782225058A1F008C5F09 /* StyledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3481782125058A1F008C5F09 /* StyledButton.swift */; };
@@ -66,6 +67,7 @@
 		34166DD2250803150054980C /* TrainsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainsService.swift; sourceTree = "<group>"; };
 		34166DD42508428C0054980C /* TripsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripsView.swift; sourceTree = "<group>"; };
 		34166DD62508435A0054980C /* TrainsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainsView.swift; sourceTree = "<group>"; };
+		34166DD825084F0B0054980C /* TripDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailView.swift; sourceTree = "<group>"; };
 		3463C1A52507154D0043F66F /* TimeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeService.swift; sourceTree = "<group>"; };
 		3481781F25056FAD008C5F09 /* TimeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeOption.swift; sourceTree = "<group>"; };
 		3481782125058A1F008C5F09 /* StyledButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledButton.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 				34DB0D1B25045C4500BF8401 /* TrainCard.swift */,
 				34166DD42508428C0054980C /* TripsView.swift */,
 				34166DD62508435A0054980C /* TrainsView.swift */,
+				34166DD825084F0B0054980C /* TripDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -475,6 +478,7 @@
 				34DB0D072504015000BF8401 /* TrainModel.swift in Sources */,
 				34DB0D0A25041E6800BF8401 /* TripModel.swift in Sources */,
 				34DB0D1A2504547B00BF8401 /* AlertView.swift in Sources */,
+				34166DD925084F0B0054980C /* TripDetailView.swift in Sources */,
 				C560522B2506A02A0026A555 /* SmartSuggestions.swift in Sources */,
 				34DB0D142504484C00BF8401 /* HomeScreen.swift in Sources */,
 				C59430EF2506EA7E00296278 /* KNN.swift in Sources */,

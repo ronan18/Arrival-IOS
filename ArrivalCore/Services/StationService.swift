@@ -10,6 +10,19 @@ import Foundation
 import CoreLocation
 
 class StationService {
+    func fillOutStations(forTrip: Trip, stations: StationStorage) -> Trip {
+        let legs = forTrip.legs
+        var resultLegs: [TripLeg] = []
+        legs.forEach {leg in
+            debugPrint("STATION SERVICE: ", leg)
+            var resultLeg = leg
+            resultLeg.origin = stations.byAbbr[resultLeg.origin]?.name ?? resultLeg.origin
+            resultLeg.destination = stations.byAbbr[resultLeg.destination]?.name ?? resultLeg.destination
+            resultLegs.append(resultLeg)
+        }
+        var result = Trip(id: forTrip.id, origin: forTrip.origin, destination: forTrip.destination, originTime: forTrip.originTime, destinationTime: forTrip.destinationTime, tripTime: forTrip.tripTime, legs: resultLegs)
+        return result
+    }
     func getClosestStations(stations: [Station], location: CLLocation, handleComplete: @escaping (([Station])->())) {
         print("STATION SERVICE: getting nearest station")
         let sorted = stations.sorted  {
@@ -105,18 +118,6 @@ class StationService {
                     results.insert(currentToStation, at: 0)
                 }
                 //   print("ml, final count", results.count)
-                /*
-                 let filteredFrequents = frequents.filter({!predictions.contains($0)})
-                 var filteredStations = cleanedStations.filter({!frequents.contains($0)})
-                 filteredStations.insert(contentsOf: filteredFrequents, at: 0)
-                 filteredStations.insert(contentsOf: predictions, at: 0)
-                 var result = filteredStations
-                 if let currentToStation = currentToStation {
-                 print("ML current to station overide")
-                 result = result.filter {$0 != currentToStation}
-                 result.insert(currentToStation, at: 0)
-                 }*/
-                
                 return results.filter {$0.abbr != fromStation.abbr}
             } else {
                 var results = stations.stations
