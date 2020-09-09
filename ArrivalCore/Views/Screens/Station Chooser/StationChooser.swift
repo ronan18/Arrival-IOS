@@ -41,7 +41,7 @@ struct StationChooser: View {
         self.type = type
         self.choose = choose
         self.filteredStations = stations
-        UITableView.appearance().separatorStyle = .none
+      
         
         
     }

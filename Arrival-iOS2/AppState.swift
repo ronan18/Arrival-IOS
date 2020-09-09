@@ -151,6 +151,15 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
             
         })
     }
+    func deleteToStationEvents() {
+        self.toStationEvents = []
+        do {
+            try Disk.remove("toStationEvents.json", from: .documents)
+        } catch {
+            
+        }
+        self.getToStationSuggestions()
+    }
     // MARK: Account logic
     func createAccount() {
         

@@ -40,6 +40,15 @@ struct SettingsScreen: View {
                         Spacer()
                         Text(String(self.appState.toStationEvents.count))
                     }
+                    HStack() {
+                        Spacer()
+                        Button(action: {
+                            self.appState.deleteToStationEvents()
+                        }) {
+                            Text("reset AI data").foregroundColor(.red)
+                        }
+                        Spacer()
+                    }
                 }
                 Spacer()
             }
