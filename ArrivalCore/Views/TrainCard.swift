@@ -9,11 +9,11 @@
 import SwiftUI
 
 struct TrainCard: View {
-    var direction: String
-    var color: Color
+    var direction: String = "Rockridge"
+    var color: Color = .red
     var cars: Int? = nil
-    var departs: String
-    var arrives: TimeDisplay?
+    var departs: TimeDisplay = TimeDisplay(time: "", a: "")
+    var arrives: TimeDisplay? = nil
     var hideUnit: Bool = false
     private let latterAlignment: HorizontalAlignment = .leading
     init(train: Train? = nil, trip: Trip? = nil) {
@@ -21,29 +21,24 @@ struct TrainCard: View {
             self.direction = train.destinationStation.name
             self.cars = train.cars
             self.color = converTrainColor(train.color)
-            let departTime = displayMinutes(train.etd)
-            if departTime < 1 {
-                self.departs = "now"
+            let departTime = displayMinutesString(train.etd)
+            if departTime.time == "now" {
+                
                 self.hideUnit = true
-            } else {
-                self.departs = String(departTime)
             }
+            self.departs = departTime
+            print("DISPLAY TIME:", self.departs)
         } else if let trip = trip  {
             self.direction = trip.legs[0].trainHeadSTN
             self.color = converTrainColor(trip.legs[0].route.color)
-            let departTime = displayMinutes(trip.originTime)
-            if departTime < 1 {
-                self.departs = "now"
+            let departTime = displayMinutesString(trip.originTime)
+            if departTime.time == "now" {
+               
                 self.hideUnit = true
-            } else {
-                self.departs = String(departTime)
             }
-            
+            self.departs = departTime
+                      print("DISPLAY TIME:", self.departs)
             self.arrives = displayTime(trip.legs[0].destinationTime)
-        } else {
-            self.direction = ""
-            self.color = .yellow
-            self.departs = "now"
         }
         
         /* if let arrives = arrives {
@@ -76,10 +71,10 @@ struct TrainCard: View {
                     Text("departs")
                         .font(.caption)
                     HStack(alignment: .lastTextBaseline,spacing: 0) {
-                        Text(self.departs)
+                        Text(self.departs.time)
                             .font(.headline)
                         if(!self.hideUnit) {
-                            Text("min")
+                            Text(self.departs.a)
                                 .font(.caption)
                         }
                         
@@ -107,8 +102,14 @@ struct TrainCard: View {
 
 struct TrainCard_Previews: PreviewProvider {
     static var previews: some View {
-        
-        TrainCard(train: Train(departureStation: Station(id: "abbr", name: "Rockridge", abbr: "test"), destinationStation: Station(id: "abbr", name: "Rockridge", abbr: "test"), etd: Date(), platform: 1, direction: .north, delay: 0, bikeFlag: 1, color: TrainColor.red,  cars: 10))
+        Group {
+             TrainCard(train: Train(departureStation: Station(id: "abbr", name: "Rockridge", abbr: "test"), destinationStation: Station(id: "abbr", name: "Rockridge", abbr: "test"), etd: Date(timeIntervalSinceNow: 0), platform: 1, direction: .north, delay: 0, bikeFlag: 1, color: TrainColor.red,  cars: 10)).previewLayout(PreviewLayout.sizeThatFits)
+             .padding()
+        TrainCard(train: Train(departureStation: Station(id: "abbr", name: "Rockridge", abbr: "test"), destinationStation: Station(id: "abbr", name: "Rockridge", abbr: "test"), etd: Date(timeIntervalSinceNow: 60*3), platform: 1, direction: .north, delay: 0, bikeFlag: 1, color: TrainColor.red,  cars: 10)).previewLayout(PreviewLayout.sizeThatFits)
+        .padding()
+            TrainCard(train: Train(departureStation: Station(id: "abbr", name: "Rockridge", abbr: "test"), destinationStation: Station(id: "abbr", name: "Rockridge", abbr: "test"), etd: Date(timeIntervalSinceNow: 60*45), platform: 1, direction: .north, delay: 0, bikeFlag: 1, color: TrainColor.red,  cars: 10)).previewLayout(PreviewLayout.sizeThatFits)
+            .padding()
+        }
         // TrainCard(direction: "Antioch", color: TrainColor.yellow, departs: Date(), arrives: Date())
         
         
