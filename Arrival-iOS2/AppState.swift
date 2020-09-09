@@ -46,6 +46,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var cycleTimer: Double = 30
     @Published var trains: [Train]? = nil
     @Published var trips: [Trip]? = nil
+    @Published var goingOffClosestStation = true
     var api = ApiService()
     let stationService = StationService()
     let defaults = UserDefaults.standard
@@ -56,7 +57,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     private var lat = 0.0
     private var long = 0.0
     private var lastLocation: CLLocation? = nil
-    private var goingOffClosestStation = true
+     
     private var fromStationWatcher: Any? = nil
     private var toStationWatcher: Any? = nil
     private var locationServiceStatusWatcher: Any? = nil
@@ -195,7 +196,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         locationManager.requestWhenInUseAuthorization()
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("location updated")
+  print("LOCATION: update")
         if let location = locations.first {
             //print(location.coordinate, "location", location)
             lat = location.coordinate.latitude
@@ -230,12 +231,14 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     
     
     func getClosestStations(handleComplete: ((Bool)->())? = nil) {
+            print("LOCATION STATION: refresh closest station")
         if let stations = self.stations {
             if let location = self.location {
                 self.stationService.getClosestStations(stations: stations.stations, location: location, handleComplete: { stations in
                     self.closestStations = stations
                     self.fromStationSuggestions =  stations
                     if self.goingOffClosestStation {
+                        print("LOCATION: going off closest station", stations[0].name, self.fromStation?.name)
                         self.fromStation = stations[0]
                         self.locationServicesState = .ready
                         self.cylce()
