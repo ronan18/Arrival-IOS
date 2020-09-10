@@ -13,6 +13,8 @@ class StationService {
     func fillOutStations(forTrip: Trip, stations: StationStorage) -> Trip {
         let legs = forTrip.legs
         var resultLegs: [TripLeg] = []
+        let destination = stations.byAbbr[forTrip.destination.abbr] ?? forTrip.destination
+         let origin = stations.byAbbr[forTrip.origin.abbr] ?? forTrip.origin
         legs.forEach {leg in
             debugPrint("STATION SERVICE: ", leg)
             var resultLeg = leg
@@ -20,7 +22,7 @@ class StationService {
             resultLeg.destination = stations.byAbbr[resultLeg.destination]?.name ?? resultLeg.destination
             resultLegs.append(resultLeg)
         }
-        var result = Trip(id: forTrip.id, origin: forTrip.origin, destination: forTrip.destination, originTime: forTrip.originTime, destinationTime: forTrip.destinationTime, tripTime: forTrip.tripTime, legs: resultLegs)
+        var result = Trip(id: forTrip.id, origin: origin, destination: destination, originTime: forTrip.originTime, destinationTime: forTrip.destinationTime, tripTime: forTrip.tripTime, legs: resultLegs)
         return result
     }
     func getClosestStations(stations: [Station], location: CLLocation, handleComplete: @escaping (([Station])->())) {

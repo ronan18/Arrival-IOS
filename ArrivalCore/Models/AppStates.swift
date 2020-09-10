@@ -19,3 +19,8 @@ enum LocationServicesState {
     case ready
     case askForLocation
 }
+enum LinkedTripState {
+    case loading
+    case ready
+    case expired
+}

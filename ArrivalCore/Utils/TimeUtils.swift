@@ -7,10 +7,15 @@
 //
 
 import Foundation
-
+enum EtdMode {
+    case min
+    case now
+    case time
+}
 struct TimeDisplay {
     let time: String
     let a: String
+    var etdMode: EtdMode = .min
 }
 
 func convertBartDate(time: String, date: String) -> Date? {
@@ -54,13 +59,15 @@ func displayMinutesString(_ date: Date) -> TimeDisplay{
     let timeFromNow = date.timeIntervalSince(Date())
     if (timeFromNow / 60) > 40 {
         print("TIME:", timeFromNow, displayTime(date))
+
+       
         return displayTime(date)
     } else if (timeFromNow / 60) < 1 {
         print("TIME:", "now")
-        return TimeDisplay(time: "now", a: "")
+        return TimeDisplay(time: "now", a: "", etdMode: .now)
     } else {
         print("TIME:", timeFromNow)
-        return TimeDisplay(time: String(Int(round(timeFromNow / 60))), a: "min")
+        return TimeDisplay(time: String(Int(round(timeFromNow / 60))), a: "min",etdMode: .min)
     }
 }
 func timeIntervalUntil(_ date: Date) -> TimeInterval {
@@ -79,7 +86,7 @@ func displayTime(_ date: Date) -> TimeDisplay {
     dateFormatter.dateStyle = .none
     let time: String = dateFormatter.string(from: date)
     
-    return TimeDisplay(time: String(time.dropLast(3)) , a: String(time.suffix(2).lowercased()))
+    return TimeDisplay(time: String(time.dropLast(3)) , a: String(time.suffix(2).lowercased()), etdMode: .time)
     
 }
 

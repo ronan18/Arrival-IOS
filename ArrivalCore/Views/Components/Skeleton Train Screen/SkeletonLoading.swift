@@ -9,15 +9,26 @@
 import SwiftUI
 
 struct SkeletonLoading: View {
+    var spacing:CGFloat = 5
+    
     var body: some View {
         ScrollView {
          Spacer().frame(height: 5)
         ForEach(0..<5) { trip in
-                      
-            SkeletonTrainCard().padding([.horizontal]).padding(.vertical, 5)
+            Button(action: {}) {
+            SkeletonTrainCard().padding([.horizontal])
                        
                        
                    }
+        }.disabled(true).foregroundColor(Color("Text"))
+        }.onAppear() {
+            if #available(iOS 14.0, *) {
+                      // modern code
+                      let spacing = 100
+                  } else {
+                      // Fallback on earlier versions
+                      let spacing = 60
+                  }
         }
     }
 }

@@ -19,6 +19,8 @@
 		34166DDF2508928E0054980C /* SkeletonTrainCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34166DDE2508928E0054980C /* SkeletonTrainCard.swift */; };
 		34166DE1250894990054980C /* SkeletonLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34166DE0250894990054980C /* SkeletonLoading.swift */; };
 		34166DE325089E5D0054980C /* NoTrains.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34166DE225089E5D0054980C /* NoTrains.swift */; };
+		341DEBBD2509D38000C2E66B /* LinkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341DEBBC2509D38000C2E66B /* LinkService.swift */; };
+		341DEBBF2509D8AE00C2E66B /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341DEBBE2509D8AE00C2E66B /* ShareSheet.swift */; };
 		3463C1A62507154D0043F66F /* TimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3463C1A52507154D0043F66F /* TimeService.swift */; };
 		3481782025056FAD008C5F09 /* TimeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3481781F25056FAD008C5F09 /* TimeOption.swift */; };
 		3481782225058A1F008C5F09 /* StyledButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3481782125058A1F008C5F09 /* StyledButton.swift */; };
@@ -78,6 +80,8 @@
 		34166DDE2508928E0054980C /* SkeletonTrainCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonTrainCard.swift; sourceTree = "<group>"; };
 		34166DE0250894990054980C /* SkeletonLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkeletonLoading.swift; sourceTree = "<group>"; };
 		34166DE225089E5D0054980C /* NoTrains.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoTrains.swift; sourceTree = "<group>"; };
+		341DEBBC2509D38000C2E66B /* LinkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkService.swift; sourceTree = "<group>"; };
+		341DEBBE2509D8AE00C2E66B /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
 		3463C1A52507154D0043F66F /* TimeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeService.swift; sourceTree = "<group>"; };
 		3481781F25056FAD008C5F09 /* TimeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeOption.swift; sourceTree = "<group>"; };
 		3481782125058A1F008C5F09 /* StyledButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledButton.swift; sourceTree = "<group>"; };
@@ -146,6 +150,7 @@
 		343B3AF725095ACA0022289A /* Train Trip View */ = {
 			isa = PBXGroup;
 			children = (
+				34166DD825084F0B0054980C /* TripDetailView.swift */,
 				34166DD42508428C0054980C /* TripsView.swift */,
 				34166DD62508435A0054980C /* TrainsView.swift */,
 				34166DE225089E5D0054980C /* NoTrains.swift */,
@@ -156,7 +161,6 @@
 		343B3AF825095AEB0022289A /* Trip Components */ = {
 			isa = PBXGroup;
 			children = (
-				34166DD825084F0B0054980C /* TripDetailView.swift */,
 				34166DDA250873DD0054980C /* TripLegCard.swift */,
 				34166DDC250874160054980C /* TripTransferWinfowView.swift */,
 			);
@@ -183,7 +187,6 @@
 		3463C1A025068E0B0043F66F /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				343B3AFA25095B100022289A /* Skeleton Train Screen */,
 				343B3AF725095ACA0022289A /* Train Trip View */,
 				C54AD4A425069D2D00B653C1 /* OnBoarding */,
 				34DB0D0F25043BDB00BF8401 /* Loading.swift */,
@@ -198,12 +201,14 @@
 		3463C1A125068E240043F66F /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				343B3AFA25095B100022289A /* Skeleton Train Screen */,
 				343B3AF925095B060022289A /* Train components */,
 				343B3AF825095AEB0022289A /* Trip Components */,
 				C55EDBF72506A71300E45272 /* ActivityIndicator.swift */,
 				C5A45BC62506A1D200E7993E /* TOS.swift */,
 				3481782125058A1F008C5F09 /* StyledButton.swift */,
 				34DB0D212504796300BF8401 /* SearchBar.swift */,
+				341DEBBE2509D8AE00C2E66B /* ShareSheet.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -280,6 +285,7 @@
 				C59430F12506EAB100296278 /* MLService.swift */,
 				3463C1A52507154D0043F66F /* TimeService.swift */,
 				34166DD2250803150054980C /* TrainsService.swift */,
+				341DEBBC2509D38000C2E66B /* LinkService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -536,10 +542,12 @@
 				C55EDBF82506A71300E45272 /* ActivityIndicator.swift in Sources */,
 				C59430F22506EAB100296278 /* MLService.swift in Sources */,
 				3481782225058A1F008C5F09 /* StyledButton.swift in Sources */,
+				341DEBBF2509D8AE00C2E66B /* ShareSheet.swift in Sources */,
 				C55EDBFA2506B43900E45272 /* StationService.swift in Sources */,
 				C59430EB2506E1EA00296278 /* Config.swift in Sources */,
 				C59430F6250706C400296278 /* TripTimeModel.swift in Sources */,
 				340D9E1325035671008878E4 /* Station Model.swift in Sources */,
+				341DEBBD2509D38000C2E66B /* LinkService.swift in Sources */,
 				34166DD3250803150054980C /* TrainsService.swift in Sources */,
 				3401C40825055E2C0032906E /* TimeOptions.swift in Sources */,
 				C54AD4A1250695AE00B653C1 /* AppState.swift in Sources */,
@@ -693,7 +701,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Arrival-iOS2/Arrival.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 5;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"Arrival-iOS2/Preview Content\"";
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
@@ -703,7 +711,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival;
 				PRODUCT_NAME = Arrival;
 				SWIFT_VERSION = 5.0;
@@ -718,7 +726,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "Arrival-iOS2/Arrival.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_ASSET_PATHS = "\"Arrival-iOS2/Preview Content\"";
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				ENABLE_PREVIEWS = YES;
@@ -727,7 +735,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival;
 				PRODUCT_NAME = Arrival;
 				SWIFT_VERSION = 5.0;

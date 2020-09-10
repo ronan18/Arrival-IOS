@@ -14,10 +14,10 @@ struct ContentView: View {
     @EnvironmentObject private var appState: AppState
     
     init() {
-     //   UITableView.appearance().separatorStyle = .none
+        //   UITableView.appearance().separatorStyle = .none
     }
     var body: some View {
-        VStack {
+        ZStack {
             if (self.appState.configLoaded) {
                 if (self.appState.screen == .loading) {
                     Loading()
@@ -43,6 +43,32 @@ struct ContentView: View {
             }else {
                 Loading()
             }
+           Text("").sheet(isPresented: self.$appState.linkedTripShown, content: {
+                ZStack {
+                    if (self.appState.linkedTripState == .loading || self.appState.stations == nil) {
+                        VStack {
+                            Spacer()
+                            ActivityIndicator(isAnimating: .constant(true), style: .large)
+                            Text("loading link...")
+                            Spacer()
+                        }
+                    } else if (self.appState.linkedTripState == .ready) {
+                        TripDetailView(trip: self.appState.linkedTrip!, close: {
+                            self.appState.linkedTripShown = false
+                        }, stations: self.appState.stations!)
+                    } else {
+                        VStack {
+                            Spacer()
+                            Text("Link expired").font(.largeTitle).fontWeight(.bold)
+                            Text("Links older than a few days are automatically discarded").multilineTextAlignment(.center).padding(.vertical)
+                            Spacer()
+                            StyledButton(action:{  self.appState.linkedTripShown = false}, text: "OK")
+                            
+                            
+                        }.padding()
+                    }
+                }
+            })
         }
     }
     

@@ -11,6 +11,7 @@ import SwiftUI
 struct TripsView: View {
     var trips: [Trip]
     var presentTrip: ((Trip)->())
+    
     var body: some View {
         ZStack {
             if (trips.count == 0) {

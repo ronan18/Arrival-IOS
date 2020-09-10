@@ -13,6 +13,7 @@ import CoreLocation
 import FirebasePerformance
 import FirebaseAnalytics
 import FirebaseRemoteConfig
+import FirebaseDynamicLinks
 import SwiftUI
 import CoreHaptics
 import UIKit
@@ -47,6 +48,9 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var trains: [Train]? = nil
     @Published var trips: [Trip]? = nil
     @Published var goingOffClosestStation = true
+    @Published var linkedTripState: LinkedTripState = .loading
+    @Published var linkedTrip: Trip? = nil
+    @Published var linkedTripShown = false
     var api = ApiService()
     let stationService = StationService()
     let defaults = UserDefaults.standard
@@ -64,6 +68,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     private let settings = RemoteConfigSettings()
     private let timeService = TimeService()
     private let trainService = TrainsService()
+    let linkService = LinkService()
     //MARK: Initilization
     override init() {
         
@@ -324,6 +329,27 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
             self.cylce()
         }
         
+        
+    }
+    // MARK: Dynamic link handleing
+    
+    func handleDynamicLink(_ dynamicLink: DynamicLink) {
+        print("LINK: handled link", dynamicLink.url )
+        self.linkedTripState = .loading
+        self.linkedTripShown = true
+               if let url = dynamicLink.url {
+                   let tripId = (url.absoluteString as NSString).lastPathComponent
+                   print("LINK:  trip id handled link", tripId)
+                api.getTrip(byID: tripId, handleComplete: {trip in
+                    if let trip = trip {
+                        self.linkedTrip = trip
+                        self.linkedTripState = .ready
+                    } else {
+                         self.linkedTripState = .expired
+                    }
+                })
+                  
+               }
         
     }
     

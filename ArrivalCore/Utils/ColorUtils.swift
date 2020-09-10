@@ -21,7 +21,26 @@ enum TrainColor {
     
     
 }
-
+func converTrainColorToHuman(_ color: TrainColor) -> String {
+    switch color {
+      case .red:
+          return "Red"
+      case .green:
+      return "Green"
+      case .orange:
+      return "orange"
+      case .blue:
+      return "Blue"
+      case .purple:
+      return "Purple"
+      case .yellow:
+      return "Yellow"
+      case .white:
+      return "White"
+      case .black:
+      return "Black"
+      }
+}
 func converTrainColor(_ color: TrainColor) -> Color {
     
     switch color {

@@ -35,6 +35,7 @@ struct StationChooser: View {
     let stations: [Station]
     let type: StationType
     @State var filteredStations: [Station] = []
+    var spacing:CGFloat = 5
     init(stations: [Station], type: StationType, close: @escaping (() -> ()), choose: @escaping ((Station?) -> ())) {
         self.close = close
         self.stations = stations
@@ -42,7 +43,13 @@ struct StationChooser: View {
         self.choose = choose
         self.filteredStations = stations
       
-        
+        if #available(iOS 14.0, *) {
+                  // modern code
+                  spacing = 0
+              } else {
+                  // Fallback on earlier versions
+                  spacing = 5
+              }
         
     }
     var body: some View {
@@ -67,12 +74,12 @@ struct StationChooser: View {
                     if (self.type == .to && self.search.count < 1) {
                         Button(action: {self.choose(nil)}) {
                             StationCard(station: nil)
-                        }.foregroundColor(Color("Text")).padding(.vertical, 5)
+                        }.foregroundColor(Color("Text")).padding(.vertical, spacing)
                     }
                     ForEach(stations.filter {runFilter(station: $0, search: self.search)}) {station in
                         Button(action: {self.choose(station)}) {
                             StationCard(station: station)
-                        }.foregroundColor(Color("Text")).padding(.vertical, 5)
+                        }.foregroundColor(Color("Text")).padding(.vertical, spacing)
                     }
                 }.edgesIgnoringSafeArea(.bottom)
             }.padding(.horizontal).edgesIgnoringSafeArea(.bottom)

@@ -10,7 +10,8 @@ import UIKit
 import SwiftUI
 import Foundation
 import Combine
-
+import Firebase
+import FirebaseDynamicLinks
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
@@ -30,7 +31,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let contentView = ContentView().environmentObject(appState)
         
-        
+        print("incomming link", connectionOptions.userActivities.first?.webpageURL)
+             if let link = connectionOptions.userActivities.first?.webpageURL {
+                 let handled = DynamicLinks.dynamicLinks().handleUniversalLink(link) { (dynamiclink, error) in
+                     if let dynamiclink = dynamiclink {
+                         self.appState.handleDynamicLink(dynamiclink)
+                     }
+                 }
+             }
         
         // Use a UIHostingController as window root view controller.
         
@@ -41,10 +49,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window.makeKeyAndVisible()
         }
     }
+
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
-        
-        
-    }
+          let handled = DynamicLinks.dynamicLinks().handleUniversalLink(userActivity.webpageURL!) { (dynamiclink, error) in
+              if let dynamiclink = dynamiclink {
+                self.appState.handleDynamicLink(dynamiclink)
+              }
+          }
+          
+      }
     
     func sceneDidDisconnect(_ scene: UIScene) {
         
@@ -57,7 +70,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         
         // print("cycling from did become active", appData.fromStation)
-        //  appData.cylce()
+          appState.cylce()
         
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
