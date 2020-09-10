@@ -17,7 +17,7 @@ struct HomeScreen: View {
     @State var stationModalType: StationType = .from
     @State var timeModal = false
     @State var locationTimeout = false
-    @State var tripToPresent: Trip = MockData().trips[0]
+    @State var tripToPresent: Trip? = nil
     init() {
         // UITableView.appearance().separatorStyle = .none
     }
@@ -33,9 +33,9 @@ struct HomeScreen: View {
                 
                 
                 if (self.appState.locationServicesState == LocationServicesState.askForLocation && self.appState.fromStation == nil) {
-                    PleaseChooseFromStation(locationAlert: true, clicked: {self.stationModalType = .from;  self.timeModal = false; self.modalPresented = true})
+                    PleaseChooseFromStation(locationAlert: true, clicked: {self.fromStationModalPresented = true})
                 } else if (self.appState.fromStation == nil && self.locationTimeout) {
-                    PleaseChooseFromStation(locationAlert: false, clicked: {self.stationModalType = .from;  self.timeModal = false; self.modalPresented = true})
+                    PleaseChooseFromStation(locationAlert: false, clicked: {self.fromStationModalPresented = true})
                 } else if (self.appState.trains != nil) {
                     TrainsView(trains: self.appState.trains!).edgesIgnoringSafeArea(.bottom)
                     
@@ -53,24 +53,37 @@ struct HomeScreen: View {
                 }
                 Spacer()
                 ZStack {
-                Text("").sheet(isPresented: self.$fromStationModalPresented) {
-                    StationChooser(stations: self.appState.fromStationSuggestions, type: .from, close: {self.fromStationModalPresented = false}, choose: ({station in
-                        print("choose",StationTypeName(self.stationModalType), station?.name);
-                        self.appState.chooseFromStation(station!)
-                        self.fromStationModalPresented = false}))
-                }
-                Text("").sheet(isPresented: self.$toStationModalPresented, content: {
-                    StationChooser(stations: self.appState.toStationSuggestions, type: .to, close: {self.toStationModalPresented = false}, choose: ({station in
-                        print("choose",StationTypeName(self.stationModalType), station?.name);
-                        self.appState.chooseToStation(station)
-                        self.toStationModalPresented = false}))
-                })
-                Text("").sheet(isPresented: self.$timeModalPresented, content: {
-                    TimeOptions(options: sampleTimeOptions, close: {
-                        self.timeModalPresented = false
+                    Text("").sheet(isPresented: self.$fromStationModalPresented) {
+                        StationChooser(stations: self.appState.fromStationSuggestions, type: .from, close: {self.fromStationModalPresented = false}, choose: ({station in
+                                                                                                                                                                print("choose",StationTypeName(self.stationModalType), station?.name);
+                                                                                                                                                                self.appState.chooseFromStation(station!)
+                                                                                                                                                                self.fromStationModalPresented = false}))
+                    }
+                    Text("").sheet(isPresented: self.$toStationModalPresented, content: {
+                        StationChooser(stations: self.appState.toStationSuggestions, type: .to, close: {self.toStationModalPresented = false}, choose: ({station in
+                                                                                                                                                            print("choose",StationTypeName(self.stationModalType), station?.name);
+                                                                                                                                                            self.appState.chooseToStation(station)
+                                                                                                                                                            self.toStationModalPresented = false}))
                     })
-                })
-               Text("").sheet(isPresented: self.$tripModalPresented, content:{ TripDetailView(trip: self.tripToPresent, close: {self.tripModalPresented = false}, stations: self.appState.stations!)})
+                    Text("").sheet(isPresented: self.$timeModalPresented, content: {
+                        TimeOptions(options: sampleTimeOptions, close: {
+                            self.timeModalPresented = false
+                        })
+                    })
+                    Text("").sheet(isPresented: self.$tripModalPresented, content:{
+                        if (self.tripToPresent != nil) {
+                            TripDetailView(trip: self.tripToPresent!, close: {self.tripModalPresented = false}, stations: self.appState.stations!)
+                        } else {
+                            VStack {
+                                Spacer()
+                                ActivityIndicator(isAnimating: .constant(true), style: .large)
+                                Text("loading trip")
+                                Spacer()
+                            }
+                        }
+                        
+                        
+                    })
                 }
             }.edgesIgnoringSafeArea(.bottom)
             
