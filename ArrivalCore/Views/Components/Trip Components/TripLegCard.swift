@@ -16,11 +16,15 @@ struct TripLegCard: View {
     var enrouteTime: TimeDisplay
     var originTime: TimeDisplay
     var destTime: TimeDisplay
+    var stopsUntil:String = "stops until"
     init(leg: TripLeg) {
         self.leg = leg
     
         if (leg.finalLeg) {
             self.transferText = "destination..."
+        }
+        if (leg.stopCount == 1) {
+            self.stopsUntil = "stop until"
         }
         self.enrouteTime = displayTimeInterval(leg.enrouteTime)
         self.originTime = displayTime(leg.originTime)
@@ -52,7 +56,7 @@ struct TripLegCard: View {
                 Spacer()
                 HStack {
                     VStack(alignment: .leading, spacing: 0){
-                        Text("\(leg.stopCount) stops until \(transferText)").font(.footnote)
+                        Text("\(leg.stopCount) \(stopsUntil) \(transferText)").font(.footnote)
                         
                         
                         
@@ -81,5 +85,11 @@ struct TripLegCard: View {
         }.frame(height: 150.0).cornerRadius(10).background(Color("cardBackground")).overlay(
             RoundedRectangle(cornerRadius: CGFloat(10.0)).stroke(Color(.sRGB, red:170/255, green: 170/255, blue: 170/255, opacity: 0.1), lineWidth:3)
         ).cornerRadius(10.0)
+    }
+}
+
+struct TripLegCard_Previews: PreviewProvider {
+    static var previews: some View {
+        TripLegCard(leg: MockData().trips[0].legs[0])
     }
 }

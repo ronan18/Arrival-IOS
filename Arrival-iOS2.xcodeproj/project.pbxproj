@@ -143,9 +143,48 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		343B3AF725095ACA0022289A /* Train Trip View */ = {
+			isa = PBXGroup;
+			children = (
+				34166DD42508428C0054980C /* TripsView.swift */,
+				34166DD62508435A0054980C /* TrainsView.swift */,
+				34166DE225089E5D0054980C /* NoTrains.swift */,
+			);
+			path = "Train Trip View";
+			sourceTree = "<group>";
+		};
+		343B3AF825095AEB0022289A /* Trip Components */ = {
+			isa = PBXGroup;
+			children = (
+				34166DD825084F0B0054980C /* TripDetailView.swift */,
+				34166DDA250873DD0054980C /* TripLegCard.swift */,
+				34166DDC250874160054980C /* TripTransferWinfowView.swift */,
+			);
+			path = "Trip Components";
+			sourceTree = "<group>";
+		};
+		343B3AF925095B060022289A /* Train components */ = {
+			isa = PBXGroup;
+			children = (
+				34DB0D1B25045C4500BF8401 /* TrainCard.swift */,
+			);
+			path = "Train components";
+			sourceTree = "<group>";
+		};
+		343B3AFA25095B100022289A /* Skeleton Train Screen */ = {
+			isa = PBXGroup;
+			children = (
+				34166DDE2508928E0054980C /* SkeletonTrainCard.swift */,
+				34166DE0250894990054980C /* SkeletonLoading.swift */,
+			);
+			path = "Skeleton Train Screen";
+			sourceTree = "<group>";
+		};
 		3463C1A025068E0B0043F66F /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				343B3AFA25095B100022289A /* Skeleton Train Screen */,
+				343B3AF725095ACA0022289A /* Train Trip View */,
 				C54AD4A425069D2D00B653C1 /* OnBoarding */,
 				34DB0D0F25043BDB00BF8401 /* Loading.swift */,
 				3482DD5C2507F1E600C2B8A2 /* Settings */,
@@ -159,6 +198,8 @@
 		3463C1A125068E240043F66F /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				343B3AF925095B060022289A /* Train components */,
+				343B3AF825095AEB0022289A /* Trip Components */,
 				C55EDBF72506A71300E45272 /* ActivityIndicator.swift */,
 				C5A45BC62506A1D200E7993E /* TOS.swift */,
 				3481782125058A1F008C5F09 /* StyledButton.swift */,
@@ -257,15 +298,6 @@
 			children = (
 				3463C1A025068E0B0043F66F /* Screens */,
 				3463C1A125068E240043F66F /* Components */,
-				34DB0D1B25045C4500BF8401 /* TrainCard.swift */,
-				34166DDE2508928E0054980C /* SkeletonTrainCard.swift */,
-				34166DE0250894990054980C /* SkeletonLoading.swift */,
-				34166DD42508428C0054980C /* TripsView.swift */,
-				34166DD62508435A0054980C /* TrainsView.swift */,
-				34166DE225089E5D0054980C /* NoTrains.swift */,
-				34166DD825084F0B0054980C /* TripDetailView.swift */,
-				34166DDA250873DD0054980C /* TripLegCard.swift */,
-				34166DDC250874160054980C /* TripTransferWinfowView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

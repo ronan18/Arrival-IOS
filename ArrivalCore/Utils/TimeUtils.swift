@@ -36,6 +36,13 @@ func displayTimeInterval(_ time: TimeInterval) -> TimeDisplay {
    time = String(time.dropLast())
     return TimeDisplay(time: time, a: "min")
 }
+func displayTimeIntervalAllUnits(_ time: TimeInterval) -> String {
+    let formatter = DateComponentsFormatter()
+    formatter.allowedUnits = [.day, .hour, .minute]
+    formatter.unitsStyle = .full
+      
+      return formatter.string(from: time)!
+}
 func displayMinutes(_ date: Date) -> Int {
     // print(date)
     let timeFromNow = date.timeIntervalSince(Date())
