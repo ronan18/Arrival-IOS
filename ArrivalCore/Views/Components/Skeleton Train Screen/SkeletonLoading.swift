@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct SkeletonLoading: View {
-    var spacing:CGFloat = 5
+    @State var spacing:CGFloat = 5
     
     var body: some View {
         ScrollView {
@@ -24,10 +24,10 @@ struct SkeletonLoading: View {
         }.onAppear() {
             if #available(iOS 14.0, *) {
                       // modern code
-                      let spacing = 0
+                self.spacing = 0
                   } else {
                       // Fallback on earlier versions
-                      let spacing = 5
+                    self.spacing = 5
                   }
         }
     }
