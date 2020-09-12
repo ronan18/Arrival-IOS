@@ -1229,6 +1229,8 @@
 			<string>information</string>
 			<key>INIntentConfigurable</key>
 			<true/>
+			<key>INIntentDescription</key>
+			<string>View BART trains heading towards a station from nearest station</string>
 			<key>INIntentDescriptionID</key>
 			<string>hV0BRe</string>
 			<key>INIntentInput</key>
@@ -1236,10 +1238,10 @@
 			<key>INIntentKeyParameter</key>
 			<string>destination</string>
 			<key>INIntentLastParameterTag</key>
-			<integer>6</integer>
+			<integer>8</integer>
 			<key>INIntentManagedParameterCombinations</key>
 			<dict>
-				<key>destination</key>
+				<key>destination,origin</key>
 				<dict>
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<true/>
@@ -1257,12 +1259,31 @@
 			<dict>
 				<key>destination</key>
 				<dict>
+					<key>INIntentParameterCombinationSubtitle</key>
+					<string>Shows upcomming trains from the station closest to you heading towards ${destination} Station</string>
+					<key>INIntentParameterCombinationSubtitleID</key>
+					<string>BhVL8b</string>
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<false/>
 					<key>INIntentParameterCombinationTitle</key>
 					<string>View trains heading towards ${destination} Station</string>
 					<key>INIntentParameterCombinationTitleID</key>
 					<string>pGs97f</string>
+				</dict>
+				<key>destination,origin</key>
+				<dict>
+					<key>INIntentParameterCombinationIsPrimary</key>
+					<true/>
+					<key>INIntentParameterCombinationSubtitle</key>
+					<string>Shows upcomming trains from ${origin} Station heading towards ${destination} Station</string>
+					<key>INIntentParameterCombinationSubtitleID</key>
+					<string>HexhHg</string>
+					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
+					<false/>
+					<key>INIntentParameterCombinationTitle</key>
+					<string>View trains from ${origin} Station to ${destination} Station</string>
+					<key>INIntentParameterCombinationTitleID</key>
+					<string>Q0iUqL</string>
 				</dict>
 			</dict>
 			<key>INIntentParameters</key>
@@ -1323,6 +1344,65 @@
 					<true/>
 					<key>INIntentParameterTag</key>
 					<integer>6</integer>
+					<key>INIntentParameterType</key>
+					<string>Integer</string>
+				</dict>
+				<dict>
+					<key>INIntentParameterConfigurable</key>
+					<true/>
+					<key>INIntentParameterCustomDisambiguation</key>
+					<true/>
+					<key>INIntentParameterDisplayName</key>
+					<string>Origin</string>
+					<key>INIntentParameterDisplayNameID</key>
+					<string>cHRyk7</string>
+					<key>INIntentParameterDisplayPriority</key>
+					<integer>2</integer>
+					<key>INIntentParameterEnumType</key>
+					<string>IntentStation</string>
+					<key>INIntentParameterEnumTypeNamespace</key>
+					<string>uEKnpc</string>
+					<key>INIntentParameterName</key>
+					<string>origin</string>
+					<key>INIntentParameterPromptDialogs</key>
+					<array>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Configuration</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Primary</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>There are ${count} options matching ‘${origin}’.</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>fQNSZn</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>DisambiguationIntroduction</string>
+						</dict>
+						<dict>
+							<key>INIntentParameterPromptDialogCustom</key>
+							<true/>
+							<key>INIntentParameterPromptDialogFormatString</key>
+							<string>Just to confirm, you wanted ‘${origin}’?</string>
+							<key>INIntentParameterPromptDialogFormatStringID</key>
+							<string>71MvWw</string>
+							<key>INIntentParameterPromptDialogType</key>
+							<string>Confirmation</string>
+						</dict>
+					</array>
+					<key>INIntentParameterSupportsResolution</key>
+					<true/>
+					<key>INIntentParameterTag</key>
+					<integer>8</integer>
 					<key>INIntentParameterType</key>
 					<string>Integer</string>
 				</dict>

@@ -84,10 +84,12 @@ class MLService {
                         labels.forEach({label in
                             print("ml lable", label)
                             if let station = self.decodeTable?[label] {
+                                print("ml lable decoded", station.name)
                                    result.append(station)
                             }
                          
                         })
+                        print("ml result count:", result.count)
                         print("ml result", result)
                         return result
                     } catch {

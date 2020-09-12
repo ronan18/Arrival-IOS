@@ -38,6 +38,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 if let intent = userActivity.interaction?.intent as? TrainsToStationIntent {
                     print("SIRI: destination intent")
                     appState.toStationFromIntent = intent.destination
+                    appState.inputIntent = intent
+                    appState.checkForIntent()
                 }
               
             }
@@ -80,6 +82,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             if let intent = userActivity.interaction?.intent as? TrainsToStationIntent {
                 print("SIRI: destination intent")
                 appState.toStationFromIntent = intent.destination
+                appState.inputIntent = intent
+                appState.checkForIntent()
             }
          
         }

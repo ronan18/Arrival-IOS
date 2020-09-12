@@ -53,6 +53,8 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var linkedTrip: Trip? = nil
     @Published var linkedTripShown = false
     @Published var toStationFromIntent: IntentStation? = nil
+    @Published var inputIntent: TrainsToStationIntent? = nil
+    @Published var waitForIntent: Bool = false
     var api = ApiService()
     let stationService = StationService()
     let defaults = UserDefaults.standard
@@ -287,30 +289,63 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         print("getting time suggestions")
         let suggestions =  self.timeService.suggestTimes(fromStation: fromStation, toStation: toStation, time: Date())
     }
+    // MARK: Intents
     func checkForIntent() {
         print("SIRI: check for intent")
-        if let toStationIntent = self.toStationFromIntent {
-            print("SIRI: intent")
-            let stationAbbr = convertIntentToStation(toStationIntent)
-            if let stationAbbr = stationAbbr {
-                print("SIRI: Station ABRR from siris", stationAbbr)
-                
-                guard let toStation = self.stations?.byAbbr[stationAbbr] else {
-                    return
-                }
-                if (self.fromStation != nil) {
-                    self.toStation = toStation
-                    self.trips = nil
-                    self.trains = nil
-                    self.toStationFromIntent = nil
-                }  else {
-                    print("SIRI: error no from station")
-                }
-          
+       
+        if let intent = self.inputIntent {
+            self.waitForIntent = true
+            print("SIRI: intent", intent)
+            let toStationString = convertIntentToStation(intent.destination)
+            let fromStationString = convertIntentToStation(intent.origin)
+            var toStation: Station? = nil
+            var fromStation: Station? = nil
+            if let toStationString = toStationString {
+                toStation = self.stations?.byAbbr[toStationString]
             }
-            
+            if let fromStationString = fromStationString {
+                fromStation = self.stations?.byAbbr[fromStationString]
+            }
+            if let fromStation = fromStation {
+                print("SIRI: fromStation Set:", fromStation.name)
+                self.trains = nil
+                self.trips = nil
+                self.fromStation = fromStation
+                self.goingOffClosestStation = false
+            } else {
+                self.goingOffClosestStation = true
+               
+            }
+            if (self.fromStation != nil) {
+                
+                if let toStation = toStation {
+                    print("SIRI: toStation Set:", toStation.name)
+                    self.trains = nil
+                    self.trips = nil
+                    self.toStation = toStation
+                    let fromStation = self.fromStation
+                    let newEvent = ToStationEvent(fromStation: fromStation!, toStation: toStation, time: Date())
+                    self.toStationEvents.append(newEvent)
+                    do {
+                        try Disk.append(newEvent, to: "toStationEvents.json", in: .documents)
+                    } catch {
+                        print("error saving toStationEvent")
+                    }
+                }
+                self.inputIntent = nil
+                self.screen = .home
+                self.cylce()
+                self.waitForIntent = false
+            } else {
+               
+                Timer.scheduledTimer(withTimeInterval: 0.05, repeats: false) { timer in
+                    self.checkForIntent()
+                    
+                }
+            }
+         
         } else {
-            print("SIRI: no intent")
+            print("SIRI no input intent")
         }
     }
     // MARK: Start function
@@ -336,7 +371,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
                 self.getToStationSuggestions(station, toStation: self.toStation)
                 self.getTimeSuggestions(fromStation: station, toStation: self.toStation)
             }
-            self.checkForIntent()
+           // self.checkForIntent()
         }
         self.locationServiceStatusWatcher = self.$locationServicesState.sink {value in
             
@@ -359,7 +394,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         Timer.scheduledTimer(withTimeInterval: self.cycleTimer, repeats: true) { timer in
             self.cylce()
         }
-        self.checkForIntent()
+       // self.checkForIntent()
         
     }
     // MARK: Dynamic link handleing
@@ -417,6 +452,10 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         }
         self.cylce()
         let intent = TrainsToStationIntent()
+        if (!self.goingOffClosestStation) {
+            print("SIRI: Loggin origin")
+            intent.origin = convertToIntent(self.fromStation ?? Station(id: "", name: "", abbr: ""))
+        }
         intent.destination = convertToIntent(station ?? Station(id: "", name: "", abbr: ""))
         let interaction = INInteraction(intent: intent, response: nil)
         interaction.donate(completion: {response in
@@ -428,7 +467,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     //MARK: Station Cycle
     
     @objc func cylce() {
-        self.checkForIntent()
+       // self.checkForIntent()
         print("cycle: starting cycle")
         if (self.fromStation != nil && self.api.authorized) {
             print("cycle: allowed to cycle")

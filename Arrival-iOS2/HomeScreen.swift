@@ -30,7 +30,7 @@ struct HomeScreen: View {
                 }
                 
                 
-                if (self.appState.locationServicesState == LocationServicesState.askForLocation && self.appState.fromStation == nil) {
+                if (self.appState.waitForIntent) { SkeletonLoading().edgesIgnoringSafeArea(.bottom)} else if (self.appState.locationServicesState == LocationServicesState.askForLocation && self.appState.fromStation == nil) {
                     PleaseChooseFromStation(locationAlert: true, clicked: {self.fromStationModalPresented = true})
                 } else if (self.appState.fromStation == nil && self.locationTimeout) {
                     PleaseChooseFromStation(locationAlert: false, clicked: {self.fromStationModalPresented = true})
