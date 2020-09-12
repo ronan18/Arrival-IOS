@@ -290,6 +290,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     func checkForIntent() {
         print("SIRI: check for intent")
         if let toStationIntent = self.toStationFromIntent {
+            print("SIRI: intent")
             let stationAbbr = convertIntentToStation(toStationIntent)
             if let stationAbbr = stationAbbr {
                 print("SIRI: Station ABRR from siris", stationAbbr)
@@ -297,12 +298,19 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
                 guard let toStation = self.stations?.byAbbr[stationAbbr] else {
                     return
                 }
-                self.toStation = toStation
-                self.trips = nil
-                self.trains = nil
-                self.toStationFromIntent = nil
+                if (self.fromStation != nil) {
+                    self.toStation = toStation
+                    self.trips = nil
+                    self.trains = nil
+                    self.toStationFromIntent = nil
+                }  else {
+                    print("SIRI: error no from station")
+                }
+          
             }
             
+        } else {
+            print("SIRI: no intent")
         }
     }
     // MARK: Start function

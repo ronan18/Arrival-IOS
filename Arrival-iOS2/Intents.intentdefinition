@@ -1344,7 +1344,7 @@
 				</array>
 			</dict>
 			<key>INIntentTitle</key>
-			<string>Trains heading towards</string>
+			<string>View BART trains heading towards a station</string>
 			<key>INIntentTitleID</key>
 			<string>WGk43V</string>
 			<key>INIntentType</key>

@@ -36,8 +36,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             if (userActivity.activityType  == "TrainsToStationIntent") {
                 print("SIRI: HANDLE INTENT")
                 if let intent = userActivity.interaction?.intent as? TrainsToStationIntent {
-                    print("SIRI: destination intent",intent.destination)
+                    print("SIRI: destination intent")
+                    appState.toStationFromIntent = intent.destination
                 }
+              
             }
             
             
