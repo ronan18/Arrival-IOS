@@ -1,0 +1,225 @@
+//
+//  IntentUtils.swift
+//  Arrival-iOS2
+//
+//  Created by Ronan Furuta on 9/11/20.
+//  Copyright © 2020 Stomp Rocket. All rights reserved.
+//
+
+import Foundation
+import Intents
+func convertToIntent(_ station: Station) -> IntentStation {
+    switch station.abbr {
+    case "12TH":
+        return .twelfth
+    case "CONC":
+        return .conc
+    case "DALY":
+        return .daly
+    case "EMBR":
+        return .embr
+    case "ORIN":
+        return .orin
+    case "DBRK":
+        return .dbrk
+    case "COLS":
+        return .cols
+    case "MLBR":
+        return .mlbr
+    case "SHAY":
+        return .shay
+    case "COLM":
+        return .colm
+    case "SSAN":
+        return .ssan
+    case "WARM":
+        return .warm
+    case "24TH":
+        return .twentyFourth
+    case "BERY":
+        return .bery
+    case "LAKE":
+        return .lake
+    case "NBRK":
+        return .nbrk
+    case "SFIA":
+        return .sfia
+    case "LAFY":
+        return .lafy
+    case "CIVIC":
+        return .civic
+    case "DELN":
+        return .deln
+    case "PCTR":
+        return .pctr
+    case "POWEL":
+        return .powl
+    case "ROCK":
+        return .rock
+    case "ASHB":
+        return .ashb
+    case "MLPT":
+        return .mlbr
+    case "CAST":
+        return .cast
+    case "FRMT":
+        return .frmt
+    case "HAYW":
+        return .hayw
+    case "RICH":
+        return .rich
+    case "NCON":
+        return .ncon
+    case "MONT":
+        return .mont
+    case "SBRN":
+        return .sbrn
+    case "UCTY":
+        return .ucty
+    case "WDUB":
+        return .wdub
+    case "WOAK":
+        return .woak
+    case "ANTC":
+        return .antc
+    case "DUBL":
+        return .dubl
+    case "WCRK":
+        return .wcrk
+    case "GLEN":
+        return .glen
+    case "MCAR":
+        return .mcar
+    case "SANL":
+        return .sanl
+    case "16TH":
+        return .sixteenth
+    case "BALB":
+        return .balb
+    case "19TH":
+        return .ninetinth
+    case "PITT":
+        return .pitt
+    case "PHIL":
+        return .phil
+    case "PLZA":
+        return .plza
+    case "OAKL":
+        return .oakl
+    case "BAYF":
+        return .bayf
+    case "FTVL":
+        return .ftvl
+    default:
+        return .unknown
+    }
+}
+
+func convertIntentToStation (_ intent: IntentStation) -> String? {
+    switch intent {
+    case .twelfth:
+        return "12TH"
+    case .conc:
+        return "CONC"
+    case .daly:
+        return "DALY"
+    case .embr:
+        return "EMBR"
+    case .orin:
+        return "ORIN"
+    case .dbrk:
+        return "DBRK"
+    case .cols:
+        return "COLS"
+    case .mlbr:
+        return "MLBR"
+    case .shay:
+        return "SHAY"
+    case .colm:
+        return "COLM"
+    case .ssan:
+        return "SSAN"
+    case .warm:
+        return "WARM"
+    case .twentyFourth:
+        return "24TH"
+    case .bery:
+        return "BERY"
+    case .lake :
+        return "LAKE"
+    case .nbrk:
+        return "NBRK"
+    case .sfia:
+        return "SFIA"
+    case .lafy:
+        return "LAFY"
+    case .civic:
+        return "CIVIC"
+    case .deln:
+        return "DELN"
+    case .pctr:
+        return "PCTR"
+    case .powl:
+        return "POWEL"
+    case .rock:
+        return "ROCK"
+    case .ashb:
+        return "ASHB"
+    case .mlbr:
+        return "MLPT"
+    case .cast:
+        return "CAST"
+    case .frmt:
+        return "FRMT"
+    case .hayw:
+        return "HAYW"
+    case .rich:
+        return "RICH"
+    case .ncon:
+        return "NCON"
+    case .mont:
+        return "MONT"
+    case .sbrn:
+        return "SBRN"
+    case .ucty:
+        return "UCTY"
+    case .wdub:
+        return "WDUB"
+    case .woak:
+        return "WOAK"
+    case .antc:
+        return "ANTC"
+    case .dubl:
+        return "DUBL"
+    case .wcrk:
+        return "WCRK"
+    case .glen:
+        return "GLEN"
+    case .mcar:
+        return "MCAR"
+    case .sanl:
+        return "SANL"
+    case .sixteenth:
+        return "16TH"
+    case .balb:
+        return "BALB"
+    case .ninetinth:
+        return "19TH"
+    case .pitt:
+        return "PITT"
+    case .phil:
+        return "PHIL"
+    case .plza:
+        return "PLZA"
+    case .oakl:
+        return "OAKL"
+    case .bayf:
+        return "BAYF"
+    case .ftvl:
+        return "FTVL"
+    case .unknown:
+        return nil
+    default:
+        return nil
+    }
+}

@@ -9,15 +9,13 @@
 import SwiftUI
 struct HomeScreen: View {
     @EnvironmentObject private var appState: AppState
-    @State var modalPresented = false
     @State var fromStationModalPresented = false
     @State var toStationModalPresented = false
     @State var timeModalPresented = false
     @State var tripModalPresented = false
-    @State var stationModalType: StationType = .from
-    @State var timeModal = false
     @State var locationTimeout = false
     @State var tripToPresent: Trip? = nil
+    
     init() {
         // UITableView.appearance().separatorStyle = .none
     }
@@ -41,27 +39,29 @@ struct HomeScreen: View {
                     
                 } else if (self.appState.trips != nil) {
                     TripsView(trips: self.appState.trips!, presentTrip: {trip in
-                        print("presenting trip:", trip)
+                        print("TRIP DETAIL: Presenting Trip", trip.origin.name)
                         self.tripToPresent = trip;
-                        print("presenting trip final:", self.tripToPresent)
-                        self.tripModalPresented = true; self.appState.buttonHaptics(); print("showing trip")
+                        print("TRIP DETAIL: Presenting Trip final", self.tripToPresent?.origin.name ?? "error")
+                        self.tripModalPresented = true;
+                        self.appState.buttonHaptics();
+                        print("TRIP DETAIL: showing trip")
                         
                     }).edgesIgnoringSafeArea(.bottom)
                     
                 } else {
-                    SkeletonLoading()
+                    SkeletonLoading().edgesIgnoringSafeArea(.bottom)
                 }
                 Spacer()
                 ZStack {
                     Text("").sheet(isPresented: self.$fromStationModalPresented) {
                         StationChooser(stations: self.appState.fromStationSuggestions, type: .from, close: {self.fromStationModalPresented = false}, choose: ({station in
-                                                                                                                                                                print("choose",StationTypeName(self.stationModalType), station?.name);
+                                                                                                                                                                print("choose from", station?.name);
                                                                                                                                                                 self.appState.chooseFromStation(station!)
                                                                                                                                                                 self.fromStationModalPresented = false}))
                     }
                     Text("").sheet(isPresented: self.$toStationModalPresented, content: {
                         StationChooser(stations: self.appState.toStationSuggestions, type: .to, close: {self.toStationModalPresented = false}, choose: ({station in
-                                                                                                                                                            print("choose",StationTypeName(self.stationModalType), station?.name);
+                                                                                                                                                            print("choose to", station?.name);
                                                                                                                                                             self.appState.chooseToStation(station)
                                                                                                                                                             self.toStationModalPresented = false}))
                     })
@@ -71,6 +71,7 @@ struct HomeScreen: View {
                         })
                     })
                     Text("").sheet(isPresented: self.$tripModalPresented, content:{
+                        ZStack {
                         if (self.tripToPresent != nil) {
                             TripDetailView(trip: self.tripToPresent!, close: {self.tripModalPresented = false}, stations: self.appState.stations!)
                         } else {
@@ -78,16 +79,21 @@ struct HomeScreen: View {
                                 Spacer()
                                 ActivityIndicator(isAnimating: .constant(true), style: .large)
                                 Text("loading trip")
+                                Text(String(self.tripToPresent != nil))
                                 Spacer()
                             }
+                        }
+                        }.onAppear {
+                            print("TRIP DETAIL: Modal Appear", self.tripToPresent != nil)
+                            self.appState.cylce()
                         }
                         
                         
                     })
                 }
-            }.edgesIgnoringSafeArea(.bottom)
+            }
             
-        }.edgesIgnoringSafeArea([.top, .bottom]).onAppear {
+        }.edgesIgnoringSafeArea(.vertical).onAppear {
             self.appState.cylce()
             Timer.scheduledTimer(withTimeInterval: 3, repeats: false) { timer in
                 self.locationTimeout = true

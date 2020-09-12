@@ -23,8 +23,9 @@ struct TripDetailView: View {
     var bottomPadding: CGFloat = 75
     var linkService: LinkService
     init(trip: Trip, close: @escaping (()->()), stations: StationStorage, linkService: LinkService? = nil) {
+        print("TRIP DETAIL: INT", trip.origin.name)
         self.trip = StationService().fillOutStations(forTrip: trip, stations: stations)
-        
+        print("TRIP DETAIL: filled out stations")
         self.close = close
         self.stations = stations
         for i in 0..<trip.legs.count {
@@ -33,6 +34,7 @@ struct TripDetailView: View {
             }
             
         }
+        print("TRIP DETAIL: got transfers")
         if #available(iOS 14.0, *) {
             // modern code
             bottomPadding = 130

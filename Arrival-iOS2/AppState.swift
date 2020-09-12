@@ -17,6 +17,7 @@ import FirebaseDynamicLinks
 import SwiftUI
 import CoreHaptics
 import UIKit
+import Intents
 
 enum StationChooserBarState {
     case loading
@@ -51,6 +52,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var linkedTripState: LinkedTripState = .loading
     @Published var linkedTrip: Trip? = nil
     @Published var linkedTripShown = false
+    @Published var toStationFromIntent: IntentStation? = nil
     var api = ApiService()
     let stationService = StationService()
     let defaults = UserDefaults.standard
@@ -118,6 +120,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         do {
             let stations = try Disk.retrieve("stations.json", from: .caches, as: StationStorage.self)
             self.stations = stations
+            self.fromStationSuggestions = stations.stations
             print("got stations from cache")
         } catch {
             self.fetchStations()
@@ -157,6 +160,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
                 print("error saving stations")
             }
             self.stations = stationData
+            self.fromStationSuggestions = stationData.stations
             
         })
     }
@@ -283,6 +287,24 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         print("getting time suggestions")
         let suggestions =  self.timeService.suggestTimes(fromStation: fromStation, toStation: toStation, time: Date())
     }
+    func checkForIntent() {
+        print("SIRI: check for intent")
+        if let toStationIntent = self.toStationFromIntent {
+            let stationAbbr = convertIntentToStation(toStationIntent)
+            if let stationAbbr = stationAbbr {
+                print("SIRI: Station ABRR from siris", stationAbbr)
+                
+                guard let toStation = self.stations?.byAbbr[stationAbbr] else {
+                    return
+                }
+                self.toStation = toStation
+                self.trips = nil
+                self.trains = nil
+                self.toStationFromIntent = nil
+            }
+            
+        }
+    }
     // MARK: Start function
     func start() {
         
@@ -306,6 +328,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
                 self.getToStationSuggestions(station, toStation: self.toStation)
                 self.getTimeSuggestions(fromStation: station, toStation: self.toStation)
             }
+            self.checkForIntent()
         }
         self.locationServiceStatusWatcher = self.$locationServicesState.sink {value in
             
@@ -328,7 +351,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         Timer.scheduledTimer(withTimeInterval: self.cycleTimer, repeats: true) { timer in
             self.cylce()
         }
-        
+        self.checkForIntent()
         
     }
     // MARK: Dynamic link handleing
@@ -384,13 +407,20 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
             }
             
         }
-  
         self.cylce()
+        let intent = TrainsToStationIntent()
+        intent.destination = convertToIntent(station ?? Station(id: "", name: "", abbr: ""))
+        let interaction = INInteraction(intent: intent, response: nil)
+        interaction.donate(completion: {response in
+            print("SIRI:", response)
+        })
+    
     }
     
     //MARK: Station Cycle
     
     @objc func cylce() {
+        self.checkForIntent()
         print("cycle: starting cycle")
         if (self.fromStation != nil && self.api.authorized) {
             print("cycle: allowed to cycle")

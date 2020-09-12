@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreLocation
-
+import Intents
 class StationService {
     func fillOutStations(forTrip: Trip, stations: StationStorage) -> Trip {
         let legs = forTrip.legs
@@ -154,4 +154,5 @@ class StationService {
         
         
     }
+   
 }

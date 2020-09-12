@@ -35,12 +35,20 @@
 	<array>
 		<string>https://link.arrival.city</string>
 	</array>
+	<key>INIntentsSupported</key>
+	<array>
+		<string>TrainsToStationIntent</string>
+	</array>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We need your location to determine the closest station to you</string>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>TrainsToStationIntent</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

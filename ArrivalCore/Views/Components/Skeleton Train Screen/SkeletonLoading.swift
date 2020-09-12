@@ -16,7 +16,7 @@ struct SkeletonLoading: View {
          Spacer().frame(height: 5)
         ForEach(0..<5) { trip in
             Button(action: {}) {
-            SkeletonTrainCard().padding([.horizontal])
+                SkeletonTrainCard().padding([.horizontal]).padding(.vertical, spacing)
                        
                        
                    }
@@ -24,10 +24,10 @@ struct SkeletonLoading: View {
         }.onAppear() {
             if #available(iOS 14.0, *) {
                       // modern code
-                      let spacing = 100
+                      let spacing = 0
                   } else {
                       // Fallback on earlier versions
-                      let spacing = 60
+                      let spacing = 5
                   }
         }
     }

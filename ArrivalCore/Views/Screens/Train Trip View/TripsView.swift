@@ -30,7 +30,7 @@ struct TripsView: View {
             }
         }.edgesIgnoringSafeArea(.bottom)
             }
-        }
+        }.edgesIgnoringSafeArea(.bottom)
         
         
     }

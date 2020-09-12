@@ -24,7 +24,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         DynamicLinks.performDiagnostics(completion: nil)
         FirebaseApp.configure()
-        
         return true
     }
 

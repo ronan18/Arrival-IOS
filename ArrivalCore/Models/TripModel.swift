@@ -9,7 +9,7 @@
 import Foundation
 
 struct Trip: Identifiable {
-    let id: String
+  let id: String
     let origin: Station
     let destination: Station
     let originTime: Date

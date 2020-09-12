@@ -11,10 +11,6 @@ import SwiftUI
 
 
 
-enum TimeOptionType {
-    case preSet
-    case choose
-}
 
 struct TimeOption: View {
     let value: String?

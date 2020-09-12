@@ -30,15 +30,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Add `@Environment(\.managedObjectContext)` in the views that will need the context.
         
         let contentView = ContentView().environmentObject(appState)
-        
+        print("SIRI OPTIONS", connectionOptions.userActivities)
+        if let userActivity = connectionOptions.userActivities.first {
+            print("SIRI USER ACTIVITY")
+            if (userActivity.activityType  == "TrainsToStationIntent") {
+                print("SIRI: HANDLE INTENT")
+                if let intent = userActivity.interaction?.intent as? TrainsToStationIntent {
+                    print("SIRI: destination intent",intent.destination)
+                }
+            }
+            
+            
+            
+        }
         print("incomming link", connectionOptions.userActivities.first?.webpageURL)
-             if let link = connectionOptions.userActivities.first?.webpageURL {
-                 let handled = DynamicLinks.dynamicLinks().handleUniversalLink(link) { (dynamiclink, error) in
-                     if let dynamiclink = dynamiclink {
-                         self.appState.handleDynamicLink(dynamiclink)
-                     }
-                 }
-             }
+        if let link = connectionOptions.userActivities.first?.webpageURL {
+            let handled = DynamicLinks.dynamicLinks().handleUniversalLink(link) { (dynamiclink, error) in
+                if let dynamiclink = dynamiclink {
+                    self.appState.handleDynamicLink(dynamiclink)
+                }
+            }
+        }
         
         // Use a UIHostingController as window root view controller.
         
@@ -49,15 +61,36 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             window.makeKeyAndVisible()
         }
     }
-
+    func scene(_ scene: UIScene,
+               willContinueUserActivityWithType userActivityType: String) {
+        print("SIRI", userActivityType, scene.userActivity)
+    }
+    func scene(_ scene: UIScene,
+               didFailToContinueUserActivityWithType userActivityType: String,
+               error: Error) {
+        print("SIRI ERROR", error)
+        
+    }
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
-          let handled = DynamicLinks.dynamicLinks().handleUniversalLink(userActivity.webpageURL!) { (dynamiclink, error) in
-              if let dynamiclink = dynamiclink {
-                self.appState.handleDynamicLink(dynamiclink)
-              }
-          }
-          
-      }
+        print("NS USER ACTIVITY TRIGGERED, SIRI")
+        if userActivity.activityType == "TrainsToStationIntent" {
+            print("SIRI: HANDLE INTENT")
+            if let intent = userActivity.interaction?.intent as? TrainsToStationIntent {
+                print("SIRI: destination intent")
+                appState.toStationFromIntent = intent.destination
+            }
+         
+        }
+        if let url = userActivity.webpageURL {
+            let handled = DynamicLinks.dynamicLinks().handleUniversalLink(url) { (dynamiclink, error) in
+                if let dynamiclink = dynamiclink {
+                    self.appState.handleDynamicLink(dynamiclink)
+                }
+            }
+        }
+        
+
+    }
     
     func sceneDidDisconnect(_ scene: UIScene) {
         
@@ -70,7 +103,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         
         // print("cycling from did become active", appData.fromStation)
-          appState.cylce()
+        appState.cylce()
         
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
