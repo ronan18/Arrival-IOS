@@ -26,6 +26,9 @@ struct HomeScreen: View {
             VStack(spacing: 0) {
                 HomeScreenHeader(geometry: geometry, settings: {self.appState.screen = .settings})
                 StationChooserBar(fromStation: self.appState.fromStation, toStation: self.appState.toStation, timeMode: self.appState.tripTimeConfig, leftAction: {self.fromStationModalPresented = true; print("show from station modal")}, centerAction: {self.timeModalPresented = true}, rightAction: {self.toStationModalPresented = true}, skeleton:  self.appState.locationServicesState == LocationServicesState.loading && !self.locationTimeout && self.appState.fromStation == nil, geometry: geometry)
+                if (!self.appState.network) {
+                NetworkAlert()
+                }
                 if (self.appState.bannerAlert != nil) {
                     AlertView(text: self.appState.bannerAlert?.content ?? "", link: self.appState.bannerAlert?.link)
                 }

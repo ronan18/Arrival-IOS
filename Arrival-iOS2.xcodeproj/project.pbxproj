@@ -11,6 +11,7 @@
 		3401C40825055E2C0032906E /* TimeOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3401C40725055E2C0032906E /* TimeOptions.swift */; };
 		340D38CB245A1DBF00EDE8DD /* Arrival_iOS2.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = C58F248523CC1438003882F3 /* Arrival_iOS2.xcdatamodeld */; };
 		340D9E1325035671008878E4 /* Station Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 340D9E1225035671008878E4 /* Station Model.swift */; };
+		341296CA250DB16D0053DF82 /* NetworkAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341296C9250DB16D0053DF82 /* NetworkAlert.swift */; };
 		34166DD3250803150054980C /* TrainsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34166DD2250803150054980C /* TrainsService.swift */; };
 		34166DD52508428C0054980C /* TripsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34166DD42508428C0054980C /* TripsView.swift */; };
 		34166DD72508435A0054980C /* TrainsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34166DD62508435A0054980C /* TrainsView.swift */; };
@@ -104,6 +105,7 @@
 		20B8FFCBDECE96070ADAFBFB /* Pods_widgetExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_widgetExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3401C40725055E2C0032906E /* TimeOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeOptions.swift; sourceTree = "<group>"; };
 		340D9E1225035671008878E4 /* Station Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Station Model.swift"; sourceTree = "<group>"; };
+		341296C9250DB16D0053DF82 /* NetworkAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAlert.swift; sourceTree = "<group>"; };
 		34166DD2250803150054980C /* TrainsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainsService.swift; sourceTree = "<group>"; };
 		34166DD42508428C0054980C /* TripsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripsView.swift; sourceTree = "<group>"; };
 		34166DD62508435A0054980C /* TrainsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainsView.swift; sourceTree = "<group>"; };
@@ -277,6 +279,7 @@
 				34DB0D1525044A9300BF8401 /* StationChooserBar.swift */,
 				34DB0D1725044FFC00BF8401 /* HomeScreenHeader.swift */,
 				C559C1842506BEBD00EF70B4 /* PleaseChooseFromStation.swift */,
+				341296C9250DB16D0053DF82 /* NetworkAlert.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -625,6 +628,7 @@
 				C560522925069EC70026A555 /* LowDataUsage.swift in Sources */,
 				34DB0D222504796300BF8401 /* SearchBar.swift in Sources */,
 				3481782025056FAD008C5F09 /* TimeOption.swift in Sources */,
+				341296CA250DB16D0053DF82 /* NetworkAlert.swift in Sources */,
 				34DB0D25250480B600BF8401 /* MockupData.swift in Sources */,
 				C58F248423CC1438003882F3 /* SceneDelegate.swift in Sources */,
 				34166DE1250894990054980C /* SkeletonLoading.swift in Sources */,

@@ -18,7 +18,7 @@ import SwiftUI
 import CoreHaptics
 import UIKit
 import Intents
-
+import Network
 enum StationChooserBarState {
     case loading
     case choose
@@ -58,6 +58,9 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var termsOfService: termsOfServiceConfig = termsOfServiceConfig(tos: URL(string: "https://arrival.city/termsofservice.html")!, privacy:  URL(string: "https://arrival.city/privacypolicy.html")!)
     @Published var notificationCard: NotificationCardConfig? = nil
     @Published var viewedNotifications: [String] = []
+    @Published var network = true
+    let monitor = NWPathMonitor()
+
     let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
     var api = ApiService()
     let stationService = StationService()
@@ -106,7 +109,22 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
             }
             
         }
-        
+        monitor.pathUpdateHandler = { path in
+            if path.status == .satisfied {
+                DispatchQueue.main.sync {
+                    self.network = true
+                }
+          
+            } else {
+                DispatchQueue.main.sync {
+                self.network = false
+                }
+            }
+
+            print("Network:", path.isExpensive, path.status)
+        }
+        let queue = DispatchQueue(label: "Monitor")
+        monitor.start(queue: queue)
         let passphrase = defaults.string(forKey: "passphrase")
         let lastVersion = defaults.string(forKey: "lastVersion")
         print("version: last version:", lastVersion)
