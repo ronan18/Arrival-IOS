@@ -30,23 +30,15 @@ struct HomeScreen: View {
                 }
                 
                 
-                if (self.appState.waitForIntent) { SkeletonLoading().edgesIgnoringSafeArea(.bottom)} else if (self.appState.locationServicesState == LocationServicesState.askForLocation && self.appState.fromStation == nil) {
+                if (self.appState.waitForIntent) {
+                    SkeletonLoading().edgesIgnoringSafeArea(.bottom)
+                    
+                } else if (self.appState.locationServicesState == LocationServicesState.askForLocation && self.appState.fromStation == nil) {
                     PleaseChooseFromStation(locationAlert: true, clicked: {self.fromStationModalPresented = true})
                 } else if (self.appState.fromStation == nil && self.locationTimeout) {
                     PleaseChooseFromStation(locationAlert: false, clicked: {self.fromStationModalPresented = true})
-                } else if (self.appState.trains != nil) {
-                    TrainsView(trains: self.appState.trains!).edgesIgnoringSafeArea(.bottom)
-                    
-                } else if (self.appState.trips != nil) {
-                    TripsView(trips: self.appState.trips!, presentTrip: {trip in
-                        print("TRIP DETAIL: Presenting Trip", trip.origin.name)
-                        self.tripToPresent = trip;
-                        print("TRIP DETAIL: Presenting Trip final", self.tripToPresent?.origin.name ?? "error")
-                        self.tripModalPresented = true;
-                        self.appState.buttonHaptics();
-                        print("TRIP DETAIL: showing trip")
-                        
-                    }).edgesIgnoringSafeArea(.bottom)
+                } else if (self.appState.trains != nil || self.appState.trips != nil) {
+                    ScrollContentView(trains: self.appState.trains, trips: self.appState.trips, stations: self.appState.stations!, haptics: {self.appState.buttonHaptics()}, cycle: {self.appState.cylce()})
                     
                 } else {
                     SkeletonLoading().edgesIgnoringSafeArea(.bottom)

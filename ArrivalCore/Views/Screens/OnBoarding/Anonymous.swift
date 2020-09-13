@@ -31,7 +31,7 @@ struct Anonymous: View {
                    Text(config?.description ?? "Because Arrival collects some pretty personal information, your daily commute, your data is stored on device.") .multilineTextAlignment(.center)
                        .font(.footnote)
                    Spacer()
-            TOS().padding()
+            TOS(config: self.config!.tosConfig).padding()
                    StyledButton(action: next, text: "START NOW")
                }.padding()
     }

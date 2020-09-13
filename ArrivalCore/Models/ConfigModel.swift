@@ -11,6 +11,7 @@ struct OnBoardingScreenConfig {
     let title: String
     let description: String
     var button: String = "CONTINUE"
+    var tosConfig: termsOfServiceConfig
     
 }
 struct OnBoardingConfig {
@@ -18,9 +19,24 @@ struct OnBoardingConfig {
      let lowDataUsage: OnBoardingScreenConfig
      let smartDataSuggestions: OnBoardingScreenConfig
      let anonymous: OnBoardingScreenConfig
+    var tosConfig: termsOfServiceConfig
 }
 
 struct AlertConfig {
     let content: String
     let link: URL?
 }
+
+struct termsOfServiceConfig {
+    var tos: URL
+    var privacy: URL
+}
+
+struct NotificationCardConfig {
+    let title: String
+    let action: URL?
+    let image: URL?
+    let message: String?
+    let id: String
+}
+

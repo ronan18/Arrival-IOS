@@ -55,6 +55,9 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var toStationFromIntent: IntentStation? = nil
     @Published var inputIntent: TrainsToStationIntent? = nil
     @Published var waitForIntent: Bool = false
+    @Published var termsOfService: termsOfServiceConfig = termsOfServiceConfig(tos: URL(string: "https://arrival.city/termsofservice.html")!, privacy:  URL(string: "https://arrival.city/privacypolicy.html")!)
+    @Published var notificationCard: NotificationCardConfig? = nil
+    @Published var viewedNotifications: [String] = []
     var api = ApiService()
     let stationService = StationService()
     let defaults = UserDefaults.standard
@@ -77,11 +80,15 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     override init() {
         
         super.init()
-        settings.minimumFetchInterval = 43200
+      //  let fetchDuration = TimeInterval(43200)
+        let fetchDuration = TimeInterval(60*60*5) //5hr
+        //let fetchDuration = TimeInterval(0)
+        settings.minimumFetchInterval = fetchDuration
         remoteConfig.configSettings = settings
         remoteConfig.setDefaults(fromPlist: "RemoteConfigDefaults")
+        self.fetchNotificationViews()
         self.runRemoteConfigFetches()
-        remoteConfig.fetch(withExpirationDuration: TimeInterval(43200)) { (status, error) -> Void in
+        remoteConfig.fetch(withExpirationDuration: fetchDuration) { (status, error) -> Void in
             if status == .success {
                 print("Config fetched!")
                 self.remoteConfig.activate(completionHandler: { (error) in
@@ -129,8 +136,28 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
     // MARK: Fetch data stores
+    func forceReloadConfig() {
+        remoteConfig.fetch(withExpirationDuration: 0) { (status, error) -> Void in
+            if status == .success {
+                print("Config fetched!")
+                self.remoteConfig.activate(completionHandler: { (error) in
+                    DispatchQueue.main.async {
+                        
+                        self.runRemoteConfigFetches()
+                        self.configLoaded = true
+                        
+                    }
+                })
+            } else {
+                print("Config not fetched")
+                print("Error: \(error?.localizedDescription ?? "No error available.")")
+            }
+            
+        }
+    }
     func runRemoteConfigFetches() {
-        self.onBoardingConfig = OnBoardingConfig(welcome: OnBoardingScreenConfig(title: self.remoteConfig["onboarding1Heading"].stringValue!, description: self.remoteConfig["onboarding1Tagline"].stringValue!), lowDataUsage: OnBoardingScreenConfig(title: self.remoteConfig["onboarding2Heading"].stringValue!, description: self.remoteConfig["onboarding2Tagline"].stringValue!), smartDataSuggestions: OnBoardingScreenConfig(title: self.remoteConfig["onboarding3Heading"].stringValue!, description: self.remoteConfig["onboarding3Tagline"].stringValue!), anonymous: OnBoardingScreenConfig(title: self.remoteConfig["onboarding4Heading"].stringValue!, description: self.remoteConfig["onboarding4Tagline"].stringValue!))
+        self.termsOfService = termsOfServiceConfig(tos: URL(string: self.remoteConfig["termsOfServiceUrl"].stringValue!)!, privacy: URL(string: self.remoteConfig["privacyPolicyUrl"].stringValue!)!)
+        self.onBoardingConfig = OnBoardingConfig(welcome: OnBoardingScreenConfig(title: self.remoteConfig["onboarding1Heading"].stringValue!, description: self.remoteConfig["onboarding1Tagline"].stringValue!, tosConfig: self.termsOfService), lowDataUsage: OnBoardingScreenConfig(title: self.remoteConfig["onboarding2Heading"].stringValue!, description: self.remoteConfig["onboarding2Tagline"].stringValue!,tosConfig: self.termsOfService), smartDataSuggestions: OnBoardingScreenConfig(title: self.remoteConfig["onboarding3Heading"].stringValue!, description: self.remoteConfig["onboarding3Tagline"].stringValue!, tosConfig: self.termsOfService), anonymous: OnBoardingScreenConfig(title: self.remoteConfig["onboarding4Heading"].stringValue!, description: self.remoteConfig["onboarding4Tagline"].stringValue!, tosConfig: self.termsOfService), tosConfig: self.termsOfService)
         self.cycleTimer = Double(self.remoteConfig["cycleTimer"].stringValue!)!
         if let alertContent = self.remoteConfig["inAppMessage"].stringValue {
             if (alertContent.count > 1) {
@@ -139,6 +166,38 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
                     link = URL(string: linkString)
                 }
                 self.bannerAlert = AlertConfig(content: alertContent, link: link)
+            }
+        }
+        let notificationCardID = self.remoteConfig["notificationCardID"].stringValue
+        print("NOTIFICATION:",notificationCardID)
+        if let notificationCardID = notificationCardID {
+            if (notificationCardID.count > 0 && notificationCardID != "none") {
+                print("NOTIFICATION VIEWED:", self.viewedNotifications.firstIndex(of: notificationCardID), viewedNotifications)
+                if (self.viewedNotifications.firstIndex(of: notificationCardID) == nil) {
+                let cardTitle = self.remoteConfig["notificationCardTitle"].stringValue!
+                var cardAction: URL? = nil
+                var cardActionString = self.remoteConfig["notificationCardAction"].stringValue
+                if let cardActionString = cardActionString {
+                    if (cardActionString.count > 1 && cardActionString != "none") {
+                        cardAction = URL(string: cardActionString)
+                    }
+                }
+                var cardImage: URL? = nil
+                var cardImageString = self.remoteConfig["notificationCardImage"].stringValue
+                if let cardImageString = cardImageString {
+                    if (cardImageString.count > 1 && cardImageString != "none") {
+                        cardImage = URL(string: cardImageString)
+                    }
+                }
+                var cardMessage: String? = nil
+                var cardMessageString = self.remoteConfig["notificationCardMessage"].stringValue
+                if let cardMessageString = cardMessageString {
+                    if (cardMessageString.count > 1 && cardMessageString != "none") {
+                        cardMessage = cardMessageString
+                    }
+                }
+                self.notificationCard = NotificationCardConfig(title: cardTitle, action: cardAction, image: cardImage, message: cardMessage, id: notificationCardID)
+                }
             }
         }
     }
@@ -165,6 +224,23 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
             self.fromStationSuggestions = stationData.stations
             
         })
+    }
+    func fetchNotificationViews() {
+        do {
+            let notificationViews = try Disk.retrieve("viewedNotifications.json", from: .applicationSupport, as: [String].self)
+            self.viewedNotifications = notificationViews
+            print("got notification views from disk", notificationViews)
+        } catch {
+            print("erorr retreiving toStationEvents")
+        }
+    }
+    func resetNotificationViews() {
+        self.viewedNotifications =  []
+        do {
+            try Disk.remove("viewedNotifications.json", from: .applicationSupport)
+        } catch {
+            
+        }
     }
     func deleteToStationEvents() {
         self.toStationEvents = []
@@ -466,7 +542,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     
     //MARK: Station Cycle
     
-    @objc func cylce() {
+    @objc public func cylce() {
        // self.checkForIntent()
         print("cycle: starting cycle")
         if (self.fromStation != nil && self.api.authorized) {
@@ -508,6 +584,17 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     func buttonHaptics() {
         let impactMed = UIImpactFeedbackGenerator(style: .medium)
                           impactMed.impactOccurred()
+    }
+    func closeNotification(_ id: String) {
+        withAnimation {
+        self.notificationCard = nil
+        }
+        viewedNotifications.append(id)
+        do {
+            try Disk.append(id, to: "viewedNotifications.json", in: .applicationSupport)
+        } catch {
+            print("error saving notification view")
+        }
     }
     
 }

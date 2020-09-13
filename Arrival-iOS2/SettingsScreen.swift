@@ -41,6 +41,20 @@ struct SettingsScreen: View {
                         Text(String(self.appState.toStationEvents.count))
                     }
                     HStack() {
+                        Text("Viewed Notifications")
+                        Spacer()
+                        Text(String(self.appState.viewedNotifications.count))
+                    }
+                    HStack() {
+                        Spacer()
+                        Button(action: {
+                            self.appState.forceReloadConfig()
+                        }) {
+                            Text("Force reload config")
+                        }
+                        Spacer()
+                    }
+                    HStack() {
                         Spacer()
                         Button(action: {
                             self.appState.deleteToStationEvents()
@@ -49,8 +63,19 @@ struct SettingsScreen: View {
                         }
                         Spacer()
                     }
+                    HStack() {
+                        Spacer()
+                        Button(action: {
+                            self.appState.resetNotificationViews()
+                        }) {
+                            Text("reset notification views").foregroundColor(.red)
+                        }
+                        Spacer()
+                    }
+                   
                 }
                 Spacer()
+                TOS(config: self.appState.termsOfService)
             }
         }.edgesIgnoringSafeArea(.top).onAppear {
             self.stationVersion = String(self.appState.stations?.version ?? 0)

@@ -9,14 +9,19 @@
 import SwiftUI
 
 struct TOS: View {
+    var config: termsOfServiceConfig
     var body: some View {
         VStack {
             Text("By using Arrival, you agree to our")
             HStack {
-                Button(action: {})  {
+                Button(action: {
+                    UIApplication.shared.open(config.privacy)
+                })  {
                     Text("Privacy Policy")
                 }
-                Button(action: {})  {
+                Button(action: {
+                    UIApplication.shared.open(config.tos)
+                })  {
                     Text("Terms of Service")
                 }
             }
@@ -26,6 +31,6 @@ struct TOS: View {
 
 struct TOS_Previews: PreviewProvider {
     static var previews: some View {
-        TOS()
+        TOS(config: termsOfServiceConfig(tos: URL(string: "https://arrival.city/termsofservice.html")!, privacy:  URL(string: "https://arrival.city/privacypolicy.html")!))
     }
 }

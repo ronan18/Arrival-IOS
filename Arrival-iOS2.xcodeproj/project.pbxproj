@@ -22,6 +22,12 @@
 		34166DE325089E5D0054980C /* NoTrains.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34166DE225089E5D0054980C /* NoTrains.swift */; };
 		341DEBBD2509D38000C2E66B /* LinkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341DEBBC2509D38000C2E66B /* LinkService.swift */; };
 		341DEBBF2509D8AE00C2E66B /* ShareSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 341DEBBE2509D8AE00C2E66B /* ShareSheet.swift */; };
+		345A7463250D680B00A0F8D7 /* ScrollContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345A7462250D680B00A0F8D7 /* ScrollContentView.swift */; };
+		345A7465250D683E00A0F8D7 /* TripsViewNoScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345A7464250D683E00A0F8D7 /* TripsViewNoScroll.swift */; };
+		345A7467250D692100A0F8D7 /* TrainsViewNoScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345A7466250D692100A0F8D7 /* TrainsViewNoScroll.swift */; };
+		345A7469250D863300A0F8D7 /* NotificationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345A7468250D863300A0F8D7 /* NotificationCard.swift */; };
+		345A746B250D922600A0F8D7 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345A746A250D922600A0F8D7 /* ImageLoader.swift */; };
+		345A746D250D925400A0F8D7 /* RemoteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345A746C250D925400A0F8D7 /* RemoteImage.swift */; };
 		345E63EA250C547E00272B78 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 345E63E9250C547E00272B78 /* Intents.intentdefinition */; };
 		3463C1A62507154D0043F66F /* TimeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3463C1A52507154D0043F66F /* TimeService.swift */; };
 		34713932250C732300E485C2 /* IntentUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34713931250C732300E485C2 /* IntentUtils.swift */; };
@@ -60,7 +66,7 @@
 		C58F248923CC1438003882F3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58F248823CC1438003882F3 /* ContentView.swift */; };
 		C58F248E23CC143A003882F3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C58F248D23CC143A003882F3 /* Preview Assets.xcassets */; };
 		C58F249123CC143A003882F3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C58F248F23CC143A003882F3 /* LaunchScreen.storyboard */; };
-		C59430EB2506E1EA00296278 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59430EA2506E1EA00296278 /* Config.swift */; };
+		C59430EB2506E1EA00296278 /* ConfigModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59430EA2506E1EA00296278 /* ConfigModel.swift */; };
 		C59430ED2506E5AB00296278 /* RemoteConfigDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = C59430EC2506E5AB00296278 /* RemoteConfigDefaults.plist */; };
 		C59430EF2506EA7E00296278 /* KNN.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59430EE2506EA7E00296278 /* KNN.swift */; };
 		C59430F22506EAB100296278 /* MLService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59430F12506EAB100296278 /* MLService.swift */; };
@@ -109,8 +115,12 @@
 		34166DE225089E5D0054980C /* NoTrains.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoTrains.swift; sourceTree = "<group>"; };
 		341DEBBC2509D38000C2E66B /* LinkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkService.swift; sourceTree = "<group>"; };
 		341DEBBE2509D8AE00C2E66B /* ShareSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareSheet.swift; sourceTree = "<group>"; };
-		345E63B6250BD77F00272B78 /* Arrival_Core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Arrival_Core.h; sourceTree = "<group>"; };
-		345E63B7250BD77F00272B78 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		345A7462250D680B00A0F8D7 /* ScrollContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollContentView.swift; sourceTree = "<group>"; };
+		345A7464250D683E00A0F8D7 /* TripsViewNoScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripsViewNoScroll.swift; sourceTree = "<group>"; };
+		345A7466250D692100A0F8D7 /* TrainsViewNoScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TrainsViewNoScroll.swift; path = "ArrivalCore/Views/Screens/Train Trip View/TrainsViewNoScroll.swift"; sourceTree = "<group>"; };
+		345A7468250D863300A0F8D7 /* NotificationCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationCard.swift; sourceTree = "<group>"; };
+		345A746A250D922600A0F8D7 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
+		345A746C250D925400A0F8D7 /* RemoteImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteImage.swift; sourceTree = "<group>"; };
 		345E63E9250C547E00272B78 /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		3463C1A52507154D0043F66F /* TimeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeService.swift; sourceTree = "<group>"; };
 		34713931250C732300E485C2 /* IntentUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentUtils.swift; sourceTree = "<group>"; };
@@ -157,7 +167,7 @@
 		C58F248D23CC143A003882F3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		C58F249023CC143A003882F3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C58F249223CC143A003882F3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C59430EA2506E1EA00296278 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		C59430EA2506E1EA00296278 /* ConfigModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigModel.swift; sourceTree = "<group>"; };
 		C59430EC2506E5AB00296278 /* RemoteConfigDefaults.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RemoteConfigDefaults.plist; sourceTree = "<group>"; };
 		C59430EE2506EA7E00296278 /* KNN.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KNN.swift; sourceTree = "<group>"; };
 		C59430F12506EAB100296278 /* MLService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MLService.swift; sourceTree = "<group>"; };
@@ -188,6 +198,7 @@
 				34166DD42508428C0054980C /* TripsView.swift */,
 				34166DD62508435A0054980C /* TrainsView.swift */,
 				34166DE225089E5D0054980C /* NoTrains.swift */,
+				345A7464250D683E00A0F8D7 /* TripsViewNoScroll.swift */,
 			);
 			path = "Train Trip View";
 			sourceTree = "<group>";
@@ -218,15 +229,6 @@
 			path = "Skeleton Train Screen";
 			sourceTree = "<group>";
 		};
-		345E63B5250BD77F00272B78 /* Arrival Core */ = {
-			isa = PBXGroup;
-			children = (
-				345E63B6250BD77F00272B78 /* Arrival_Core.h */,
-				345E63B7250BD77F00272B78 /* Info.plist */,
-			);
-			path = "Arrival Core";
-			sourceTree = "<group>";
-		};
 		3463C1A025068E0B0043F66F /* Screens */ = {
 			isa = PBXGroup;
 			children = (
@@ -252,6 +254,9 @@
 				3481782125058A1F008C5F09 /* StyledButton.swift */,
 				34DB0D212504796300BF8401 /* SearchBar.swift */,
 				341DEBBE2509D8AE00C2E66B /* ShareSheet.swift */,
+				345A7468250D863300A0F8D7 /* NotificationCard.swift */,
+				345A746A250D922600A0F8D7 /* ImageLoader.swift */,
+				345A746C250D925400A0F8D7 /* RemoteImage.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -313,7 +318,7 @@
 				C559C1862506CC5C00EF70B4 /* ToStationEvent.swift */,
 				34DB0D062504015000BF8401 /* TrainModel.swift */,
 				34DB0D0925041E6800BF8401 /* TripModel.swift */,
-				C59430EA2506E1EA00296278 /* Config.swift */,
+				C59430EA2506E1EA00296278 /* ConfigModel.swift */,
 				C59430F3250706AE00296278 /* AppStates.swift */,
 				C59430F5250706C400296278 /* TripTimeModel.swift */,
 			);
@@ -389,9 +394,9 @@
 		C58F247523CC1438003882F3 = {
 			isa = PBXGroup;
 			children = (
+				345A7466250D692100A0F8D7 /* TrainsViewNoScroll.swift */,
 				34ACF58A2502A3B400D56C0C /* ArrivalCore */,
 				C58F248023CC1438003882F3 /* Arrival-iOS2 */,
-				345E63B5250BD77F00272B78 /* Arrival Core */,
 				C58F247F23CC1438003882F3 /* Products */,
 				839595E0F6499434F5CD83EF /* Pods */,
 				5C54F1D8772CCE96550EBCBD /* Frameworks */,
@@ -424,6 +429,7 @@
 				C58F248C23CC143A003882F3 /* Preview Content */,
 				C55BC25B23EE7FCB008E12AB /* GoogleService-Info.plist */,
 				345E63E9250C547E00272B78 /* Intents.intentdefinition */,
+				345A7462250D680B00A0F8D7 /* ScrollContentView.swift */,
 			);
 			path = "Arrival-iOS2";
 			sourceTree = "<group>";
@@ -566,6 +572,8 @@
 			files = (
 				3482DD5B2507F1E100C2B8A2 /* SettingsHeader.swift in Sources */,
 				C58F248223CC1438003882F3 /* AppDelegate.swift in Sources */,
+				345A7469250D863300A0F8D7 /* NotificationCard.swift in Sources */,
+				345A746D250D925400A0F8D7 /* RemoteImage.swift in Sources */,
 				34DB0D1025043BDB00BF8401 /* Loading.swift in Sources */,
 				34DB0D1625044A9300BF8401 /* StationChooserBar.swift in Sources */,
 				34DB0D27250483FB00BF8401 /* StationCard.swift in Sources */,
@@ -584,6 +592,7 @@
 				C559C1852506BEBD00EF70B4 /* PleaseChooseFromStation.swift in Sources */,
 				34DB0D072504015000BF8401 /* TrainModel.swift in Sources */,
 				34DB0D0A25041E6800BF8401 /* TripModel.swift in Sources */,
+				345A746B250D922600A0F8D7 /* ImageLoader.swift in Sources */,
 				34DB0D1A2504547B00BF8401 /* AlertView.swift in Sources */,
 				34166DD925084F0B0054980C /* TripDetailView.swift in Sources */,
 				34166DE325089E5D0054980C /* NoTrains.swift in Sources */,
@@ -595,17 +604,20 @@
 				34DB0D202504782100BF8401 /* StationChooser.swift in Sources */,
 				34713932250C732300E485C2 /* IntentUtils.swift in Sources */,
 				C55EDBF82506A71300E45272 /* ActivityIndicator.swift in Sources */,
+				345A7467250D692100A0F8D7 /* TrainsViewNoScroll.swift in Sources */,
 				C59430F22506EAB100296278 /* MLService.swift in Sources */,
 				3481782225058A1F008C5F09 /* StyledButton.swift in Sources */,
 				341DEBBF2509D8AE00C2E66B /* ShareSheet.swift in Sources */,
 				C55EDBFA2506B43900E45272 /* StationService.swift in Sources */,
-				C59430EB2506E1EA00296278 /* Config.swift in Sources */,
+				C59430EB2506E1EA00296278 /* ConfigModel.swift in Sources */,
 				C59430F6250706C400296278 /* TripTimeModel.swift in Sources */,
 				340D9E1325035671008878E4 /* Station Model.swift in Sources */,
 				341DEBBD2509D38000C2E66B /* LinkService.swift in Sources */,
 				34166DD3250803150054980C /* TrainsService.swift in Sources */,
 				3401C40825055E2C0032906E /* TimeOptions.swift in Sources */,
 				C54AD4A1250695AE00B653C1 /* AppState.swift in Sources */,
+				345A7463250D680B00A0F8D7 /* ScrollContentView.swift in Sources */,
+				345A7465250D683E00A0F8D7 /* TripsViewNoScroll.swift in Sources */,
 				34ACF58C2502A40100D56C0C /* ApiService.swift in Sources */,
 				C560522D2506A0E30026A555 /* Anonymous.swift in Sources */,
 				C5B706432506A2E100953108 /* OnBoarding.swift in Sources */,

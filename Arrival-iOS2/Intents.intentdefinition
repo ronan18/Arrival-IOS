@@ -1234,7 +1234,7 @@
 			<key>INIntentDescriptionID</key>
 			<string>hV0BRe</string>
 			<key>INIntentInput</key>
-			<string>destination</string>
+			<string>origin</string>
 			<key>INIntentKeyParameter</key>
 			<string>destination</string>
 			<key>INIntentLastParameterTag</key>
@@ -1284,6 +1284,19 @@
 					<string>View trains from ${origin} Station to ${destination} Station</string>
 					<key>INIntentParameterCombinationTitleID</key>
 					<string>Q0iUqL</string>
+				</dict>
+				<key>origin</key>
+				<dict>
+					<key>INIntentParameterCombinationSubtitle</key>
+					<string>Shows realtime train predcitions from ${origin} Stations</string>
+					<key>INIntentParameterCombinationSubtitleID</key>
+					<string>Ag5Gm9</string>
+					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
+					<false/>
+					<key>INIntentParameterCombinationTitle</key>
+					<string>View realtime BART trains from ${origin} Station</string>
+					<key>INIntentParameterCombinationTitleID</key>
+					<string>idhcl0</string>
 				</dict>
 			</dict>
 			<key>INIntentParameters</key>
