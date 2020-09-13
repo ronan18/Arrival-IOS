@@ -58,6 +58,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var termsOfService: termsOfServiceConfig = termsOfServiceConfig(tos: URL(string: "https://arrival.city/termsofservice.html")!, privacy:  URL(string: "https://arrival.city/privacypolicy.html")!)
     @Published var notificationCard: NotificationCardConfig? = nil
     @Published var viewedNotifications: [String] = []
+    let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
     var api = ApiService()
     let stationService = StationService()
     let defaults = UserDefaults.standard
@@ -107,6 +108,14 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         }
         
         let passphrase = defaults.string(forKey: "passphrase")
+        let lastVersion = defaults.string(forKey: "lastVersion")
+        print("version: last version:", lastVersion)
+        print("version: current version:", version)
+        if (lastVersion != version) {
+            print("version: missmatch reloading config")
+            self.forceReloadConfig()
+            defaults.setValue(version, forKey: "lastVersion")
+        }
         if let passphrase = passphrase {
             print("authorized")
             api.login(key: passphrase, handleComplete: {authorized  in
@@ -116,6 +125,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
                     self.authorized = true
                     self.fetchToStationEvents()
                     self.start()
+                    Analytics.setUserID(passphrase)
                 } else {
                     print("auth invalid")
                     self.screen = .onBoarding
@@ -255,7 +265,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     func createAccount() {
         
         self.screen = .loadingIndicator
-        let newKey: String = UUID().uuidString
+        let newKey: String = "AR-" + UUID().uuidString
         
         self.api.createAccount(key: newKey, handleComplete: ({ result  in
             print("created new account", newKey)
@@ -265,6 +275,8 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
                 self.key = newKey
                 self.authorized = true
                 self.start()
+                Analytics.setUserID(newKey)
+                Analytics.logEvent(AnalyticsEventSignUp, parameters: [:])
             }))
         }))
         
@@ -306,13 +318,13 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
                 self.locationServicesState = .loading
                 self.getClosestStations()
                 print(" location access")
-                // Analytics.setUserProperty("true", forName: "locationAccess")
+                 Analytics.setUserProperty("true", forName: "locationAccess")
             }
         case .restricted, .denied:
             self.locationAccess = false
             self.locationServicesState = .askForLocation
             print("no location access")
-            // Analytics.setUserProperty("false", forName: "locationAccess")
+             Analytics.setUserProperty("false", forName: "locationAccess")
         }
     }
     
@@ -412,6 +424,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
                 self.screen = .home
                 self.cylce()
                 self.waitForIntent = false
+                Analytics.logEvent("usedSiriIntent", parameters: ["fromStation": fromStation?.abbr, "toStation": toStation?.abbr])
             } else {
                
                 Timer.scheduledTimer(withTimeInterval: 0.05, repeats: false) { timer in
@@ -434,10 +447,12 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
             locationManager.desiredAccuracy = kCLLocationAccuracyBest // You can change the locaiton accuary here.
             locationManager.startUpdatingLocation()
             print("location access after start")
+            Analytics.setUserProperty("true", forName: "locationAccess")
         } else {
             print("no location access")
             self.fromStationSuggestions = self.stations?.stations ?? []
             self.locationServicesState = .askForLocation
+            Analytics.setUserProperty("false", forName: "locationAccess")
             self.requestLocation()
             
         }
@@ -489,6 +504,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
                     } else {
                          self.linkedTripState = .expired
                     }
+                    Analytics.logEvent("showing_trip_link", parameters: [:])
                 })
                   
                }
@@ -508,6 +524,9 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         }
      
         self.cylce()
+        Analytics.logEvent("set_fromStation", parameters: [
+                   "station": station.abbr as NSObject
+               ])
     }
     func chooseToStation(_ station: Station?) {
         self.trains = nil
@@ -527,6 +546,10 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
             
         }
         self.cylce()
+        Analytics.logEvent("set_toStation", parameters: [
+                   "station":(station?.abbr ?? "none") as NSObject,
+            "fromStation": (self.fromStation?.abbr ?? "none") as NSObject
+               ])
         let intent = TrainsToStationIntent()
         if (!self.goingOffClosestStation) {
             print("SIRI: Loggin origin")

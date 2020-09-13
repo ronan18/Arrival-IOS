@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-
+import FirebaseAnalytics
 struct TOS: View {
     var config: termsOfServiceConfig
     var body: some View {
@@ -15,11 +15,13 @@ struct TOS: View {
             Text("By using Arrival, you agree to our")
             HStack {
                 Button(action: {
+                    Analytics.logEvent("privacyPolicy_clicked", parameters: [:])
                     UIApplication.shared.open(config.privacy)
                 })  {
                     Text("Privacy Policy")
                 }
                 Button(action: {
+                    Analytics.logEvent("termsOfService_clicked", parameters: [:])
                     UIApplication.shared.open(config.tos)
                 })  {
                     Text("Terms of Service")

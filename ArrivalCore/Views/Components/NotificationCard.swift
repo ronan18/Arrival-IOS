@@ -7,8 +7,9 @@
 //
 
 import SwiftUI
-
+import FirebaseAnalytics
 struct NotificationCard: View {
+    let id: String
     let imageURL: URL?
     let title: String
     let message: String?
@@ -33,8 +34,11 @@ struct NotificationCard: View {
             }.foregroundColor(Color("Text")).padding(.leading, 2)
             
                 Spacer()
-            Button(action: close) {
-                Image(systemName: "xmark.circle.fill").font(.caption)
+            Button(action: {
+                Analytics.logEvent("notificationCard_closed", parameters: ["id": self.id])
+                close()
+            }) {
+                Image(systemName: "xmark.circle.fill").font(.callout).padding([.vertical, .leading])
             }.foregroundColor(Color.gray)
        
         }.padding(10).frame(height: 60.0).cornerRadius(10).background(Color("cardBackground")).overlay(
@@ -42,6 +46,7 @@ struct NotificationCard: View {
         ).cornerRadius(10.0).onTapGesture {
             print("CARD: CLICK")
             if let url = actionURL {
+                Analytics.logEvent("notificationCard_clicked", parameters: ["id": self.id])
                 UIApplication.shared.open(url)
             }
         }
@@ -51,6 +56,6 @@ struct NotificationCard: View {
 
 struct NotificationCard_Previews: PreviewProvider {
     static var previews: some View {
-        NotificationCard(imageURL: URL(string: "https://raw.githubusercontent.com/ronan18/Arrival-IOS/master/Arrival-iOS2/Assets.xcassets/arrivalLogo.imageset/Artboard%2022%20copy%202.png")!, title: "Arrival T-Shirts have arrived!", message: "tap to learn more", actionURL: URL(string:"https://staging.ronanfuruta.com")!, close: {})
+        NotificationCard(id: "test",imageURL: URL(string: "https://raw.githubusercontent.com/ronan18/Arrival-IOS/master/Arrival-iOS2/Assets.xcassets/arrivalLogo.imageset/Artboard%2022%20copy%202.png")!, title: "Arrival T-Shirts have arrived!", message: "tap to learn more", actionURL: URL(string:"https://staging.ronanfuruta.com")!, close: {})
     }
 }

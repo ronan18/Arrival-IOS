@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import FirebaseAnalytics
 
 struct ScrollContentView: View {
     @EnvironmentObject var appState: AppState
@@ -31,7 +32,7 @@ struct ScrollContentView: View {
         ScrollView {
             if (self.appState.notificationCard != nil) {
                 Spacer().frame(height: 10)
-                NotificationCard(imageURL: self.appState.notificationCard!.image, title: self.appState.notificationCard!.title, message: self.appState.notificationCard!.message, actionURL: self.appState.notificationCard!.action, close: {self.appState.closeNotification(self.appState.notificationCard!.id)})
+                NotificationCard(id: self.appState.notificationCard!.id, imageURL: self.appState.notificationCard!.image, title: self.appState.notificationCard!.title, message: self.appState.notificationCard!.message, actionURL: self.appState.notificationCard!.action, close: {self.appState.closeNotification(self.appState.notificationCard!.id)})
             }
         
             Spacer().frame(height: 10)
@@ -44,6 +45,7 @@ struct ScrollContentView: View {
                     self.haptics();
                     print("TRIP DETAIL: showing trip")
                     self.cycle()
+                    Analytics.logEvent("trip_details_viewed", parameters: ["fromStation": self.appState.fromStation?.abbr, "toStation": self.appState.toStation?.abbr])
                     
                 }).sheet(isPresented: self.$tripModalPresented, content:{
                     ZStack {

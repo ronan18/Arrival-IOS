@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import FirebaseAnalytics
 struct HomeScreen: View {
     @EnvironmentObject private var appState: AppState
     @State var fromStationModalPresented = false

@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-
+import FirebaseAnalytics
 struct AlertView: View {
     let text: String
     var link: URL? = nil
@@ -21,6 +21,7 @@ struct AlertView: View {
             if (self.link != nil) {
                 Button(action: {
                     if let url = self.link {
+                        Analytics.logEvent("appMessageClicked", parameters: ["link": self.link])
                         UIApplication.shared.open(url)
                     }
                 }) {

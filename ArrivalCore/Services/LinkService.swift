@@ -48,6 +48,7 @@ class LinkService {
             return link
         }
         print("LINK SERVICE: The long URL is: \(longDynamicLink)")
+        Analytics.logEvent("sharing_trip_link", parameters: ["mode": mode])
         return longDynamicLink
     }
 }
