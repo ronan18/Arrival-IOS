@@ -9,6 +9,9 @@
 import SwiftUI
 
 public struct NetworkAlert: View {
+    public init() {
+        
+    }
     public var body: some View {
         HStack {
             Spacer()

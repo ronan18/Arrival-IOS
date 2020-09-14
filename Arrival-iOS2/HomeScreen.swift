@@ -34,60 +34,7 @@ struct HomeScreen: View {
                     AlertView(text: self.appState.bannerAlert?.content ?? "", link: self.appState.bannerAlert?.link)
                 }
                 
-                
-                if (self.appState.waitForIntent) {
-                    SkeletonLoading().edgesIgnoringSafeArea(.bottom)
-                    
-                } else if (self.appState.locationServicesState == LocationServicesState.askForLocation && self.appState.fromStation == nil) {
-                    PleaseChooseFromStation(locationAlert: true, clicked: {self.fromStationModalPresented = true})
-                } else if (self.appState.fromStation == nil && self.locationTimeout) {
-                    PleaseChooseFromStation(locationAlert: false, clicked: {self.fromStationModalPresented = true})
-                } else if (self.appState.trains != nil || self.appState.trips != nil) {
-                    ScrollContentView(trains: self.appState.trains, trips: self.appState.trips, stations: self.appState.stations!, haptics: {self.appState.buttonHaptics()}, cycle: {self.appState.cylce()})
-                    
-                } else {
-                    SkeletonLoading().edgesIgnoringSafeArea(.bottom)
-                }
-                Spacer()
-                ZStack {
-                    Text("").sheet(isPresented: self.$fromStationModalPresented) {
-                        StationChooser(stations: self.appState.fromStationSuggestions, type: .from, close: {self.fromStationModalPresented = false}, choose: ({station in
-                                                                                                                                                                print("choose from", station?.name);
-                                                                                                                                                                self.appState.chooseFromStation(station!)
-                                                                                                                                                                self.fromStationModalPresented = false}))
-                    }
-                    Text("").sheet(isPresented: self.$toStationModalPresented, content: {
-                        StationChooser(stations: self.appState.toStationSuggestions, type: .to, close: {self.toStationModalPresented = false}, choose: ({station in
-                                                                                                                                                            print("choose to", station?.name);
-                                                                                                                                                            self.appState.chooseToStation(station)
-                                                                                                                                                            self.toStationModalPresented = false}))
-                    })
-                    Text("").sheet(isPresented: self.$timeModalPresented, content: {
-                        TimeOptions(options: sampleTimeOptions, close: {
-                            self.timeModalPresented = false
-                        })
-                    })
-                    Text("").sheet(isPresented: self.$tripModalPresented, content:{
-                        ZStack {
-                        if (self.tripToPresent != nil) {
-                            TripDetailView(trip: self.tripToPresent!, close: {self.tripModalPresented = false}, stations: self.appState.stations!)
-                        } else {
-                            VStack {
-                                Spacer()
-                                ActivityIndicator(style: .large)
-                                Text("loading trip")
-                                Text(String(self.tripToPresent != nil))
-                                Spacer()
-                            }
-                        }
-                        }.onAppear {
-                            print("TRIP DETAIL: Modal Appear", self.tripToPresent != nil)
-                            self.appState.cylce()
-                        }
-                        
-                        
-                    })
-                }
+                HomeContentView(fromStationModalPresented: self.$fromStationModalPresented, toStationModalPresented: self.$toStationModalPresented, timeModalPresented: self.$timeModalPresented, tripModalPresented: self.$tripModalPresented, tripToPresent: self.$tripToPresent, locationTimeout: self.$locationTimeout)
             }
             
         }.edgesIgnoringSafeArea(.vertical).onAppear {
@@ -108,4 +55,82 @@ struct HomeScreen_Previews: PreviewProvider {
 }
 
 
+struct HomeContentView: View {
+    @EnvironmentObject var appState: AppState
+    @Binding var fromStationModalPresented: Bool
+    @Binding var toStationModalPresented: Bool
+    @Binding var timeModalPresented: Bool
+    @Binding var tripModalPresented: Bool
+    @Binding var tripToPresent: Trip?
+    @Binding var locationTimeout: Bool
+    var body: some View {
+        VStack {
+        if (self.appState.waitForIntent) {
+            SkeletonLoading().edgesIgnoringSafeArea(.bottom)
+            
+        } else if (self.appState.locationServicesState == LocationServicesState.askForLocation && self.appState.fromStation == nil) {
+            PleaseChooseFromStation(locationAlert: true, clicked: {self.fromStationModalPresented = true})
+        } else if (self.appState.fromStation == nil && self.locationTimeout) {
+            PleaseChooseFromStation(locationAlert: false, clicked: {self.fromStationModalPresented = true})
+        } else if (self.appState.trains != nil || self.appState.trips != nil) {
+            ScrollContentView(trains: self.appState.trains, trips: self.appState.trips, stations: self.appState.stations!, haptics: {self.appState.buttonHaptics()}, cycle: {self.appState.cylce()})
+            
+        } else {
+            SkeletonLoading().edgesIgnoringSafeArea(.bottom)
+        }
+        Spacer()
+        HomeScreenModals(fromStationModalPresented: self.$fromStationModalPresented, toStationModalPresented: self.$toStationModalPresented, timeModalPresented: self.$timeModalPresented, tripModalPresented: self.$tripModalPresented, tripToPresent: self.$tripToPresent)
+    }
+    }
+}
 
+struct HomeScreenModals: View {
+    @EnvironmentObject var appState: AppState
+    @Binding var fromStationModalPresented: Bool
+    @Binding var toStationModalPresented: Bool
+    @Binding var timeModalPresented: Bool
+    @Binding var tripModalPresented: Bool
+    @Binding var tripToPresent: Trip?
+    
+    var body: some View {
+        ZStack {
+            Text("").sheet(isPresented: self.$fromStationModalPresented) {
+                StationChooser(stations: self.appState.fromStationSuggestions, type: .from, close: {self.fromStationModalPresented = false}, choose: ({station in
+                                                                                                                                                        print("choose from", station?.name);
+                                                                                                                                                        self.appState.chooseFromStation(station!)
+                                                                                                                                                        self.fromStationModalPresented = false}))
+            }
+            Text("").sheet(isPresented: self.$toStationModalPresented, content: {
+                StationChooser(stations: self.appState.toStationSuggestions, type: .to, close: {self.toStationModalPresented = false}, choose: ({station in
+                                                                                                                                                    print("choose to", station?.name);
+                                                                                                                                                    self.appState.chooseToStation(station)
+                                                                                                                                                    self.toStationModalPresented = false}))
+            })
+            Text("").sheet(isPresented: self.$timeModalPresented, content: {
+                TimeOptions(options: sampleTimeOptions, close: {
+                    self.timeModalPresented = false
+                })
+            })
+            Text("").sheet(isPresented: self.$tripModalPresented, content:{
+                ZStack {
+                    if (self.tripToPresent != nil) {
+                        TripDetailView(trip: self.tripToPresent!, close: {self.tripModalPresented = false}, stations: self.appState.stations!)
+                    } else {
+                        VStack {
+                            Spacer()
+                            ActivityIndicator(style: .large)
+                            Text("loading trip")
+                            Text(String(self.tripToPresent != nil))
+                            Spacer()
+                        }
+                    }
+                }.onAppear {
+                    print("TRIP DETAIL: Modal Appear", self.tripToPresent != nil)
+                    self.appState.cylce()
+                }
+                
+                
+            })
+        }
+    }
+}

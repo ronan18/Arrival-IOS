@@ -3,13 +3,15 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		340D38CB245A1DBF00EDE8DD /* Arrival_iOS2.xcdatamodeld in Resources */ = {isa = PBXBuildFile; fileRef = C58F248523CC1438003882F3 /* Arrival_iOS2.xcdatamodeld */; };
 		345A7463250D680B00A0F8D7 /* ScrollContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345A7462250D680B00A0F8D7 /* ScrollContentView.swift */; };
 		3469D312250EEEFA004BB27F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C55BC25B23EE7FCB008E12AB /* GoogleService-Info.plist */; };
+		3469D316250F0B68004BB27F /* Pods_ArrivalCoreFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C95509C1B527B4773F827F0 /* Pods_ArrivalCoreFramework.framework */; platformFilter = ios; };
+		3469D317250F0B68004BB27F /* Pods_ArrivalCoreFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3C95509C1B527B4773F827F0 /* Pods_ArrivalCoreFramework.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		347E7AD8250E85B300D3E1E2 /* ArrivalCoreFramework.h in Headers */ = {isa = PBXBuildFile; fileRef = 347E7AD6250E85B300D3E1E2 /* ArrivalCoreFramework.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		347E7ADB250E85B300D3E1E2 /* ArrivalCoreFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 347E7AD4250E85B300D3E1E2 /* ArrivalCoreFramework.framework */; };
 		347E7ADC250E85B300D3E1E2 /* ArrivalCoreFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 347E7AD4250E85B300D3E1E2 /* ArrivalCoreFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -79,7 +81,6 @@
 		C58F248E23CC143A003882F3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C58F248D23CC143A003882F3 /* Preview Assets.xcassets */; };
 		C58F249123CC143A003882F3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C58F248F23CC143A003882F3 /* LaunchScreen.storyboard */; };
 		C59430ED2506E5AB00296278 /* RemoteConfigDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = C59430EC2506E5AB00296278 /* RemoteConfigDefaults.plist */; };
-		FD9F8E888A25EDFF69CFC5E2 /* Pods_ArrivalCoreFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C95509C1B527B4773F827F0 /* Pods_ArrivalCoreFramework.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,6 +101,17 @@
 			dstSubfolderSpec = 10;
 			files = (
 				347E7ADC250E85B300D3E1E2 /* ArrivalCoreFramework.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3469D318250F0B68004BB27F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				3469D317250F0B68004BB27F /* Pods_ArrivalCoreFramework.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -208,7 +220,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FD9F8E888A25EDFF69CFC5E2 /* Pods_ArrivalCoreFramework.framework in Frameworks */,
+				3469D316250F0B68004BB27F /* Pods_ArrivalCoreFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -521,6 +533,7 @@
 				347E7AD0250E85B300D3E1E2 /* Sources */,
 				347E7AD1250E85B300D3E1E2 /* Frameworks */,
 				347E7AD2250E85B300D3E1E2 /* Resources */,
+				3469D318250F0B68004BB27F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -800,6 +813,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.ArrivalCoreFramework;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -830,6 +844,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.ArrivalCoreFramework;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";

@@ -10,7 +10,9 @@ import SwiftUI
 
 public struct SkeletonLoading: View {
     @State var spacing:CGFloat = 5
-    
+    public init() {
+        
+    }
     public var body: some View {
         ScrollView {
          Spacer().frame(height: 5)
