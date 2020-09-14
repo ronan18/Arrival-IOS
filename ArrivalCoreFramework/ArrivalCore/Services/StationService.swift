@@ -37,7 +37,7 @@ public class StationService {
         }
         handleComplete(sorted)
     }
-    public func getToStationSuggestions(fromStation: Station, previousRequests: [ToStationEvent], stations: StationStorage, currentToStation: Station? = nil) -> [Station] {
+    public func getToStationSuggestions(fromStation: Station, previousRequests: [ToStationEvent], stations: StationStorage, currentToStation: Station? = nil, date: Date = Date()) -> [Station] {
         let ml = MLService()
         let frequentEvents = previousRequests.filter({event in event.toStation != fromStation})
         let model = ml.train(frequentEvents)
@@ -74,7 +74,7 @@ public class StationService {
             }
             return results.filter {$0.abbr != fromStation.abbr}
         } else {
-            let predictions = ml.predict(fromStation: fromStation)
+            let predictions = ml.predict(fromStation: fromStation, date: date)
             
            
             if let predictions = predictions {

@@ -13,9 +13,9 @@ public enum EtdMode {
     case time
 }
 public struct TimeDisplay {
-    let time: String
-    let a: String
-    var etdMode: EtdMode = .min
+   public let time: String
+    public let a: String
+    public var etdMode: EtdMode = .min
 }
 
 public func convertBartDate(time: String, date: String) -> Date? {
