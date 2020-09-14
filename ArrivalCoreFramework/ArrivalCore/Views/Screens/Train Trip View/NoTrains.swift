@@ -8,8 +8,11 @@
 
 import SwiftUI
 
-struct NoTrains: View {
-    var body: some View {
+public struct NoTrains: View {
+    public init() {
+        
+    }
+    public var body: some View {
         VStack {
                 Spacer()
                

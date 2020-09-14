@@ -7,12 +7,12 @@
 //
 
 import SwiftUI
-struct VisualEffectView: UIViewRepresentable {
+public struct VisualEffectView: UIViewRepresentable {
     var effect: UIVisualEffect?
-    func makeUIView(context: UIViewRepresentableContext<Self>) -> UIVisualEffectView { UIVisualEffectView() }
-    func updateUIView(_ uiView: UIVisualEffectView, context: UIViewRepresentableContext<Self>) { uiView.effect = effect }
+    public func makeUIView(context: UIViewRepresentableContext<Self>) -> UIVisualEffectView { UIVisualEffectView() }
+    public func updateUIView(_ uiView: UIVisualEffectView, context: UIViewRepresentableContext<Self>) { uiView.effect = effect }
 }
-struct TripDetailView: View {
+public struct TripDetailView: View {
     @State var share = false
     @State var shareActionSheet = false
     @State var shareLink: URL? = nil
@@ -22,7 +22,7 @@ struct TripDetailView: View {
     var transfers: [TimeInterval] = []
     var bottomPadding: CGFloat = 75
     var linkService: LinkService
-    init(trip: Trip, close: @escaping (()->()), stations: StationStorage, linkService: LinkService? = nil) {
+   public init(trip: Trip, close: @escaping (()->()), stations: StationStorage, linkService: LinkService? = nil) {
         print("TRIP DETAIL: INT", trip.origin.name)
         self.trip = StationService().fillOutStations(forTrip: trip, stations: stations)
         print("TRIP DETAIL: filled out stations")
@@ -44,7 +44,7 @@ struct TripDetailView: View {
         }
         self.linkService = linkService ?? LinkService()
     }
-    var body: some View {
+    public var body: some View {
         ZStack {
             GeometryReader { geometry in
                 
@@ -132,11 +132,11 @@ struct TripDetailView_Previews: PreviewProvider {
 
 
 
-struct TripDetailTimeInfo: View {
+public struct TripDetailTimeInfo: View {
     let label: String
     let time: TimeDisplay
     var alignment: HorizontalAlignment
-    var body: some View {
+    public   var body: some View {
         VStack (alignment: alignment) {
             Text(label)
                 .font(.caption)

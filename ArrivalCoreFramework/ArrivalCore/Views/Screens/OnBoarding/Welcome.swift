@@ -11,7 +11,11 @@ import SwiftUI
 struct Welcome: View {
     var next: (()->())
     var config: OnBoardingScreenConfig? = nil
-    var body: some View {
+    public init(next: @escaping (()->()), config: OnBoardingScreenConfig? = nil) {
+        self.next = next
+        self.config = config
+    }
+   public var body: some View {
         VStack {
             Spacer()
             Image("map").resizable().aspectRatio(contentMode: .fit).frame(maxWidth: 300)

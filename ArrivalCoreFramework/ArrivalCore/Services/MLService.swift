@@ -7,17 +7,19 @@
 //
 
 import Foundation
-struct MLObject {
+public struct MLObject {
     let model: KNearestNeighborsClassifier?
     let key: [Int: Station]
 }
 
-class MLService {
+public class MLService {
     var model: KNearestNeighborsClassifier? = nil
     var decodeTable:[Int: Station]? = nil
     var encodeTable:[Station: Int]? = nil
-    
-    func train(_ inputData: [ToStationEvent]) -> MLObject {
+    public init() {
+        
+    }
+    public func train(_ inputData: [ToStationEvent]) -> MLObject {
         var trainingLabels: [Int] = [] // by abbr
         var trainingData: [[Double]] = [] // from station, day, hour
         var key: [Int: Station] = [:]
@@ -70,7 +72,7 @@ class MLService {
        // print("trained ml", result)
         return result
     }
-    func predict(fromStation: Station, date: Date = Date()) -> [Station]? {
+    public func predict(fromStation: Station, date: Date = Date()) -> [Station]? {
         if let key = self.encodeTable {
             if let model = self.model {
                 

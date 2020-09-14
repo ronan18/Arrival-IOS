@@ -8,10 +8,14 @@
 
 import SwiftUI
 import FirebaseAnalytics
-struct AlertView: View {
+public struct AlertView: View {
     let text: String
     var link: URL? = nil
-    var body: some View {
+    public init(text: String, link: URL? = nil) {
+        self.text = text
+        self.link = link
+    }
+    public var body: some View {
         VStack(alignment: .center) {
             HStack {
                 Spacer()

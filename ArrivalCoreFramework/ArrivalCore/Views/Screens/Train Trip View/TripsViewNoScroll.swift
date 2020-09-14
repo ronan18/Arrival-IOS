@@ -8,10 +8,14 @@
 
 import SwiftUI
 
-struct TripsViewNoScroll: View {
+public struct TripsViewNoScroll: View {
     var trips: [Trip]
     var presentTrip: ((Trip)->())
-    var body: some View {
+    public init(trips: [Trip], presentTrip: @escaping ((Trip)->())) {
+        self.trips = trips
+        self.presentTrip = presentTrip
+    }
+    public var body: some View {
         
 
         

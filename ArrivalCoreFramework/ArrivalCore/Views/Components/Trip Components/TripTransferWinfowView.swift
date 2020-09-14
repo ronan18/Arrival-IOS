@@ -8,18 +8,18 @@
 
 import Foundation
 import SwiftUI
-enum TripTransferWindowType {
+public enum TripTransferWindowType {
     case transfer
     case board
     case arrive
 }
 
-struct TripTransferWindow: View {
+public struct TripTransferWindow: View {
     let type: TripTransferWindowType
     var timeInterval: TimeInterval = TimeInterval(60)
     var time: Date = Date()
     var boardText: String = ""
-    init(type: TripTransferWindowType, timeInterval: TimeInterval = TimeInterval(60), time: Date = Date()) {
+   public init(type: TripTransferWindowType, timeInterval: TimeInterval = TimeInterval(60), time: Date = Date()) {
         self.type = type
         self.timeInterval = timeInterval
         self.time = time
@@ -37,7 +37,7 @@ struct TripTransferWindow: View {
             }
         }
     }
-    var body: some View {
+    public var body: some View {
         HStack {
             if (type == .transfer) {
                 Image(systemName: "clock")

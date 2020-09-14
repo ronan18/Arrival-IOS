@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct TrainCard: View {
+public struct TrainCard: View {
     var direction: String = "Rockridge"
     var color: Color = .red
     var cars: Int? = nil
@@ -16,7 +16,7 @@ struct TrainCard: View {
     var arrives: TimeDisplay? = nil
     var hideUnit: Bool = false
     private let latterAlignment: HorizontalAlignment = .leading
-    init(train: Train? = nil, trip: Trip? = nil) {
+   public init(train: Train? = nil, trip: Trip? = nil) {
         if let train = train {
             self.direction = train.destinationStation.name
             self.cars = train.cars
@@ -46,7 +46,7 @@ struct TrainCard: View {
          }*/
         
     }
-    var body: some View {
+    public var body: some View {
         HStack(){
             Rectangle()
                 .frame(width: 10.0)

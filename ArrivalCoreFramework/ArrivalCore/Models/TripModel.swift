@@ -8,30 +8,39 @@
 
 import Foundation
 
-struct Trip: Identifiable {
-  let id: String
-    let origin: Station
-    let destination: Station
-    let originTime: Date
-    let destinationTime: Date
-    let tripTime: TimeInterval
-    let legs: [TripLeg]
+public struct Trip: Identifiable {
+    public let id: String
+    public let origin: Station
+    public let destination: Station
+    public let originTime: Date
+    public let destinationTime: Date
+    public let tripTime: TimeInterval
+    public let legs: [TripLeg]
+    public init (id: String, origin: Station, destination: Station, originTime: Date, destinationTime: Date,tripTime: TimeInterval,legs: [TripLeg]) {
+        self.id = id
+        self.origin = origin
+        self.destination = destination
+        self.originTime = originTime
+        self.destinationTime = destinationTime
+        self.tripTime = tripTime
+        self.legs = legs
+    }
     
 }
 
-struct TripLeg: Identifiable {
-    let id = UUID()
-    var order: Int
-    var origin: String
-    var destination: String
-    let originTime: Date
-    let destinationTime: Date
-    let route: Route
-    var trainHeadSTN: String
-    var stopCount: Int
-    var enrouteTime: TimeInterval
-    var finalLeg: Bool
-    init(order: Int, origin: String, destination: String, originTime: Date, destinationTime: Date, route: Route, trainHeadSTN: String, finalLeg: Bool = false) {
+public struct TripLeg: Identifiable {
+    public let id = UUID()
+    public var order: Int
+    public var origin: String
+    public var destination: String
+    public let originTime: Date
+    public let destinationTime: Date
+    public let route: Route
+    public var trainHeadSTN: String
+    public var stopCount: Int
+    public var enrouteTime: TimeInterval
+    public var finalLeg: Bool
+    public init(order: Int, origin: String, destination: String, originTime: Date, destinationTime: Date, route: Route, trainHeadSTN: String, finalLeg: Bool = false) {
         self.order = order
         self.origin = origin
         self.destination = destination
@@ -42,7 +51,7 @@ struct TripLeg: Identifiable {
         let startIndex = self.route.stations.firstIndex(of: origin)
         let endIndex = self.route.stations.firstIndex(of: destination)
         if let startIndex = startIndex, let endIndex = endIndex {
-              self.stopCount = endIndex - startIndex
+            self.stopCount = endIndex - startIndex
         } else {
             self.stopCount = 0
             print("error generating stop count")
@@ -54,15 +63,26 @@ struct TripLeg: Identifiable {
     }
 }
 
-struct Route: Identifiable {
-    let id = UUID()
-    let routeNumber: Int
-    let name: String
-    let abbr: String
-    let origin: String
-    let destination: String
-    let direction: TrainDirection
-    let color: TrainColor
-    let stationCount: Int
-    let stations: [String]
+public struct Route: Identifiable {
+    public let id = UUID()
+    public let routeNumber: Int
+    public let name: String
+    public let abbr: String
+    public let origin: String
+    public let destination: String
+    public let direction: TrainDirection
+    public let color: TrainColor
+    public let stationCount: Int
+    public let stations: [String]
+    public init(routeNumber: Int, name: String,abbr: String, origin: String, destination: String, direction: TrainDirection, color: TrainColor, stationCount: Int, stations: [String]) {
+        self.routeNumber = routeNumber
+        self.name = name
+        self.abbr = abbr
+        self.origin = origin
+        self.destination = destination
+        self.direction = direction
+        self.color = color
+        self.stationCount = stationCount
+        self.stations = stations
+    }
 }

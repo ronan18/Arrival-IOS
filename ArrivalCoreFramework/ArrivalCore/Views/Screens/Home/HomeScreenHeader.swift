@@ -8,11 +8,11 @@
 
 import Foundation
 import SwiftUI
-struct HomeScreenHeader: View {
+public struct HomeScreenHeader: View {
     var geometry: GeometryProxy
     var navSpace: CGFloat = 60
     var settings: (()->())? = nil
-    init(geometry: GeometryProxy, settings: (()->())? = nil) {
+   public init(geometry: GeometryProxy, settings: (()->())? = nil) {
         self.geometry = geometry
         if #available(iOS 14.0, *) {
                   // modern code
@@ -23,7 +23,7 @@ struct HomeScreenHeader: View {
               }
         self.settings = settings
     }
-    var body: some View {
+    public var body: some View {
         VStack {
             Spacer()
             HStack {

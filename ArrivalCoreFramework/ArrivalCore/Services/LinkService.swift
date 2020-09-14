@@ -9,12 +9,13 @@
 import Foundation
 import FirebaseDynamicLinks
 import FirebaseAnalytics
-enum TripLinkMode {
+public enum TripLinkMode {
     case etd
     case eta
 }
-class LinkService {
-    func generateLinkForTrip(trip: Trip, mode: TripLinkMode) -> URL {
+public class LinkService {
+    public init() {}
+  public func generateLinkForTrip(trip: Trip, mode: TripLinkMode) -> URL {
         var linkTitle: String
         switch mode {
         case .eta:

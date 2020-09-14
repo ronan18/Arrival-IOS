@@ -8,14 +8,22 @@
 
 import SwiftUI
 import FirebaseAnalytics
-struct NotificationCard: View {
+public struct NotificationCard: View {
     let id: String
     let imageURL: URL?
     let title: String
     let message: String?
     let actionURL: URL?
     let close: (()->())
-    var body: some View {
+    public init(id: String, imageURL: URL?, title: String, message: String?, actionURL: URL?, close: @escaping (()->())) {
+        self.id = id
+        self.imageURL = imageURL
+        self.title = title
+        self.message = message
+        self.actionURL = actionURL
+        self.close = close
+    }
+    public var body: some View {
       
         HStack(){
            

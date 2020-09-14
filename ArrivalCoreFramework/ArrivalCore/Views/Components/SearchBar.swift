@@ -10,11 +10,11 @@ import Foundation
 import UIKit
 import SwiftUI
 
-struct SearchBar: UIViewRepresentable {
+public struct SearchBar: UIViewRepresentable {
 
     @Binding var text: String
 
-    class Coordinator: NSObject, UISearchBarDelegate {
+    public class Coordinator: NSObject, UISearchBarDelegate {
 
         @Binding var text: String
 
@@ -22,15 +22,15 @@ struct SearchBar: UIViewRepresentable {
             _text = text
         }
 
-        func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
             text = searchText
         }
     }
-    func makeCoordinator() -> SearchBar.Coordinator {
+    public  func makeCoordinator() -> SearchBar.Coordinator {
         return Coordinator(text: $text)
     }
 
-    func makeUIView(context: UIViewRepresentableContext<SearchBar>) -> UISearchBar {
+    public  func makeUIView(context: UIViewRepresentableContext<SearchBar>) -> UISearchBar {
         let searchBar = UISearchBar(frame: .zero)
         searchBar.searchBarStyle = .minimal
         searchBar.placeholder = "Search for a station"
@@ -40,7 +40,7 @@ struct SearchBar: UIViewRepresentable {
         return searchBar
     }
 
-    func updateUIView(_ uiView: UISearchBar, context: UIViewRepresentableContext<SearchBar>) {
+    public  func updateUIView(_ uiView: UISearchBar, context: UIViewRepresentableContext<SearchBar>) {
         uiView.text = text
     }
 }

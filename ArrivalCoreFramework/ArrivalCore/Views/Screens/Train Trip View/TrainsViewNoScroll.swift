@@ -8,20 +8,22 @@
 
 import SwiftUI
 
-struct TrainsViewNoScroll: View {
+public struct TrainsViewNoScroll: View {
     var trains: [Train]
-
- 
-    var body: some View {
-
-            
-          
-                        ForEach(trains) { train in
-                            TrainCard(train: train)
-                       
+    
+    public init(trains: [Train]) {
+        self.trains = trains
+    }
+    public var body: some View {
         
-                
- 
+        
+        
+        ForEach(trains) { train in
+            TrainCard(train: train)
+            
+            
+            
+            
             
         }.edgesIgnoringSafeArea(.bottom)
     }

@@ -8,16 +8,28 @@
 
 import Foundation
 
-struct Station: Identifiable, Codable, Hashable {
-    let id: String
-    var name: String
-    var abbr: String
-    var lat: Double? = nil
-    var long: Double? = nil
+public struct Station: Identifiable, Codable, Hashable {
+    public let id: String
+    public var name: String
+    public var abbr: String
+    public var lat: Double? = nil
+    public var long: Double? = nil
+    public init(id: String, name: String,abbr: String, lat: Double? = nil,long: Double? = nil) {
+        self.id = id
+        self.name = name
+        self.abbr = abbr
+        self.lat = lat
+        self.long = long
+    }
 }
 
-struct StationStorage: Codable {
-    var stations: [Station]
-    var byAbbr: [String: Station]
-    var version: Double
+public struct StationStorage: Codable {
+    public var stations: [Station]
+    public var byAbbr: [String: Station]
+    public var version: Double
+    public init(stations: [Station],byAbbr: [String: Station],version: Double) {
+        self.stations = stations
+        self.byAbbr = byAbbr
+        self.version = version
+    }
 }

@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-func timeModeText(_ timeMode: TripTimeModel) -> String {
+public func timeModeText(_ timeMode: TripTimeModel) -> String {
     switch timeMode.timeMode {
     case .now:
         return "Now"
@@ -19,7 +19,7 @@ func timeModeText(_ timeMode: TripTimeModel) -> String {
     }
 }
 
-struct StationChooserBar: View {
+public struct StationChooserBar: View {
     var fromStation: Station?  = nil
     var toStation: Station? = nil
     var timeMode: TripTimeModel = TripTimeModel(timeMode: .now, time: Date())
@@ -28,7 +28,17 @@ struct StationChooserBar: View {
     var rightAction: (()->())
     var skeleton: Bool = false
     var geometry: GeometryProxy
-    var body: some View {
+    public init(fromStation: Station? = nil, toStation: Station? = nil, timeMode: TripTimeModel = TripTimeModel(timeMode: .now, time: Date()), leftAction: @escaping (()->()), centerAction: @escaping (()->()), rightAction: @escaping (()->()), skeleton: Bool = false, geometry: GeometryProxy) {
+        self.fromStation = fromStation
+        self.toStation = toStation
+        self.timeMode = timeMode
+        self.leftAction = leftAction
+        self.centerAction = centerAction
+        self.rightAction = rightAction
+        self.skeleton = skeleton
+        self.geometry = geometry
+    }
+    public var body: some View {
         
         HStack {
             HStack() {
@@ -55,7 +65,7 @@ struct StationChooserBar: View {
         
     }
 }
-struct StationChooserButton: View {
+public struct StationChooserButton: View {
     var title: String
     var value: String?
     var unit: String? = nil
@@ -63,7 +73,16 @@ struct StationChooserButton: View {
     var action: (()->())
     var skelton: Bool = false
     var disabled: Bool = false
-    var body: some View {
+    public init(title: String, value: String?,unit: String? = nil,alignment: HorizontalAlignment, action: @escaping (()->()), skelton: Bool = false, disabled: Bool = false) {
+        self.title = title
+        self.value = value
+        self.unit = unit
+        self.alignment = alignment
+        self.action = action
+        self.skelton = skelton
+        self.disabled = disabled
+    }
+    public var body: some View {
         VStack {
             if (skelton) {
                 VStack(alignment: alignment) {

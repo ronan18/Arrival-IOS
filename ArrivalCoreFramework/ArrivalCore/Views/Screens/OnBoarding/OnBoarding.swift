@@ -7,17 +7,21 @@
 //
 
 import SwiftUI
-enum OnBoardingScreens {
+public enum OnBoardingScreens {
     case welcome
     case lowData
     case smart
     case anonymous
 }
-struct OnBoarding: View {
-    let next: (()->())
+public struct OnBoarding: View {
+    var next: (()->())
     var config: OnBoardingConfig? = nil
     @State var screen: OnBoardingScreens = .welcome
-    var body: some View {
+    public init(next: @escaping (()->()), config: OnBoardingConfig? = nil) {
+        self.next = next
+        self.config = config
+    }
+    public var body: some View {
         VStack {
             if (self.screen == .welcome) {
                 Welcome(next: {self.screen = .lowData}, config: config?.welcome)

@@ -12,7 +12,7 @@ import SwiftUI
 
 
 
-struct TimeOption: View {
+public struct TimeOption: View {
     let value: String?
     var selected = false
     var unit: String? = nil
@@ -20,7 +20,7 @@ struct TimeOption: View {
     var borderWidth:CGFloat = 3
     var borderColor: Color
     var action: (() -> ())
-    init (value: String? = nil, selected: Bool, unit: String? = nil, type: TimeOptionType = .preSet, action: @escaping (()-> ())) {
+   public init (value: String? = nil, selected: Bool, unit: String? = nil, type: TimeOptionType = .preSet, action: @escaping (()-> ())) {
         self.value = value
         self.unit = unit
         self.type = type
@@ -38,7 +38,7 @@ struct TimeOption: View {
         }
         self.action = action
     }
-    var body: some View {
+    public var body: some View {
              Button (action: action) {
         VStack {
        

@@ -10,7 +10,8 @@ import UIKit
 import SwiftUI
 import Foundation
 import Combine
-import Firebase
+import ArrivalCoreFramework
+//import Firebase
 import FirebaseDynamicLinks
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {

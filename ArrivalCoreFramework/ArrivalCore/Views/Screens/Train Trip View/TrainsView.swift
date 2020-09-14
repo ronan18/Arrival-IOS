@@ -14,7 +14,7 @@ struct TrainsView: View {
     var northTrains: [Train] = []
     var southTrains: [Train] = []
     var doubleMode = false
-    init(trains: [Train]) {
+    public init(trains: [Train]) {
         self.trains = trains
         northTrains = trains.filter({$0.direction == .north})
         if (northTrains.count == 0) {
@@ -25,7 +25,7 @@ struct TrainsView: View {
             doubleMode = true
         }
     }
-    var body: some View {
+  public var body: some View {
         VStack {
             if (trains.count == 0) {
                 NoTrains()

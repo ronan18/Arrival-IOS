@@ -9,7 +9,7 @@
 import SwiftUI
 
 
-struct TimeOptions: View {
+public struct TimeOptions: View {
     private enum timeType {
         case leave
         case arrive
@@ -19,7 +19,11 @@ struct TimeOptions: View {
     @State private var selection: Date = Date()
     var options: TimeOptionsInput
     var close: (() -> ())
-    var body: some View {
+    public init(options: TimeOptionsInput,close: @escaping (() -> ()) ) {
+        self.options = options
+        self.close = close
+    }
+    public var body: some View {
         ZStack {
             VStack(alignment: .leading) {
                 HStack() {

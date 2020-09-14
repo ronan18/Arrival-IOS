@@ -8,9 +8,12 @@
 
 import SwiftUI
 import FirebaseAnalytics
-struct TOS: View {
+public struct TOS: View {
     var config: termsOfServiceConfig
-    var body: some View {
+    public init(config: termsOfServiceConfig) {
+        self.config = config
+    }
+    public  var body: some View {
         VStack {
             Text("By using Arrival, you agree to our")
             HStack {

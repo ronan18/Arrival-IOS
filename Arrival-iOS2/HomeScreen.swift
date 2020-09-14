@@ -8,6 +8,7 @@
 
 import SwiftUI
 import FirebaseAnalytics
+import ArrivalCoreFramework
 struct HomeScreen: View {
     @EnvironmentObject private var appState: AppState
     @State var fromStationModalPresented = false
@@ -73,7 +74,7 @@ struct HomeScreen: View {
                         } else {
                             VStack {
                                 Spacer()
-                                ActivityIndicator(isAnimating: .constant(true), style: .large)
+                                ActivityIndicator(style: .large)
                                 Text("loading trip")
                                 Text(String(self.tripToPresent != nil))
                                 Spacer()

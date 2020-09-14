@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreData
-
+import ArrivalCoreFramework
 import Foundation
 import Firebase
 import FirebaseDynamicLinks

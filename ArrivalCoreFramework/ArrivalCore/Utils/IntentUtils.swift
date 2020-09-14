@@ -8,7 +8,7 @@
 
 import Foundation
 import Intents
-func convertToIntent(_ station: Station) -> IntentStation {
+public func convertToIntent(_ station: Station) -> IntentStation {
     switch station.abbr {
     case "12TH":
         return .twelfth
@@ -115,7 +115,7 @@ func convertToIntent(_ station: Station) -> IntentStation {
     }
 }
 
-func convertIntentToStation (_ intent: IntentStation) -> String? {
+public func convertIntentToStation (_ intent: IntentStation) -> String? {
     switch intent {
     case .twelfth:
         return "12TH"

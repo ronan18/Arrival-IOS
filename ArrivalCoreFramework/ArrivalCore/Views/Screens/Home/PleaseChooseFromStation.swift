@@ -8,10 +8,14 @@
 
 import SwiftUI
 
-struct PleaseChooseFromStation: View {
+public struct PleaseChooseFromStation: View {
     var locationAlert = false
     var clicked: (()->())
-    var body: some View {
+    public init(locationAlert: Bool = false, clicked: @escaping (()->())) {
+        self.locationAlert = locationAlert
+        self.clicked = clicked
+    }
+    public var body: some View {
         VStack {
             Spacer()
             Button(action: clicked) {

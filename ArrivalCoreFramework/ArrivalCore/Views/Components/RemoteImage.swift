@@ -10,12 +10,14 @@ import Foundation
 import SwiftUI
 import UIKit
 
-struct RemoteImage: View {
+public struct RemoteImage: View {
     let url: URL
     let imageLoader = ImageLoader()
     @State var image: UIImage? = nil
-
-    var body: some View {
+    public init(url: URL) {
+        self.url = url
+    }
+    public  var body: some View {
         Group {
             makeContent()
         }

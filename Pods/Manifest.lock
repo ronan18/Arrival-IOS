@@ -118,6 +118,7 @@ DEPENDENCIES:
   - Alamofire (~> 5.2)
   - Disk (~> 0.6.4)
   - Firebase/Analytics
+  - Firebase/Core
   - Firebase/Crashlytics
   - Firebase/DynamicLinks
   - Firebase/Performance
@@ -171,6 +172,6 @@ SPEC CHECKSUMS:
   Protobuf: 3dac39b34a08151c6d949560efe3f86134a3f748
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: 928aa26cd9965b985df3e22d63ec6dbf7c1fd403
+PODFILE CHECKSUM: be5797183e9afc447915dea8422c5fc2b54ec7dc
 
 COCOAPODS: 1.8.4

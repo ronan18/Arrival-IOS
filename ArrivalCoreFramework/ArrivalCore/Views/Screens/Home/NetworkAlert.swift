@@ -8,8 +8,8 @@
 
 import SwiftUI
 
-struct NetworkAlert: View {
-    var body: some View {
+public struct NetworkAlert: View {
+    public var body: some View {
         HStack {
             Spacer()
             Text("NO NETWORK").font(.headline).fontWeight(.bold).foregroundColor(.white)

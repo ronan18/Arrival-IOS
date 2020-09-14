@@ -19,6 +19,7 @@ import CoreHaptics
 import UIKit
 import Intents
 import Network
+import ArrivalCoreFramework
 enum StationChooserBarState {
     case loading
     case choose

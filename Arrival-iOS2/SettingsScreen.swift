@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-
+import ArrivalCoreFramework
 struct SettingsScreen: View {
     @EnvironmentObject private var appState: AppState
     @State var stationVersion: String = ""

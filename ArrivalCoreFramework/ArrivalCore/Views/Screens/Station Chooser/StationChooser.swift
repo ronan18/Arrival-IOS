@@ -8,12 +8,12 @@
 
 import SwiftUI
 let mockData = MockData()
-enum StationType {
+public enum StationType {
     case from
     case to
 }
 
-func StationTypeName (_ type: StationType) -> String {
+public func StationTypeName (_ type: StationType) -> String {
     switch type {
     case .from:
         return "Departure"
@@ -21,14 +21,14 @@ func StationTypeName (_ type: StationType) -> String {
         return "Destination"
     }
 }
-func runFilter(station: Station, search: String) -> Bool {
+public func runFilter(station: Station, search: String) -> Bool {
     if (search.count >= 1) {
     
         return station.name.lowercased().contains(search.lowercased())
     } else {return true}
 }
 
-struct StationChooser: View {
+public struct StationChooser: View {
     var close: (() -> ())
     var choose:  ((Station?) -> ())
     @State var search: String = ""
@@ -36,7 +36,7 @@ struct StationChooser: View {
     let type: StationType
     @State var filteredStations: [Station] = []
     var spacing:CGFloat = 5
-    init(stations: [Station], type: StationType, close: @escaping (() -> ()), choose: @escaping ((Station?) -> ())) {
+    public init(stations: [Station], type: StationType, close: @escaping (() -> ()), choose: @escaping ((Station?) -> ())) {
         self.close = close
         self.stations = stations
         self.type = type
@@ -52,7 +52,7 @@ struct StationChooser: View {
               }
         
     }
-    var body: some View {
+    public var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack() {
                 Text("\(StationTypeName(type)) Station")

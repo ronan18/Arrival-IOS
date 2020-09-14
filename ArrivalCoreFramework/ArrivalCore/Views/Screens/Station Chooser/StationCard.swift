@@ -8,9 +8,12 @@
 
 import SwiftUI
 
-struct StationCard: View {
+public struct StationCard: View {
     let station: Station?
-    var body: some View {
+    public init (station: Station?) {
+        self.station = station
+    }
+    public var body: some View {
            HStack(){
               
                 HStack(alignment: .lastTextBaseline) {

@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-struct TripLegCard: View {
+public struct TripLegCard: View {
     var leg: TripLeg
     
     var transferText = "transfer..."
@@ -17,7 +17,7 @@ struct TripLegCard: View {
     var originTime: TimeDisplay
     var destTime: TimeDisplay
     var stopsUntil:String = "stops until"
-    init(leg: TripLeg) {
+    public init(leg: TripLeg) {
         self.leg = leg
     
         if (leg.finalLeg) {
@@ -30,7 +30,7 @@ struct TripLegCard: View {
         self.originTime = displayTime(leg.originTime)
         self.destTime = displayTime(leg.destinationTime)
     }
-    var body: some View {
+    public var body: some View {
         HStack(){
             Rectangle()
                 .frame(width: 10.0)

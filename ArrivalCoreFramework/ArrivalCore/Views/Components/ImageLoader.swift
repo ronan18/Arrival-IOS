@@ -10,11 +10,11 @@ import Foundation
 import Combine
 import UIKit
 
-class ImageLoader: ObservableObject {
+public class ImageLoader: ObservableObject {
     private var cancellable: AnyCancellable?
-    let objectWillChange = PassthroughSubject<UIImage?, Never>()
+    public  let objectWillChange = PassthroughSubject<UIImage?, Never>()
 
-    func load(url: URL) {
+    public   func load(url: URL) {
         print("IMAGE LOADER LOADING")
         self.cancellable = URLSession.shared
             .dataTaskPublisher(for: url)
@@ -29,7 +29,7 @@ class ImageLoader: ObservableObject {
             })
     }
 
-    func cancel() {
+    public  func cancel() {
         print("IMAGE LOADER CANCLED")
         cancellable?.cancel()
     }

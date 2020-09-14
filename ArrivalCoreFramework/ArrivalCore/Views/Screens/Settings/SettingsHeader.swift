@@ -8,11 +8,11 @@
 
 import Foundation
 import SwiftUI
-struct SettingsScreenHeader: View {
+public struct SettingsScreenHeader: View {
     var geometry: GeometryProxy
     var navSpace: CGFloat = 60
     var back: (()->())
-    init(geometry: GeometryProxy, back: @escaping (()->())) {
+    public init(geometry: GeometryProxy, back: @escaping (()->())) {
         self.geometry = geometry
         if #available(iOS 14.0, *) {
                   // modern code
@@ -23,7 +23,7 @@ struct SettingsScreenHeader: View {
               }
         self.back = back
     }
-    var body: some View {
+    public var body: some View {
         VStack {
             Spacer()
             HStack(alignment: .center) {

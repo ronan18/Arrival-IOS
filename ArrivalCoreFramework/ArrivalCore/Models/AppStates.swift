@@ -7,19 +7,19 @@
 //
 
 import Foundation
-enum AppScreen {
+public enum AppScreen {
     case loading
     case loadingIndicator
     case home
     case settings
     case onBoarding
 }
-enum LocationServicesState {
+public enum LocationServicesState {
     case loading
     case ready
     case askForLocation
 }
-enum LinkedTripState {
+public enum LinkedTripState {
     case loading
     case ready
     case expired

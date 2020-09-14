@@ -8,10 +8,10 @@
 
 import SwiftUI
 
-struct SkeletonLoading: View {
+public struct SkeletonLoading: View {
     @State var spacing:CGFloat = 5
     
-    var body: some View {
+    public var body: some View {
         ScrollView {
          Spacer().frame(height: 5)
         ForEach(0..<5) { trip in

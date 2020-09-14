@@ -8,25 +8,29 @@
 
 import Foundation
 
-enum TimeMode {
+public enum TimeMode {
     case leave
     case arrive
     case now
 }
 
-struct TripTimeModel {
-    var timeMode: TimeMode
-    var time: Date
+public struct TripTimeModel {
+    public var timeMode: TimeMode
+    public var time: Date
+    public init (timeMode: TimeMode, time: Date) {
+        self.timeMode = timeMode
+        self.time = time
+    }
 }
 
-class TimeOptionInput: Identifiable {
-    let id = UUID()
-    var value: String? = nil
-    var unit: String? = nil
-    let selected: Bool
-    var action: (()->())
-    var type: TimeOptionType
-    init(value: String? = nil, unit: String? = nil, selected: Bool, action: @escaping (() -> ()), type: TimeOptionType) {
+public class TimeOptionInput: Identifiable {
+    public let id = UUID()
+    public var value: String? = nil
+    public var unit: String? = nil
+    public let selected: Bool
+    public var action: (()->())
+    public var type: TimeOptionType
+    public init(value: String? = nil, unit: String? = nil, selected: Bool, action: @escaping (() -> ()), type: TimeOptionType) {
         self.value = value
         self.unit = unit
         self.selected = selected
@@ -35,13 +39,13 @@ class TimeOptionInput: Identifiable {
     }
     
 }
-class ChooseOption: Identifiable {
-    let id = UUID()
-    var value: String? = nil
-    var unit: String? = nil
-    let selected: Bool
-    var action: (()->())
-    init(value: String? = nil, unit: String? = nil, selected: Bool, action: @escaping (() -> ())) {
+public class ChooseOption: Identifiable {
+    public let id = UUID()
+    public var value: String? = nil
+    public var unit: String? = nil
+    public let selected: Bool
+    public var action: (()->())
+    public init(value: String? = nil, unit: String? = nil, selected: Bool, action: @escaping (() -> ())) {
         self.value = value
         self.unit = unit
         self.selected = selected
@@ -51,19 +55,19 @@ class ChooseOption: Identifiable {
 }
 
 
-class TimeOptionsInput {
-    let leave: [TimeOptionInput]
-    let leaveChoose: ChooseOption
-    let arrive: [TimeOptionInput]?
-    let arriveChoose: ChooseOption?
-    init(leave: [TimeOptionInput], leaveChoose: ChooseOption, arrive: [TimeOptionInput]?, arriveChoose: ChooseOption?) {
+public class TimeOptionsInput {
+    public let leave: [TimeOptionInput]
+    public let leaveChoose: ChooseOption
+    public let arrive: [TimeOptionInput]?
+    public let arriveChoose: ChooseOption?
+    public init(leave: [TimeOptionInput], leaveChoose: ChooseOption, arrive: [TimeOptionInput]?, arriveChoose: ChooseOption?) {
         self.leave = leave
         self.arrive = arrive
         self.arriveChoose = arriveChoose
         self.leaveChoose = leaveChoose
     }
 }
-enum TimeOptionType {
+public enum TimeOptionType {
     case preSet
     case choose
 }

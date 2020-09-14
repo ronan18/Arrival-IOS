@@ -8,8 +8,13 @@
 
 import Foundation
 
-struct ToStationEvent: Codable {
-    let fromStation: Station
-    let toStation: Station
-    let time: Date
+public struct ToStationEvent: Codable {
+    public let fromStation: Station
+    public let toStation: Station
+    public let time: Date
+    public init(fromStation: Station, toStation: Station,time: Date) {
+        self.fromStation = fromStation
+        self.toStation = toStation
+        self.time = time
+    }
 }

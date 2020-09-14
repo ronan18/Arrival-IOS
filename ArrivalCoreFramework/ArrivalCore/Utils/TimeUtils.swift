@@ -7,18 +7,18 @@
 //
 
 import Foundation
-enum EtdMode {
+public enum EtdMode {
     case min
     case now
     case time
 }
-struct TimeDisplay {
+public struct TimeDisplay {
     let time: String
     let a: String
     var etdMode: EtdMode = .min
 }
 
-func convertBartDate(time: String, date: String) -> Date? {
+public func convertBartDate(time: String, date: String) -> Date? {
     let dateString = time + " " + date
       print("convert date", dateString)
     
@@ -32,7 +32,7 @@ func convertBartDate(time: String, date: String) -> Date? {
      print("date",dateFormatter.string(from: date!))
     return date
 }
-func displayTimeInterval(_ time: TimeInterval) -> TimeDisplay {
+public func displayTimeInterval(_ time: TimeInterval) -> TimeDisplay {
     let formatter = DateComponentsFormatter()
     formatter.allowedUnits = [.minute]
     formatter.unitsStyle = .abbreviated
@@ -41,21 +41,21 @@ func displayTimeInterval(_ time: TimeInterval) -> TimeDisplay {
    time = String(time.dropLast())
     return TimeDisplay(time: time, a: "min")
 }
-func displayTimeIntervalAllUnits(_ time: TimeInterval) -> String {
+public func displayTimeIntervalAllUnits(_ time: TimeInterval) -> String {
     let formatter = DateComponentsFormatter()
     formatter.allowedUnits = [.day, .hour, .minute]
     formatter.unitsStyle = .full
       
       return formatter.string(from: time)!
 }
-func displayMinutes(_ date: Date) -> Int {
+public func displayMinutes(_ date: Date) -> Int {
     // print(date)
     let timeFromNow = date.timeIntervalSince(Date())
    
     // print(timeFromNow)
     return Int(round(timeFromNow / 60))
 }
-func displayMinutesString(_ date: Date) -> TimeDisplay{
+public func displayMinutesString(_ date: Date) -> TimeDisplay{
     let timeFromNow = date.timeIntervalSince(Date())
     if (timeFromNow / 60) > 40 {
         print("TIME:", timeFromNow, displayTime(date))
@@ -70,13 +70,13 @@ func displayMinutesString(_ date: Date) -> TimeDisplay{
         return TimeDisplay(time: String(Int(round(timeFromNow / 60))), a: "min",etdMode: .min)
     }
 }
-func timeIntervalUntil(_ date: Date) -> TimeInterval {
+public func timeIntervalUntil(_ date: Date) -> TimeInterval {
     return date.timeIntervalSince(Date())
 }
-func getTimeDifference(from: Date, to: Date) -> TimeInterval {
+public func getTimeDifference(from: Date, to: Date) -> TimeInterval {
     return to.timeIntervalSince(from)
 }
-func displayTime(_ date: Date) -> TimeDisplay {
+public func displayTime(_ date: Date) -> TimeDisplay {
     // print(date)
     let dateFormatter = DateFormatter()
     dateFormatter.locale = Locale(identifier: "en_US")
@@ -90,7 +90,7 @@ func displayTime(_ date: Date) -> TimeDisplay {
     
 }
 
-func convertDateToISO(_ time: Date) -> String {
+public func convertDateToISO(_ time: Date) -> String {
    let formatter = ISO8601DateFormatter()
     return formatter.string(from: time)
 }

@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import ArrivalCoreFramework
 import FirebaseAnalytics
 
 struct ScrollContentView: View {
@@ -54,7 +55,7 @@ struct ScrollContentView: View {
                         } else {
                             VStack {
                                 Spacer()
-                                ActivityIndicator(isAnimating: .constant(true), style: .large)
+                                ActivityIndicator(style: .large)
                                 Text("loading trip")
                                 Text(String(self.tripToPresent != nil))
                                 Spacer()

@@ -9,11 +9,11 @@
 import SwiftUI
 import Combine
 import NotificationCenter
-
+import ArrivalCoreFramework
 struct ContentView: View {
     @EnvironmentObject private var appState: AppState
     
-    init() {
+    public init() {
         //   UITableView.appearance().separatorStyle = .none
     }
     var body: some View {
@@ -48,7 +48,7 @@ struct ContentView: View {
                     if (self.appState.linkedTripState == .loading || self.appState.stations == nil) {
                         VStack {
                             Spacer()
-                            ActivityIndicator(isAnimating: .constant(true), style: .large)
+                            ActivityIndicator(style: .large)
                             Text("loading link...")
                             Spacer()
                         }

@@ -9,8 +9,9 @@
 import Foundation
 import CoreLocation
 import Intents
-class StationService {
-    func fillOutStations(forTrip: Trip, stations: StationStorage) -> Trip {
+public class StationService {
+    public init() {}
+    public func fillOutStations(forTrip: Trip, stations: StationStorage) -> Trip {
         let legs = forTrip.legs
         var resultLegs: [TripLeg] = []
         let destination = stations.byAbbr[forTrip.destination.abbr] ?? forTrip.destination
@@ -25,7 +26,7 @@ class StationService {
         var result = Trip(id: forTrip.id, origin: origin, destination: destination, originTime: forTrip.originTime, destinationTime: forTrip.destinationTime, tripTime: forTrip.tripTime, legs: resultLegs)
         return result
     }
-    func getClosestStations(stations: [Station], location: CLLocation, handleComplete: @escaping (([Station])->())) {
+    public func getClosestStations(stations: [Station], location: CLLocation, handleComplete: @escaping (([Station])->())) {
         print("STATION SERVICE: getting nearest station")
         let sorted = stations.sorted  {
             let station1Loc: CLLocation = CLLocation(latitude: $0.lat!, longitude: $0.long!)
@@ -36,7 +37,7 @@ class StationService {
         }
         handleComplete(sorted)
     }
-    func getToStationSuggestions(fromStation: Station, previousRequests: [ToStationEvent], stations: StationStorage, currentToStation: Station? = nil) -> [Station] {
+    public func getToStationSuggestions(fromStation: Station, previousRequests: [ToStationEvent], stations: StationStorage, currentToStation: Station? = nil) -> [Station] {
         let ml = MLService()
         let frequentEvents = previousRequests.filter({event in event.toStation != fromStation})
         let model = ml.train(frequentEvents)

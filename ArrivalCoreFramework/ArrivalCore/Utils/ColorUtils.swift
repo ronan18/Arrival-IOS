@@ -8,7 +8,7 @@
 
 import Foundation
 import SwiftUI
-enum TrainColor {
+public enum TrainColor {
 
     case red
     case green
@@ -21,7 +21,7 @@ enum TrainColor {
     
     
 }
-func converTrainColorToHuman(_ color: TrainColor) -> String {
+public func converTrainColorToHuman(_ color: TrainColor) -> String {
     switch color {
       case .red:
           return "Red"
@@ -41,7 +41,7 @@ func converTrainColorToHuman(_ color: TrainColor) -> String {
       return "Black"
       }
 }
-func converTrainColor(_ color: TrainColor) -> Color {
+public func converTrainColor(_ color: TrainColor) -> Color {
     
     switch color {
     case .red:
@@ -63,7 +63,7 @@ func converTrainColor(_ color: TrainColor) -> Color {
     }
     
 }
-extension Color {
+public extension Color {
     init(hex: String) {
         let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int: UInt64 = 0

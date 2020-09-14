@@ -8,10 +8,14 @@
 
 import SwiftUI
 
-struct StyledButton: View {
+public struct StyledButton: View {
     var action: (() -> ())
     var text: String
-    var body: some View {
+    public init(action: @escaping (() -> ()), text: String) {
+        self.action = action
+        self.text = text
+    }
+    public var body: some View {
         Button(action: action) {
             HStack {
                 Spacer()

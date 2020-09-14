@@ -12,7 +12,12 @@ struct Anonymous: View {
     var next: (()->())
         var back: (()->())
       var config: OnBoardingScreenConfig? = nil
-    var body: some View {
+    public init(next: @escaping (()->()), back: @escaping (()->()), config: OnBoardingScreenConfig? = nil) {
+        self.next = next
+        self.back = back
+        self.config = config
+    }
+   public var body: some View {
         VStack {
                    HStack {
                        Button(action: back) {

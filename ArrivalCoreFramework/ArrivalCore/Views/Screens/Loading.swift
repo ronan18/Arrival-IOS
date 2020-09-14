@@ -8,10 +8,13 @@
 
 import SwiftUI
 
-struct Loading: View {
+public struct Loading: View {
     let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
     var indicator = false
-    var body: some View {
+    public init(indicator: Bool = false) {
+        self.indicator = indicator
+    }
+    public var body: some View {
         
         VStack {
             GeometryReader { geometry in
@@ -40,7 +43,7 @@ struct Loading: View {
                 
                 .foregroundColor(Color.white)
                     } else {
-                        ActivityIndicator(isAnimating: .constant(true), style: .whiteLarge)
+                        ActivityIndicator(style: .whiteLarge)
                     }
                 
                 Spacer()

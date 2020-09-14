@@ -11,11 +11,16 @@ import Alamofire
 import Combine
 import NotificationCenter
 import SwiftyJSON
-class ApiService {
-    var auth: String?
-    var authorized: Bool = false
-    let apiUrl = "https://api.arrival.city"
-    func  getStations(handleComplete: @escaping ((StationStorage)->())) {
+public class ApiService {
+    public var auth: String?
+    public var authorized: Bool = false
+    public var apiUrl = "https://api.arrival.city"
+    public init(auth: String? = nil, authorized: Bool = false, apiUrl: String = "https://api.arrival.city") {
+        self.auth = auth
+        self.authorized = authorized
+        self.apiUrl = apiUrl
+    }
+    public  func  getStations(handleComplete: @escaping ((StationStorage)->())) {
         var result:JSON = []
         
         AF.request("\(apiUrl)/api/v3/stations").responseJSON { response in
@@ -44,7 +49,7 @@ class ApiService {
         
         
     }
-    func login(key: String, handleComplete: @escaping ((_ authorized: Bool)->())) {
+    public func login(key: String, handleComplete: @escaping ((_ authorized: Bool)->())) {
         let headers: HTTPHeaders = [
             "Authorization": key,
             "Accept": "application/json"
@@ -71,7 +76,7 @@ class ApiService {
         }
     }
     
-    func createAccount(key: String, handleComplete: @escaping ((Bool)->())) {
+    public func createAccount(key: String, handleComplete: @escaping ((Bool)->())) {
         let headers: HTTPHeaders = [
             "Authorization": key,
             "Accept": "application/json"
@@ -96,7 +101,7 @@ class ApiService {
             
         }
     }
-    func getTrip(byID: String,handleComplete: @escaping ((Trip?)->()) ) {
+    public func getTrip(byID: String,handleComplete: @escaping ((Trip?)->()) ) {
         var headers: HTTPHeaders
         if let auth = self.auth {
             headers = [
@@ -156,7 +161,7 @@ class ApiService {
             }
         }
     }
-    func conertTimeModelToAPIModel (_ timeConfig: TripTimeModel) -> [String] {
+    public func conertTimeModelToAPIModel (_ timeConfig: TripTimeModel) -> [String] {
         var type: String
         var time: String = convertDateToISO(timeConfig.time)
         switch timeConfig.timeMode {
@@ -169,7 +174,7 @@ class ApiService {
         }
         return [type, time]
     }
-    func getTrainsFrom(from: Station, timeConfig: TripTimeModel, handleComplete: @escaping (([Train]?)->())) {
+    public func getTrainsFrom(from: Station, timeConfig: TripTimeModel, handleComplete: @escaping (([Train]?)->())) {
         if let auth = auth {
             let headers: HTTPHeaders = [
                 "Authorization": auth,
@@ -210,7 +215,7 @@ class ApiService {
         }
         
     }
-    func getTrips(from: Station, to: Station, timeConfig: TripTimeModel, handleComplete: @escaping (([Trip]?)->())) {
+    public func getTrips(from: Station, to: Station, timeConfig: TripTimeModel, handleComplete: @escaping (([Trip]?)->())) {
         if let auth = auth {
             let headers: HTTPHeaders = [
                 "Authorization": auth,

@@ -9,12 +9,12 @@
 import Foundation
 import SwiftUI
 
-enum TrainDirection {
+public enum TrainDirection {
     case north
     case south
 }
 
-func determineTrainDirection(_ direction: String) -> TrainDirection {
+public func determineTrainDirection(_ direction: String) -> TrainDirection {
     switch direction {
     case "North", "north":
         return TrainDirection.north
@@ -25,7 +25,7 @@ func determineTrainDirection(_ direction: String) -> TrainDirection {
     }
 }
 
-func determineTrainColor(_ color: String) -> TrainColor {
+public func determineTrainColor(_ color: String) -> TrainColor {
     switch color.lowercased() {
     case "yellow":
         return TrainColor.yellow
@@ -46,15 +46,26 @@ func determineTrainColor(_ color: String) -> TrainColor {
     }
 }
 
-struct Train: Identifiable {
-   let id = UUID()
-    let departureStation: Station
-    let destinationStation: Station
-    let etd: Date
-    let platform: Int
-    let direction: TrainDirection
-    let delay: Double
-    let bikeFlag: Int
-    let color: TrainColor
-    let cars: Int
+public struct Train: Identifiable {
+    public let id = UUID()
+    public let departureStation: Station
+    public let destinationStation: Station
+    public let etd: Date
+    public let platform: Int
+    public let direction: TrainDirection
+    public let delay: Double
+    public let bikeFlag: Int
+    public let color: TrainColor
+    public let cars: Int
+    public init(departureStation: Station, destinationStation: Station,etd: Date, platform: Int,direction: TrainDirection, delay: Double,bikeFlag: Int,color: TrainColor,cars: Int) {
+        self.departureStation = departureStation
+        self.destinationStation = destinationStation
+        self.etd = etd
+        self.platform = platform
+        self.direction = direction
+        self.delay = delay
+        self.bikeFlag = bikeFlag
+        self.color = color
+        self.cars = cars
+    }
 }
