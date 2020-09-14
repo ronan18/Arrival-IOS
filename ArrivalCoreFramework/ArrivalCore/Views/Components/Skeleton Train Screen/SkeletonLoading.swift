@@ -18,7 +18,7 @@ public struct SkeletonLoading: View {
          Spacer().frame(height: 5)
         ForEach(0..<5) { trip in
             Button(action: {}) {
-                SkeletonTrainCard().padding([.horizontal]).padding(.vertical, spacing)
+                SkeletonTrainCard().padding([.horizontal]).padding(.vertical, self.spacing)
                        
                        
                    }

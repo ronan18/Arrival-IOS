@@ -19,13 +19,13 @@ public struct TOS: View {
             HStack {
                 Button(action: {
                     Analytics.logEvent("privacyPolicy_clicked", parameters: [:])
-                    UIApplication.shared.open(config.privacy)
+                    UIApplication.shared.open(self.config.privacy)
                 })  {
                     Text("Privacy Policy")
                 }
                 Button(action: {
                     Analytics.logEvent("termsOfService_clicked", parameters: [:])
-                    UIApplication.shared.open(config.tos)
+                    UIApplication.shared.open(self.config.tos)
                 })  {
                     Text("Terms of Service")
                 }

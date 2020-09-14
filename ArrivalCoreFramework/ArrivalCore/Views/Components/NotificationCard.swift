@@ -44,7 +44,7 @@ public struct NotificationCard: View {
                 Spacer()
             Button(action: {
                 Analytics.logEvent("notificationCard_closed", parameters: ["id": self.id])
-                close()
+                self.close()
             }) {
                 Image(systemName: "xmark.circle.fill").font(.callout).padding([.vertical, .leading])
             }.foregroundColor(Color.gray)
@@ -53,7 +53,7 @@ public struct NotificationCard: View {
             RoundedRectangle(cornerRadius: CGFloat(10.0)).stroke(Color(.sRGB, red:170/255, green: 170/255, blue: 170/255, opacity: 0.1), lineWidth:3)
         ).cornerRadius(10.0).onTapGesture {
             print("CARD: CLICK")
-            if let url = actionURL {
+            if let url = self.actionURL {
                 Analytics.logEvent("notificationCard_clicked", parameters: ["id": self.id])
                 UIApplication.shared.open(url)
             }

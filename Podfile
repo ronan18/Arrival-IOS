@@ -6,7 +6,7 @@ target 'Arrival-iOS2' do
   
   # Pods for Arrival-iOS2
  
-  pod 'Firebase/Core'
+  # pod 'Firebase/Core'
 
 end
 target 'ArrivalCoreFramework' do
@@ -20,7 +20,7 @@ target 'ArrivalCoreFramework' do
   pod 'Firebase/Core'
   pod 'Firebase/Analytics'
   pod 'Firebase/Crashlytics'
-  pod 'Firebase/Performance'
+ # pod 'Firebase/Performance'
   pod 'Firebase/RemoteConfig'
   pod 'Firebase/DynamicLinks'
 

@@ -10,7 +10,8 @@ import Foundation
 import SwiftyJSON
 import Disk
 import CoreLocation
-import FirebasePerformance
+//import Firebase
+//import FirebasePerformance
 import FirebaseAnalytics
 import FirebaseRemoteConfig
 import FirebaseDynamicLinks

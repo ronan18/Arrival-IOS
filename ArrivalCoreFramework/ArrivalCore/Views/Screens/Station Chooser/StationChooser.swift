@@ -79,7 +79,7 @@ public struct StationChooser: View {
                     ForEach(stations.filter {runFilter(station: $0, search: self.search)}) {station in
                         Button(action: {self.choose(station)}) {
                             StationCard(station: station)
-                        }.foregroundColor(Color("Text")).padding(.vertical, spacing)
+                        }.foregroundColor(Color("Text")).padding(.vertical, self.spacing)
                     }
                 }.edgesIgnoringSafeArea(.bottom)
             }.padding(.horizontal).edgesIgnoringSafeArea(.bottom)
