@@ -14,13 +14,19 @@ public enum TimeMode {
     case now
 }
 
-public struct TripTimeModel {
+public struct TripTimeModel: Identifiable {
+    public let id = UUID()
     public var timeMode: TimeMode
     public var time: Date
     public init (timeMode: TimeMode, time: Date) {
         self.timeMode = timeMode
         self.time = time
     }
+}
+
+public struct TimeSuggestion {
+    let leave: TripTimeModel // 1 option
+    let arrive: [TripTimeModel] // 5 options
 }
 
 public class TimeOptionInput: Identifiable {
@@ -41,15 +47,15 @@ public class TimeOptionInput: Identifiable {
 }
 public class ChooseOption: Identifiable {
     public let id = UUID()
-    public var value: String? = nil
-    public var unit: String? = nil
-    public let selected: Bool
-    public var action: (()->())
-    public init(value: String? = nil, unit: String? = nil, selected: Bool, action: @escaping (() -> ())) {
+    public var value: String
+    public var time: Date
+    public var unit: String
+    public init(time: Date, value: String, unit: String, action: @escaping (() -> ())) {
         self.value = value
         self.unit = unit
-        self.selected = selected
-        self.action = action
+        self.time = time
+     
+       
     }
     
 }

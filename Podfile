@@ -7,7 +7,7 @@ target 'Arrival-iOS2' do
   # Pods for Arrival-iOS2
  
   # pod 'Firebase/Core'
-
+ # pod 'Firebase/InAppMessaging'
 end
 target 'ArrivalCoreFramework' do
   # Comment the next line if you don't want to use dynamic frameworks

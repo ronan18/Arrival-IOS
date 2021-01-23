@@ -7,15 +7,12 @@
 //
 
 import Foundation
-public struct TimeSuggestion {
-    let leave: [TripTimeModel] // 1 option
-    let arrive: [TripTimeModel] // 5 options
-}
+
 public class TimeService {
     public init() {
         
     }
    public func suggestTimes(fromStation: Station, toStation: Station?, time: Date) -> TimeSuggestion {
-        return TimeSuggestion(leave: [TripTimeModel(timeMode: .leave, time: Date(timeIntervalSinceNow: (15*60)))], arrive: [TripTimeModel(timeMode: .arrive, time: Date(timeIntervalSinceNow: (1*60*60))), TripTimeModel(timeMode: .arrive, time: Date(timeIntervalSinceNow: (4*60*60))), TripTimeModel(timeMode: .arrive, time: Date(timeIntervalSinceNow: (6*60*60))),TripTimeModel(timeMode: .arrive, time: Date(timeIntervalSinceNow: (10*60*60))),TripTimeModel(timeMode: .arrive, time: Date(timeIntervalSinceNow: (24*60*60)))])
+        return TimeSuggestion(leave: TripTimeModel(timeMode: .leave, time: Date(timeIntervalSinceNow: (15*60))), arrive: [TripTimeModel(timeMode: .arrive, time: Date(timeIntervalSinceNow: (1*60*60))), TripTimeModel(timeMode: .arrive, time: Date(timeIntervalSinceNow: (4*60*60))), TripTimeModel(timeMode: .arrive, time: Date(timeIntervalSinceNow: (6*60*60))),TripTimeModel(timeMode: .arrive, time: Date(timeIntervalSinceNow: (10*60*60))),TripTimeModel(timeMode: .arrive, time: Date(timeIntervalSinceNow: (24*60*60)))])
     }
 }

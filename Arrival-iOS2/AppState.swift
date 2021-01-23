@@ -60,6 +60,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var termsOfService: termsOfServiceConfig = termsOfServiceConfig(tos: URL(string: "https://arrival.city/termsofservice.html")!, privacy:  URL(string: "https://arrival.city/privacypolicy.html")!)
     @Published var notificationCard: NotificationCardConfig? = nil
     @Published var viewedNotifications: [String] = []
+    @Published var viewedAlerts: [String] = []
     @Published var network = true
     let monitor = NWPathMonitor()
 
@@ -195,7 +196,9 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
                 if let linkString = self.remoteConfig["inAppLink"].stringValue {
                     link = URL(string: linkString)
                 }
-                self.bannerAlert = AlertConfig(content: alertContent, link: link)
+                if (self.viewedAlerts.count == 0 || self.viewedAlerts.firstIndex(of: self.remoteConfig["inAppMessageID"].stringValue ?? "error") == nil) {
+                self.bannerAlert = AlertConfig(id: self.remoteConfig["inAppMessageID"].stringValue ?? UUID().uuidString, content: alertContent, link: link)
+                }
             }
         }
         let notificationCardID = self.remoteConfig["notificationCardID"].stringValue
@@ -203,7 +206,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         if let notificationCardID = notificationCardID {
             if (notificationCardID.count > 0 && notificationCardID != "none") {
                 print("NOTIFICATION VIEWED:", self.viewedNotifications.firstIndex(of: notificationCardID), viewedNotifications)
-                if (self.viewedNotifications.firstIndex(of: notificationCardID) == nil) {
+                if (self.viewedNotifications.count == 0 || self.viewedNotifications.firstIndex(of: notificationCardID) == nil) {
                 let cardTitle = self.remoteConfig["notificationCardTitle"].stringValue!
                 var cardAction: URL? = nil
                 var cardActionString = self.remoteConfig["notificationCardAction"].stringValue
@@ -230,6 +233,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
                 }
             }
         }
+        self.configLoaded = true
     }
     func fetchToStationEvents() {
         do {
@@ -261,13 +265,26 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
             self.viewedNotifications = notificationViews
             print("got notification views from disk", notificationViews)
         } catch {
-            print("erorr retreiving toStationEvents")
+            print("erorr retreiving notification views")
+        }
+        do {
+            let alertViews = try Disk.retrieve("viewedAlerts.json", from: .applicationSupport, as: [String].self)
+            self.viewedAlerts = alertViews
+            print("got alert views from disk", alertViews)
+        } catch {
+            print("erorr retreiving alert views")
         }
     }
     func resetNotificationViews() {
         self.viewedNotifications =  []
         do {
             try Disk.remove("viewedNotifications.json", from: .applicationSupport)
+        } catch {
+            
+        }
+        self.viewedAlerts =  []
+        do {
+            try Disk.remove("viewedAlerts.json", from: .applicationSupport)
         } catch {
             
         }
@@ -289,11 +306,13 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
         
         self.api.createAccount(key: newKey, handleComplete: ({ result  in
             print("created new account", newKey)
+            self.runRemoteConfigFetches()
             self.api.login(key: newKey, handleComplete: ({ result in
                 print("new account validated")
                 self.defaults.set(newKey, forKey: "passphrase")
                 self.key = newKey
                 self.authorized = true
+               
                 self.start()
                 Analytics.setUserID(newKey)
                 Analytics.logEvent(AnalyticsEventSignUp, parameters: [:])
@@ -459,7 +478,6 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     // MARK: Start function
     func start() {
-        
         print("start")
         self.requestLocation()
         if CLLocationManager.locationServicesEnabled() {
@@ -537,12 +555,13 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
               self.trips = nil
         self.fromStation = station
            self.buttonHaptics()
+        if (closestStations.count > 1) {
         if (station == closestStations[0]) {
             self.goingOffClosestStation = true
         } else {
             self.goingOffClosestStation = false
         }
-     
+        }
         self.cylce()
         Analytics.logEvent("set_fromStation", parameters: [
                    "station": station.abbr as NSObject
@@ -639,5 +658,13 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
             print("error saving notification view")
         }
     }
-    
+    func dismissAlert() {
+        let id = bannerAlert?.id ?? ""
+        self.bannerAlert = nil
+        do {
+            try Disk.append(id, to: "viewedAlerts.json", in: .applicationSupport)
+        } catch {
+            print("error saving notification view")
+        }
+    }
 }

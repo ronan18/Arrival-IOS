@@ -21,6 +21,6 @@ public let leaveSampleOptions = [TimeOptionInput(value: "now", selected: true, a
 
 public let arriveSampleOptions = [TimeOptionInput(value: "9:00", unit: "am", selected: false, action: {print("now")}, type:TimeOptionType.preSet),  TimeOptionInput(value: "10:00", unit: "am", selected: false, action: {print("now")}, type:TimeOptionType.preSet),  TimeOptionInput(value: "12:00", unit: "pm", selected: false, action: {print("now")}, type:TimeOptionType.preSet),  TimeOptionInput(value: "4:00", unit: "pm", selected: false, action: {print("now")}, type:TimeOptionType.preSet),  TimeOptionInput(value: "6:00", unit: "pm", selected: false, action: {print("now")}, type:TimeOptionType.preSet),  TimeOptionInput(value: "9:00", unit: "am", selected: false, action: {print("now")}, type:TimeOptionType.choose)]
 
-public let sampleLeaveChoose = ChooseOption(selected: false, action: {print("choose")})
-public let sampleArriveChoose = ChooseOption(value: "9:00", unit: "am", selected: false, action: {print("choose")})
-public let sampleTimeOptions = TimeOptionsInput(leave: leaveSampleOptions,leaveChoose: sampleLeaveChoose, arrive: arriveSampleOptions, arriveChoose: sampleArriveChoose)
+//public let sampleLeaveChoose = ChooseOption(selected: false, action: {print("choose")})
+//public let sampleArriveChoose = ChooseOption(value: "9:00", unit: "am", selected: false, action: {print("choose")})
+public let sampleTimeOptions = TimeSuggestion(leave: TripTimeModel(timeMode: .leave, time: Date(timeIntervalSinceNow: (15*60))), arrive: [TripTimeModel(timeMode: .arrive, time: Date(timeIntervalSinceNow: (1*60*60))), TripTimeModel(timeMode: .arrive, time: Date(timeIntervalSinceNow: (4*60*60))), TripTimeModel(timeMode: .arrive, time: Date(timeIntervalSinceNow: (6*60*60))),TripTimeModel(timeMode: .arrive, time: Date(timeIntervalSinceNow: (10*60*60))),TripTimeModel(timeMode: .arrive, time: Date(timeIntervalSinceNow: (24*60*60)))])

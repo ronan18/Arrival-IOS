@@ -36,9 +36,11 @@ public struct OnBoardingConfig {
 }
 
 public struct AlertConfig {
+    public let id: String
     public let content: String
     public let link: URL?
-    public init(content: String, link: URL?) {
+    public init(id: String, content: String, link: URL?) {
+        self.id = id
         self.content = content
         self.link = link
     }

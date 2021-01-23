@@ -26,6 +26,7 @@ public class ImageLoader: ObservableObject {
             .sink(receiveValue: { image in
                 print("IMAGE LOADER LOADED")
                 self.objectWillChange.send(image)
+                print("IMAGE LOADER LOADED SENT")
             })
     }
 

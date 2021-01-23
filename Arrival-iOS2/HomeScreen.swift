@@ -29,13 +29,13 @@ struct HomeScreen: View {
                 HomeScreenHeader(geometry: geometry, settings: {self.appState.screen = .settings})
                 StationChooserBar(fromStation: self.appState.fromStation, toStation: self.appState.toStation, timeMode: self.appState.tripTimeConfig, leftAction: {self.fromStationModalPresented = true; print("show from station modal")}, centerAction: {self.timeModalPresented = true}, rightAction: {self.toStationModalPresented = true}, skeleton:  self.appState.locationServicesState == LocationServicesState.loading && !self.locationTimeout && self.appState.fromStation == nil, geometry: geometry)
                 if (!self.appState.network) {
-                NetworkAlert()
+                    NetworkAlert()
                 }
                 if (self.appState.bannerAlert != nil) {
-                    AlertView(text: self.appState.bannerAlert?.content ?? "", link: self.appState.bannerAlert?.link)
+                    AlertView(id: self.appState.bannerAlert?.id ?? "error", text: self.appState.bannerAlert?.content ?? "", link: self.appState.bannerAlert?.link, close: self.appState.dismissAlert)
                 }
                 
-                HomeContentView(fromStationModalPresented: self.$fromStationModalPresented, toStationModalPresented: self.$toStationModalPresented, timeModalPresented: self.$timeModalPresented, tripModalPresented: self.$tripModalPresented, tripToPresent: self.$tripToPresent, locationTimeout: self.$locationTimeout)
+                HomeContentView(fromStationModalPresented: self.$fromStationModalPresented, toStationModalPresented: self.$toStationModalPresented, timeModalPresented: self.$timeModalPresented, tripModalPresented: self.$tripModalPresented, tripToPresent: self.$tripToPresent, locationTimeout: self.$locationTimeout).edgesIgnoringSafeArea(.bottom)
             }
             
         }.edgesIgnoringSafeArea(.vertical).onAppear {
@@ -66,22 +66,22 @@ struct HomeContentView: View {
     @Binding var locationTimeout: Bool
     var body: some View {
         VStack {
-        if (self.appState.waitForIntent) {
-            SkeletonLoading().edgesIgnoringSafeArea(.bottom)
-            
-        } else if (self.appState.locationServicesState == LocationServicesState.askForLocation && self.appState.fromStation == nil) {
-            PleaseChooseFromStation(locationAlert: true, clicked: {self.fromStationModalPresented = true})
-        } else if (self.appState.fromStation == nil && self.locationTimeout) {
-            PleaseChooseFromStation(locationAlert: false, clicked: {self.fromStationModalPresented = true})
-        } else if (self.appState.trains != nil || self.appState.trips != nil) {
-            ScrollContentView(trains: self.appState.trains, trips: self.appState.trips, stations: self.appState.stations!, haptics: {self.appState.buttonHaptics()}, cycle: {self.appState.cylce()})
-            
-        } else {
-            SkeletonLoading().edgesIgnoringSafeArea(.bottom)
+            if (self.appState.waitForIntent) {
+                SkeletonLoading().edgesIgnoringSafeArea(.bottom)
+                
+            } else if (self.appState.locationServicesState == LocationServicesState.askForLocation && self.appState.fromStation == nil) {
+                PleaseChooseFromStation(locationAlert: true, clicked: {self.fromStationModalPresented = true})
+            } else if (self.appState.fromStation == nil && self.locationTimeout) {
+                PleaseChooseFromStation(locationAlert: false, clicked: {self.fromStationModalPresented = true})
+            } else if (self.appState.trains != nil || self.appState.trips != nil) {
+                ScrollContentView(trains: self.appState.trains, trips: self.appState.trips, stations: self.appState.stations!, haptics: {self.appState.buttonHaptics()}, cycle: {self.appState.cylce()})
+                
+            } else {
+                SkeletonLoading().edgesIgnoringSafeArea(.bottom)
+            }
+            Spacer()
+            HomeScreenModals(fromStationModalPresented: self.$fromStationModalPresented, toStationModalPresented: self.$toStationModalPresented, timeModalPresented: self.$timeModalPresented, tripModalPresented: self.$tripModalPresented, tripToPresent: self.$tripToPresent)
         }
-        Spacer()
-        HomeScreenModals(fromStationModalPresented: self.$fromStationModalPresented, toStationModalPresented: self.$toStationModalPresented, timeModalPresented: self.$timeModalPresented, tripModalPresented: self.$tripModalPresented, tripToPresent: self.$tripToPresent)
-    }
     }
 }
 

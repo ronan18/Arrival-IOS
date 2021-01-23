@@ -88,7 +88,7 @@ struct ScrollContentView: View {
             }
             
             
-        }.padding(.horizontal).onAppear {
+        }.edgesIgnoringSafeArea(.bottom).padding(.horizontal).onAppear {
             if let trains = self.trains {
                 var northTrains: [Train] = []
                 var southTrains: [Train] = []
@@ -102,7 +102,7 @@ struct ScrollContentView: View {
                     }
                 }
             
-        }
+        }.edgesIgnoringSafeArea(.bottom)
     }
     }
 }
