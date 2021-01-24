@@ -118,7 +118,7 @@ public struct TripDetailView: View {
                     self.share = true
                 }),.cancel()])
             }.sheet(isPresented: self.$share) {
-                ShareSheet(sharing: [self.shareLink])
+                ShareSheet(sharing: [self.shareLink as Any])
             }
         }
     }

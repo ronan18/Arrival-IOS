@@ -22,13 +22,15 @@ public struct TimeOptions: View {
     var leaveTimesRow2: [TripTimeModel] = []
     var options: TimeSuggestion
     var close: (() -> ())
+    var choose: (TripTimeModel) -> ()
     func chooseTime(_ time: TripTimeModel) {
-        
+        self.choose(time)
     }
-    public init(options: TimeSuggestion,close: @escaping (() -> ()) ) {
+    public init(options: TimeSuggestion, choose: @escaping (TripTimeModel) -> (),close: @escaping (() -> ()) ) {
         self.options = options
         self.close = close
         print("leave times count",self.options.arrive.count)
+        self.choose = choose
         if (self.options.arrive.count == 5) {
           
             self.leaveTimes = true
@@ -62,7 +64,10 @@ public struct TimeOptions: View {
                             Spacer()
                             TimeOption(value: "now", selected: true, action: {chooseTime(TripTimeModel(timeMode: .now, time: Date()))} )
                             Spacer()
-                            TimeOption(value: displayTime(self.options.leave.time).time, selected: false, unit: displayTime(self.options.leave.time).a, type: .preSet, action: {self.options.leave} )
+                            TimeOption(value: displayTime(self.options.leave.time).time, selected: false, unit: displayTime(self.options.leave.time).a, type: .preSet, action: {
+                                self.chooseTime(self.options.leave)
+                                
+                            } )
                             Spacer()
                             TimeOption(value: nil, selected: false, unit: "", type: TimeOptionType.choose, action: {
                                 self.timePickerType = .leave
@@ -185,7 +190,7 @@ public struct TimeOptions: View {
 struct TimeOptions_Previews: PreviewProvider {
     static var previews: some View {
         
-        TimeOptions(options: sampleTimeOptions, close: {print("close")})
+        TimeOptions(options: sampleTimeOptions,choose: {i in }, close: {print("close")})
         
         
     }

@@ -48,7 +48,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             
             
         }
-        print("incomming link", connectionOptions.userActivities.first?.webpageURL)
+        print("incomming link", connectionOptions.userActivities.first?.webpageURL as Any)
         if let link = connectionOptions.userActivities.first?.webpageURL {
             let handled = DynamicLinks.dynamicLinks().handleUniversalLink(link) { (dynamiclink, error) in
                 if let dynamiclink = dynamiclink {
@@ -68,7 +68,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     func scene(_ scene: UIScene,
                willContinueUserActivityWithType userActivityType: String) {
-        print("SIRI", userActivityType, scene.userActivity)
+        print("SIRI", userActivityType, scene.userActivity as Any)
     }
     func scene(_ scene: UIScene,
                didFailToContinueUserActivityWithType userActivityType: String,
@@ -123,7 +123,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func sceneWillEnterForeground(_ scene: UIScene) {
-        
+        appState.cylce()
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
         

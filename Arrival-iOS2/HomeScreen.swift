@@ -108,7 +108,10 @@ struct HomeScreenModals: View {
                                                                                                                                                     self.toStationModalPresented = false}))
             })
             Text("").sheet(isPresented: self.$timeModalPresented, content: {
-                TimeOptions(options: sampleTimeOptions, close: {
+                TimeOptions(options: sampleTimeOptions, choose: {time in
+                    self.timeModalPresented = false
+                    self.appState.chooseTime(time)
+                }, close: {
                     self.timeModalPresented = false
                 })
             })

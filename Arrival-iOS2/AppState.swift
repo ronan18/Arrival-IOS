@@ -495,7 +495,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
             
         }
         self.fromStationWatcher = self.$fromStation.sink { value in
-            print("from station change", value)
+            print("from station change", value as Any)
             if let station = value {
                 self.getToStationSuggestions(station, toStation: self.toStation)
                 self.getTimeSuggestions(fromStation: station, toStation: self.toStation)
@@ -506,7 +506,7 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
             
         }
         self.toStationWatcher = self.$toStation.sink { value in
-            print("to station change", value)
+            print("to station change", value as Any)
             if let station = value {
                 self.getToStationSuggestions(self.fromStation, toStation: value)
                 self.getTimeSuggestions(fromStation: self.fromStation!, toStation: station)
@@ -600,6 +600,11 @@ class AppState:NSObject, ObservableObject, CLLocationManagerDelegate {
             print("SIRI:", response)
         })
     
+    }
+    
+    func chooseTime(_ time: TripTimeModel) {
+        self.tripTimeConfig = time
+        self.cylce()
     }
     
     //MARK: Station Cycle
