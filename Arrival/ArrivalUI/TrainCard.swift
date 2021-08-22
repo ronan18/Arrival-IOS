@@ -7,9 +7,12 @@
 
 import SwiftUI
 
-struct TrainCard: View {
+public struct TrainCard: View {
     let color: Color
-    var body: some View {
+    public init(color: Color) {
+        self.color = color
+    }
+    public var body: some View {
         HStack {
            // Rectangle().frame(width: 10).foregroundColor(self.color)
             HStack {

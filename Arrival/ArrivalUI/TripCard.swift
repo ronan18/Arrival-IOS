@@ -7,11 +7,13 @@
 
 import SwiftUI
 
-struct TripCard: View {
+public struct TripCard: View {
     let color: Color
     @State private var isStopsExpanded: Bool = false
-
-    var body: some View {
+    public init(color: Color) {
+        self.color = color
+    }
+    public var body: some View {
         HStack {
            
             VStack {

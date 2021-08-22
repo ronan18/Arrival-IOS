@@ -7,9 +7,10 @@
 
 import SwiftUI
 
-struct HeaderAlert: View {
+public struct HeaderAlert: View {
     @State private var alertOpen = false
-    var body: some View {
+    public init() {}
+    public  var body: some View {
         HStack {
             DisclosureGroup( isExpanded: self.$alertOpen, content: {
                 HeaderAlertContent()

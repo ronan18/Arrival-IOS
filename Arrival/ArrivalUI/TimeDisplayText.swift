@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct TimeDisplayText: View {
+public struct TimeDisplayText: View {
     let font: Font
-    init(font: Font = .headline) {
+    public init(font: Font = .headline) {
         self.font = font
     }
-    var body: some View {
+    public var body: some View {
         HStack(alignment: .lastTextBaseline, spacing: 0) {
             Text("10:40").font(font)
             Text("pm").font(.caption)

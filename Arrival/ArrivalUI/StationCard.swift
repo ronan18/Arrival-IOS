@@ -6,9 +6,9 @@
 //
 
 import SwiftUI
-
-struct StationCard: View {
-    var body: some View {
+public struct StationCard: View {
+    public init() {}
+    public var body: some View {
         HStack {
            
             HStack {

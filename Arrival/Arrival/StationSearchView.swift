@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
-
-struct StationSearchView: View {
+import ArrivalUI
+public struct StationSearchView: View {
     @State var searchText: String = ""
-    var body: some View {
+    public init() {}
+    public var body: some View {
         NavigationView() {
             List() {
                 StationCard().listRowSeparator(.hidden)

@@ -7,8 +7,9 @@
 
 import SwiftUI
 
-struct DestinationBar: View {
-    var body: some View {
+public struct DestinationBar: View {
+    public init() {}
+    public var body: some View {
         HStack {
             Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
                 VStack(alignment:.leading) {
