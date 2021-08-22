@@ -22,6 +22,7 @@
 		343DA3A526D08CF5008F6A0E /* ArrivalCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 343DA3A226D08CF5008F6A0E /* ArrivalCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		343DA3A826D08CF5008F6A0E /* ArrivalCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */; };
 		343DA3A926D08CF5008F6A0E /* ArrivalCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C54A297226D20E4C00E8F1D7 /* HeaderAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297126D20E4C00E8F1D7 /* HeaderAlert.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArrivalCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		343DA3A226D08CF5008F6A0E /* ArrivalCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArrivalCore.h; sourceTree = "<group>"; };
 		343DA3A326D08CF5008F6A0E /* ArrivalCore.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = ArrivalCore.docc; sourceTree = "<group>"; };
+		C54A297126D20E4C00E8F1D7 /* HeaderAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderAlert.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +152,7 @@
 				343DA39026D08CD8008F6A0E /* ArrivalUI.docc */,
 				341BB6AA26D1ED080044190A /* TrainCard.swift */,
 				341BB6AF26D1F8310044190A /* TripCard.swift */,
+				C54A297126D20E4C00E8F1D7 /* HeaderAlert.swift */,
 				341BB6AC26D1F14A0044190A /* TimeDisplayText.swift */,
 			);
 			path = ArrivalUI;
@@ -324,6 +327,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				341BB6AB26D1ED080044190A /* TrainCard.swift in Sources */,
+				C54A297226D20E4C00E8F1D7 /* HeaderAlert.swift in Sources */,
 				341BB6AD26D1F14A0044190A /* TimeDisplayText.swift in Sources */,
 				341BB6B026D1F8310044190A /* TripCard.swift in Sources */,
 				343DA39126D08CD8008F6A0E /* ArrivalUI.docc in Sources */,
