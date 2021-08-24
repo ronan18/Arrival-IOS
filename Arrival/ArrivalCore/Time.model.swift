@@ -7,10 +7,10 @@
 
 import Foundation
 
-public enum TripType {
-    case leave
-    case arrive
-    case now
+public enum TripType: String {
+    case leave = "leave"
+    case arrive = "arrive"
+    case now = "now"
 }
 public struct TripTime {
     public var type: TripType

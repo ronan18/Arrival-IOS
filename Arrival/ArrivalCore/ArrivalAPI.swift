@@ -97,7 +97,7 @@ public class ArrivalAPI {
             } else {
                 //  self.auth = auth
                 throw ValidationError.apiError
-                return  false
+                //return  false
             }
             
         case .failure(let error):
@@ -192,47 +192,100 @@ public class ArrivalAPI {
             "Accept": "application/json"
         ]
         
-      let response = await withCheckedContinuation { cont in
-          /*AF.request("\(apiURL)/api/v3/trains/\(from.abbr)", method: .post, parameters: ["type": type, "time": time], headers: headers).responseJSON{ response in
-              
-              cont.resume(returning: response)
-          } */
-          AF.request("\(apiURL)/api/v3/trip/\(from.abbr)", headers: headers).responseJSON { response in
-              cont.resume(returning: response)
-          }
-          
-        }
-       /* let response = await withCheckedContinuation { cont in
-            AF.request("\(apiURL)/api/v3/trains/\(from.abbr)", method: .post, parameters: ["type": type, "time": time], headers: headers).responseJSON{ response in
+        
+        let response = await withCheckedContinuation { cont in
+            AF.request("\(apiURL)/api/v3/trains/\(from.abbr)", method: .post, parameters: ["type": timeConfig.type.rawValue, "time": timeConfig.iso], headers: headers).responseJSON { response in
                 cont.resume(returning: response)
             }
-        }*/
-        /*switch response.result {
+        }
+        
+        switch response.result {
         case .success(let value):
             let result = JSON(value)
             var trains: [Train] = []
             result["estimates"]["etd"].arrayValue.forEach {destinationTrains in
                 let destinationTrainsJSON = JSON(destinationTrains)
                 let destination = Station(id: destinationTrainsJSON["abbreviation"].stringValue, name: destinationTrainsJSON["destination"].stringValue, abbr: destinationTrainsJSON["abbreviation"].stringValue)
-                //print(destination)
                 let estimates = destinationTrainsJSON["estimate"].arrayValue
-                //  print(estimates.count)
                 estimates.forEach {trainEstimate in
-                    // print("API: train etd addition", trainEstimate["minutes"])
                     let etd = Date(timeIntervalSinceNow: trainEstimate["minutes"].doubleValue * 60)
                     let train = Train(departureStation: from, destinationStation: destination, etd: etd, platform: trainEstimate["platform"].intValue, direction: determineTrainDirection(trainEstimate["direction"].stringValue), delay: trainEstimate["delay"].doubleValue, bikeFlag: trainEstimate["bikeflag"].intValue, color: determineTrainColor(trainEstimate["color"].stringValue), cars: trainEstimate["length"].intValue)
-                    //print(train)
                     trains.append(train)
                 }
             }
-            return trains
             
+            return trains
         case .failure(let error):
             print(error)
             throw ValidationError.apiError
-        }*/
+        }
         
-        return nil
+        //return  nil
+    }
+    public func getTrips(from: Station, to: Station, timeConfig: TripTime) async throws -> ([Trip]?) {
+        enum ValidationError: Error {
+            case notAuthorized
+            case apiError
+            //   case nameToShort(nameLength: Int)
+        }
+        guard self.authorized else {
+            throw ValidationError.notAuthorized
+            
+        }
+        guard self.auth != nil else {
+            throw ValidationError.notAuthorized
+        }
+        let headers: HTTPHeaders = [
+            "Authorization": auth!,
+            "Accept": "application/json"
+        ]
+        
+        let response = await withCheckedContinuation { cont in
+            AF.request("\(apiURL)/api/v4/routes/\(from.abbr)/\(to.abbr)", method: .post, parameters: ["type": timeConfig.type.rawValue, "time": timeConfig.iso], headers: headers).responseJSON{ response in
+                cont.resume(returning: response)
+            }
+        }
+        switch response.result {
+        case .success(let value):
+            let result = JSON(value)
+            let tripsJSON = result["trips"]
+            if (tripsJSON.arrayValue.count > 0) {
+                var resultTrips: [Trip] = []
+                var routes: [Int: Route] = [:]
+                for (_, route) in result["routes"] {
+                    //  print(key, route)
+                    var stations: [String] = []
+                    route["config"]["station"].arrayValue.forEach({station in
+                        stations.append(station.stringValue)
+                    })
+                    routes[route["number"].intValue] = Route(routeNumber: route["number"].intValue, name: route["name"].stringValue, abbr: route["abbr"].stringValue, origin: route["oirgin"].stringValue, destination: route["destination"].stringValue, direction: determineTrainDirection(route["direction"].stringValue), color: determineTrainColor(route["color"].stringValue), stationCount: route["num_stns"].intValue, stations: stations)
+                    
+                }
+                tripsJSON.arrayValue.forEach({trip in
+                    var legs: [TripLeg] = []
+                    trip["leg"].arrayValue.forEach({leg in
+                        //print(leg)
+                        /*  print(convertBartDate(time: leg["@origTimeMin"].stringValue, date: leg["@origTimeDate"].stringValue))*/
+                        
+                        legs.append(TripLeg(order: leg["@order"].intValue, origin: leg["@origin"].stringValue, destination: leg["@destination"].stringValue, originTime: convertBartDate(time: leg["@origTimeMin"].stringValue, date: leg["@origTimeDate"].stringValue)!, destinationTime: convertBartDate(time: leg["@destTimeMin"].stringValue, date: leg["@destTimeDate"].stringValue)!, route: routes[leg["route"].intValue]!, trainHeadSTN: leg["@trainHeadStation"].stringValue))
+                        
+                    })
+                    legs[legs.count - 1].finalLeg = true
+                    let originTime = convertBartDate(time: trip["@origTimeMin"].stringValue, date: trip["@origTimeDate"].stringValue)!
+                    print("API: origin time converted", originTime,trip["@origTimeMin"].stringValue )
+                    let destTime = convertBartDate(time: trip["@destTimeMin"].stringValue, date: trip["@destTimeDate"].stringValue)!
+                    
+                    let resultTrip = Trip(id: trip["tripId"].stringValue, origin: Station(id: trip["@origin"].stringValue, name: trip["@origin"].stringValue, abbr: trip["@origin"].stringValue), destination: Station(id: trip["@destination"].stringValue, name: trip["@destination"].stringValue, abbr: trip["@destination"].stringValue), originTime: originTime , destinationTime: destTime, tripTime: destTime.timeIntervalSince(originTime), legs: legs)
+                    resultTrips.append(resultTrip)
+                })
+                return resultTrips
+            } else {
+                return nil
+            }
+        case .failure(let error):
+            print(error)
+            throw ValidationError.apiError
+        }
     }
 }
 
