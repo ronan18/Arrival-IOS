@@ -6,9 +6,14 @@
 //
 
 import SwiftUI
-
+import ArrivalCore
+import Network
+import AlamofireNetworkActivityIndicator
 @main
 struct ArrivalApp: App {
+    init() {
+        NetworkActivityIndicatorManager.shared.isEnabled = true
+    }
     var body: some Scene {
         WindowGroup {
             ContentView()
