@@ -19,7 +19,7 @@ public class ArrivalAPI {
         self.authorized = authorized
         self.apiURL = apiUrl
     }
-    public func stations() async throws  -> (StationStorage?) {
+    public func stations() async throws  -> (StationStorage) {
      
         let response = await withCheckedContinuation { cont in
             AF.request("\(self.apiURL)/api/v3/stations").responseJSON { response in

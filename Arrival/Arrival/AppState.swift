@@ -12,7 +12,6 @@ import CoreLocation
 import SwiftUI
 import Intents
 import Network
-import Disk
 
 @MainActor
 class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
@@ -23,6 +22,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     //Services
     let api = ArrivalAPI()
+    let disk = DiskService()
     
     //Constants
     let defaults = UserDefaults.standard
@@ -34,6 +34,9 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     private var long = 0.0
     private var lastLocation: CLLocation? = nil
     private var location: CLLocation? = nil
+    
+    //stations state
+    private var stations: StationStorage? = nil
     
     //Watchers
     
@@ -61,7 +64,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             let auth = try await api.login(auth: key)
             if auth {
                 self.key = key
-                await self.startUp()
+                await self.startMain()
             } else {
                 runOnboarding()
             }
@@ -76,6 +79,26 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     func requestLocation() {
         locationManager.requestWhenInUseAuthorization()
+    }
+    func getStations(force: Bool = false) async {
+        guard !force else {
+            await self.fetchStations()
+            return
+        }
+        if let stations = disk.getStations() {
+            self.stations = stations
+        } else {
+            await self.fetchStations()
+        }
+    }
+    func fetchStations() async {
+        do {
+            let stations = try await self.api.stations()
+            self.stations = stations
+            self.disk.saveStations(stations)
+        } catch {
+            //TODO: Catch this
+        }
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         print("LOCATION: update")
@@ -115,39 +138,44 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         do {
             let result = try await self.api.createAccount(auth: newKey)
             guard result else {
+                //TODO: Catch this
                 return
             }
             let loginResult = try await self.api.login(auth: newKey)
             
             guard loginResult else {
+                //TODO: Catch this
                 return
             }
             self.defaults.set(newKey, forKey: "passphrase")
             self.key = newKey
             await self.startMain()
         } catch {
-            
+            //TODO: Catch this
         }
         
     }
     func startMain() async {
+        print("start main")
         self.screen = .loading
         guard let key = self.key else {
             self.runOnboarding()
             return
         }
+        await self.getStations()
+       
         self.requestLocation()
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyBest // You can change the locaiton accuary here.
             locationManager.startUpdatingLocation()
             print("location access after start")
-          //  Analytics.setUserProperty("true", forName: "locationAccess")
+            //  Analytics.setUserProperty("true", forName: "locationAccess")
         } else {
             print("no location access")
-           // self.fromStationSuggestions = self.stations?.stations ?? []
+            // self.fromStationSuggestions = self.stations?.stations ?? []
             self.locationAuthState = .notAuthorized
-           // Analytics.setUserProperty("false", forName: "locationAccess")
+            // Analytics.setUserProperty("false", forName: "locationAccess")
             self.requestLocation()
             
         }
