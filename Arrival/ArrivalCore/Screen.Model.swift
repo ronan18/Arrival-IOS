@@ -7,7 +7,8 @@
 
 import Foundation
 
-public enum AppScreen {
-    case home
-    case onboard
+public enum AppScreen: String {
+    case home = "home"
+    case onboard = "onboard"
+    case loading = "loading"
 }

@@ -6,20 +6,23 @@
 //
 
 import SwiftUI
-
+import ArrivalCore
+import ArrivalUI
 struct ContentView: View {
-    @ObservedObject var appState: AppState
+    @StateObject var appState = AppState()
     var body: some View {
         if (appState.screen == .onboard) {
-            OnboardingView()
-        } else {
-            HomeScreen()
+            OnboardingView(appState: appState)
+        } else if (appState.screen == .home) {
+            HomeScreen(appState: appState)
+        } else if (appState.screen == .loading) {
+            ProgressView()
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(appState: AppState())
+        ContentView()
     }
 }

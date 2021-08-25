@@ -11,6 +11,8 @@ import Combine
 import ArrivalUI
 import ArrivalCore
 struct HomeScreen: View {
+    @ObservedObject var appState: AppState
+
     var body: some View {
         VStack(spacing: 0) {
             ArrivalHeader()
@@ -24,7 +26,7 @@ struct HomeScreen: View {
 
 struct HomeScreen_Previews: PreviewProvider {
     static var previews: some View {
-        HomeScreen()
+        HomeScreen(appState: AppState())
     }
 }
 

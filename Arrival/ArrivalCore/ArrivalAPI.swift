@@ -20,12 +20,7 @@ public class ArrivalAPI {
         self.apiURL = apiUrl
     }
     public func stations() async throws  -> (StationStorage?) {
-        enum ValidationError: Error {
-            case notAuthorized
-            case apiError
-            case requestError
-            //   case nameToShort(nameLength: Int)
-        }
+     
         let response = await withCheckedContinuation { cont in
             AF.request("\(self.apiURL)/api/v3/stations").responseJSON { response in
                 cont.resume(returning: response)
@@ -46,16 +41,11 @@ public class ArrivalAPI {
             return(StationStorage(stations: stations, byAbbr: stationsByAbbr, version: result["version"].doubleValue))
         case .failure(let error):
             print(error)
-            throw ValidationError.requestError
-           // return nil
+            throw APIError.requestError
+            // return nil
         }
     }
     public func login(auth: String) async throws -> (Bool) {
-        enum ValidationError: Error {
-            case notAuthorized
-            case apiError
-            //   case nameToShort(nameLength: Int)
-        }
         let headers: HTTPHeaders = [
             "Authorization": auth,
             "Accept": "application/json"
@@ -74,16 +64,16 @@ public class ArrivalAPI {
                 self.authorized = true
                 return true
             } else {
-               // self.auth = auth
+                // self.auth = auth
                 self.authorized = false
-                throw ValidationError.notAuthorized
-               // return false
+                throw APIError.notAuthorized
+                // return false
                 
             }
             
         case .failure(let error):
             print(error)
-            throw ValidationError.apiError
+            throw APIError.requestError
         }
         
     }
@@ -111,24 +101,19 @@ public class ArrivalAPI {
                 return true
             } else {
                 //  self.auth = auth
-                throw ValidationError.apiError
+                throw APIError.apiError
                 //return  false
             }
             
         case .failure(let error):
             print(error)
-            throw ValidationError.requestError
+            throw APIError.requestError
             // return false
         }
         
     }
     public func trip(byID: String) async throws -> (Trip?) {
-        enum ValidationError: Error {
-            case notAuthorized
-            case requestError
-            case tripDoesNotExist
-            //   case nameToShort(nameLength: Int)
-        }
+       
         var headers: HTTPHeaders
         if let auth = self.auth {
             headers = [
@@ -179,27 +164,23 @@ public class ArrivalAPI {
                 
                 return resultTrip
             } else {
-                throw ValidationError.tripDoesNotExist
+                throw APIError.requestedPropertyDoesntExist
                 //  return (nil)
             }
         case .failure(let error):
             print(error)
-            throw ValidationError.requestError
+            throw APIError.requestError
             // return (nil)
         }
     }
     public func trainsFrom(from: Station, timeConfig: TripTime) async throws -> ([Train]?) {
-        enum ValidationError: Error {
-            case notAuthorized
-            case apiError
-            //   case nameToShort(nameLength: Int)
-        }
+      
         guard self.authorized else {
-            throw ValidationError.notAuthorized
+            throw APIError.notAuthorized
             
         }
         guard self.auth != nil else {
-            throw ValidationError.notAuthorized
+            throw APIError.notAuthorized
         }
         
         let headers: HTTPHeaders = [
@@ -232,23 +213,19 @@ public class ArrivalAPI {
             return trains
         case .failure(let error):
             print(error)
-            throw ValidationError.apiError
+            throw APIError.apiError
         }
         
         //return  nil
     }
     public func trips(from: Station, to: Station, timeConfig: TripTime) async throws -> ([Trip]?) {
-        enum ValidationError: Error {
-            case notAuthorized
-            case apiError
-            //   case nameToShort(nameLength: Int)
-        }
+   
         guard self.authorized else {
-            throw ValidationError.notAuthorized
+            throw APIError.notAuthorized
             
         }
         guard self.auth != nil else {
-            throw ValidationError.notAuthorized
+            throw APIError.notAuthorized
         }
         let headers: HTTPHeaders = [
             "Authorization": auth!,
@@ -299,7 +276,7 @@ public class ArrivalAPI {
             }
         case .failure(let error):
             print(error)
-            throw ValidationError.apiError
+            throw APIError.apiError
         }
     }
 }

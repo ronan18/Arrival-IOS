@@ -11,14 +11,14 @@ import Network
 import AlamofireNetworkActivityIndicator
 @main
 struct ArrivalApp: App {
-   @StateObject var appState = AppState()
+  
     
     init() {
         NetworkActivityIndicatorManager.shared.isEnabled = true
     }
     var body: some Scene {
         WindowGroup {
-            ContentView(appState: appState)
+            ContentView()
         }
     }
 }

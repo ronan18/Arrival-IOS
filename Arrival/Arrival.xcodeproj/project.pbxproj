@@ -23,6 +23,10 @@
 		343DA3A526D08CF5008F6A0E /* ArrivalCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 343DA3A226D08CF5008F6A0E /* ArrivalCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		343DA3A826D08CF5008F6A0E /* ArrivalCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */; };
 		343DA3A926D08CF5008F6A0E /* ArrivalCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		34F61C2F26D5D8A200B35074 /* APIErrors.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F61C2E26D5D8A200B35074 /* APIErrors.model.swift */; };
+		34F61C3226D5DE9300B35074 /* LocationData.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F61C3126D5DE9300B35074 /* LocationData.model.swift */; };
+		34F61C3826D5E5BC00B35074 /* Disk in Frameworks */ = {isa = PBXBuildFile; productRef = 34F61C3726D5E5BC00B35074 /* Disk */; };
+		34F61C3A26D5E5E500B35074 /* Disk.service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F61C3926D5E5E500B35074 /* Disk.service.swift */; };
 		C54A297226D20E4C00E8F1D7 /* HeaderAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297126D20E4C00E8F1D7 /* HeaderAlert.swift */; };
 		C54A297426D2165200E8F1D7 /* DestinationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297326D2165200E8F1D7 /* DestinationBar.swift */; };
 		C54A297626D2171900E8F1D7 /* StationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297526D2171900E8F1D7 /* StationCard.swift */; };
@@ -99,6 +103,10 @@
 		343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArrivalCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		343DA3A226D08CF5008F6A0E /* ArrivalCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArrivalCore.h; sourceTree = "<group>"; };
 		343DA3A326D08CF5008F6A0E /* ArrivalCore.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = ArrivalCore.docc; sourceTree = "<group>"; };
+		34F61C2E26D5D8A200B35074 /* APIErrors.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIErrors.model.swift; sourceTree = "<group>"; };
+		34F61C3026D5DDF800B35074 /* Arrival.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Arrival.entitlements; sourceTree = "<group>"; };
+		34F61C3126D5DE9300B35074 /* LocationData.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationData.model.swift; sourceTree = "<group>"; };
+		34F61C3926D5E5E500B35074 /* Disk.service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Disk.service.swift; sourceTree = "<group>"; };
 		C54A297126D20E4C00E8F1D7 /* HeaderAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderAlert.swift; sourceTree = "<group>"; };
 		C54A297326D2165200E8F1D7 /* DestinationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationBar.swift; sourceTree = "<group>"; };
 		C54A297526D2171900E8F1D7 /* StationCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationCard.swift; sourceTree = "<group>"; };
@@ -146,6 +154,7 @@
 				C5CC58A526D408E10025BAC7 /* AlamofireNetworkActivityIndicator in Frameworks */,
 				C5CC58A226D408420025BAC7 /* SwiftyJSON in Frameworks */,
 				C5CC589F26D3F5A30025BAC7 /* Alamofire in Frameworks */,
+				34F61C3826D5E5BC00B35074 /* Disk in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,6 +185,7 @@
 		343DA37826D089DF008F6A0E /* Arrival */ = {
 			isa = PBXGroup;
 			children = (
+				34F61C3026D5DDF800B35074 /* Arrival.entitlements */,
 				343DA38726D08A2C008F6A0E /* Info.plist */,
 				343DA37926D089DF008F6A0E /* ArrivalApp.swift */,
 				343DA37B26D089DF008F6A0E /* ContentView.swift */,
@@ -226,12 +236,15 @@
 				343DA3A226D08CF5008F6A0E /* ArrivalCore.h */,
 				343DA3A326D08CF5008F6A0E /* ArrivalCore.docc */,
 				3406FAF326D2C75C00D821D8 /* ArrivalAPI.swift */,
+				34F61C2E26D5D8A200B35074 /* APIErrors.model.swift */,
+				34F61C3126D5DE9300B35074 /* LocationData.model.swift */,
 				C5CC58AE26D4173F0025BAC7 /* Time.model.swift */,
 				C5CC58AC26D415180025BAC7 /* Time.helpers.swift */,
 				C5CC58A626D40E570025BAC7 /* Station.model.swift */,
 				C5CC58A826D412720025BAC7 /* Train.model.swift */,
 				C5CC58AA26D412BC0025BAC7 /* Trip.model.swift */,
 				C5CC58BA26D58FD20025BAC7 /* Screen.Model.swift */,
+				34F61C3926D5E5E500B35074 /* Disk.service.swift */,
 			);
 			path = ArrivalCore;
 			sourceTree = "<group>";
@@ -274,6 +287,8 @@
 				343DA3A726D08CF5008F6A0E /* PBXTargetDependency */,
 			);
 			name = Arrival;
+			packageProductDependencies = (
+			);
 			productName = Arrival;
 			productReference = 343DA37626D089DF008F6A0E /* Arrival.app */;
 			productType = "com.apple.product-type.application";
@@ -314,6 +329,7 @@
 				C5CC589E26D3F5A30025BAC7 /* Alamofire */,
 				C5CC58A126D408420025BAC7 /* SwiftyJSON */,
 				C5CC58A426D408E10025BAC7 /* AlamofireNetworkActivityIndicator */,
+				34F61C3726D5E5BC00B35074 /* Disk */,
 			);
 			productName = ArrivalCore;
 			productReference = 343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */;
@@ -353,6 +369,7 @@
 				C5CC589D26D3F5A30025BAC7 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				C5CC58A026D408420025BAC7 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				C5CC58A326D408E10025BAC7 /* XCRemoteSwiftPackageReference "AlamofireNetworkActivityIndicator" */,
+				34F61C3626D5E5BC00B35074 /* XCRemoteSwiftPackageReference "Disk" */,
 			);
 			productRefGroup = 343DA37726D089DF008F6A0E /* Products */;
 			projectDirPath = "";
@@ -431,8 +448,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				34F61C2F26D5D8A200B35074 /* APIErrors.model.swift in Sources */,
 				C5CC58A726D40E570025BAC7 /* Station.model.swift in Sources */,
+				34F61C3A26D5E5E500B35074 /* Disk.service.swift in Sources */,
 				C5CC58A926D412720025BAC7 /* Train.model.swift in Sources */,
+				34F61C3226D5DE9300B35074 /* LocationData.model.swift in Sources */,
 				C5CC58AF26D4173F0025BAC7 /* Time.model.swift in Sources */,
 				C5CC58AB26D412BC0025BAC7 /* Trip.model.swift in Sources */,
 				C5CC58BB26D58FD20025BAC7 /* Screen.Model.swift in Sources */,
@@ -580,6 +600,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Arrival/Arrival.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Arrival/Preview Content\"";
@@ -616,6 +637,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Arrival/Arrival.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Arrival/Preview Content\"";
@@ -808,6 +830,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		34F61C3626D5E5BC00B35074 /* XCRemoteSwiftPackageReference "Disk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/saoudrizwan/Disk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.6.4;
+			};
+		};
 		C5CC589D26D3F5A30025BAC7 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
@@ -835,6 +865,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		34F61C3726D5E5BC00B35074 /* Disk */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 34F61C3626D5E5BC00B35074 /* XCRemoteSwiftPackageReference "Disk" */;
+			productName = Disk;
+		};
 		C5CC589E26D3F5A30025BAC7 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = C5CC589D26D3F5A30025BAC7 /* XCRemoteSwiftPackageReference "Alamofire" */;

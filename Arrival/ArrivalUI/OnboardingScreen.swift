@@ -30,7 +30,7 @@ public struct OnboardingScreen: View {
                 }
                 Spacer()
             }
-            Spacer().frame(height: 100)
+            Spacer().frame(height: 50)
             Image(image).resizable().aspectRatio(contentMode: .fit).frame(maxWidth: 300, maxHeight: 300).padding(.bottom)
             Text(title).font(.largeTitle).fontWeight(.bold)
             Text(description).font(.body).padding(.top, 1)
