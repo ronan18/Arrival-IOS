@@ -29,13 +29,7 @@ struct TripDetailsView: View {
             }).navigationBarTitleDisplayMode(.automatic).toolbar {
                 ToolbarItemGroup(placement: .bottomBar) {
                     VStack {
-                       
-                    Button(action: {}) {
-                        Text("SHARE TRIP").frame(maxWidth: 400).font(.headline)
-                            
-                    }.tint(.accentColor)
-                        .buttonStyle(.bordered)
-                        .controlSize(.large).controlProminence(.increased)
+                        LargeButton("SHARE TRIP", action: {}, haptic: true)
                     }.background(.thinMaterial)
                 }
             }

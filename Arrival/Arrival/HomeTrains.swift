@@ -21,7 +21,9 @@ struct HomeTrains: View {
                 TrainCard(color: .yellow).listRowSeparator(.hidden).listRowInsets(EdgeInsets()).padding(.vertical, 5)
                 TrainCard(color: .red).listRowSeparator(.hidden).listRowInsets(EdgeInsets()).padding(.vertical, 5)
                 TrainCard(color: .blue).listRowSeparator(.hidden).listRowInsets(EdgeInsets()).padding(.vertical, 5)
-            }.listStyle(.plain)
+            }.listStyle(.plain).refreshable {
+                
+            }
         }.padding()
     }
 }

@@ -19,7 +19,13 @@ public class ArrivalAPI {
         self.authorized = authorized
         self.apiURL = apiUrl
     }
-    public func stations() async  -> (StationStorage?) {
+    public func stations() async throws  -> (StationStorage?) {
+        enum ValidationError: Error {
+            case notAuthorized
+            case apiError
+            case requestError
+            //   case nameToShort(nameLength: Int)
+        }
         let response = await withCheckedContinuation { cont in
             AF.request("\(self.apiURL)/api/v3/stations").responseJSON { response in
                 cont.resume(returning: response)
@@ -40,10 +46,16 @@ public class ArrivalAPI {
             return(StationStorage(stations: stations, byAbbr: stationsByAbbr, version: result["version"].doubleValue))
         case .failure(let error):
             print(error)
-            return nil
+            throw ValidationError.requestError
+           // return nil
         }
     }
-    public func login(auth: String) async -> (Bool) {
+    public func login(auth: String) async throws -> (Bool) {
+        enum ValidationError: Error {
+            case notAuthorized
+            case apiError
+            //   case nameToShort(nameLength: Int)
+        }
         let headers: HTTPHeaders = [
             "Authorization": auth,
             "Accept": "application/json"
@@ -62,13 +74,16 @@ public class ArrivalAPI {
                 self.authorized = true
                 return true
             } else {
-                self.auth = auth
-                return false
+               // self.auth = auth
+                self.authorized = false
+                throw ValidationError.notAuthorized
+               // return false
+                
             }
             
         case .failure(let error):
             print(error)
-            return false
+            throw ValidationError.apiError
         }
         
     }
@@ -173,7 +188,7 @@ public class ArrivalAPI {
             // return (nil)
         }
     }
-    public func getTrainsFrom(from: Station, timeConfig: TripTime) async throws -> ([Train]?) {
+    public func trainsFrom(from: Station, timeConfig: TripTime) async throws -> ([Train]?) {
         enum ValidationError: Error {
             case notAuthorized
             case apiError
@@ -222,7 +237,7 @@ public class ArrivalAPI {
         
         //return  nil
     }
-    public func getTrips(from: Station, to: Station, timeConfig: TripTime) async throws -> ([Trip]?) {
+    public func trips(from: Station, to: Station, timeConfig: TripTime) async throws -> ([Trip]?) {
         enum ValidationError: Error {
             case notAuthorized
             case apiError

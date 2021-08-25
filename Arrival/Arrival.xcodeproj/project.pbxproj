@@ -41,6 +41,12 @@
 		C5CC58AB26D412BC0025BAC7 /* Trip.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CC58AA26D412BC0025BAC7 /* Trip.model.swift */; };
 		C5CC58AD26D415180025BAC7 /* Time.helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CC58AC26D415180025BAC7 /* Time.helpers.swift */; };
 		C5CC58AF26D4173F0025BAC7 /* Time.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CC58AE26D4173F0025BAC7 /* Time.model.swift */; };
+		C5CC58B126D581A70025BAC7 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CC58B026D581A70025BAC7 /* AppState.swift */; };
+		C5CC58B326D582430025BAC7 /* OnboardingIntro.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CC58B226D582430025BAC7 /* OnboardingIntro.swift */; };
+		C5CC58B526D583290025BAC7 /* LargeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CC58B426D583290025BAC7 /* LargeButton.swift */; };
+		C5CC58B726D585360025BAC7 /* OnboardingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CC58B626D585360025BAC7 /* OnboardingScreen.swift */; };
+		C5CC58B926D587060025BAC7 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CC58B826D587060025BAC7 /* OnboardingView.swift */; };
+		C5CC58BB26D58FD20025BAC7 /* Screen.Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CC58BA26D58FD20025BAC7 /* Screen.Model.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +114,12 @@
 		C5CC58AA26D412BC0025BAC7 /* Trip.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.model.swift; sourceTree = "<group>"; };
 		C5CC58AC26D415180025BAC7 /* Time.helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.helpers.swift; sourceTree = "<group>"; };
 		C5CC58AE26D4173F0025BAC7 /* Time.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.model.swift; sourceTree = "<group>"; };
+		C5CC58B026D581A70025BAC7 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		C5CC58B226D582430025BAC7 /* OnboardingIntro.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingIntro.swift; sourceTree = "<group>"; };
+		C5CC58B426D583290025BAC7 /* LargeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeButton.swift; sourceTree = "<group>"; };
+		C5CC58B626D585360025BAC7 /* OnboardingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingScreen.swift; sourceTree = "<group>"; };
+		C5CC58B826D587060025BAC7 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		C5CC58BA26D58FD20025BAC7 /* Screen.Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.Model.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +183,8 @@
 				C54A298126D2AA7A00E8F1D7 /* HomeTrains.swift */,
 				C54A297726D219E700E8F1D7 /* StationSearchView.swift */,
 				C54A298426D2AB6800E8F1D7 /* TripDetailsView.swift */,
+				C5CC58B026D581A70025BAC7 /* AppState.swift */,
+				C5CC58B826D587060025BAC7 /* OnboardingView.swift */,
 				343DA37D26D089E3008F6A0E /* Assets.xcassets */,
 				343DA37F26D089E3008F6A0E /* Preview Content */,
 			);
@@ -199,6 +213,9 @@
 				C54A297926D2A3BF00E8F1D7 /* TripBar.swift */,
 				C54A297B26D2A46A00E8F1D7 /* TripTransferText.swift */,
 				C54A297D26D2A4E300E8F1D7 /* ArrivalHeader.swift */,
+				C5CC58B226D582430025BAC7 /* OnboardingIntro.swift */,
+				C5CC58B626D585360025BAC7 /* OnboardingScreen.swift */,
+				C5CC58B426D583290025BAC7 /* LargeButton.swift */,
 			);
 			path = ArrivalUI;
 			sourceTree = "<group>";
@@ -214,6 +231,7 @@
 				C5CC58A626D40E570025BAC7 /* Station.model.swift */,
 				C5CC58A826D412720025BAC7 /* Train.model.swift */,
 				C5CC58AA26D412BC0025BAC7 /* Trip.model.swift */,
+				C5CC58BA26D58FD20025BAC7 /* Screen.Model.swift */,
 			);
 			path = ArrivalCore;
 			sourceTree = "<group>";
@@ -380,8 +398,10 @@
 			files = (
 				343DA37C26D089DF008F6A0E /* ContentView.swift in Sources */,
 				C54A298226D2AA7B00E8F1D7 /* HomeTrains.swift in Sources */,
+				C5CC58B126D581A70025BAC7 /* AppState.swift in Sources */,
 				C54A298526D2AB6800E8F1D7 /* TripDetailsView.swift in Sources */,
 				343DA37A26D089DF008F6A0E /* ArrivalApp.swift in Sources */,
+				C5CC58B926D587060025BAC7 /* OnboardingView.swift in Sources */,
 				C54A298026D2A6CB00E8F1D7 /* HomeScreen.swift in Sources */,
 				C54A298326D2AB4500E8F1D7 /* StationSearchView.swift in Sources */,
 			);
@@ -394,13 +414,16 @@
 				341BB6AB26D1ED080044190A /* TrainCard.swift in Sources */,
 				C54A297226D20E4C00E8F1D7 /* HeaderAlert.swift in Sources */,
 				C54A297C26D2A46A00E8F1D7 /* TripTransferText.swift in Sources */,
+				C5CC58B326D582430025BAC7 /* OnboardingIntro.swift in Sources */,
 				C54A297426D2165200E8F1D7 /* DestinationBar.swift in Sources */,
 				C54A297626D2171900E8F1D7 /* StationCard.swift in Sources */,
 				341BB6AD26D1F14A0044190A /* TimeDisplayText.swift in Sources */,
 				341BB6B026D1F8310044190A /* TripCard.swift in Sources */,
 				C54A297E26D2A4E300E8F1D7 /* ArrivalHeader.swift in Sources */,
+				C5CC58B726D585360025BAC7 /* OnboardingScreen.swift in Sources */,
 				343DA39126D08CD8008F6A0E /* ArrivalUI.docc in Sources */,
 				C54A297A26D2A3BF00E8F1D7 /* TripBar.swift in Sources */,
+				C5CC58B526D583290025BAC7 /* LargeButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -412,6 +435,7 @@
 				C5CC58A926D412720025BAC7 /* Train.model.swift in Sources */,
 				C5CC58AF26D4173F0025BAC7 /* Time.model.swift in Sources */,
 				C5CC58AB26D412BC0025BAC7 /* Trip.model.swift in Sources */,
+				C5CC58BB26D58FD20025BAC7 /* Screen.Model.swift in Sources */,
 				3406FAF426D2C75C00D821D8 /* ArrivalAPI.swift in Sources */,
 				343DA3A426D08CF5008F6A0E /* ArrivalCore.docc in Sources */,
 				C5CC58AD26D415180025BAC7 /* Time.helpers.swift in Sources */,

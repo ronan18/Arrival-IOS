@@ -8,13 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject var appState: AppState
     var body: some View {
-       HomeScreen()
+        if (appState.screen == .onboard) {
+            OnboardingView()
+        } else {
+            HomeScreen()
+        }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView(appState: AppState())
     }
 }
