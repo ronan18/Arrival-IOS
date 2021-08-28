@@ -11,3 +11,7 @@ public enum LocationAuthState {
     case authorized
     case notAuthorized
 }
+public enum LocationDataSate {
+    case notReady
+    case ready
+}

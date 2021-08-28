@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
-
+import ArrivalCore
 public struct TrainCard: View {
     let color: Color
-    public init(color: Color) {
-        self.color = color
+    let train: Train
+    public init( train: Train) {
+        self.color = .red
+        self.train = train
     }
     public var body: some View {
         HStack {
@@ -42,6 +44,6 @@ public struct TrainCard: View {
 
 struct TrainCard_Previews: PreviewProvider {
     static var previews: some View {
-        TrainCard(color: .red).previewLayout(.sizeThatFits).padding()
+        TrainCard().previewLayout(.sizeThatFits).padding()
     }
 }

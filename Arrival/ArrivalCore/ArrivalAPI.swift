@@ -20,7 +20,7 @@ public class ArrivalAPI {
         self.apiURL = apiUrl
     }
     public func stations() async throws  -> (StationStorage) {
-     
+        
         let response = await withCheckedContinuation { cont in
             AF.request("\(self.apiURL)/api/v3/stations").responseJSON { response in
                 cont.resume(returning: response)
@@ -113,7 +113,7 @@ public class ArrivalAPI {
         
     }
     public func trip(byID: String) async throws -> (Trip?) {
-       
+        
         var headers: HTTPHeaders
         if let auth = self.auth {
             headers = [
@@ -173,8 +173,8 @@ public class ArrivalAPI {
             // return (nil)
         }
     }
-    public func trainsFrom(from: Station, timeConfig: TripTime) async throws -> ([Train]?) {
-      
+    public func trainsFrom(from: Station, timeConfig: TripTime) async throws -> ([Train]) {
+        
         guard self.authorized else {
             throw APIError.notAuthorized
             
@@ -219,7 +219,7 @@ public class ArrivalAPI {
         //return  nil
     }
     public func trips(from: Station, to: Station, timeConfig: TripTime) async throws -> ([Trip]?) {
-   
+        
         guard self.authorized else {
             throw APIError.notAuthorized
             

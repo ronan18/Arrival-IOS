@@ -16,9 +16,9 @@ struct HomeScreen: View {
     var body: some View {
         VStack(spacing: 0) {
             ArrivalHeader()
-            DestinationBar()
+            DestinationBar(appState: appState)
             HeaderAlert()
-            HomeTrains()
+            HomeTrains(appState: appState)
             Spacer()
         }
     }
