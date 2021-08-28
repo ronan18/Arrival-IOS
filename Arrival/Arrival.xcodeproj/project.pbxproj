@@ -23,6 +23,9 @@
 		343DA3A526D08CF5008F6A0E /* ArrivalCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 343DA3A226D08CF5008F6A0E /* ArrivalCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		343DA3A826D08CF5008F6A0E /* ArrivalCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */; };
 		343DA3A926D08CF5008F6A0E /* ArrivalCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3475A94C26DAC7F000DFDD9E /* RunMode.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3475A94B26DAC7F000DFDD9E /* RunMode.model.swift */; };
+		3475A94E26DACA1E00DFDD9E /* AuthorizeLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3475A94D26DACA1E00DFDD9E /* AuthorizeLocationView.swift */; };
+		3475A95026DACE4700DFDD9E /* ArrivalCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */; };
 		34F61C2F26D5D8A200B35074 /* APIErrors.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F61C2E26D5D8A200B35074 /* APIErrors.model.swift */; };
 		34F61C3226D5DE9300B35074 /* LocationData.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F61C3126D5DE9300B35074 /* LocationData.model.swift */; };
 		34F61C3826D5E5BC00B35074 /* Disk in Frameworks */ = {isa = PBXBuildFile; productRef = 34F61C3726D5E5BC00B35074 /* Disk */; };
@@ -70,6 +73,13 @@
 			remoteGlobalIDString = 343DA39F26D08CF5008F6A0E;
 			remoteInfo = ArrivalCore;
 		};
+		3475A95226DACE4700DFDD9E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 343DA36E26D089DF008F6A0E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 343DA39F26D08CF5008F6A0E;
+			remoteInfo = ArrivalCore;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -105,6 +115,8 @@
 		343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArrivalCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		343DA3A226D08CF5008F6A0E /* ArrivalCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArrivalCore.h; sourceTree = "<group>"; };
 		343DA3A326D08CF5008F6A0E /* ArrivalCore.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = ArrivalCore.docc; sourceTree = "<group>"; };
+		3475A94B26DAC7F000DFDD9E /* RunMode.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunMode.model.swift; sourceTree = "<group>"; };
+		3475A94D26DACA1E00DFDD9E /* AuthorizeLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizeLocationView.swift; sourceTree = "<group>"; };
 		34F61C2E26D5D8A200B35074 /* APIErrors.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIErrors.model.swift; sourceTree = "<group>"; };
 		34F61C3026D5DDF800B35074 /* Arrival.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Arrival.entitlements; sourceTree = "<group>"; };
 		34F61C3126D5DE9300B35074 /* LocationData.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationData.model.swift; sourceTree = "<group>"; };
@@ -148,6 +160,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3475A95026DACE4700DFDD9E /* ArrivalCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -173,6 +186,7 @@
 				343DA38E26D08CD8008F6A0E /* ArrivalUI */,
 				343DA3A126D08CF5008F6A0E /* ArrivalCore */,
 				343DA37726D089DF008F6A0E /* Products */,
+				3475A94F26DACE4700DFDD9E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -195,6 +209,7 @@
 				343DA37B26D089DF008F6A0E /* ContentView.swift */,
 				C54A297F26D2A6CB00E8F1D7 /* HomeScreen.swift */,
 				C54A298126D2AA7A00E8F1D7 /* HomeTrains.swift */,
+				3475A94D26DACA1E00DFDD9E /* AuthorizeLocationView.swift */,
 				C54A297726D219E700E8F1D7 /* StationSearchView.swift */,
 				C54A298426D2AB6800E8F1D7 /* TripDetailsView.swift */,
 				C5CC58B026D581A70025BAC7 /* AppState.swift */,
@@ -251,8 +266,16 @@
 				C5CC58BA26D58FD20025BAC7 /* Screen.Model.swift */,
 				34F61C3926D5E5E500B35074 /* Disk.service.swift */,
 				C58B60D526D9990D00FCB47B /* MockupData.swift */,
+				3475A94B26DAC7F000DFDD9E /* RunMode.model.swift */,
 			);
 			path = ArrivalCore;
+			sourceTree = "<group>";
+		};
+		3475A94F26DACE4700DFDD9E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -311,6 +334,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				3475A95326DACE4700DFDD9E /* PBXTargetDependency */,
 			);
 			name = ArrivalUI;
 			productName = ArrivalUI;
@@ -428,6 +452,7 @@
 				C5CC58B926D587060025BAC7 /* OnboardingView.swift in Sources */,
 				C54A298026D2A6CB00E8F1D7 /* HomeScreen.swift in Sources */,
 				C54A298326D2AB4500E8F1D7 /* StationSearchView.swift in Sources */,
+				3475A94E26DACA1E00DFDD9E /* AuthorizeLocationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -467,6 +492,7 @@
 				3406FAF426D2C75C00D821D8 /* ArrivalAPI.swift in Sources */,
 				343DA3A426D08CF5008F6A0E /* ArrivalCore.docc in Sources */,
 				C5CC58AD26D415180025BAC7 /* Time.helpers.swift in Sources */,
+				3475A94C26DAC7F000DFDD9E /* RunMode.model.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -482,6 +508,11 @@
 			isa = PBXTargetDependency;
 			target = 343DA39F26D08CF5008F6A0E /* ArrivalCore */;
 			targetProxy = 343DA3A626D08CF5008F6A0E /* PBXContainerItemProxy */;
+		};
+		3475A95326DACE4700DFDD9E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 343DA39F26D08CF5008F6A0E /* ArrivalCore */;
+			targetProxy = 3475A95226DACE4700DFDD9E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

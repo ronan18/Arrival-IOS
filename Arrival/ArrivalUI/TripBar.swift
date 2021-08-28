@@ -10,6 +10,7 @@ import SwiftUI
 public struct TripBar: View {
     public init() {}
     public var body: some View {
+        
         HStack {
             VStack(alignment: .leading) {
                 Text("Departs").font(.caption)

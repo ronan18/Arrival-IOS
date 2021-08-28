@@ -40,6 +40,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     //Constants
     let defaults = UserDefaults.standard
     let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
+    let mode = RunMode.development
     
     //Location state
     private var locationManager = CLLocationManager()
@@ -158,6 +159,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     func createAccount() async {
         self.screen = .loading
+        if (self.mode == .production) {
         let newKey: String = "AR-" + UUID().uuidString
         do {
             let result = try await self.api.createAccount(auth: newKey)
@@ -177,7 +179,21 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         } catch {
             //TODO: Catch this
         }
-        
+        } else {
+            do {
+            let loginResult = try await self.api.login(auth: "test")
+            
+            guard loginResult else {
+                //TODO: Catch this
+                return
+            }
+            self.defaults.set("test", forKey: "passphrase")
+            self.key = "test"
+            await self.startMain()
+            } catch {
+                
+            }
+        }
     }
     func startMain() async {
         print("start main")

@@ -18,7 +18,11 @@ struct HomeScreen: View {
             ArrivalHeader()
             DestinationBar(appState: appState)
             HeaderAlert()
+            if (self.appState.locationAuthState == .notAuthorized && self.appState.fromStation == nil) {
+                AuthorizeLocationView(appState: appState)
+            } else {
             HomeTrains(appState: appState).edgesIgnoringSafeArea(.bottom)
+            }
             Spacer()
         }.edgesIgnoringSafeArea(.bottom)
     }
