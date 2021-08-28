@@ -8,11 +8,15 @@
 import SwiftUI
 import ArrivalCore
 public struct TrainCard: View {
-    let color: Color
+   // let color: Color
+    @Binding var timeDisplayMode: TimeDisplayType
     let train: Train
-    public init( train: Train) {
-        self.color = .red
+    let eta: Date?
+    public init( train: Train, timeDisplayMode: Binding<TimeDisplayType>, eta: Date? = nil) {
+       // self.color = Color(train.color.rawValue)
         self.train = train
+        self.eta = eta
+        self._timeDisplayMode = timeDisplayMode
     }
     public var body: some View {
         HStack {
@@ -20,23 +24,35 @@ public struct TrainCard: View {
             HStack {
                 VStack(alignment:.leading) {
                     Text("direction").font(.caption)
-                    Text("Antioch").font(.headline)
+                    Text(self.train.destinationStation.name).font(.headline).lineLimit(1)
                 }
                 Spacer()
                 VStack(alignment:.trailing) {
                     Text("cars").font(.caption)
-                    Text("10").font(.headline)
+                    Text("\(self.train.cars)").font(.headline)
                 }
+                
                 VStack(alignment:.trailing) {
                     Text("departs").font(.caption)
-                    TimeDisplayText()
+                    TimeDisplayText(self.train.etd,mode: self.timeDisplayMode)
+                }.onTapGesture {
+                    switch self.timeDisplayMode {
+                    case .etd:
+                        self.timeDisplayMode = .timeTill
+                        return
+                    case .timeTill:
+                        self.timeDisplayMode = .etd
+                        return
+                    }
                 }
+                if (self.eta != nil) {
                 VStack(alignment:.trailing) {
                     Text("arrives").font(.caption)
-                   TimeDisplayText()
+                    TimeDisplayText(self.train.etd,mode: .etd)
+                }
                 }
             }.padding(.leading, 20).padding([.vertical,.trailing])
-        }.cornerRadius(10).background(Color("CardBG")).overlay(HStack{Rectangle().frame(width: 10).foregroundColor(self.color); Spacer()}).overlay(
+        }.cornerRadius(10).background(Color("CardBG")).overlay(HStack{Rectangle().frame(width: 10).foregroundColor(self.train.colorData); Spacer()}).overlay(
             RoundedRectangle(cornerRadius: CGFloat(10.0)).stroke(Color("CardBorder"), lineWidth:3)
         ).cornerRadius(10.0)
     }
@@ -44,6 +60,6 @@ public struct TrainCard: View {
 
 struct TrainCard_Previews: PreviewProvider {
     static var previews: some View {
-        TrainCard().previewLayout(.sizeThatFits).padding()
+        TrainCard(train: MockUpData().train, timeDisplayMode: .constant(.timeTill)).previewLayout(.sizeThatFits).padding()
     }
 }

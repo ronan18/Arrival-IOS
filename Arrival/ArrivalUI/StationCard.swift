@@ -16,7 +16,7 @@ public struct StationCard: View {
                 Spacer()
                 VStack(alignment:.trailing) {
                     Text("walking distance").font(.caption)
-                    TimeDisplayText()
+                    TimeDisplayText(Date(), mode: .timeTill)
                 }
                     
             }.padding(.leading, 20).padding([.vertical,.trailing])

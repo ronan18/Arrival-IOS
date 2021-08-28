@@ -27,7 +27,7 @@ public struct TripCard: View {
                         
                     }
                     Spacer()
-                    TimeDisplayText(font: .body)
+                    TimeDisplayText(Date(), mode: .etd, font: .body)
                 }.padding(.bottom)
                 HStack(alignment: .firstTextBaseline) {
                     /*DisclosureGroup("11 stops before transfer...", isExpanded: self.$isStopsExpanded) {
@@ -51,7 +51,7 @@ public struct TripCard: View {
                     }
                     }
                     Spacer()
-                    TimeDisplayText(font: .footnote).padding(.leading)
+                    TimeDisplayText(Date(), mode: .etd, font: .footnote).padding(.leading)
                 }.padding(.bottom)
                 HStack(alignment: .center) {
                     VStack(alignment: .leading) {
@@ -60,7 +60,7 @@ public struct TripCard: View {
                         
                     }
                     Spacer()
-                    TimeDisplayText(font: .body)
+                    TimeDisplayText(Date(), mode: .etd, font: .body)
                 }
             }.padding(.leading, 20).padding([.vertical,.trailing])
         }.cornerRadius(10).background(Color("CardBG")).overlay(HStack{Rectangle().frame(width: 10).foregroundColor(self.color); Spacer()}).overlay(

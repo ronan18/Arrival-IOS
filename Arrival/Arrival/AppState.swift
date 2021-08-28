@@ -7,6 +7,7 @@
 
 import Foundation
 import ArrivalCore
+import ArrivalUI
 import Combine
 import CoreLocation
 import SwiftUI
@@ -27,7 +28,8 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     @Published var fromStation: Station? = nil
     @Published var toStation: Station? = nil
-    
+    @Published var directionFilter: Int = 1
+    @Published var timeDisplayMode = TimeDisplayType.timeTill
     
     @Published var trains: [Train] = []
     //Services
@@ -52,7 +54,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     //Watchers
     
-    private var cycleTimerLength: TimeInterval = 500
+    private var cycleTimerLength: TimeInterval = 30
     
     override init() {
         super.init()
@@ -210,9 +212,9 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         
         await self.cycle()
         self.screen = .home
-        /*Timer.scheduledTimer(withTimeInterval: self.cycleTimerLength, repeats: true) { timer in
+        Timer.scheduledTimer(withTimeInterval: self.cycleTimerLength, repeats: true) { timer in
             async {await self.cycle()}
-        } */
+        }
     }
     func getClosestStations() async -> [Station] {
         print("LOCATION STATION: refresh closest station")
@@ -222,8 +224,9 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
                 self.closestStations = stations
                 self.fromStationSuggestions =  stations
                 if self.goingOffOfClosestStation {
-                    print("LOCATION: going off closest station", stations[0].name, self.fromStation?.name as Any)
                     self.fromStation = stations[0]
+                    print("LOCATION: going off closest station", stations[0].name, self.fromStation?.name as Any)
+                    
                     // self.locationServicesState = .ready
                     async {
                         await self.cycle()
@@ -260,11 +263,14 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
         
         do {
+            print("get trains from \(self.fromStation?.name ?? "none")")
             let trains = try await self.api.trainsFrom(from: fromStation, timeConfig: TripTime(type: .now))
             self.trains = trains
+            print("got \(trains.count) trains from \(self.fromStation?.name ?? "none")")
             // print(trains)
         } catch {
-            
+            print("ERROR getting trains", error)
+            //TODO: catch this
         }
     }
     

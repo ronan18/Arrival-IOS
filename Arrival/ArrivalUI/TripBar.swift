@@ -13,17 +13,17 @@ public struct TripBar: View {
         HStack {
             VStack(alignment: .leading) {
                 Text("Departs").font(.caption)
-                TimeDisplayText()
+                TimeDisplayText(Date(), mode: .etd)
             }
             Spacer()
             VStack(alignment: .center) {
                 Text("Travel").font(.caption)
-                TimeDisplayText()
+                TimeDisplayText(Date(), mode: .etd)
             }
             Spacer()
             VStack(alignment: .trailing) {
                 Text("Arrives").font(.caption)
-                TimeDisplayText()
+                TimeDisplayText(Date(), mode: .etd)
             }
            
         }.padding()

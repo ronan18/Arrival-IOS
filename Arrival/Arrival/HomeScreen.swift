@@ -18,9 +18,9 @@ struct HomeScreen: View {
             ArrivalHeader()
             DestinationBar(appState: appState)
             HeaderAlert()
-            HomeTrains(appState: appState)
+            HomeTrains(appState: appState).edgesIgnoringSafeArea(.bottom)
             Spacer()
-        }
+        }.edgesIgnoringSafeArea(.bottom)
     }
 }
 

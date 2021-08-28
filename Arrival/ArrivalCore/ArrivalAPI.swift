@@ -209,7 +209,9 @@ public class ArrivalAPI {
                     trains.append(train)
                 }
             }
-            
+            trains.sort(by: {(a,b) in
+                return a.etd < b.etd
+            })
             return trains
         case .failure(let error):
             print(error)
