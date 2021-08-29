@@ -173,7 +173,7 @@ public class ArrivalAPI {
             // return (nil)
         }
     }
-    public func trainsFrom(from: Station, timeConfig: TripTime) async throws -> ([Train]) {
+    public func trainsFrom(from: Station, timeConfig: TripTime) async throws -> ([Train], [Train], [Train]) {
         
         guard self.authorized else {
             throw APIError.notAuthorized
@@ -198,6 +198,8 @@ public class ArrivalAPI {
         switch response.result {
         case .success(let value):
             let result = JSON(value)
+            var north: [Train] = []
+            var south: [Train] = []
             var trains: [Train] = []
             result["estimates"]["etd"].arrayValue.forEach {destinationTrains in
                 let destinationTrainsJSON = JSON(destinationTrains)
@@ -205,14 +207,28 @@ public class ArrivalAPI {
                 let estimates = destinationTrainsJSON["estimate"].arrayValue
                 estimates.forEach {trainEstimate in
                     let etd = Date(timeIntervalSinceNow: trainEstimate["minutes"].doubleValue * 60)
-                    let train = Train(departureStation: from, destinationStation: destination, etd: etd, platform: trainEstimate["platform"].intValue, direction: determineTrainDirection(trainEstimate["direction"].stringValue), delay: trainEstimate["delay"].doubleValue, bikeFlag: trainEstimate["bikeflag"].intValue, color: determineTrainColor(trainEstimate["color"].stringValue), cars: trainEstimate["length"].intValue)
+                    let direction = determineTrainDirection(trainEstimate["direction"].stringValue)
+                  
+                    let train = Train(departureStation: from, destinationStation: destination, etd: etd, platform: trainEstimate["platform"].intValue, direction: direction, delay: trainEstimate["delay"].doubleValue, bikeFlag: trainEstimate["bikeflag"].intValue, color: determineTrainColor(trainEstimate["color"].stringValue), cars: trainEstimate["length"].intValue)
+                    switch direction {
+                    case .north:
+                        north.append(train)
+                    case .south:
+                        south.append(train)
+                    }
                     trains.append(train)
                 }
             }
             trains.sort(by: {(a,b) in
                 return a.etd < b.etd
             })
-            return trains
+            north.sort(by: {(a,b) in
+                return a.etd < b.etd
+            })
+            south.sort(by: {(a,b) in
+                return a.etd < b.etd
+            })
+            return (trains, north, south)
         case .failure(let error):
             print(error)
             throw APIError.apiError

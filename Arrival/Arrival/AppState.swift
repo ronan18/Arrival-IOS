@@ -36,6 +36,10 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
  
     
     @Published var trains: [Train] = []
+    @Published var northTrains: [Train] = []
+    @Published var southTrains: [Train] = []
+    @Published var trainsLoading = true
+    @Published var firstCycleOfFromStation = true
     
     //stations state
     @Published var stations: StationStorage? = nil
@@ -241,8 +245,9 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
         
         let _ = await self.getClosestStations()
-        self.getToStationSuggestions()
+        await self.getToStationSuggestions()
         await self.cycle()
+        
         self.screen = .home
         Timer.scheduledTimer(withTimeInterval: self.cycleTimerLength, repeats: true) { timer in
             Task {await self.cycle()}
@@ -267,6 +272,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
                     // self.locationServicesState = .ready
                     Task {
                         await self.cycle()
+                        await self.getToStationSuggestions()
                     }
                 }
                 return stations
@@ -287,7 +293,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
         
     }
-    func getToStationSuggestions() {
+    func getToStationSuggestions() async {
         guard self.stations?.stations.count ?? 0 > 1 else {
             return
         }
@@ -299,6 +305,9 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             print("TO STATION SUGGESTIONS: going off of API")
             result = self.stations?.stations ?? []
         }
+        result = result.filter({a in
+            return self.fromStation != a
+        })
         self.toStationSuggestions = result
     }
     func cycle() async {
@@ -315,9 +324,25 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         
         do {
             print("get trains from \(self.fromStation?.name ?? "none")")
-            let trains = try await self.api.trainsFrom(from: fromStation, timeConfig: TripTime(type: .now))
+            let (trains, north, south) = try await self.api.trainsFrom(from: fromStation, timeConfig: TripTime(type: .now))
             self.trains = trains
+            self.northTrains = north
+            self.southTrains = south
             print("got \(trains.count) trains from \(self.fromStation?.name ?? "none")")
+            if (self.firstCycleOfFromStation) {
+               // print("first cycle \(north) \(south)")
+                if (south.count == 0 && north.count == 0) {
+                    self.directionFilter = 3
+                } else if (south.count == 0 && north.count > 0) {
+                    self.directionFilter = 1
+                }
+                else if (south.count > 0 && north.count == 0) {
+                    self.directionFilter = 2
+                }
+                
+                self.firstCycleOfFromStation = false
+            }
+            self.trainsLoading = false
             // print(trains)
         } catch {
             print("ERROR getting trains", error)
@@ -331,13 +356,16 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         } else {
             self.goingOffOfClosestStation = true
         }
-        self.getToStationSuggestions()
+        self.trainsLoading = true
+        self.firstCycleOfFromStation = true
         Task {
+            await self.getToStationSuggestions()
             await self.cycle()
         }
     }
-    func setToStation(_ station: Station) {
+    func setToStation(_ station: Station?) {
         self.toStation = station
+        self.trainsLoading = true
         Task {
             await self.cycle()
         }

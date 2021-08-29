@@ -15,16 +15,14 @@ struct HomeTrains: View {
     @State var filteredTrains: [Train] = []
     func filterTrains (_ trains: [Train], direction: TrainDirection? = nil) -> [Train] {
         
-        return trains.filter({a in
-            switch self.appState.directionFilter {
-            case 1 :
-                return a.direction == .north
-            case 2:
-                return a.direction == .south
-            default:
-                return true
-            }
-        })
+        switch self.appState.directionFilter {
+        case 1 :
+            return self.appState.northTrains
+        case 2:
+            return self.appState.southTrains
+        default:
+            return trains
+        }
     }
     var body: some View {
         VStack {
@@ -32,9 +30,21 @@ struct HomeTrains: View {
                 Text("Northbound").tag(1)
                 Text("Southbound").tag(2)
                 Text("All").tag(3)
-            }.pickerStyle(SegmentedPickerStyle())
+            }.pickerStyle(SegmentedPickerStyle()).disabled(self.appState.trainsLoading).opacity(self.appState.trainsLoading ? 0.8 : 1)
+            if (self.appState.trainsLoading) {
+                List() {
+                    ForEach(0..<5) {i in
+                        TrainCard(train: MockUpData().train, timeDisplayMode: self.$timeDisplayMode, redacted: true).redacted(reason: .placeholder).listRowSeparator(.hidden).listRowInsets(EdgeInsets()).padding(.vertical, 5)
+                    }
+                   
+                    
+                }.listStyle(.plain)
+            } else {
             if (filteredTrains.count > 0) {
             List() {
+                if (self.appState.directionFilter == 1) {
+                    
+                }
                 ForEach(filteredTrains) {train in
                     TrainCard(train: train, timeDisplayMode: self.$timeDisplayMode).listRowSeparator(.hidden).listRowInsets(EdgeInsets()).padding(.vertical, 5)
                 }.edgesIgnoringSafeArea(.bottom)
@@ -51,10 +61,25 @@ struct HomeTrains: View {
                     Spacer()
                 }
             }
+            }
         }.padding().edgesIgnoringSafeArea(.bottom).onChange(of: self.appState.trains, perform: { trains in
-            self.filteredTrains = self.filterTrains(trains)
+            switch self.appState.directionFilter {
+            case 1 :
+                self.filteredTrains = self.appState.northTrains
+            case 2:
+                self.filteredTrains = self.appState.southTrains
+            default:
+                self.filteredTrains = trains
+            }
         }).onChange(of: self.appState.directionFilter, perform: { direction in
-            self.filteredTrains = self.filterTrains(self.appState.trains)
+            switch direction {
+            case 1 :
+                self.filteredTrains = self.appState.northTrains
+            case 2:
+                self.filteredTrains = self.appState.southTrains
+            default:
+                self.filteredTrains = self.appState.trains
+            }
         })
     }
 }
