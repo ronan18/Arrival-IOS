@@ -74,7 +74,7 @@ public func determineTrainColor(_ color: String) -> TrainColor {
     }
 }
 
-public struct Train: Identifiable {
+public struct Train: Identifiable, Equatable {
     public let id = UUID()
     public let departureStation: Station
     public let destinationStation: Station

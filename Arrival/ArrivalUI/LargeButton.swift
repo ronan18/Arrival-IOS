@@ -23,8 +23,8 @@ public struct LargeButton: View {
             Text(self.text).frame(maxWidth: 400).font(.headline)
                 
         }.tint(.accentColor)
-            .buttonStyle(.bordered)
-            .controlSize(.large).controlProminence(.increased)
+            .buttonStyle(.borderedProminent)
+            .controlSize(.large)
     }
 }
 

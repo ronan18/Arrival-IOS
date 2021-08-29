@@ -11,7 +11,10 @@ import ArrivalUI
 import ArrivalCore
 struct HomeTrains: View {
     @ObservedObject var appState: AppState
-    func filterTrains (_ trains: [Train]) -> [Train] {
+    @State var timeDisplayMode = TimeDisplayType.timeTill
+    @State var filteredTrains: [Train] = []
+    func filterTrains (_ trains: [Train], direction: TrainDirection? = nil) -> [Train] {
+        
         return trains.filter({a in
             switch self.appState.directionFilter {
             case 1 :
@@ -30,17 +33,29 @@ struct HomeTrains: View {
                 Text("Southbound").tag(2)
                 Text("All").tag(3)
             }.pickerStyle(SegmentedPickerStyle())
+            if (filteredTrains.count > 0) {
             List() {
-                ForEach(filterTrains(self.appState.trains)) {train in
-                    TrainCard(train: train, timeDisplayMode: .init(get: {return self.appState.timeDisplayMode}, set: {self.appState.timeDisplayMode = $0})).listRowSeparator(.hidden).listRowInsets(EdgeInsets()).padding(.vertical, 5)
+                ForEach(filteredTrains) {train in
+                    TrainCard(train: train, timeDisplayMode: self.$timeDisplayMode).listRowSeparator(.hidden).listRowInsets(EdgeInsets()).padding(.vertical, 5)
                 }.edgesIgnoringSafeArea(.bottom)
                 
             }.listStyle(.plain).refreshable {
-                async {
+                Task {
                     await self.appState.cycle()
                 }
             }.edgesIgnoringSafeArea(.bottom)
-        }.padding().edgesIgnoringSafeArea(.bottom)
+            } else {
+                VStack {
+                    Spacer()
+                    Text("No Trains in this direction")
+                    Spacer()
+                }
+            }
+        }.padding().edgesIgnoringSafeArea(.bottom).onChange(of: self.appState.trains, perform: { trains in
+            self.filteredTrains = self.filterTrains(trains)
+        }).onChange(of: self.appState.directionFilter, perform: { direction in
+            self.filteredTrains = self.filterTrains(self.appState.trains)
+        })
     }
 }
 

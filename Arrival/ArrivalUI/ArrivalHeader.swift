@@ -18,7 +18,7 @@ public struct ArrivalHeader: View {
             Button(action: {}) {
                 Image(systemName: "gear")
             }
-        }.foregroundColor(.white).padding().background(LinearGradient(gradient: Gradient(colors: [.accentColor,.accentColor, Color("arrivalBlueBGDark")]), startPoint: .topLeading, endPoint: .bottomTrailing))
+        }.foregroundColor(.white).padding().background(LinearGradient(gradient: Gradient(colors: [Color("ArrivalBlue"),Color("ArrivalBlue"), Color("arrivalBlueBGDark")]), startPoint: .topLeading, endPoint: .bottomTrailing))
     }
 }
 

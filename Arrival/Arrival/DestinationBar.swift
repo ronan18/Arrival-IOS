@@ -13,7 +13,9 @@ public struct DestinationBar: View {
     public var body: some View {
         
         HStack {
-            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
+            Button(action: {
+                self.appState.fromStationChooser = true
+            }) {
                 HStack {
                     
                     VStack(alignment:.leading) {
@@ -29,20 +31,30 @@ public struct DestinationBar: View {
                 }
             }.frame(width: navItemWidth)
             Spacer()
-            Button(action: {}) {
+            Button(action: {
+                self.appState.timeChooser = true
+            }) {
                 VStack(alignment:.center) {
                     Text("leave").font(.caption)
                     if (self.appState.locationAuthState == .notAuthorized) {
                         Text("Now").font(.headline).lineLimit(1)
-                    }else if (self.appState.fromStation != nil) {
+                    } else if (self.appState.fromStation != nil) {
                         Text("Now").font(.headline)
                     } else {
                         Text("Now").font(.headline).redacted(reason: .placeholder)
                     }
                 }
-            }.disabled(self.appState.fromStation == nil).opacity(self.appState.fromStation == nil && self.appState.locationAuthState == .notAuthorized ? 0.8 : 1)
+            }.disabled(self.appState.fromStation == nil).opacity(self.appState.fromStation == nil && self.appState.locationAuthState == .notAuthorized ? 0.8 : 1).sheet(isPresented: .init(get: {
+                return self.appState.fromStationChooser
+            }, set: {
+                self.appState.fromStationChooser = $0
+            })) {
+                StationSearchView(appState: self.appState, mode: .from)
+            }
             Spacer()
-            Button(action: /*@START_MENU_TOKEN@*/{}/*@END_MENU_TOKEN@*/) {
+            Button(action: {
+                self.appState.toStationChooser = true
+            }) {
                 HStack {
                     Spacer()
                     VStack(alignment:.trailing) {
@@ -56,9 +68,15 @@ public struct DestinationBar: View {
                         }
                     }
                 }
-            }.frame(width: navItemWidth).disabled(self.appState.fromStation == nil).opacity(self.appState.fromStation == nil && self.appState.locationAuthState == .notAuthorized ? 0.8 : 1)
+            }.frame(width: navItemWidth).disabled(self.appState.fromStation == nil).opacity(self.appState.fromStation == nil && self.appState.locationAuthState == .notAuthorized ? 0.8 : 1).frame(width: navItemWidth).sheet(isPresented: .init(get: {
+                return self.appState.toStationChooser
+            }, set: {
+                self.appState.toStationChooser = $0
+            })) {
+                StationSearchView(appState: self.appState, mode: .to)
+            }
             
-        }.foregroundColor(Color("OppositeTextColor")).padding().background(.black)
+        }.foregroundColor(Color("LightText")).padding().background(.black)
         
         
     }

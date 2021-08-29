@@ -15,12 +15,12 @@ public struct HeaderAlert: View {
             DisclosureGroup( isExpanded: self.$alertOpen, content: {
                 HeaderAlertContent()
             }, label: {HStack {
-                Image(systemName: "exclamationmark.triangle.fill").foregroundColor(Color("OppositeTextColor"))
+                Image(systemName: "exclamationmark.triangle.fill").foregroundColor(Color("LightText"))
                 Text("Alert").font(.headline)
                 if (!self.alertOpen) {
                 Text("Due to COVID-19 BART is operating under a modified schedule. Face coverings are required.").lineLimit(1).font(.subheadline)
                 }
-            }}).foregroundColor(Color("OppositeTextColor")).accentColor(Color("OppositeTextColor")).padding(.horizontal).padding(.vertical, 10).background(Color("Gray"))
+            }}).foregroundColor(Color("LightText")).accentColor(Color("OppositeTextColor")).padding(.horizontal).padding(.vertical, 10).background(Color("Gray"))
         }
     }
 }

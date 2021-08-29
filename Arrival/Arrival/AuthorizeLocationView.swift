@@ -13,8 +13,8 @@ struct AuthorizeLocationView: View {
     @ObservedObject var appState: AppState
     var body: some View {
         VStack {
-            Spacer().frame(height: 100)
-            Image(systemName: "exclamationmark.triangle.fill").font(.largeTitle).symbolRenderingMode(.multicolor)
+            Spacer().frame(height: 25)
+            Image(systemName: "exclamationmark.octagon.fill").font(.system(size: 100)).symbolRenderingMode(.hierarchical).padding().foregroundColor(.yellow)
             Text("No Departure Station Specified").font(.title2).bold()
             HStack {
                 Button(action: {
@@ -26,18 +26,14 @@ struct AuthorizeLocationView: View {
                 }) {
                     Image(systemName: "location.fill.viewfinder")
                     Text("use location")
-                }.buttonStyle(.bordered).controlSize(.small).controlProminence(.increased)
+                }.buttonStyle(.borderedProminent).controlSize(.small).buttonBorderShape(.capsule)
                 Text("or").font(.subheadline)
                 Button(action: {
-                    if let bundleIdentifier = Bundle.main.bundleIdentifier, let appSettings = URL(string: UIApplication.openSettingsURLString + bundleIdentifier) {
-                        if UIApplication.shared.canOpenURL(appSettings) {
-                            UIApplication.shared.open(appSettings)
-                        }
-                    }
+                    self.appState.fromStationChooser = true
                 }) {
                     Image(systemName: "list.dash")
                     Text("specify station")
-                }.buttonStyle(.bordered).controlSize(.small)
+                }.buttonStyle(.bordered).controlSize(.small).buttonBorderShape(.capsule)
           
             }.padding(.top).padding(.bottom, 5)
             Text("Arrival uses your location to automatically determine the closest station to you. Your location never leaves the device and isn't shared with anyone").font(.caption)

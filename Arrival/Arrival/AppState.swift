@@ -18,7 +18,11 @@ import Network
 class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     //Publishers
     @Published var key: String? = nil
+    
     @Published var screen: AppScreen = .loading
+    @Published var fromStationChooser = false
+    @Published var toStationChooser = false
+    @Published var timeChooser = false
     
     @Published var locationAuthState = LocationAuthState.notAuthorized
     @Published var locationDataState  = LocationDataSate.notReady
@@ -29,13 +33,19 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var fromStation: Station? = nil
     @Published var toStation: Station? = nil
     @Published var directionFilter: Int = 1
-    @Published var timeDisplayMode = TimeDisplayType.timeTill
+ 
     
     @Published var trains: [Train] = []
+    
+    //stations state
+    @Published var stations: StationStorage? = nil
+    @Published var closestStations: [Station] = []
+    @Published var toStationSuggestions: [Station] = []
     //Services
     let api = ArrivalAPI()
     let disk = DiskService()
     let stationService = StationService()
+    let mapService = MapService()
     
     //Constants
     let defaults = UserDefaults.standard
@@ -49,9 +59,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     private var lastLocation: CLLocation? = nil
     private var location: CLLocation? = nil
     
-    //stations state
-    private var stations: StationStorage? = nil
-    private var closestStations: [Station] = []
+   
     
     //Watchers
     
@@ -61,7 +69,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         super.init()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest // You can change the locaiton accuary here.
-        async {
+        Task {
             await self.startUp()
         }
         
@@ -119,13 +127,21 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
      func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        //print("LOCATION: update")
+        print("LOCATION: update")
         if let location = locations.first {
             //print(location.coordinate, "location", location)
+            if let currentLocation = self.location {
+                guard  location.distance(from: currentLocation) > 10 else{
+                    print("LOCATION: within 10m cancel refresh")
+                    return
+                }
+            }
+           
             lat = location.coordinate.latitude
             long = location.coordinate.longitude
             self.location = location
-            async {
+            self.mapService.location = location
+            Task {
             let _ = await self.getClosestStations()
             }
         }
@@ -143,7 +159,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             if CLLocationManager.locationServicesEnabled() {
                 self.locationAuthState = .authorized
                 //  self.locationServicesState = .loading
-                async {
+                Task {
                     await self.getClosestStations()
                 }
                 //print(" location access")
@@ -225,11 +241,11 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
         
         let _ = await self.getClosestStations()
-        
+        self.getToStationSuggestions()
         await self.cycle()
         self.screen = .home
         Timer.scheduledTimer(withTimeInterval: self.cycleTimerLength, repeats: true) { timer in
-            async {await self.cycle()}
+            Task {await self.cycle()}
         }
     }
     func getClosestStations() async -> [Station] {
@@ -240,11 +256,16 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
                 self.closestStations = stations
                 self.fromStationSuggestions =  stations
                 if self.goingOffOfClosestStation {
+                    
+                    guard self.fromStation != stations[0] else {
+                        return self.closestStations
+                    }
+                    
                     self.fromStation = stations[0]
                     print("LOCATION: going off closest station", stations[0].name, self.fromStation?.name as Any)
                     
                     // self.locationServicesState = .ready
-                    async {
+                    Task {
                         await self.cycle()
                     }
                 }
@@ -265,6 +286,20 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             
         }
         
+    }
+    func getToStationSuggestions() {
+        guard self.stations?.stations.count ?? 0 > 1 else {
+            return
+        }
+        var result: [Station] = []
+        if (self.closestStations.count > 1) {
+            print("TO STATION SUGGESTIONS: going off of distance")
+            result = closestStations.reversed()
+        } else {
+            print("TO STATION SUGGESTIONS: going off of API")
+            result = self.stations?.stations ?? []
+        }
+        self.toStationSuggestions = result
     }
     func cycle() async {
         print("CYCLE")
@@ -287,6 +322,24 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         } catch {
             print("ERROR getting trains", error)
             //TODO: catch this
+        }
+    }
+    func setFromStation(_ station: Station) {
+        self.fromStation = station
+        if (station != self.closestStations.first) {
+            self.goingOffOfClosestStation = false
+        } else {
+            self.goingOffOfClosestStation = true
+        }
+        self.getToStationSuggestions()
+        Task {
+            await self.cycle()
+        }
+    }
+    func setToStation(_ station: Station) {
+        self.toStation = station
+        Task {
+            await self.cycle()
         }
     }
     

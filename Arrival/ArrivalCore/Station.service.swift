@@ -8,6 +8,10 @@
 import Foundation
 import CoreLocation
 import Intents
+import CoreML
+#if os(iOS)
+//import CreateML
+#endif
 
 public class StationService {
     public init() {}
@@ -36,6 +40,9 @@ public class StationService {
             return distance1Miles < distance2Miles
         }
         return sorted
+    }
+    public func trainML() {
+        
     }
    
 }

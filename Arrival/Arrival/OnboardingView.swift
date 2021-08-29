@@ -28,7 +28,7 @@ struct OnboardingView: View {
                 self.screen = .suggestions})
         } else if (self.screen == .anonymous) {
             OnboardingScreen(image: "Secure", title: "Smart Suggestions", description: "Because Arrival collects some pretty personal information, your daily commute, your data is stored on device.", button: "GET STARTED", next: {
-                async {
+                Task {
                    
                        await self.appState.createAccount()
                 

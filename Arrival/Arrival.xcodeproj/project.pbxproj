@@ -30,8 +30,9 @@
 		34F61C3226D5DE9300B35074 /* LocationData.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F61C3126D5DE9300B35074 /* LocationData.model.swift */; };
 		34F61C3826D5E5BC00B35074 /* Disk in Frameworks */ = {isa = PBXBuildFile; productRef = 34F61C3726D5E5BC00B35074 /* Disk */; };
 		34F61C3A26D5E5E500B35074 /* Disk.service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F61C3926D5E5E500B35074 /* Disk.service.swift */; };
+		34FB5A9B26DAEF0F00964BF9 /* Maps.service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FB5A9A26DAEF0E00964BF9 /* Maps.service.swift */; };
+		34FB5A9E26DAF8AB00964BF9 /* StationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297526D2171900E8F1D7 /* StationCard.swift */; };
 		C54A297226D20E4C00E8F1D7 /* HeaderAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297126D20E4C00E8F1D7 /* HeaderAlert.swift */; };
-		C54A297626D2171900E8F1D7 /* StationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297526D2171900E8F1D7 /* StationCard.swift */; };
 		C54A297A26D2A3BF00E8F1D7 /* TripBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297926D2A3BF00E8F1D7 /* TripBar.swift */; };
 		C54A297C26D2A46A00E8F1D7 /* TripTransferText.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297B26D2A46A00E8F1D7 /* TripTransferText.swift */; };
 		C54A297E26D2A4E300E8F1D7 /* ArrivalHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297D26D2A4E300E8F1D7 /* ArrivalHeader.swift */; };
@@ -121,6 +122,7 @@
 		34F61C3026D5DDF800B35074 /* Arrival.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Arrival.entitlements; sourceTree = "<group>"; };
 		34F61C3126D5DE9300B35074 /* LocationData.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationData.model.swift; sourceTree = "<group>"; };
 		34F61C3926D5E5E500B35074 /* Disk.service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Disk.service.swift; sourceTree = "<group>"; };
+		34FB5A9A26DAEF0E00964BF9 /* Maps.service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maps.service.swift; sourceTree = "<group>"; };
 		C54A297126D20E4C00E8F1D7 /* HeaderAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderAlert.swift; sourceTree = "<group>"; };
 		C54A297326D2165200E8F1D7 /* DestinationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationBar.swift; sourceTree = "<group>"; };
 		C54A297526D2171900E8F1D7 /* StationCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationCard.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 				C5CC58B026D581A70025BAC7 /* AppState.swift */,
 				C5CC58B826D587060025BAC7 /* OnboardingView.swift */,
 				C54A297326D2165200E8F1D7 /* DestinationBar.swift */,
+				C54A297526D2171900E8F1D7 /* StationCard.swift */,
 				343DA37D26D089E3008F6A0E /* Assets.xcassets */,
 				343DA37F26D089E3008F6A0E /* Preview Content */,
 			);
@@ -238,7 +241,6 @@
 				341BB6AF26D1F8310044190A /* TripCard.swift */,
 				C54A297126D20E4C00E8F1D7 /* HeaderAlert.swift */,
 				341BB6AC26D1F14A0044190A /* TimeDisplayText.swift */,
-				C54A297526D2171900E8F1D7 /* StationCard.swift */,
 				C54A297926D2A3BF00E8F1D7 /* TripBar.swift */,
 				C54A297B26D2A46A00E8F1D7 /* TripTransferText.swift */,
 				C54A297D26D2A4E300E8F1D7 /* ArrivalHeader.swift */,
@@ -267,6 +269,7 @@
 				34F61C3926D5E5E500B35074 /* Disk.service.swift */,
 				C58B60D526D9990D00FCB47B /* MockupData.swift */,
 				3475A94B26DAC7F000DFDD9E /* RunMode.model.swift */,
+				34FB5A9A26DAEF0E00964BF9 /* Maps.service.swift */,
 			);
 			path = ArrivalCore;
 			sourceTree = "<group>";
@@ -446,6 +449,7 @@
 				343DA37C26D089DF008F6A0E /* ContentView.swift in Sources */,
 				C54A298226D2AA7B00E8F1D7 /* HomeTrains.swift in Sources */,
 				C550A8EB26D96A42008A2679 /* DestinationBar.swift in Sources */,
+				34FB5A9E26DAF8AB00964BF9 /* StationCard.swift in Sources */,
 				C5CC58B126D581A70025BAC7 /* AppState.swift in Sources */,
 				C54A298526D2AB6800E8F1D7 /* TripDetailsView.swift in Sources */,
 				343DA37A26D089DF008F6A0E /* ArrivalApp.swift in Sources */,
@@ -464,7 +468,6 @@
 				C54A297226D20E4C00E8F1D7 /* HeaderAlert.swift in Sources */,
 				C54A297C26D2A46A00E8F1D7 /* TripTransferText.swift in Sources */,
 				C5CC58B326D582430025BAC7 /* OnboardingIntro.swift in Sources */,
-				C54A297626D2171900E8F1D7 /* StationCard.swift in Sources */,
 				341BB6AD26D1F14A0044190A /* TimeDisplayText.swift in Sources */,
 				341BB6B026D1F8310044190A /* TripCard.swift in Sources */,
 				C54A297E26D2A4E300E8F1D7 /* ArrivalHeader.swift in Sources */,
@@ -482,6 +485,7 @@
 				34F61C2F26D5D8A200B35074 /* APIErrors.model.swift in Sources */,
 				C5CC58A726D40E570025BAC7 /* Station.model.swift in Sources */,
 				34F61C3A26D5E5E500B35074 /* Disk.service.swift in Sources */,
+				34FB5A9B26DAEF0F00964BF9 /* Maps.service.swift in Sources */,
 				C5CC58A926D412720025BAC7 /* Train.model.swift in Sources */,
 				34F61C3226D5DE9300B35074 /* LocationData.model.swift in Sources */,
 				C5CC58BD26D6B16C0025BAC7 /* Station.service.swift in Sources */,
