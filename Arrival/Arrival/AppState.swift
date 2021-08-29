@@ -32,12 +32,16 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     @Published var fromStation: Station? = nil
     @Published var toStation: Station? = nil
+    @Published var timeConfig: TripTime = TripTime(type: .now)
+    
     @Published var directionFilter: Int = 1
  
     
     @Published var trains: [Train] = []
     @Published var northTrains: [Train] = []
     @Published var southTrains: [Train] = []
+   
+    
     @Published var trainsLoading = true
     @Published var firstCycleOfFromStation = true
     
@@ -321,33 +325,51 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             print("CYCLE: no from station")
             return
         }
-        
-        do {
-            print("get trains from \(self.fromStation?.name ?? "none")")
-            let (trains, north, south) = try await self.api.trainsFrom(from: fromStation, timeConfig: TripTime(type: .now))
-            self.trains = trains
-            self.northTrains = north
-            self.southTrains = south
-            print("got \(trains.count) trains from \(self.fromStation?.name ?? "none")")
-            if (self.firstCycleOfFromStation) {
-               // print("first cycle \(north) \(south)")
-                if (south.count == 0 && north.count == 0) {
-                    self.directionFilter = 3
-                } else if (south.count == 0 && north.count > 0) {
-                    self.directionFilter = 1
-                }
-                else if (south.count > 0 && north.count == 0) {
-                    self.directionFilter = 2
-                }
-                
-                self.firstCycleOfFromStation = false
+        switch self.timeConfig.type {
+        case .leave, .arrive:
+           
+            guard let toStation = self.toStation else {
+                print("No to station")
+                return
             }
-            self.trainsLoading = false
-            // print(trains)
-        } catch {
-            print("ERROR getting trains", error)
-            //TODO: catch this
+            print("get trips from \(fromStation.name) to \(toStation.name) at \(self.timeConfig)")
+            do {
+            let trips = try await self.api.trips(from: fromStation, to: toStation, timeConfig: self.timeConfig)
+                print("Got \(trips.count) trips from \(fromStation.name) to \(toStation.name) at \(self.timeConfig)")
+            } catch {
+                //TODO: Handel errors from here
+            }
+            return
+        case .now:
+            do {
+                print("get trains from \(self.fromStation?.name ?? "none")")
+                let (trains, north, south) = try await self.api.trainsFrom(from: fromStation, timeConfig: TripTime(type: .now))
+                self.trains = trains
+                self.northTrains = north
+                self.southTrains = south
+                print("got \(trains.count) trains from \(self.fromStation?.name ?? "none")")
+                if (self.firstCycleOfFromStation) {
+                   // print("first cycle \(north) \(south)")
+                    if (south.count == 0 && north.count == 0) {
+                        self.directionFilter = 3
+                    } else if (south.count == 0 && north.count > 0) {
+                        self.directionFilter = 1
+                    }
+                    else if (south.count > 0 && north.count == 0) {
+                        self.directionFilter = 2
+                    }
+                    
+                    self.firstCycleOfFromStation = false
+                }
+                self.trainsLoading = false
+                // print(trains)
+            } catch {
+                print("ERROR getting trains", error)
+                //TODO: catch this
+            }
+            return
         }
+       
     }
     func setFromStation(_ station: Station) {
         self.fromStation = station
@@ -365,6 +387,13 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     func setToStation(_ station: Station?) {
         self.toStation = station
+        self.trainsLoading = true
+        Task {
+            await self.cycle()
+        }
+    }
+    func setTripTime(_ time: TripTime) {
+        self.timeConfig = time
         self.trainsLoading = true
         Task {
             await self.cycle()

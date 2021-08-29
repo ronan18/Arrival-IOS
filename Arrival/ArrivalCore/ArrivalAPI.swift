@@ -236,7 +236,7 @@ public class ArrivalAPI {
         
         //return  nil
     }
-    public func trips(from: Station, to: Station, timeConfig: TripTime) async throws -> ([Trip]?) {
+    public func trips(from: Station, to: Station, timeConfig: TripTime) async throws -> ([Trip]) {
         
         guard self.authorized else {
             throw APIError.notAuthorized
@@ -258,6 +258,7 @@ public class ArrivalAPI {
         switch response.result {
         case .success(let value):
             let result = JSON(value)
+            print(result)
             let tripsJSON = result["trips"]
             if (tripsJSON.arrayValue.count > 0) {
                 var resultTrips: [Trip] = []
@@ -290,7 +291,7 @@ public class ArrivalAPI {
                 })
                 return resultTrips
             } else {
-                return nil
+                return []
             }
         case .failure(let error):
             print(error)

@@ -76,7 +76,7 @@ public struct StationSearchView: View {
                     return
                 }
             }) {
-                Text("Cancel")
+                Text("Cancel").foregroundColor(Color("TextColor"))
             }).navigationBarTitleDisplayMode(.large)
         }.searchable(text: self.$searchText, placement: .navigationBarDrawer(displayMode: .always))
     }

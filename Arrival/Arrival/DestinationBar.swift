@@ -29,7 +29,13 @@ public struct DestinationBar: View {
                     }
                     Spacer()
                 }
-            }.frame(width: navItemWidth)
+            }.frame(width: navItemWidth).sheet(isPresented: .init(get: {
+                return self.appState.fromStationChooser
+            }, set: {
+                self.appState.fromStationChooser = $0
+            })) {
+                StationSearchView(appState: self.appState, mode: .from)
+            }
             Spacer()
             Button(action: {
                 self.appState.timeChooser = true
@@ -45,11 +51,11 @@ public struct DestinationBar: View {
                     }
                 }
             }.disabled(self.appState.fromStation == nil).opacity(self.appState.fromStation == nil && self.appState.locationAuthState == .notAuthorized ? 0.8 : 1).sheet(isPresented: .init(get: {
-                return self.appState.fromStationChooser
+                return self.appState.timeChooser
             }, set: {
-                self.appState.fromStationChooser = $0
+                self.appState.timeChooser = $0
             })) {
-                StationSearchView(appState: self.appState, mode: .from)
+                TimeChooserView(appState: self.appState)
             }
             Spacer()
             Button(action: {

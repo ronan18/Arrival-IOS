@@ -26,6 +26,8 @@
 		3475A94C26DAC7F000DFDD9E /* RunMode.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3475A94B26DAC7F000DFDD9E /* RunMode.model.swift */; };
 		3475A94E26DACA1E00DFDD9E /* AuthorizeLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3475A94D26DACA1E00DFDD9E /* AuthorizeLocationView.swift */; };
 		3475A95026DACE4700DFDD9E /* ArrivalCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */; };
+		3483604A26DBF6F6003EEFB9 /* TripTimeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3483604926DBF6F6003EEFB9 /* TripTimeOption.swift */; };
+		3483604C26DC26BD003EEFB9 /* TimeChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3483604B26DC26BD003EEFB9 /* TimeChooserView.swift */; };
 		34F61C2F26D5D8A200B35074 /* APIErrors.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F61C2E26D5D8A200B35074 /* APIErrors.model.swift */; };
 		34F61C3226D5DE9300B35074 /* LocationData.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F61C3126D5DE9300B35074 /* LocationData.model.swift */; };
 		34F61C3826D5E5BC00B35074 /* Disk in Frameworks */ = {isa = PBXBuildFile; productRef = 34F61C3726D5E5BC00B35074 /* Disk */; };
@@ -119,6 +121,8 @@
 		343DA3A326D08CF5008F6A0E /* ArrivalCore.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = ArrivalCore.docc; sourceTree = "<group>"; };
 		3475A94B26DAC7F000DFDD9E /* RunMode.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunMode.model.swift; sourceTree = "<group>"; };
 		3475A94D26DACA1E00DFDD9E /* AuthorizeLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizeLocationView.swift; sourceTree = "<group>"; };
+		3483604926DBF6F6003EEFB9 /* TripTimeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTimeOption.swift; sourceTree = "<group>"; };
+		3483604B26DC26BD003EEFB9 /* TimeChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeChooserView.swift; sourceTree = "<group>"; };
 		34F61C2E26D5D8A200B35074 /* APIErrors.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIErrors.model.swift; sourceTree = "<group>"; };
 		34F61C3026D5DDF800B35074 /* Arrival.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Arrival.entitlements; sourceTree = "<group>"; };
 		34F61C3126D5DE9300B35074 /* LocationData.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationData.model.swift; sourceTree = "<group>"; };
@@ -221,6 +225,7 @@
 				C5CC58B826D587060025BAC7 /* OnboardingView.swift */,
 				C54A297326D2165200E8F1D7 /* DestinationBar.swift */,
 				C54A297526D2171900E8F1D7 /* StationCard.swift */,
+				3483604B26DC26BD003EEFB9 /* TimeChooserView.swift */,
 				343DA37D26D089E3008F6A0E /* Assets.xcassets */,
 				343DA37F26D089E3008F6A0E /* Preview Content */,
 			);
@@ -250,6 +255,7 @@
 				C5CC58B226D582430025BAC7 /* OnboardingIntro.swift */,
 				C5CC58B626D585360025BAC7 /* OnboardingScreen.swift */,
 				C5CC58B426D583290025BAC7 /* LargeButton.swift */,
+				3483604926DBF6F6003EEFB9 /* TripTimeOption.swift */,
 			);
 			path = ArrivalUI;
 			sourceTree = "<group>";
@@ -456,6 +462,7 @@
 				C5CC58B126D581A70025BAC7 /* AppState.swift in Sources */,
 				C54A298526D2AB6800E8F1D7 /* TripDetailsView.swift in Sources */,
 				34FB5AA026DB35FA00964BF9 /* ErrorDeterminingLocation.swift in Sources */,
+				3483604C26DC26BD003EEFB9 /* TimeChooserView.swift in Sources */,
 				343DA37A26D089DF008F6A0E /* ArrivalApp.swift in Sources */,
 				C5CC58B926D587060025BAC7 /* OnboardingView.swift in Sources */,
 				C54A298026D2A6CB00E8F1D7 /* HomeScreen.swift in Sources */,
@@ -470,6 +477,7 @@
 			files = (
 				341BB6AB26D1ED080044190A /* TrainCard.swift in Sources */,
 				C54A297226D20E4C00E8F1D7 /* HeaderAlert.swift in Sources */,
+				3483604A26DBF6F6003EEFB9 /* TripTimeOption.swift in Sources */,
 				C54A297C26D2A46A00E8F1D7 /* TripTransferText.swift in Sources */,
 				C5CC58B326D582430025BAC7 /* OnboardingIntro.swift in Sources */,
 				341BB6AD26D1F14A0044190A /* TimeDisplayText.swift in Sources */,

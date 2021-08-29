@@ -9,7 +9,7 @@ import Foundation
 import CoreLocation
 import Intents
 import CoreML
-
+import TabularData
 public class StationService {
     public init() {}
     public func fillOutStations(forTrip: Trip, stations: StationStorage) -> Trip {
