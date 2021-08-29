@@ -9,9 +9,6 @@ import Foundation
 import CoreLocation
 import Intents
 import CoreML
-#if os(iOS)
-//import CreateML
-#endif
 
 public class StationService {
     public init() {}
