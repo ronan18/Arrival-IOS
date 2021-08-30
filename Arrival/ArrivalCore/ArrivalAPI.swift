@@ -249,9 +249,9 @@ public class ArrivalAPI {
             "Authorization": auth!,
             "Accept": "application/json"
         ]
-        
+        print("API REQUEST: \(apiURL)/api/v5/routes/\(from.abbr)/\(to.abbr)", ["type": timeConfig.type.rawValue, "time": timeConfig.iso], headers)
         let response = await withCheckedContinuation { cont in
-            AF.request("\(apiURL)/api/v4/routes/\(from.abbr)/\(to.abbr)", method: .post, parameters: ["type": timeConfig.type.rawValue, "time": timeConfig.iso], headers: headers).responseJSON{ response in
+            AF.request("\(apiURL)/api/v5/routes/\(from.abbr)/\(to.abbr)", method: .post, parameters: ["type": timeConfig.type.rawValue, "time": timeConfig.iso], headers: headers).responseJSON{ response in
                 cont.resume(returning: response)
             }
         }

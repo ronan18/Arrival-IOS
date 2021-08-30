@@ -36,7 +36,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     @Published var directionFilter: Int = 1
  
-    
+    @Published var trips: [Trip] = []
     @Published var trains: [Train] = []
     @Published var northTrains: [Train] = []
     @Published var southTrains: [Train] = []
@@ -325,22 +325,19 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             print("CYCLE: no from station")
             return
         }
-        switch self.timeConfig.type {
-        case .leave, .arrive:
-           
-            guard let toStation = self.toStation else {
-                print("No to station")
-                return
-            }
-            print("get trips from \(fromStation.name) to \(toStation.name) at \(self.timeConfig)")
-            do {
-            let trips = try await self.api.trips(from: fromStation, to: toStation, timeConfig: self.timeConfig)
-                print("Got \(trips.count) trips from \(fromStation.name) to \(toStation.name) at \(self.timeConfig)")
-            } catch {
-                //TODO: Handel errors from here
-            }
-            return
-        case .now:
+        if let toStation = self.toStation {
+            
+              print("get trips from \(fromStation.name) to \(toStation.name) at \(self.timeConfig)")
+              do {
+              let trips = try await self.api.trips(from: fromStation, to: toStation, timeConfig: self.timeConfig)
+                  print("Got \(trips.count) trips from \(fromStation.name) to \(toStation.name) at \(self.timeConfig)")
+                  self.trips = trips
+                  self.trainsLoading = false
+              } catch {
+                  //TODO: Handel errors from here
+              }
+        } else {
+            print("No to station")
             do {
                 print("get trains from \(self.fromStation?.name ?? "none")")
                 let (trains, north, south) = try await self.api.trainsFrom(from: fromStation, timeConfig: TripTime(type: .now))
@@ -367,7 +364,6 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
                 print("ERROR getting trains", error)
                 //TODO: catch this
             }
-            return
         }
        
     }

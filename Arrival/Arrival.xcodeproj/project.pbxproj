@@ -23,6 +23,7 @@
 		343DA3A526D08CF5008F6A0E /* ArrivalCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 343DA3A226D08CF5008F6A0E /* ArrivalCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		343DA3A826D08CF5008F6A0E /* ArrivalCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */; };
 		343DA3A926D08CF5008F6A0E /* ArrivalCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3469C6E026DC41500036C5D5 /* HomeTrips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3469C6DF26DC41500036C5D5 /* HomeTrips.swift */; };
 		3475A94C26DAC7F000DFDD9E /* RunMode.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3475A94B26DAC7F000DFDD9E /* RunMode.model.swift */; };
 		3475A94E26DACA1E00DFDD9E /* AuthorizeLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3475A94D26DACA1E00DFDD9E /* AuthorizeLocationView.swift */; };
 		3475A95026DACE4700DFDD9E /* ArrivalCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */; };
@@ -119,6 +120,7 @@
 		343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ArrivalCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		343DA3A226D08CF5008F6A0E /* ArrivalCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ArrivalCore.h; sourceTree = "<group>"; };
 		343DA3A326D08CF5008F6A0E /* ArrivalCore.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = ArrivalCore.docc; sourceTree = "<group>"; };
+		3469C6DF26DC41500036C5D5 /* HomeTrips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTrips.swift; sourceTree = "<group>"; };
 		3475A94B26DAC7F000DFDD9E /* RunMode.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunMode.model.swift; sourceTree = "<group>"; };
 		3475A94D26DACA1E00DFDD9E /* AuthorizeLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizeLocationView.swift; sourceTree = "<group>"; };
 		3483604926DBF6F6003EEFB9 /* TripTimeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTimeOption.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 				343DA37926D089DF008F6A0E /* ArrivalApp.swift */,
 				343DA37B26D089DF008F6A0E /* ContentView.swift */,
 				C54A297F26D2A6CB00E8F1D7 /* HomeScreen.swift */,
+				3469C6DF26DC41500036C5D5 /* HomeTrips.swift */,
 				C54A298126D2AA7A00E8F1D7 /* HomeTrains.swift */,
 				3475A94D26DACA1E00DFDD9E /* AuthorizeLocationView.swift */,
 				34FB5A9F26DB35FA00964BF9 /* ErrorDeterminingLocation.swift */,
@@ -462,6 +465,7 @@
 				C5CC58B126D581A70025BAC7 /* AppState.swift in Sources */,
 				C54A298526D2AB6800E8F1D7 /* TripDetailsView.swift in Sources */,
 				34FB5AA026DB35FA00964BF9 /* ErrorDeterminingLocation.swift in Sources */,
+				3469C6E026DC41500036C5D5 /* HomeTrips.swift in Sources */,
 				3483604C26DC26BD003EEFB9 /* TimeChooserView.swift in Sources */,
 				343DA37A26D089DF008F6A0E /* ArrivalApp.swift in Sources */,
 				C5CC58B926D587060025BAC7 /* OnboardingView.swift in Sources */,

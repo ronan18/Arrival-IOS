@@ -38,6 +38,7 @@ public struct TripLeg: Identifiable {
     public var stopCount: Int
     public var enrouteTime: TimeInterval
     public var finalLeg: Bool
+    public var trainData: Train
     public init(order: Int, origin: String, destination: String, originTime: Date, destinationTime: Date, route: Route, trainHeadSTN: String, finalLeg: Bool = false) {
         self.order = order
         self.origin = origin
@@ -57,6 +58,7 @@ public struct TripLeg: Identifiable {
         self.enrouteTime = destinationTime.timeIntervalSince(originTime)
         self.trainHeadSTN = trainHeadSTN
         self.finalLeg = finalLeg
+        self.trainData = Train(departureStation: Station(id: trainHeadSTN, name: trainHeadSTN, abbr: trainHeadSTN), destinationStation: Station(id: destination, name: destination, abbr: destination), etd: originTime, platform: 0, direction: route.direction, delay: 0, bikeFlag: 0, color: route.color, cars: 0)
         
     }
 }

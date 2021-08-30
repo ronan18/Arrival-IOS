@@ -21,7 +21,12 @@ struct HomeScreen: View {
             if (self.appState.locationAuthState == .notAuthorized && self.appState.fromStation == nil) {
                 AuthorizeLocationView(appState: appState)
             } else {
-            HomeTrains(appState: appState).edgesIgnoringSafeArea(.bottom)
+                if (self.appState.toStation != nil) {
+                    HomeTrips(appState: appState).edgesIgnoringSafeArea(.bottom)
+                } else {
+                    HomeTrains(appState: appState).edgesIgnoringSafeArea(.bottom)
+                }
+           
             }
             Spacer()
         }.edgesIgnoringSafeArea(.bottom)

@@ -42,9 +42,7 @@ struct HomeTrains: View {
             } else {
             if (filteredTrains.count > 0) {
             List() {
-                if (self.appState.directionFilter == 1) {
-                    
-                }
+            
                 ForEach(filteredTrains) {train in
                     TrainCard(train: train, timeDisplayMode: self.$timeDisplayMode).listRowSeparator(.hidden).listRowInsets(EdgeInsets()).padding(.vertical, 5)
                 }.edgesIgnoringSafeArea(.bottom)
