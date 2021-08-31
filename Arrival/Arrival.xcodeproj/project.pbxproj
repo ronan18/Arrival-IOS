@@ -48,7 +48,6 @@
 		C58B60D626D9990D00FCB47B /* MockupData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58B60D526D9990D00FCB47B /* MockupData.swift */; };
 		C5CC589F26D3F5A30025BAC7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = C5CC589E26D3F5A30025BAC7 /* Alamofire */; };
 		C5CC58A226D408420025BAC7 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = C5CC58A126D408420025BAC7 /* SwiftyJSON */; };
-		C5CC58A526D408E10025BAC7 /* AlamofireNetworkActivityIndicator in Frameworks */ = {isa = PBXBuildFile; productRef = C5CC58A426D408E10025BAC7 /* AlamofireNetworkActivityIndicator */; };
 		C5CC58A726D40E570025BAC7 /* Station.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CC58A626D40E570025BAC7 /* Station.model.swift */; };
 		C5CC58A926D412720025BAC7 /* Train.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CC58A826D412720025BAC7 /* Train.model.swift */; };
 		C5CC58AB26D412BC0025BAC7 /* Trip.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CC58AA26D412BC0025BAC7 /* Trip.model.swift */; };
@@ -178,7 +177,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C5CC58A526D408E10025BAC7 /* AlamofireNetworkActivityIndicator in Frameworks */,
 				C5CC58A226D408420025BAC7 /* SwiftyJSON in Frameworks */,
 				C5CC589F26D3F5A30025BAC7 /* Alamofire in Frameworks */,
 				34F61C3826D5E5BC00B35074 /* Disk in Frameworks */,
@@ -373,7 +371,6 @@
 			packageProductDependencies = (
 				C5CC589E26D3F5A30025BAC7 /* Alamofire */,
 				C5CC58A126D408420025BAC7 /* SwiftyJSON */,
-				C5CC58A426D408E10025BAC7 /* AlamofireNetworkActivityIndicator */,
 				34F61C3726D5E5BC00B35074 /* Disk */,
 			);
 			productName = ArrivalCore;
@@ -790,6 +787,7 @@
 		343DA3AB26D08CF5008F6A0E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -820,6 +818,7 @@
 		343DA3AC26D08CF5008F6A0E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -938,11 +937,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C5CC58A026D408420025BAC7 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
 			productName = SwiftyJSON;
-		};
-		C5CC58A426D408E10025BAC7 /* AlamofireNetworkActivityIndicator */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = C5CC58A326D408E10025BAC7 /* XCRemoteSwiftPackageReference "AlamofireNetworkActivityIndicator" */;
-			productName = AlamofireNetworkActivityIndicator;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
