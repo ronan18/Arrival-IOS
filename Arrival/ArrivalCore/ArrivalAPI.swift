@@ -258,7 +258,7 @@ public class ArrivalAPI {
         switch response.result {
         case .success(let value):
             let result = JSON(value)
-            print(result)
+            //print(result)
             let tripsJSON = result["trips"]
             if (tripsJSON.arrayValue.count > 0) {
                 var resultTrips: [Trip] = []
@@ -283,12 +283,18 @@ public class ArrivalAPI {
                     })
                     legs[legs.count - 1].finalLeg = true
                     let originTime = convertBartDate(time: trip["@origTimeMin"].stringValue, date: trip["@origTimeDate"].stringValue)!
-                    print("API: origin time converted", originTime,trip["@origTimeMin"].stringValue )
+                   // print("API: origin time converted", originTime,trip["@origTimeMin"].stringValue )
                     let destTime = convertBartDate(time: trip["@destTimeMin"].stringValue, date: trip["@destTimeDate"].stringValue)!
-                    
+                    //print("API: dest time converted", destTime,trip["@destTimeMin"].stringValue )
+
                     let resultTrip = Trip(id: trip["tripId"].stringValue, origin: Station(id: trip["@origin"].stringValue, name: trip["@origin"].stringValue, abbr: trip["@origin"].stringValue), destination: Station(id: trip["@destination"].stringValue, name: trip["@destination"].stringValue, abbr: trip["@destination"].stringValue), originTime: originTime , destinationTime: destTime, tripTime: destTime.timeIntervalSince(originTime), legs: legs)
                     resultTrips.append(resultTrip)
                 })
+                if (timeConfig.type == .arrive) {
+                resultTrips.sort {a,b in
+                    return a.originTime > b.originTime
+                }
+                }
                 return resultTrips
             } else {
                 return []

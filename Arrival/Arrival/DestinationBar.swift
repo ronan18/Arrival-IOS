@@ -6,10 +6,11 @@
 //
 
 import SwiftUI
+import ArrivalUI
 
 public struct DestinationBar: View {
     @ObservedObject var appState: AppState
-    let navItemWidth: Double = 150
+    let navItemWidth: Double = 125
     public var body: some View {
         
         HStack {
@@ -41,11 +42,16 @@ public struct DestinationBar: View {
                 self.appState.timeChooser = true
             }) {
                 VStack(alignment:.center) {
-                    Text("leave").font(.caption)
+                 
+                    Text(self.appState.timeConfig.type == .now || self.appState.timeConfig.type == .leave ? "Leave" : "Arrive" ).font(.caption)
                     if (self.appState.locationAuthState == .notAuthorized) {
                         Text("Now").font(.headline).lineLimit(1)
                     } else if (self.appState.fromStation != nil) {
-                        Text("Now").font(.headline)
+                        if (self.appState.timeConfig.type == .now) {
+                            Text("Now").font(.headline)
+                        } else {
+                        TimeDisplayText(self.appState.timeConfig.time, mode: .etd)
+                        }
                     } else {
                         Text("Now").font(.headline).redacted(reason: .placeholder)
                     }

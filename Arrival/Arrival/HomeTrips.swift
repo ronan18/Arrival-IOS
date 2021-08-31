@@ -10,7 +10,7 @@ import ArrivalUI
 import ArrivalCore
 struct HomeTrips: View {
     @ObservedObject var appState: AppState
-    @State var timeDisplayMode = TimeDisplayType.timeTill
+    @State var timeDisplayMode = TimeDisplayType.etd
     var body: some View {
         VStack {
             if (self.appState.trainsLoading) {

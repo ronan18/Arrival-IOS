@@ -29,11 +29,12 @@ public struct TrainCard: View {
                     Text(self.train.destinationStation.name).font(.headline).lineLimit(1)
                 }
                 Spacer()
+                if (self.train.cars > 0) {
                 VStack(alignment:.trailing) {
                     Text("cars").font(.caption)
                     Text("\(self.train.cars)").font(.headline)
                 }
-                
+                }
                 VStack(alignment:.trailing) {
                     Text("departs").font(.caption)
                     TimeDisplayText(self.train.etd,mode: self.timeDisplayMode)
@@ -50,7 +51,7 @@ public struct TrainCard: View {
                 if (self.eta != nil) {
                 VStack(alignment:.trailing) {
                     Text("arrives").font(.caption)
-                    TimeDisplayText(self.train.etd,mode: .etd)
+                    TimeDisplayText(self.eta!,mode: .etd)
                 }
                 }
             }.padding(.leading, 20).padding([.vertical,.trailing]).foregroundColor(Color("DarkText"))

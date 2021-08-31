@@ -22,6 +22,7 @@ public struct Trip: Identifiable {
         self.destinationTime = destinationTime
         self.tripTime = tripTime
         self.legs = legs
+       // print("\(originTime) \(destinationTime)")
     }
     
 }
@@ -58,7 +59,7 @@ public struct TripLeg: Identifiable {
         self.enrouteTime = destinationTime.timeIntervalSince(originTime)
         self.trainHeadSTN = trainHeadSTN
         self.finalLeg = finalLeg
-        self.trainData = Train(departureStation: Station(id: trainHeadSTN, name: trainHeadSTN, abbr: trainHeadSTN), destinationStation: Station(id: destination, name: destination, abbr: destination), etd: originTime, platform: 0, direction: route.direction, delay: 0, bikeFlag: 0, color: route.color, cars: 0)
+        self.trainData = Train(departureStation: Station(id: trainHeadSTN, name: trainHeadSTN, abbr: trainHeadSTN), destinationStation: Station(id: trainHeadSTN, name: trainHeadSTN, abbr: trainHeadSTN), etd: originTime, platform: 0, direction: route.direction, delay: 0, bikeFlag: 0, color: route.color, cars: 0)
         
     }
 }
