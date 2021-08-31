@@ -29,7 +29,9 @@ struct HomeScreen: View {
            
             }
             Spacer()
-        }.edgesIgnoringSafeArea(.bottom)
+        }.edgesIgnoringSafeArea(.bottom).task {
+            await self.appState.cycle()
+        }
     }
 }
 
