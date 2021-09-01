@@ -29,6 +29,7 @@
 		3475A95026DACE4700DFDD9E /* ArrivalCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */; };
 		3483604A26DBF6F6003EEFB9 /* TripTimeOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3483604926DBF6F6003EEFB9 /* TripTimeOption.swift */; };
 		3483604C26DC26BD003EEFB9 /* TimeChooserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3483604B26DC26BD003EEFB9 /* TimeChooserView.swift */; };
+		34CAB3FD26DF21A300CE2374 /* AI.service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CAB3FC26DF21A300CE2374 /* AI.service.swift */; };
 		34F61C2F26D5D8A200B35074 /* APIErrors.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F61C2E26D5D8A200B35074 /* APIErrors.model.swift */; };
 		34F61C3226D5DE9300B35074 /* LocationData.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34F61C3126D5DE9300B35074 /* LocationData.model.swift */; };
 		34F61C3826D5E5BC00B35074 /* Disk in Frameworks */ = {isa = PBXBuildFile; productRef = 34F61C3726D5E5BC00B35074 /* Disk */; };
@@ -124,6 +125,7 @@
 		3475A94D26DACA1E00DFDD9E /* AuthorizeLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizeLocationView.swift; sourceTree = "<group>"; };
 		3483604926DBF6F6003EEFB9 /* TripTimeOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTimeOption.swift; sourceTree = "<group>"; };
 		3483604B26DC26BD003EEFB9 /* TimeChooserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeChooserView.swift; sourceTree = "<group>"; };
+		34CAB3FC26DF21A300CE2374 /* AI.service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI.service.swift; sourceTree = "<group>"; };
 		34F61C2E26D5D8A200B35074 /* APIErrors.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIErrors.model.swift; sourceTree = "<group>"; };
 		34F61C3026D5DDF800B35074 /* Arrival.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Arrival.entitlements; sourceTree = "<group>"; };
 		34F61C3126D5DE9300B35074 /* LocationData.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationData.model.swift; sourceTree = "<group>"; };
@@ -280,6 +282,7 @@
 				C58B60D526D9990D00FCB47B /* MockupData.swift */,
 				3475A94B26DAC7F000DFDD9E /* RunMode.model.swift */,
 				34FB5A9A26DAEF0E00964BF9 /* Maps.service.swift */,
+				34CAB3FC26DF21A300CE2374 /* AI.service.swift */,
 			);
 			path = ArrivalCore;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 				C5CC58A726D40E570025BAC7 /* Station.model.swift in Sources */,
 				34F61C3A26D5E5E500B35074 /* Disk.service.swift in Sources */,
 				34FB5A9B26DAEF0F00964BF9 /* Maps.service.swift in Sources */,
+				34CAB3FD26DF21A300CE2374 /* AI.service.swift in Sources */,
 				C5CC58A926D412720025BAC7 /* Train.model.swift in Sources */,
 				34F61C3226D5DE9300B35074 /* LocationData.model.swift in Sources */,
 				C5CC58BD26D6B16C0025BAC7 /* Station.service.swift in Sources */,
@@ -681,6 +685,7 @@
 				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -718,6 +723,7 @@
 				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
