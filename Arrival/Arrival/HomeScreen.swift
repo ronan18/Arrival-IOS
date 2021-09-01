@@ -10,6 +10,7 @@ import Foundation
 import Combine
 import ArrivalUI
 import ArrivalCore
+
 struct HomeScreen: View {
     @ObservedObject var appState: AppState
 
