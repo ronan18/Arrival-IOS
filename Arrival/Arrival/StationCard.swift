@@ -33,11 +33,13 @@ public struct StationCard: View {
                         Text("\(String(distance!))mi").bold()
                     }
                 
-                }else if (self.loadingDistance) {
+                } else if (self.loadingDistance) {
                     VStack(alignment:.trailing) {
                         Text("walking distance").font(.caption).redacted(reason: .placeholder)
                         TimeDisplayText(Date(), mode: .timeTill).redacted(reason: .placeholder)
                     }
+                } else {
+                    Text("no distnace")
                 }
                 
             }.padding(.leading, 20).padding([.vertical,.trailing]).foregroundColor(Color("DarkText"))
@@ -56,8 +58,10 @@ public struct StationCard: View {
                     let distance = await self.appState.mapService.distanceTo(self.station)
                     self.distance = distance
                     self.loadingDistance = false
+                    
                 }
                 self.loadingDistance = false
+               // print(distance, walkingTime, loadingDistance, "distance")
             }
         }
     }
