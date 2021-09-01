@@ -19,21 +19,13 @@ public class MapService {
         guard station.firstFive else {
             return (nil, "nil")
         }
-        guard let stationLat = station.lat else {
+        guard station.lat != nil else {
             return (nil, "nil")
         }
-        guard let stationLong = station.long else {
+        guard station.long != nil else {
             return (nil, "nil")
         }
-        var currentLocation: MKMapItem
-        if let location = self.location {
-            currentLocation =  MKMapItem.init(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)))
-            //print("using arrival location info")
-        } else {
-            currentLocation = MKMapItem.forCurrentLocation()
-         //   print("using system location info")
-        }
-        let stationLocation = MKMapItem.init(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: stationLat, longitude: stationLong)))
+     
         let distance = await self.distanceTo(station) ?? 100
         if (distance <= 1.2) {
             return await (self.walkingTimeTo(station), "walking")

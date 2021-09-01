@@ -51,11 +51,13 @@ public struct StationCard: View {
                 if let time = time {
                     self.walkingTime = time
                     self.timeLabel = text
+                    self.loadingDistance = false
                 } else {
                     let distance = await self.appState.mapService.distanceTo(self.station)
                     self.distance = distance
                     self.loadingDistance = false
                 }
+                self.loadingDistance = false
             }
         }
     }
