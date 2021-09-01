@@ -12,6 +12,7 @@ public struct StationCard: View {
     @ObservedObject var appState: AppState
     let station: Station
     @State var walkingTime: Date? = nil
+    @State var timeLabel: String = "walking"
     @State var distance: Double? = nil
     @State var loadingDistance = true
   
@@ -23,7 +24,7 @@ public struct StationCard: View {
                 Spacer()
                 if (self.walkingTime != nil) {
                     VStack(alignment:.trailing) {
-                        Text("walking time").font(.caption)
+                        Text("\(self.timeLabel) time").font(.caption)
                         TimeDisplayText(self.walkingTime!, mode: .timeTill)
                     }
                 } else  if (self.distance != nil) {
@@ -46,9 +47,10 @@ public struct StationCard: View {
             if( self.loadingDistance) {
                 let number = Double.random(in: 0..<1)
                 await Task.sleep(UInt64(number) * 1_000_000_000)
-                let time = await self.appState.mapService.walkingTimeTo(self.station)
+                let (time, text) = await self.appState.mapService.timeTo(self.station)
                 if let time = time {
                     self.walkingTime = time
+                    self.timeLabel = text
                 } else {
                     let distance = await self.appState.mapService.distanceTo(self.station)
                     self.distance = distance

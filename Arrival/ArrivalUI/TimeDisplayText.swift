@@ -55,6 +55,32 @@ public struct TimeDisplayText: View {
         }
     }
 }
+public struct TimeIntervalDisplayText: View {
+    let font: Font
+    let timeText: String
+    let timeUnit: String
+    public init(_ interval: TimeInterval,  font: Font = .headline) {
+        self.font = font
+    
+    
+           
+            let formatter = DateComponentsFormatter()
+            formatter.allowedUnits = [.minute]
+            formatter.unitsStyle = .abbreviated
+            formatter.maximumUnitCount = 1
+            var time = formatter.string(from: interval)!
+           time = String(time.dropLast())
+            self.timeText = time
+            self.timeUnit = "min"
+     
+    }
+    public var body: some View {
+        HStack(alignment: .lastTextBaseline, spacing: 0) {
+            Text(timeText).font(font)
+            Text(timeUnit).font(.caption)
+        }
+    }
+}
 
 struct TimeDisplayText_Previews: PreviewProvider {
     static var previews: some View {

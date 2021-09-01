@@ -11,6 +11,7 @@ import ArrivalCore
 struct HomeTrips: View {
     @ObservedObject var appState: AppState
     @State var timeDisplayMode = TimeDisplayType.etd
+    
     var body: some View {
         VStack {
             if (self.appState.trainsLoading) {
@@ -26,7 +27,12 @@ struct HomeTrips: View {
             List() {
                
                 ForEach(self.appState.trips) {trip in
-                    TrainCard(train: trip.legs.first!.trainData, timeDisplayMode: self.$timeDisplayMode, eta: trip.destinationTime).listRowSeparator(.hidden).listRowInsets(EdgeInsets()).padding(.vertical, 5)
+                    Button(action: {
+                        self.appState.tripDisplay = trip
+                    }) {
+                        TrainCard(train: trip.legs.first!.trainData, timeDisplayMode: self.$timeDisplayMode, eta: trip.destinationTime)
+                    }.listRowSeparator(.hidden).listRowInsets(EdgeInsets()).padding(.vertical, 5)
+                   
                 }.edgesIgnoringSafeArea(.bottom)
                 
             }.listStyle(.plain).refreshable {
@@ -42,7 +48,19 @@ struct HomeTrips: View {
                 }
             }
             }
-        }.padding().edgesIgnoringSafeArea(.bottom)
+        }.padding().edgesIgnoringSafeArea(.bottom).sheet(isPresented: .init(get: {
+            return self.appState.tripDisplay != nil
+        }, set: {
+            switch $0 {
+            case true:
+                return
+            case false:
+                 self.appState.tripDisplay = nil
+                return
+            }
+        })) {
+            TripDetailsView(appState: appState)
+        }
     }
 }
 

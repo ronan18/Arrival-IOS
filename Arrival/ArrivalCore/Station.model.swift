@@ -12,6 +12,7 @@ public struct Station: Identifiable, Codable, Hashable {
     public var abbr: String
     public var lat: Double? = nil
     public var long: Double? = nil
+    public var firstFive = false
     public init(id: String, name: String,abbr: String, lat: Double? = nil,long: Double? = nil) {
         self.id = id
         self.name = name

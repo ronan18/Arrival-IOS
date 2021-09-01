@@ -8,19 +8,20 @@
 import SwiftUI
 import ArrivalUI
 struct TripDetailsView: View {
+    @ObservedObject var appState: AppState
     var body: some View {
         NavigationView() {
             VStack(spacing: 0) {
-               TripBar()
+                TripBar(trip: self.appState.tripDisplay!)
                 Divider()
                 List() {
                     TripTransferText().listRowSeparator(.hidden)
-                    TripCard(color: .yellow).listRowSeparator(.hidden)
-                    TripTransferText().listRowSeparator(.hidden)
-                    TripCard(color: .yellow).listRowSeparator(.hidden)
-                    TripTransferText().listRowSeparator(.hidden)
-                    TripCard(color: .yellow).listRowSeparator(.hidden)
-                    TripTransferText().listRowSeparator(.hidden)
+                    ForEach(self.appState.tripDisplay!.legs) {leg in
+                        TripCard(leg).listRowSeparator(.hidden)
+                        TripTransferText().listRowSeparator(.hidden)
+                    }
+                   
+             
                 }.listStyle(.plain)
                 Spacer()
                 
@@ -39,6 +40,6 @@ struct TripDetailsView: View {
 
 struct TripDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        TripDetailsView()
+        TripDetailsView(appState: AppState())
     }
 }

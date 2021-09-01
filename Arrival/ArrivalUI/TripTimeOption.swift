@@ -29,7 +29,7 @@ public struct TripTimeOption: View {
    public var body: some View {
        Button(action: {choose(self.tripTime)}) {
         
-            TimeDisplayText(self.tripTime.time, mode: self.timeMode).foregroundColor(Color("DarkText"))
+            TimeDisplayText(self.tripTime.time, mode: self.timeMode).foregroundColor(Color("TextColor"))
            
         }.frame(width: size, height: size).padding().cornerRadius(10).overlay(
             RoundedRectangle(cornerRadius: CGFloat(10.0)).stroke(Color("CardBorder"), lineWidth:3)

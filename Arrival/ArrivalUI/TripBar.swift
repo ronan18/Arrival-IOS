@@ -6,25 +6,28 @@
 //
 
 import SwiftUI
-
+import ArrivalCore
 public struct TripBar: View {
-    public init() {}
+    var trip: Trip
+    public init(trip: Trip) {
+        self.trip = trip
+    }
     public var body: some View {
         
         HStack {
             VStack(alignment: .leading) {
                 Text("Departs").font(.caption)
-                TimeDisplayText(Date(), mode: .etd)
+                TimeDisplayText(self.trip.originTime, mode: .etd)
             }
             Spacer()
             VStack(alignment: .center) {
                 Text("Travel").font(.caption)
-                TimeDisplayText(Date(), mode: .etd)
+                TimeIntervalDisplayText(self.trip.tripTime)
             }
             Spacer()
             VStack(alignment: .trailing) {
                 Text("Arrives").font(.caption)
-                TimeDisplayText(Date(), mode: .etd)
+                TimeDisplayText(self.trip.destinationTime, mode: .etd)
             }
            
         }.padding()
@@ -33,6 +36,6 @@ public struct TripBar: View {
 
 struct TripBar_Previews: PreviewProvider {
     static var previews: some View {
-        TripBar().previewLayout(.sizeThatFits)
+        TripBar(trip: MockUpData().trip).previewLayout(.sizeThatFits)
     }
 }

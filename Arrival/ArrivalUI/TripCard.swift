@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import ArrivalCore
 
 public struct TripCard: View {
-    let color: Color
+    let leg: TripLeg
     @State private var isStopsExpanded: Bool = false
-    public init(color: Color) {
-        self.color = color
+    public init(_ leg: TripLeg) {
+        self.leg = leg
     }
     public var body: some View {
         HStack {
@@ -19,51 +20,46 @@ public struct TripCard: View {
             VStack {
                 HStack(alignment: .center) {
                     VStack(alignment: .leading) {
-                        Text("Boarding Station").font(.headline).lineLimit(1)
+                        Text(self.leg.origin).font(.headline).lineLimit(1).foregroundColor(Color("DarkText"))
                         HStack(alignment: .center, spacing: 0) {
-                            Image(systemName: "arrow.right.circle.fill").foregroundColor(Color("TextColor"))
-                            Text("Train Direction").lineLimit(1)
+                            Image(systemName: "arrow.right.circle.fill").foregroundColor(Color("DarkText"))
+                            Text("Train Direction").lineLimit(1).foregroundColor(Color("DarkText"))
                         }.font(.subheadline)
                         
                     }
                     Spacer()
-                    TimeDisplayText(Date(), mode: .etd, font: .body)
+                    TimeDisplayText(self.leg.originTime, mode: .etd, font: .body)
                 }.padding(.bottom)
                 HStack(alignment: .firstTextBaseline) {
-                    /*DisclosureGroup("11 stops before transfer...", isExpanded: self.$isStopsExpanded) {
-                        HStack {
-                            Text("Station name").font(.caption)
-                            Spacer()
-                        }
-                    }.font(.footnote).foregroundColor(Color("TextColor")).accentColor(Color("TextColor"))*/
+                   
                     VStack(alignment: .leading) {
                     Button(action: {self.isStopsExpanded.toggle()}) {
                         HStack(spacing: 0) {
                             Image(systemName: self.isStopsExpanded ? "chevron.down" :"chevron.right").padding(.trailing, self.isStopsExpanded ? 5 : 10)
                             Text("11 stops before transfer...")
-                        }.font(.footnote).foregroundColor(Color("TextColor")).accentColor(Color("TextColor"))
+                        }.font(.footnote).foregroundColor(Color("DarkText")).accentColor(Color("DarkText"))
                     }
                     if (self.isStopsExpanded) {
                         HStack {
-                            Text("Station name").font(.caption)
+                            Text("Station name").font(.caption).foregroundColor(Color("DarkText"))
                             Spacer()
                         }
                     }
                     }
                     Spacer()
-                    TimeDisplayText(Date(), mode: .etd, font: .footnote).padding(.leading)
+                    TimeDisplayText(Date(), mode: .etd, font: .footnote).padding(.leading).foregroundColor(Color("DarkText"))
                 }.padding(.bottom)
                 HStack(alignment: .center) {
                     VStack(alignment: .leading) {
-                        Text("Destination Station").font(.headline).lineLimit(1)
+                        Text(self.leg.destination).font(.headline).lineLimit(1).foregroundColor(Color("DarkText"))
                     
                         
                     }
                     Spacer()
-                    TimeDisplayText(Date(), mode: .etd, font: .body)
+                    TimeDisplayText(self.leg.destinationTime, mode: .etd, font: .body)
                 }
             }.padding(.leading, 20).padding([.vertical,.trailing])
-        }.cornerRadius(10).background(Color("CardBG")).overlay(HStack{Rectangle().frame(width: 10).foregroundColor(self.color); Spacer()}).overlay(
+        }.cornerRadius(10).background(Color("CardBG")).overlay(HStack{Rectangle().frame(width: 10).foregroundColor(turnTrainColorToColor(self.leg.route.color)); Spacer()}).overlay(
             RoundedRectangle(cornerRadius: CGFloat(10.0)).stroke(Color("CardBorder"), lineWidth:3)
         ).cornerRadius(10.0)
     }
@@ -71,6 +67,6 @@ public struct TripCard: View {
 
 struct TripCard_Previews: PreviewProvider {
     static var previews: some View {
-        TripCard(color: .yellow).previewLayout(.sizeThatFits).padding()
+        TripCard(MockUpData().trip.legs.first!).previewLayout(.sizeThatFits).padding()
     }
 }

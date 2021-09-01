@@ -27,7 +27,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var locationAuthState = LocationAuthState.notAuthorized
     @Published var locationDataState  = LocationDataSate.notReady
     
-    @Published var fromStationSuggestions: [Station] = []
+
     @Published var goingOffOfClosestStation = true
     
     @Published var fromStation: Station? = nil
@@ -49,6 +49,9 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var stations: StationStorage? = nil
     @Published var closestStations: [Station] = []
     @Published var toStationSuggestions: [Station] = []
+    @Published var fromStationSuggestions: [Station] = []
+    
+    @Published var tripDisplay: Trip? = nil
     //Services
     let api = ArrivalAPI()
     let disk = DiskService()
@@ -263,7 +266,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             if let location = self.location {
                 let stations =  await self.stationService.getClosestStations(stations: stations.stations, location: location)
                 self.closestStations = stations
-                self.fromStationSuggestions =  stations
+                await self.setFromStationSuggestions()
                 if self.goingOffOfClosestStation {
                     
                     guard self.fromStation != stations[0] else {
@@ -274,16 +277,17 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
                     print("LOCATION: going off closest station", stations[0].name, self.fromStation?.name as Any)
                     
                     // self.locationServicesState = .ready
-                    Task {
+                
                         await self.cycle()
                         await self.getToStationSuggestions()
-                    }
+                    
                 }
                 return stations
                 
             } else  {
                 self.closestStations = stations.stations
-                self.fromStationSuggestions =  stations.stations
+                
+                await self.setFromStationSuggestions()
                 
                 return stations.stations
             }
@@ -312,7 +316,33 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         result = result.filter({a in
             return self.fromStation != a
         })
+        for i in 0...4 {
+            result[i].firstFive = true
+        }
+        for i in 4..<result.count {
+            result[i].firstFive = false
+        }
         self.toStationSuggestions = result
+    }
+    func setFromStationSuggestions() async {
+        guard self.stations?.stations.count ?? 0 > 1 else {
+            return
+        }
+        var result: [Station] = []
+        if (self.closestStations.count > 1) {
+            result = closestStations
+        } else {
+            print("TO STATION SUGGESTIONS: going off of API")
+            result = self.stations?.stations ?? []
+        }
+        
+        for i in 0...4 {
+            result[i].firstFive = true
+        }
+        for i in 4..<result.count {
+            result[i].firstFive = false
+        }
+        self.fromStationSuggestions = result
     }
     func cycle() async {
         print("CYCLE")
@@ -382,8 +412,15 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
     func setToStation(_ station: Station?) {
+        if (self.toStation != station) {
+            self.trainsLoading = true
+        }
+        if (station == nil) {
+            self.timeConfig = TripTime(type: .now)
+        }
         self.toStation = station
-        self.trainsLoading = true
+        
+        
         Task {
             await self.cycle()
         }

@@ -46,7 +46,7 @@ public struct StationSearchView: View {
                     ).cornerRadius(10.0)
                     }.listRowSeparator(.hidden)
                 }
-                ForEach(self.mode == .to ? self.appState.toStationSuggestions.filter({a in searchFilter(self.searchText, station: a)}) : self.appState.closestStations.filter({a in searchFilter(self.searchText, station: a)})) { station in
+                ForEach(self.mode == .to ? self.appState.toStationSuggestions.filter({a in searchFilter(self.searchText, station: a)}) : self.appState.fromStationSuggestions.filter({a in searchFilter(self.searchText, station: a)})) { station in
                     Button(action: {
                         switch (self.mode) {
                         case .from:
