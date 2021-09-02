@@ -22,6 +22,7 @@ public enum TrainColor: String {
     case purple = "purple"
     case white = "white"
     case black = "black"
+    case gray = "gray"
 }
 public func determineTrainDirection(_ direction: String) -> TrainDirection {
     switch direction {
@@ -47,9 +48,12 @@ public func turnTrainColorToColor(_ trainColor: TrainColor) -> Color{
         return .orange
     case .purple:
         return .purple
+    case .gray:
+        return .gray
     case .white:
         return .white
     default:
+        print("Default color \(trainColor)")
         return .black
     }
 }
@@ -68,8 +72,11 @@ public func determineTrainColor(_ color: String) -> TrainColor {
     case "purple":
         return .purple
     case "white":
-        return .white
+        print("white color \(color) string")
+        return .gray
     default:
+        print("Default color \(color) string")
+
         return TrainColor.black
     }
 }

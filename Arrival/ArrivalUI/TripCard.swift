@@ -10,9 +10,15 @@ import ArrivalCore
 
 public struct TripCard: View {
     let leg: TripLeg
+    var destinationText: String
     @State private var isStopsExpanded: Bool = false
     public init(_ leg: TripLeg) {
         self.leg = leg
+        if leg.finalLeg {
+            destinationText = "destination"
+        } else {
+            destinationText = "transfer"
+        }
     }
     public var body: some View {
         HStack {
@@ -36,7 +42,7 @@ public struct TripCard: View {
                         Button(action: {self.isStopsExpanded.toggle()}) {
                             HStack(spacing: 0) {
                                 Image(systemName: self.isStopsExpanded ? "chevron.down" :"chevron.right").padding(.trailing, self.isStopsExpanded ? 5 : 10)
-                                Text("\(self.leg.route.stationCount) stops before transfer...")
+                                Text("\(self.leg.stopCount) stops before \(destinationText)...")
                             }.font(.footnote).foregroundColor(Color("DarkText")).accentColor(Color("DarkText"))
                         }
                         if (self.isStopsExpanded) {
@@ -54,7 +60,7 @@ public struct TripCard: View {
                         }
                     }
                     Spacer()
-                    TimeDisplayText(Date(), mode: .etd, font: .footnote).padding(.leading).foregroundColor(Color("DarkText"))
+                    TimeIntervalDisplayText(self.leg.enrouteTime, font: .footnote).padding(.leading).foregroundColor(Color("DarkText"))
                 }.padding(.bottom)
                 HStack(alignment: .center) {
                     VStack(alignment: .leading) {

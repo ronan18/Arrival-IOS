@@ -39,7 +39,7 @@ public struct StationCard: View {
                         TimeDisplayText(Date(), mode: .timeTill).redacted(reason: .placeholder)
                     }
                 } else {
-                    Text("no distnace")
+                    //Text("no distnace")
                 }
                 
             }.padding(.leading, 20).padding([.vertical,.trailing]).foregroundColor(Color("DarkText"))

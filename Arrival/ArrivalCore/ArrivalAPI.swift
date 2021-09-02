@@ -282,6 +282,12 @@ public class ArrivalAPI {
                         
                     })
                     legs[legs.count - 1].finalLeg = true
+                    for i in 0..<legs.count {
+                        guard !legs[i].finalLeg  else {
+                            break
+                        }
+                        legs[i].transferWindow = legs[i + 1].originTime.timeIntervalSince(legs[i].destinationTime)
+                    }
                     let originTime = convertBartDate(time: trip["@origTimeMin"].stringValue, date: trip["@origTimeDate"].stringValue)!
                    // print("API: origin time converted", originTime,trip["@origTimeMin"].stringValue )
                     let destTime = convertBartDate(time: trip["@destTimeMin"].stringValue, date: trip["@destTimeDate"].stringValue)!
