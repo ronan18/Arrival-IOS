@@ -28,9 +28,14 @@ struct HomeTrips: View {
                
                 ForEach(self.appState.trips) {trip in
                     Button(action: {
+                        print("displaying", trip.id)
                         self.appState.tripDisplay = trip
+                        
                     }) {
+                   
+                           //Text("test")
                         TrainCard(train: trip.legs.first!.trainData, timeDisplayMode: self.$timeDisplayMode, eta: trip.destinationTime)
+                        
                     }.listRowSeparator(.hidden).listRowInsets(EdgeInsets()).padding(.vertical, 5)
                    
                 }.edgesIgnoringSafeArea(.bottom)

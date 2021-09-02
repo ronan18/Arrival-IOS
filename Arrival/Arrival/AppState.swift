@@ -361,7 +361,11 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
               do {
               let trips = try await self.api.trips(from: fromStation, to: toStation, timeConfig: self.timeConfig)
                   print("Got \(trips.count) trips from \(fromStation.name) to \(toStation.name) at \(self.timeConfig)")
-                  self.trips = trips
+                  var result: [Trip] =  []
+                  trips.forEach { trip in
+                      result.append(self.stationService.fillOutStations(forTrip: trip, stations: self.stations!))
+                  }
+                  self.trips = result
                   self.trainsLoading = false
               } catch {
                   //TODO: Handel errors from here

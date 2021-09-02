@@ -40,6 +40,7 @@ public struct TripLeg: Identifiable {
     public var enrouteTime: TimeInterval
     public var finalLeg: Bool
     public var trainData: Train
+    public var stationsEnRoute: [String] = []
     public init(order: Int, origin: String, destination: String, originTime: Date, destinationTime: Date, route: Route, trainHeadSTN: String, finalLeg: Bool = false) {
         self.order = order
         self.origin = origin

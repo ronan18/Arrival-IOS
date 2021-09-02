@@ -17,7 +17,7 @@ struct ArrivalApp: App {
     }
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView().frame(idealWidth: 500)
         }
     }
 }

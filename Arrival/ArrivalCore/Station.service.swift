@@ -12,16 +12,29 @@ import CoreML
 import TabularData
 public class StationService {
     public init() {}
+    public func getStationFromAbbr(_ abbr: String, stations: StationStorage) -> Station? {
+        return  stations.byAbbr[abbr]
+    }
     public func fillOutStations(forTrip: Trip, stations: StationStorage) -> Trip {
         let legs = forTrip.legs
         var resultLegs: [TripLeg] = []
         let destination = stations.byAbbr[forTrip.destination.abbr] ?? forTrip.destination
          let origin = stations.byAbbr[forTrip.origin.abbr] ?? forTrip.origin
         legs.forEach {leg in
-            debugPrint("STATION SERVICE: ", leg)
+           // debugPrint("STATION SERVICE: ", leg)
             var resultLeg = leg
             resultLeg.origin = stations.byAbbr[resultLeg.origin]?.name ?? resultLeg.origin
             resultLeg.destination = stations.byAbbr[resultLeg.destination]?.name ?? resultLeg.destination
+            let startIndex = (resultLeg.route.stations.firstIndex(of: leg.origin) ?? 0) + 1
+            let destIndex = resultLeg.route.stations.firstIndex(of: leg.destination) ?? 0
+            let subset = Array(resultLeg.route.stations[startIndex..<destIndex])
+            var stationsEnroute: [String] = []
+            subset.forEach {stationID in
+                stationsEnroute.append(stations.byAbbr[stationID]?.name ?? stationID)
+            }
+            resultLeg.trainHeadSTN = self.getStationFromAbbr(leg.trainHeadSTN, stations: stations)?.name ?? leg.trainHeadSTN
+            print(resultLeg.trainHeadSTN)
+            resultLeg.stationsEnRoute = stationsEnroute
             resultLegs.append(resultLeg)
         }
         let result = Trip(id: forTrip.id, origin: origin, destination: destination, originTime: forTrip.originTime, destinationTime: forTrip.destinationTime, tripTime: forTrip.tripTime, legs: resultLegs)
