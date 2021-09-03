@@ -41,6 +41,7 @@
 		C546474C26E2897A0055545A /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C546474B26E2897A0055545A /* Intents.framework */; };
 		C546474F26E2897A0055545A /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C546474E26E2897A0055545A /* IntentHandler.swift */; };
 		C546475326E2897A0055545A /* Siri Intents.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C546474A26E2897A0055545A /* Siri Intents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C546475A26E2BFBE0055545A /* Intents.service.swift in Sources */ = {isa = PBXBuildFile; fileRef = C546475926E2BFBE0055545A /* Intents.service.swift */; };
 		C54A297226D20E4C00E8F1D7 /* HeaderAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297126D20E4C00E8F1D7 /* HeaderAlert.swift */; };
 		C54A297A26D2A3BF00E8F1D7 /* TripBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297926D2A3BF00E8F1D7 /* TripBar.swift */; };
 		C54A297C26D2A46A00E8F1D7 /* TripTransferText.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297B26D2A46A00E8F1D7 /* TripTransferText.swift */; };
@@ -204,6 +205,7 @@
 		C546474E26E2897A0055545A /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		C546475026E2897A0055545A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C546475426E2897A0055545A /* Siri Intents.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Siri Intents.entitlements"; sourceTree = "<group>"; };
+		C546475926E2BFBE0055545A /* Intents.service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intents.service.swift; sourceTree = "<group>"; };
 		C54A297126D20E4C00E8F1D7 /* HeaderAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderAlert.swift; sourceTree = "<group>"; };
 		C54A297326D2165200E8F1D7 /* DestinationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationBar.swift; sourceTree = "<group>"; };
 		C54A297526D2171900E8F1D7 /* StationCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationCard.swift; sourceTree = "<group>"; };
@@ -386,6 +388,7 @@
 				34FB5A9A26DAEF0E00964BF9 /* Maps.service.swift */,
 				34CAB3FC26DF21A300CE2374 /* AI.service.swift */,
 				C546474426E2757B0055545A /* Intents.intentdefinition */,
+				C546475926E2BFBE0055545A /* Intents.service.swift */,
 			);
 			path = ArrivalCore;
 			sourceTree = "<group>";
@@ -740,6 +743,7 @@
 				34CAB3FD26DF21A300CE2374 /* AI.service.swift in Sources */,
 				C5CC58A926D412720025BAC7 /* Train.model.swift in Sources */,
 				34F61C3226D5DE9300B35074 /* LocationData.model.swift in Sources */,
+				C546475A26E2BFBE0055545A /* Intents.service.swift in Sources */,
 				C5CC58BD26D6B16C0025BAC7 /* Station.service.swift in Sources */,
 				C5CC58AF26D4173F0025BAC7 /* Time.model.swift in Sources */,
 				C5CC58AB26D412BC0025BAC7 /* Trip.model.swift in Sources */,

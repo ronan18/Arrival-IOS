@@ -26,14 +26,14 @@
 			<key>INIntentDescriptionID</key>
 			<string>klBgCG</string>
 			<key>INIntentInput</key>
-			<string>To Station</string>
+			<string>toStation</string>
 			<key>INIntentKeyParameter</key>
-			<string>To Station</string>
+			<string>toStation</string>
 			<key>INIntentLastParameterTag</key>
 			<integer>7</integer>
 			<key>INIntentManagedParameterCombinations</key>
 			<dict>
-				<key>To Station,From Station</key>
+				<key>toStation,fromStation</key>
 				<dict>
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<true/>
@@ -49,7 +49,7 @@
 			<string>ToStation</string>
 			<key>INIntentParameterCombinations</key>
 			<dict>
-				<key>To Station,From Station</key>
+				<key>toStation,fromStation</key>
 				<dict>
 					<key>INIntentParameterCombinationIsLinked</key>
 					<true/>
@@ -75,9 +75,9 @@
 					<key>INIntentParameterDisplayPriority</key>
 					<integer>1</integer>
 					<key>INIntentParameterName</key>
-					<string>To Station</string>
+					<string>toStation</string>
 					<key>INIntentParameterObjectType</key>
-					<string>Type</string>
+					<string>IntentStation</string>
 					<key>INIntentParameterObjectTypeNamespace</key>
 					<string>sX215m</string>
 					<key>INIntentParameterPromptDialogs</key>
@@ -126,9 +126,9 @@
 					<key>INIntentParameterDisplayPriority</key>
 					<integer>2</integer>
 					<key>INIntentParameterName</key>
-					<string>From Station</string>
+					<string>fromStation</string>
 					<key>INIntentParameterObjectType</key>
-					<string>Type</string>
+					<string>IntentStation</string>
 					<key>INIntentParameterObjectTypeNamespace</key>
 					<string>sX215m</string>
 					<key>INIntentParameterPromptDialogs</key>
@@ -192,13 +192,13 @@
 	<array>
 		<dict>
 			<key>INTypeDisplayName</key>
-			<string>IntentStation</string>
+			<string>Station</string>
 			<key>INTypeDisplayNameID</key>
 			<string>9wIZro</string>
 			<key>INTypeLastPropertyTag</key>
 			<integer>99</integer>
 			<key>INTypeName</key>
-			<string>Type</string>
+			<string>IntentStation</string>
 			<key>INTypeProperties</key>
 			<array>
 				<dict>
