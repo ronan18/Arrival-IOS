@@ -11,13 +11,22 @@ import Network
 @main
 struct ArrivalApp: App {
   
-    
+    var width: CGFloat?
     init() {
        // NetworkActivityIndicatorManager.shared.isEnabled = true
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            width = 700
+            print("on mac",  UIDevice.current.systemName)
+        } else {
+            print("not mac")
+            debugPrint(UIDevice.current.systemName)
+            width = nil
+        }
+        
     }
     var body: some Scene {
         WindowGroup {
-            ContentView().frame(idealWidth: 500)
+            ContentView()
         }
     }
 }

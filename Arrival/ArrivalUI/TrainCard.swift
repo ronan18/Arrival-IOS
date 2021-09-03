@@ -22,7 +22,6 @@ public struct TrainCard: View {
     }
     public var body: some View {
         HStack {
-           // Rectangle().frame(width: 10).foregroundColor(self.color)
             HStack {
                 VStack(alignment:.leading) {
                     Text("direction").font(.caption)

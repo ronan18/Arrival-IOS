@@ -15,6 +15,7 @@ public class AIService {
     public init () {
         
     }
+    
     public func train() {
     
     }

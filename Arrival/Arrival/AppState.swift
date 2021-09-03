@@ -52,6 +52,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var fromStationSuggestions: [Station] = []
     
     @Published var tripDisplay: Trip? = nil
+    @Published var diplayTripModal = false
     //Services
     let api = ArrivalAPI()
     let disk = DiskService()

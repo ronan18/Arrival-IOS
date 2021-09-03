@@ -27,16 +27,19 @@ struct HomeTrips: View {
             List() {
                
                 ForEach(self.appState.trips) {trip in
-                    Button(action: {
-                        print("displaying", trip.id)
-                        self.appState.tripDisplay = trip
-                        
-                    }) {
+              
                    
                            //Text("test")
-                        TrainCard(train: trip.legs.first!.trainData, timeDisplayMode: self.$timeDisplayMode, eta: trip.destinationTime)
+                    Button(action: {
                         
-                    }.listRowSeparator(.hidden).listRowInsets(EdgeInsets()).padding(.vertical, 5)
+                        print("displaying from click")
+                        self.appState.diplayTripModal = true
+                        self.appState.tripDisplay = trip
+                    }) {
+                    TrainCard(train: trip.legs.first!.trainData, timeDisplayMode: self.$timeDisplayMode, eta: trip.destinationTime)
+                    }.contentShape(Rectangle()).listRowSeparator(.hidden).listRowInsets(EdgeInsets()).padding(.vertical, 5).buttonStyle(PlainButtonStyle())  
+                
+              
                    
                 }.edgesIgnoringSafeArea(.bottom)
                 
@@ -54,15 +57,11 @@ struct HomeTrips: View {
             }
             }
         }.padding().edgesIgnoringSafeArea(.bottom).sheet(isPresented: .init(get: {
-            return self.appState.tripDisplay != nil
+            return self.appState.diplayTripModal
         }, set: {
-            switch $0 {
-            case true:
-                return
-            case false:
-                 self.appState.tripDisplay = nil
-                return
-            }
+         
+                self.appState.diplayTripModal = $0
+            
         })) {
             TripDetailsView(appState: appState)
         }

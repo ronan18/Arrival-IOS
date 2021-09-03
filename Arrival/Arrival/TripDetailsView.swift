@@ -29,6 +29,7 @@ struct TripDetailsView: View {
                     Spacer()
                     
                 }.navigationBarTitle("Trip Details").navigationBarItems(trailing:Button(action: {
+                    self.appState.diplayTripModal = false
                     self.appState.tripDisplay = nil
                 }) {
                     Text("Close")
