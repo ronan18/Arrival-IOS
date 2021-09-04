@@ -8,9 +8,12 @@
 import SwiftUI
 import ArrivalCore
 import Network
+import Intents
 @main
 struct ArrivalApp: App {
-  
+    @Environment(\.scenePhase) private var scenePhase
+  //  @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     var width: CGFloat?
     init() {
        // NetworkActivityIndicatorManager.shared.isEnabled = true
@@ -27,6 +30,11 @@ struct ArrivalApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-        }
+        } .onChange(of: scenePhase) { phase in
+            INPreferences.requestSiriAuthorization({status in
+            // Handle errors here
+        })
     }
+    }
+   
 }

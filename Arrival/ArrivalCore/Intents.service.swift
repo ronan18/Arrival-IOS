@@ -6,8 +6,7 @@
 //
 
 import Foundation
-import Siri_Intents
-
+import Intents
 public class IntentsService {
     public init () {
         

@@ -56,7 +56,7 @@ public struct TripLeg: Identifiable {
             self.stopCount = endIndex - startIndex
         } else {
             self.stopCount = 0
-            print("error generating stop count")
+            //print("error generating stop count")
         }
         self.enrouteTime = destinationTime.timeIntervalSince(originTime)
         self.trainHeadSTN = trainHeadSTN

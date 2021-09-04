@@ -71,6 +71,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     private var lastLocation: CLLocation? = nil
     private var location: CLLocation? = nil
     
+    private var handleTrainsToStationIntent: String? = nil
    
     
     //Watchers
@@ -254,6 +255,9 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         
         let _ = await self.getClosestStations()
         await self.getToStationSuggestions()
+        if let id = self.handleTrainsToStationIntent {
+            self.trainsToStationIntent(id)
+        }
         await self.cycle()
         
         self.screen = .home
@@ -436,6 +440,19 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         Task {
             await self.cycle()
         }
+    }
+    func trainsToStationIntent(_ id: String) {
+        guard let stations = self.stations else {
+            self.handleTrainsToStationIntent = id
+            return
+        }
+        self.handleTrainsToStationIntent = nil
+        let stationReq = self.stationService.getStationFromAbbr(id, stations: stations)
+        guard let station = stationReq else {
+            return
+        }
+        print(station)
+        self.toStation = station
     }
     
 }
