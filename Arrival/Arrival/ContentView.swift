@@ -23,7 +23,7 @@ struct ContentView: View {
             guard let intent = userActivity.interaction?.intent as? TrainsToStationIntent else {
                 return
             }
-            guard let destinationStationID = intent.destination?.identifier else {
+            guard let destinationStationID = intent.destinationStation?.identifier else {
                 return
             }
             print( destinationStationID, "user activity")

@@ -37,15 +37,16 @@
 		34FB5A9B26DAEF0F00964BF9 /* Maps.service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FB5A9A26DAEF0E00964BF9 /* Maps.service.swift */; };
 		34FB5A9E26DAF8AB00964BF9 /* StationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297526D2171900E8F1D7 /* StationCard.swift */; };
 		34FB5AA026DB35FA00964BF9 /* ErrorDeterminingLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FB5A9F26DB35FA00964BF9 /* ErrorDeterminingLocation.swift */; };
+		C5186CA026E34A93003955F8 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C546474B26E2897A0055545A /* Intents.framework */; };
+		C5186CA326E34A93003955F8 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5186CA226E34A93003955F8 /* IntentHandler.swift */; };
+		C5186CA726E34A93003955F8 /* SiriIntents.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C5186C9F26E34A93003955F8 /* SiriIntents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C5186CAD26E34AC3003955F8 /* ToStationIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5186CAC26E34AC3003955F8 /* ToStationIntentHandler.swift */; };
+		C5186CAE26E34AC9003955F8 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = C546477226E31A960055545A /* Intents.intentdefinition */; settings = {ATTRIBUTES = (no_codegen, ); }; };
+		C5186CB126E353D9003955F8 /* ToStationIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5186CAC26E34AC3003955F8 /* ToStationIntentHandler.swift */; };
 		C546475A26E2BFBE0055545A /* Intents.service.swift in Sources */ = {isa = PBXBuildFile; fileRef = C546475926E2BFBE0055545A /* Intents.service.swift */; };
-		C546476626E31A5A0055545A /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C546474B26E2897A0055545A /* Intents.framework */; };
-		C546476926E31A5A0055545A /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C546476826E31A5A0055545A /* IntentHandler.swift */; };
-		C546476D26E31A5A0055545A /* TrainsToStationIntent.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C546476526E31A5A0055545A /* TrainsToStationIntent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C546477326E31A960055545A /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = C546477226E31A960055545A /* Intents.intentdefinition */; settings = {ATTRIBUTES = (no_codegen, ); }; };
 		C546477426E31A960055545A /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = C546477226E31A960055545A /* Intents.intentdefinition */; settings = {ATTRIBUTES = (codegen, ); }; };
 		C546477526E31A960055545A /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = C546477226E31A960055545A /* Intents.intentdefinition */; settings = {ATTRIBUTES = (no_codegen, ); }; };
-		C546477626E31AB60055545A /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = C546477226E31A960055545A /* Intents.intentdefinition */; settings = {ATTRIBUTES = (no_codegen, ); }; };
-		C546477826E31CCD0055545A /* ToStationIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C546477726E31CCC0055545A /* ToStationIntentHandler.swift */; };
 		C54A297226D20E4C00E8F1D7 /* HeaderAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297126D20E4C00E8F1D7 /* HeaderAlert.swift */; };
 		C54A297A26D2A3BF00E8F1D7 /* TripBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297926D2A3BF00E8F1D7 /* TripBar.swift */; };
 		C54A297C26D2A46A00E8F1D7 /* TripTransferText.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297B26D2A46A00E8F1D7 /* TripTransferText.swift */; };
@@ -102,12 +103,12 @@
 			remoteGlobalIDString = 343DA39F26D08CF5008F6A0E;
 			remoteInfo = ArrivalCore;
 		};
-		C546476B26E31A5A0055545A /* PBXContainerItemProxy */ = {
+		C5186CA526E34A93003955F8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 343DA36E26D089DF008F6A0E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = C546476426E31A5A0055545A;
-			remoteInfo = TrainsToStationIntent;
+			remoteGlobalIDString = C5186C9E26E34A93003955F8;
+			remoteInfo = SiriIntents;
 		};
 		C550DCE526E15C59006C8709 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -144,7 +145,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				C546476D26E31A5A0055545A /* TrainsToStationIntent.appex in Embed App Extensions */,
+				C5186CA726E34A93003955F8 /* SiriIntents.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -203,14 +204,14 @@
 		34F61C3926D5E5E500B35074 /* Disk.service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Disk.service.swift; sourceTree = "<group>"; };
 		34FB5A9A26DAEF0E00964BF9 /* Maps.service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maps.service.swift; sourceTree = "<group>"; };
 		34FB5A9F26DB35FA00964BF9 /* ErrorDeterminingLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDeterminingLocation.swift; sourceTree = "<group>"; };
+		C5186C9F26E34A93003955F8 /* SiriIntents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SiriIntents.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		C5186CA226E34A93003955F8 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		C5186CA426E34A93003955F8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C5186CA826E34A93003955F8 /* SiriIntents.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SiriIntents.entitlements; sourceTree = "<group>"; };
+		C5186CAC26E34AC3003955F8 /* ToStationIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToStationIntentHandler.swift; sourceTree = "<group>"; };
 		C546474B26E2897A0055545A /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		C546475926E2BFBE0055545A /* Intents.service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intents.service.swift; sourceTree = "<group>"; };
-		C546476526E31A5A0055545A /* TrainsToStationIntent.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TrainsToStationIntent.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		C546476826E31A5A0055545A /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
-		C546476A26E31A5A0055545A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C546476E26E31A5A0055545A /* TrainsToStationIntent.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TrainsToStationIntent.entitlements; sourceTree = "<group>"; };
 		C546477226E31A960055545A /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
-		C546477726E31CCC0055545A /* ToStationIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToStationIntentHandler.swift; sourceTree = "<group>"; };
 		C54A297126D20E4C00E8F1D7 /* HeaderAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderAlert.swift; sourceTree = "<group>"; };
 		C54A297326D2165200E8F1D7 /* DestinationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationBar.swift; sourceTree = "<group>"; };
 		C54A297526D2171900E8F1D7 /* StationCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationCard.swift; sourceTree = "<group>"; };
@@ -273,11 +274,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C546476226E31A5A0055545A /* Frameworks */ = {
+		C5186C9C26E34A93003955F8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C546476626E31A5A0055545A /* Intents.framework in Frameworks */,
+				C5186CA026E34A93003955F8 /* Intents.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -300,7 +301,7 @@
 				343DA3A126D08CF5008F6A0E /* ArrivalCore */,
 				C550DCDC26E15C58006C8709 /* ArrivalWatch */,
 				C550DCE726E15C59006C8709 /* ArrivalWatch Extension */,
-				C546476726E31A5A0055545A /* TrainsToStationIntent */,
+				C5186CA126E34A93003955F8 /* SiriIntents */,
 				343DA37726D089DF008F6A0E /* Products */,
 				3475A94F26DACE4700DFDD9E /* Frameworks */,
 			);
@@ -314,7 +315,7 @@
 				343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */,
 				C550DCDB26E15C57006C8709 /* ArrivalWatch.app */,
 				C550DCE326E15C59006C8709 /* ArrivalWatch Extension.appex */,
-				C546476526E31A5A0055545A /* TrainsToStationIntent.appex */,
+				C5186C9F26E34A93003955F8 /* SiriIntents.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -406,15 +407,15 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		C546476726E31A5A0055545A /* TrainsToStationIntent */ = {
+		C5186CA126E34A93003955F8 /* SiriIntents */ = {
 			isa = PBXGroup;
 			children = (
-				C546476E26E31A5A0055545A /* TrainsToStationIntent.entitlements */,
-				C546476826E31A5A0055545A /* IntentHandler.swift */,
-				C546477726E31CCC0055545A /* ToStationIntentHandler.swift */,
-				C546476A26E31A5A0055545A /* Info.plist */,
+				C5186CA826E34A93003955F8 /* SiriIntents.entitlements */,
+				C5186CA226E34A93003955F8 /* IntentHandler.swift */,
+				C5186CAC26E34AC3003955F8 /* ToStationIntentHandler.swift */,
+				C5186CA426E34A93003955F8 /* Info.plist */,
 			);
-			path = TrainsToStationIntent;
+			path = SiriIntents;
 			sourceTree = "<group>";
 		};
 		C550DCDC26E15C58006C8709 /* ArrivalWatch */ = {
@@ -485,7 +486,7 @@
 				343DA39426D08CD8008F6A0E /* PBXTargetDependency */,
 				343DA3A726D08CF5008F6A0E /* PBXTargetDependency */,
 				C550DCF526E15C5A006C8709 /* PBXTargetDependency */,
-				C546476C26E31A5A0055545A /* PBXTargetDependency */,
+				C5186CA626E34A93003955F8 /* PBXTargetDependency */,
 			);
 			name = Arrival;
 			packageProductDependencies = (
@@ -536,21 +537,21 @@
 			productReference = 343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		C546476426E31A5A0055545A /* TrainsToStationIntent */ = {
+		C5186C9E26E34A93003955F8 /* SiriIntents */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C546476F26E31A5A0055545A /* Build configuration list for PBXNativeTarget "TrainsToStationIntent" */;
+			buildConfigurationList = C5186CA926E34A93003955F8 /* Build configuration list for PBXNativeTarget "SiriIntents" */;
 			buildPhases = (
-				C546476126E31A5A0055545A /* Sources */,
-				C546476226E31A5A0055545A /* Frameworks */,
-				C546476326E31A5A0055545A /* Resources */,
+				C5186C9B26E34A93003955F8 /* Sources */,
+				C5186C9C26E34A93003955F8 /* Frameworks */,
+				C5186C9D26E34A93003955F8 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = TrainsToStationIntent;
-			productName = TrainsToStationIntent;
-			productReference = C546476526E31A5A0055545A /* TrainsToStationIntent.appex */;
+			name = SiriIntents;
+			productName = SiriIntents;
+			productReference = C5186C9F26E34A93003955F8 /* SiriIntents.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 		C550DCDA26E15C57006C8709 /* ArrivalWatch */ = {
@@ -606,7 +607,7 @@
 					343DA39F26D08CF5008F6A0E = {
 						CreatedOnToolsVersion = 13.0;
 					};
-					C546476426E31A5A0055545A = {
+					C5186C9E26E34A93003955F8 = {
 						CreatedOnToolsVersion = 13.0;
 					};
 					C550DCDA26E15C57006C8709 = {
@@ -641,7 +642,7 @@
 				343DA39F26D08CF5008F6A0E /* ArrivalCore */,
 				C550DCDA26E15C57006C8709 /* ArrivalWatch */,
 				C550DCE226E15C59006C8709 /* ArrivalWatch Extension */,
-				C546476426E31A5A0055545A /* TrainsToStationIntent */,
+				C5186C9E26E34A93003955F8 /* SiriIntents */,
 			);
 		};
 /* End PBXProject section */
@@ -670,7 +671,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C546476326E31A5A0055545A /* Resources */ = {
+		C5186C9D26E34A93003955F8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -713,6 +714,7 @@
 				3483604C26DC26BD003EEFB9 /* TimeChooserView.swift in Sources */,
 				343DA37A26D089DF008F6A0E /* ArrivalApp.swift in Sources */,
 				C5CC58B926D587060025BAC7 /* OnboardingView.swift in Sources */,
+				C5186CB126E353D9003955F8 /* ToStationIntentHandler.swift in Sources */,
 				C54A298026D2A6CB00E8F1D7 /* HomeScreen.swift in Sources */,
 				C54A298326D2AB4500E8F1D7 /* StationSearchView.swift in Sources */,
 				3475A94E26DACA1E00DFDD9E /* AuthorizeLocationView.swift in Sources */,
@@ -763,13 +765,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C546476126E31A5A0055545A /* Sources */ = {
+		C5186C9B26E34A93003955F8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C546477626E31AB60055545A /* Intents.intentdefinition in Sources */,
-				C546476926E31A5A0055545A /* IntentHandler.swift in Sources */,
-				C546477826E31CCD0055545A /* ToStationIntentHandler.swift in Sources */,
+				C5186CAE26E34AC9003955F8 /* Intents.intentdefinition in Sources */,
+				C5186CAD26E34AC3003955F8 /* ToStationIntentHandler.swift in Sources */,
+				C5186CA326E34A93003955F8 /* IntentHandler.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -802,10 +804,10 @@
 			target = 343DA39F26D08CF5008F6A0E /* ArrivalCore */;
 			targetProxy = 3475A95226DACE4700DFDD9E /* PBXContainerItemProxy */;
 		};
-		C546476C26E31A5A0055545A /* PBXTargetDependency */ = {
+		C5186CA626E34A93003955F8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = C546476426E31A5A0055545A /* TrainsToStationIntent */;
-			targetProxy = C546476B26E31A5A0055545A /* PBXContainerItemProxy */;
+			target = C5186C9E26E34A93003955F8 /* SiriIntents */;
+			targetProxy = C5186CA526E34A93003955F8 /* PBXContainerItemProxy */;
 		};
 		C550DCE626E15C59006C8709 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1140,25 +1142,25 @@
 			};
 			name = Release;
 		};
-		C546477026E31A5A0055545A /* Debug */ = {
+		C5186CAA26E34A93003955F8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CODE_SIGN_ENTITLEMENTS = TrainsToStationIntent/TrainsToStationIntent.entitlements;
+				CODE_SIGN_ENTITLEMENTS = SiriIntents/SiriIntents.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = TrainsToStationIntent/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = TrainsToStationIntent;
+				INFOPLIST_FILE = SiriIntents/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SiriIntents;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival.TrainsToStationIntent;
+				MARKETING_VERSION = 3.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival.SiriIntents;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = YES;
@@ -1168,25 +1170,25 @@
 			};
 			name = Debug;
 		};
-		C546477126E31A5A0055545A /* Release */ = {
+		C5186CAB26E34A93003955F8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CODE_SIGN_ENTITLEMENTS = TrainsToStationIntent/TrainsToStationIntent.entitlements;
+				CODE_SIGN_ENTITLEMENTS = SiriIntents/SiriIntents.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = TrainsToStationIntent/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = TrainsToStationIntent;
+				INFOPLIST_FILE = SiriIntents/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SiriIntents;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival.TrainsToStationIntent;
+				MARKETING_VERSION = 3.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival.SiriIntents;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = YES;
@@ -1211,7 +1213,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = ArrivalWatch;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.ronanfuruta.arrival;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -1238,7 +1240,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = ArrivalWatch;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.ronanfuruta.arrival;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival.watchkitapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = watchos;
@@ -1263,14 +1265,14 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ArrivalWatch Extension/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "ArrivalWatch Extension";
-				INFOPLIST_KEY_CLKComplicationPrincipalClass = "$(PRODUCT_MODULE_NAME).ComplicationController";
+				INFOPLIST_KEY_CLKComplicationPrincipalClass = ArrivalWatch_Extension.ComplicationController;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
@@ -1295,14 +1297,14 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "ArrivalWatch Extension/Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "ArrivalWatch Extension";
-				INFOPLIST_KEY_CLKComplicationPrincipalClass = "$(PRODUCT_MODULE_NAME).ComplicationController";
+				INFOPLIST_KEY_CLKComplicationPrincipalClass = ArrivalWatch_Extension.ComplicationController;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival.watchkitapp.watchkitextension;
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
@@ -1353,11 +1355,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C546476F26E31A5A0055545A /* Build configuration list for PBXNativeTarget "TrainsToStationIntent" */ = {
+		C5186CA926E34A93003955F8 /* Build configuration list for PBXNativeTarget "SiriIntents" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C546477026E31A5A0055545A /* Debug */,
-				C546477126E31A5A0055545A /* Release */,
+				C5186CAA26E34A93003955F8 /* Debug */,
+				C5186CAB26E34A93003955F8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

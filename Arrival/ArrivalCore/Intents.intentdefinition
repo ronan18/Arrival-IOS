@@ -21,26 +21,24 @@
 			<string>information</string>
 			<key>INIntentConfigurable</key>
 			<true/>
-			<key>INIntentDescription</key>
-			<string>Get BART trips to a station</string>
 			<key>INIntentDescriptionID</key>
-			<string>4L3RoA</string>
+			<string>MiIaFO</string>
 			<key>INIntentInput</key>
-			<string>destination</string>
+			<string>destinationStation</string>
 			<key>INIntentKeyParameter</key>
-			<string>destination</string>
+			<string>destinationStation</string>
 			<key>INIntentLastParameterTag</key>
-			<integer>4</integer>
+			<integer>2</integer>
 			<key>INIntentManagedParameterCombinations</key>
 			<dict>
-				<key>destination</key>
+				<key>destinationStation</key>
 				<dict>
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<true/>
 					<key>INIntentParameterCombinationTitle</key>
-					<string>View BART trips to ${destination}</string>
+					<string>View trains to${destinationStation}</string>
 					<key>INIntentParameterCombinationTitleID</key>
-					<string>UKEC2M</string>
+					<string>6HUwXx</string>
 					<key>INIntentParameterCombinationUpdatesLinked</key>
 					<true/>
 				</dict>
@@ -49,18 +47,16 @@
 			<string>TrainsToStation</string>
 			<key>INIntentParameterCombinations</key>
 			<dict>
-				<key>destination</key>
+				<key>destinationStation</key>
 				<dict>
-					<key>INIntentParameterCombinationSubtitle</key>
-					<string>See BART trips to destination</string>
-					<key>INIntentParameterCombinationSubtitleID</key>
-					<string>ULECfz</string>
+					<key>INIntentParameterCombinationIsLinked</key>
+					<true/>
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<false/>
 					<key>INIntentParameterCombinationTitle</key>
-					<string>View trains heading to ${destination}</string>
+					<string>View trains to${destinationStation}</string>
 					<key>INIntentParameterCombinationTitleID</key>
-					<string>2XlWrS</string>
+					<string>60Sb0d</string>
 				</dict>
 			</dict>
 			<key>INIntentParameters</key>
@@ -71,13 +67,13 @@
 					<key>INIntentParameterCustomDisambiguation</key>
 					<true/>
 					<key>INIntentParameterDisplayName</key>
-					<string>Destination</string>
+					<string>Destination Station</string>
 					<key>INIntentParameterDisplayNameID</key>
-					<string>LF9oYi</string>
+					<string>onSvuv</string>
 					<key>INIntentParameterDisplayPriority</key>
 					<integer>1</integer>
 					<key>INIntentParameterName</key>
-					<string>destination</string>
+					<string>destinationStation</string>
 					<key>INIntentParameterObjectType</key>
 					<string>IntentStation</string>
 					<key>INIntentParameterObjectTypeNamespace</key>
@@ -88,9 +84,9 @@
 							<key>INIntentParameterPromptDialogCustom</key>
 							<true/>
 							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>Destination station</string>
+							<string>Destination Station</string>
 							<key>INIntentParameterPromptDialogFormatStringID</key>
-							<string>Rd7Nbp</string>
+							<string>IKtJ7k</string>
 							<key>INIntentParameterPromptDialogType</key>
 							<string>Configuration</string>
 						</dict>
@@ -98,9 +94,9 @@
 							<key>INIntentParameterPromptDialogCustom</key>
 							<true/>
 							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>What is your destination?</string>
+							<string>Choose Station</string>
 							<key>INIntentParameterPromptDialogFormatStringID</key>
-							<string>ZmKI8x</string>
+							<string>QG0G1m</string>
 							<key>INIntentParameterPromptDialogType</key>
 							<string>Primary</string>
 						</dict>
@@ -108,9 +104,9 @@
 							<key>INIntentParameterPromptDialogCustom</key>
 							<true/>
 							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>There are ${count} options matching ‘${destination}’.</string>
+							<string>There are ${count} options matching ‘${destinationStation}’.</string>
 							<key>INIntentParameterPromptDialogFormatStringID</key>
-							<string>MIHnZG</string>
+							<string>K7V2cE</string>
 							<key>INIntentParameterPromptDialogType</key>
 							<string>DisambiguationIntroduction</string>
 						</dict>
@@ -118,9 +114,9 @@
 							<key>INIntentParameterPromptDialogCustom</key>
 							<true/>
 							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>Just to confirm, you wanted ‘${destination}’?</string>
+							<string>Just to confirm, you wanted ‘${destinationStation}’?</string>
 							<key>INIntentParameterPromptDialogFormatStringID</key>
-							<string>Q2h6MP</string>
+							<string>omZdH8</string>
 							<key>INIntentParameterPromptDialogType</key>
 							<string>Confirmation</string>
 						</dict>
@@ -132,7 +128,7 @@
 					<key>INIntentParameterSupportsSearch</key>
 					<true/>
 					<key>INIntentParameterTag</key>
-					<integer>4</integer>
+					<integer>2</integer>
 					<key>INIntentParameterType</key>
 					<string>Object</string>
 				</dict>
@@ -142,74 +138,21 @@
 				<key>INIntentResponseCodes</key>
 				<array>
 					<dict>
-						<key>INIntentResponseCodeConciseFormatString</key>
-						<string>Displaying BART to ${destination}</string>
-						<key>INIntentResponseCodeConciseFormatStringID</key>
-						<string>sD2bYA</string>
-						<key>INIntentResponseCodeFormatString</key>
-						<string>Displaying BART to ${destination}</string>
-						<key>INIntentResponseCodeFormatStringID</key>
-						<string>hawImL</string>
 						<key>INIntentResponseCodeName</key>
 						<string>success</string>
 						<key>INIntentResponseCodeSuccess</key>
 						<true/>
 					</dict>
 					<dict>
-						<key>INIntentResponseCodeConciseFormatString</key>
-						<string>Could not find the BART trips to ${destination}</string>
-						<key>INIntentResponseCodeConciseFormatStringID</key>
-						<string>vuPrlC</string>
-						<key>INIntentResponseCodeFormatString</key>
-						<string>Could not find the BART trips to ${destination}</string>
-						<key>INIntentResponseCodeFormatStringID</key>
-						<string>vQ6Fxs</string>
 						<key>INIntentResponseCodeName</key>
 						<string>failure</string>
-					</dict>
-					<dict>
-						<key>INIntentResponseCodeConciseFormatString</key>
-						<string>Could not find the BART trips to station</string>
-						<key>INIntentResponseCodeConciseFormatStringID</key>
-						<string>Rlsoh7</string>
-						<key>INIntentResponseCodeFormatString</key>
-						<string>Could not find the BART trips to station</string>
-						<key>INIntentResponseCodeFormatStringID</key>
-						<string>rgWCAy</string>
-						<key>INIntentResponseCodeName</key>
-						<string>failureNoDestination</string>
-					</dict>
-				</array>
-				<key>INIntentResponseLastParameterTag</key>
-				<integer>4</integer>
-				<key>INIntentResponseOutput</key>
-				<string>destination</string>
-				<key>INIntentResponseParameters</key>
-				<array>
-					<dict>
-						<key>INIntentResponseParameterDisplayName</key>
-						<string>Destination</string>
-						<key>INIntentResponseParameterDisplayNameID</key>
-						<string>c0RqG9</string>
-						<key>INIntentResponseParameterDisplayPriority</key>
-						<integer>1</integer>
-						<key>INIntentResponseParameterName</key>
-						<string>destination</string>
-						<key>INIntentResponseParameterObjectType</key>
-						<string>IntentStation</string>
-						<key>INIntentResponseParameterObjectTypeNamespace</key>
-						<string>5hl10L</string>
-						<key>INIntentResponseParameterTag</key>
-						<integer>4</integer>
-						<key>INIntentResponseParameterType</key>
-						<string>Object</string>
 					</dict>
 				</array>
 			</dict>
 			<key>INIntentTitle</key>
 			<string>Trains To Station</string>
 			<key>INIntentTitleID</key>
-			<string>xoSH39</string>
+			<string>ZoTOlh</string>
 			<key>INIntentType</key>
 			<string>Custom</string>
 			<key>INIntentVerb</key>
