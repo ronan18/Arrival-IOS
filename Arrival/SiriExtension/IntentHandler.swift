@@ -1,12 +1,12 @@
 //
 //  IntentHandler.swift
-//  TrainsToStationIntent
+//  SiriExtension
 //
-//  Created by Ronan Furuta on 9/3/21.
+//  Created by Ronan Furuta on 9/4/21.
 //
 
 import Intents
-
+import ArrivalCore
 class IntentHandler: INExtension {
     
     override func handler(for intent: INIntent) -> Any {
