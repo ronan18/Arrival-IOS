@@ -58,6 +58,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     let disk = DiskService()
     let stationService = StationService()
     let mapService = MapService()
+    let aiService = AIService()
     
     //Constants
     let defaults = UserDefaults.standard
@@ -82,6 +83,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         super.init()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest // You can change the locaiton accuary here.
+      
         Task {
             await self.startUp()
         }
@@ -111,7 +113,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             print(error)
             runOnboarding()
         }
-        
+        await self.aiService.train()
     }
     func runOnboarding() {
         self.screen = .onboard
@@ -256,7 +258,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         let _ = await self.getClosestStations()
         await self.getToStationSuggestions()
         if let id = self.handleTrainsToStationIntent {
-            self.trainsToStationIntent(id)
+            //self.trainsToStationIntent(id)
         }
         await self.cycle()
         
@@ -287,6 +289,12 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
                         await self.getToStationSuggestions()
                     
                 }
+                if let fromStation = self.fromStation {
+                    if fromStation == stations[0] {
+                        self.goingOffOfClosestStation = true
+                    }
+                }
+                
                 return stations
                 
             } else  {
@@ -433,6 +441,12 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         Task {
             await self.cycle()
         }
+        if let station = station {
+            guard let fromStation = fromStation else {
+                return
+            }
+            self.aiService.logTripEvent(TripEvent(fromStation: fromStation, toStation: station, date: Date()))
+        }
     }
     func setTripTime(_ time: TripTime) {
         self.timeConfig = time
@@ -441,18 +455,19 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             await self.cycle()
         }
     }
-    func trainsToStationIntent(_ id: String) {
-        guard let stations = self.stations else {
-            self.handleTrainsToStationIntent = id
+    func trainsToStationIntent(departureStationID: String, destinationStationID: String) {
+      /*  guard let stations = self.stations else {
+          //  self.handleTrainsToStationIntent = (departureStationID, destinationStationID)
             return
         }
         self.handleTrainsToStationIntent = nil
-        let stationReq = self.stationService.getStationFromAbbr(id, stations: stations)
+       // let stationReq = self.stationService.getStationFromAbbr(id, stations: stations)
         guard let station = stationReq else {
             return
         }
         print(station)
         self.toStation = station
+       */
     }
     
 }

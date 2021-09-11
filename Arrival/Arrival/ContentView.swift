@@ -19,7 +19,19 @@ struct ContentView: View {
             } else if (appState.screen == .loading) {
                 ProgressView()
             }
-        }
+        }.onContinueUserActivity("TrainsToStationIntent", perform: {userActivity in
+           /* guard let intent = userActivity.interaction?.intent as? TrainsToStationIntent else {
+                return
+            }
+            guard let departureStationID = intent.departureStation?.identifier else {
+                return
+            }
+            guard let destinationStationID = intent.destinationStation?.identifier else {
+                return
+            }
+            print( destinationStationID, "user activity")
+            self.appState.trainsToStationIntent(departure: despartureStationID, destination: destinationStationID)*/
+        })
     }
 }
 

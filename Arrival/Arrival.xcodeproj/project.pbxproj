@@ -37,6 +37,7 @@
 		34FB5A9B26DAEF0F00964BF9 /* Maps.service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FB5A9A26DAEF0E00964BF9 /* Maps.service.swift */; };
 		34FB5A9E26DAF8AB00964BF9 /* StationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297526D2171900E8F1D7 /* StationCard.swift */; };
 		34FB5AA026DB35FA00964BF9 /* ErrorDeterminingLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FB5A9F26DB35FA00964BF9 /* ErrorDeterminingLocation.swift */; };
+		C527270E26EBDD35002EE89C /* AI.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C527270D26EBDD35002EE89C /* AI.model.swift */; };
 		C546475A26E2BFBE0055545A /* Intents.service.swift in Sources */ = {isa = PBXBuildFile; fileRef = C546475926E2BFBE0055545A /* Intents.service.swift */; };
 		C54A297226D20E4C00E8F1D7 /* HeaderAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297126D20E4C00E8F1D7 /* HeaderAlert.swift */; };
 		C54A297A26D2A3BF00E8F1D7 /* TripBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297926D2A3BF00E8F1D7 /* TripBar.swift */; };
@@ -176,6 +177,7 @@
 		34F61C3926D5E5E500B35074 /* Disk.service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Disk.service.swift; sourceTree = "<group>"; };
 		34FB5A9A26DAEF0E00964BF9 /* Maps.service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maps.service.swift; sourceTree = "<group>"; };
 		34FB5A9F26DB35FA00964BF9 /* ErrorDeterminingLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDeterminingLocation.swift; sourceTree = "<group>"; };
+		C527270D26EBDD35002EE89C /* AI.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI.model.swift; sourceTree = "<group>"; };
 		C546474B26E2897A0055545A /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		C546475926E2BFBE0055545A /* Intents.service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intents.service.swift; sourceTree = "<group>"; };
 		C54A297126D20E4C00E8F1D7 /* HeaderAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderAlert.swift; sourceTree = "<group>"; };
@@ -346,6 +348,7 @@
 				3475A94B26DAC7F000DFDD9E /* RunMode.model.swift */,
 				34FB5A9A26DAEF0E00964BF9 /* Maps.service.swift */,
 				34CAB3FC26DF21A300CE2374 /* AI.service.swift */,
+				C527270D26EBDD35002EE89C /* AI.model.swift */,
 				C546475926E2BFBE0055545A /* Intents.service.swift */,
 				C599E1D426E3E5B0004C573C /* Intents.intentdefinition */,
 			);
@@ -611,6 +614,7 @@
 				34F61C2F26D5D8A200B35074 /* APIErrors.model.swift in Sources */,
 				C5CC58A726D40E570025BAC7 /* Station.model.swift in Sources */,
 				34F61C3A26D5E5E500B35074 /* Disk.service.swift in Sources */,
+				C527270E26EBDD35002EE89C /* AI.model.swift in Sources */,
 				34FB5A9B26DAEF0F00964BF9 /* Maps.service.swift in Sources */,
 				34CAB3FD26DF21A300CE2374 /* AI.service.swift in Sources */,
 				C5CC58A926D412720025BAC7 /* Train.model.swift in Sources */,

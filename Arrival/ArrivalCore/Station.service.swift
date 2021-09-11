@@ -27,10 +27,13 @@ public class StationService {
             resultLeg.destination = stations.byAbbr[resultLeg.destination]?.name ?? resultLeg.destination
             let startIndex = (resultLeg.route.stations.firstIndex(of: leg.origin) ?? 0) + 1
             let destIndex = resultLeg.route.stations.firstIndex(of: leg.destination) ?? 0
-            let subset = Array(resultLeg.route.stations[startIndex..<destIndex])
             var stationsEnroute: [String] = []
+            if (startIndex <= destIndex) {
+            let subset = Array(resultLeg.route.stations[startIndex..<destIndex])
+           
             subset.forEach {stationID in
                 stationsEnroute.append(stations.byAbbr[stationID]?.name ?? stationID)
+            }
             }
             resultLeg.trainHeadSTN = self.getStationFromAbbr(leg.trainHeadSTN, stations: stations)?.name ?? leg.trainHeadSTN
             print(resultLeg.trainHeadSTN)

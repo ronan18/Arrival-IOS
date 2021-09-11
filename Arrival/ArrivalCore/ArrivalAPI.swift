@@ -274,13 +274,25 @@ public class ArrivalAPI {
                 }
                 tripsJSON.arrayValue.forEach({trip in
                     var legs: [TripLeg] = []
+                    var error = false
                     trip["leg"].arrayValue.forEach({leg in
                         //print(leg)
                         /*  print(convertBartDate(time: leg["@origTimeMin"].stringValue, date: leg["@origTimeDate"].stringValue))*/
+                       // print("DEBUG START")
+                      // print(leg["route"].intValue)
+                       // print(routes)
+                       // print(routes[leg["route"].intValue])
+                       let routeLeg = routes[leg["route"].intValue] ?? Route(routeNumber: 0, name: "ERROR", abbr: "TEST", origin: "TEST", destination: "TEST", direction: .north, color: .black, stationCount: 0, stations: [])
                         
-                        legs.append(TripLeg(order: leg["@order"].intValue, origin: leg["@origin"].stringValue, destination: leg["@destination"].stringValue, originTime: convertBartDate(time: leg["@origTimeMin"].stringValue, date: leg["@origTimeDate"].stringValue)!, destinationTime: convertBartDate(time: leg["@destTimeMin"].stringValue, date: leg["@destTimeDate"].stringValue)!, route: routes[leg["route"].intValue]!, trainHeadSTN: leg["@trainHeadStation"].stringValue))
+                        legs.append(TripLeg(order: leg["@order"].intValue, origin: leg["@origin"].stringValue, destination: leg["@destination"].stringValue, originTime: convertBartDate(time: leg["@origTimeMin"].stringValue, date: leg["@origTimeDate"].stringValue)!, destinationTime: convertBartDate(time: leg["@destTimeMin"].stringValue, date: leg["@destTimeDate"].stringValue)!, route: routeLeg, trainHeadSTN: leg["@trainHeadStation"].stringValue))
+                        if routeLeg.name == "ERROR" {
+                            error = true
+                        }
                         
                     })
+                    if (error) {
+                        print(trip, result)
+                    }
                     legs[legs.count - 1].finalLeg = true
                     for i in 0..<legs.count {
                         guard !legs[i].finalLeg  else {

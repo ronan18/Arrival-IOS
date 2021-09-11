@@ -28,4 +28,20 @@ public class DiskService {
            // print("error saving stations")
         }
     }
+    public func storeTipEvent(_ event: TripEvent) {
+        do {
+           try Disk.append(event, to: "tripEvents.json", in: .sharedContainer(appGroupName: "group.com.ronanfuruta.arrival"))
+        } catch {
+            print("error saving tripe event")
+        }
+    }
+    public func getTripEvents() -> [TripEvent] {
+        var events: [TripEvent] = []
+        do {
+          events  =  try Disk.retrieve("tripEvents.json", from: .sharedContainer(appGroupName: "group.com.ronanfuruta.arrival"), as: [TripEvent].self)
+        } catch {
+            
+        }
+        return events
+    }
 }
