@@ -434,7 +434,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
         self.trainsLoading = true
         self.firstCycleOfFromStation = true
-        Task {
+        Task(priority: TaskPriority(rawValue: 2)) {
             await self.getToStationSuggestions()
             await self.cycle()
         }
@@ -449,7 +449,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         self.toStation = station
         
         
-        Task {
+        Task(priority: TaskPriority(rawValue: 2)) {
             await self.cycle()
         }
         if let station = station {
@@ -458,11 +458,14 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             }
             aiService.logTripEvent(TripEvent(fromStation: fromStation, toStation: station, date: Date()))
         }
+        Task(priority: TaskPriority(rawValue: 1)) {
+            await aiService.train()
+        }
     }
     func setTripTime(_ time: TripTime) {
         self.timeConfig = time
         self.trainsLoading = true
-        Task {
+        Task(priority: TaskPriority(rawValue: 2)) {
             await self.cycle()
         }
     }
