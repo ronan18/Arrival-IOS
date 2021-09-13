@@ -58,7 +58,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     let disk = DiskService()
     let stationService = StationService()
     let mapService = MapService()
-    let aiService = AIService()
+   // let aiService = AIService()
     
     //Constants
     let defaults = UserDefaults.standard
@@ -113,7 +113,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             print(error)
             runOnboarding()
         }
-        await self.aiService.train()
+        await aiService.train()
     }
     func runOnboarding() {
         self.screen = .onboard
@@ -318,6 +318,12 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         guard self.stations?.stations.count ?? 0 > 1 else {
             return
         }
+        guard let stations = stations , let fromStation = self.fromStation else {
+            return
+        }
+
+        let predictions = self.stationService.getToStationSuggestions(stations: stations, currentStation: fromStation)
+        print(predictions, "to Station predictions results")
         var result: [Station] = []
         if (self.closestStations.count > 1) {
             print("TO STATION SUGGESTIONS: going off of distance")
@@ -327,8 +333,12 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             result = self.stations?.stations ?? []
         }
         result = result.filter({a in
-            return self.fromStation != a
+            return self.fromStation != a && !predictions.contains(where: {station in
+                station.abbr == a.abbr
+            })
         })
+        result.insert(contentsOf: predictions, at: 0)
+        //print(result)
         for i in 0...4 {
             result[i].firstFive = true
         }
@@ -336,6 +346,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             result[i].firstFive = false
         }
         self.toStationSuggestions = result
+      
     }
     func setFromStationSuggestions() async {
         guard self.stations?.stations.count ?? 0 > 1 else {
@@ -445,7 +456,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             guard let fromStation = fromStation else {
                 return
             }
-            self.aiService.logTripEvent(TripEvent(fromStation: fromStation, toStation: station, date: Date()))
+            aiService.logTripEvent(TripEvent(fromStation: fromStation, toStation: station, date: Date()))
         }
     }
     func setTripTime(_ time: TripTime) {

@@ -15,6 +15,7 @@ public class StationService {
     public func getStationFromAbbr(_ abbr: String, stations: StationStorage) -> Station? {
         return  stations.byAbbr[abbr]
     }
+
     public func fillOutStations(forTrip: Trip, stations: StationStorage) -> Trip {
         let legs = forTrip.legs
         var resultLegs: [TripLeg] = []
@@ -54,8 +55,21 @@ public class StationService {
         }
         return sorted
     }
-    public func trainML() {
+    public func getToStationSuggestions(stations: StationStorage, currentStation: Station) -> [Station] {
+       let aiResult = aiService.predictDestinationStation(currentStation)
         
+        print("result for toStation ai", aiResult as Any)
+        var result: [Station] = []
+        aiResult?.forEach({suggestion in
+            guard let station = self.getStationFromAbbr(suggestion.id, stations: stations) else {
+                return
+            }
+            result.append(station)
+           // print(suggestion.id)
+        })
+        
+       
+        return result
     }
    
 }

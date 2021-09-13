@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreML
 
 public struct TripEvent: Hashable, Codable {
     public init(fromStation: Station, toStation: Station, date: Date) {
