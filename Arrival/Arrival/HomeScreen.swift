@@ -30,7 +30,8 @@ struct HomeScreen: View {
            
             }
             Spacer()
-        }.edgesIgnoringSafeArea(.bottom).task {
+        }.edgesIgnoringSafeArea(.bottom).task(priority: .userInitiated) {
+            print("home appeared")
             await self.appState.cycle()
         }
     }

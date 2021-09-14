@@ -48,7 +48,7 @@ struct HomeTrains: View {
                 }.edgesIgnoringSafeArea(.bottom)
                 
             }.listStyle(.plain).refreshable {
-                Task {
+                Task(priority: .userInitiated) {
                     await self.appState.cycle()
                 }
             }.edgesIgnoringSafeArea(.bottom)

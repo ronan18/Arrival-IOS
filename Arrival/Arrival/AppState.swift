@@ -27,7 +27,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var locationAuthState = LocationAuthState.notAuthorized
     @Published var locationDataState  = LocationDataSate.notReady
     
-
+    
     @Published var goingOffOfClosestStation = true
     
     @Published var fromStation: Station? = nil
@@ -35,12 +35,12 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var timeConfig: TripTime = TripTime(type: .now)
     
     @Published var directionFilter: Int = 1
- 
+    
     @Published var trips: [Trip] = []
     @Published var trains: [Train] = []
     @Published var northTrains: [Train] = []
     @Published var southTrains: [Train] = []
-   
+    
     
     @Published var trainsLoading = true
     @Published var firstCycleOfFromStation = true
@@ -58,7 +58,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     let disk = DiskService()
     let stationService = StationService()
     let mapService = MapService()
-   // let aiService = AIService()
+    // let aiService = AIService()
     
     //Constants
     let defaults = UserDefaults.standard
@@ -73,7 +73,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     private var location: CLLocation? = nil
     
     private var handleTrainsToStationIntent: String? = nil
-   
+    
     
     //Watchers
     
@@ -83,8 +83,8 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         super.init()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest // You can change the locaiton accuary here.
-      
-        Task {
+        
+        Task() {
             await self.startUp()
         }
         
@@ -113,7 +113,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             print(error)
             runOnboarding()
         }
-        await aiService.train()
+       
     }
     func runOnboarding() {
         self.screen = .onboard
@@ -141,23 +141,23 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             //TODO: Catch this
         }
     }
-     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("LOCATION: update")
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+       // print("LOCATION: update")
         if let location = locations.first {
             //print(location.coordinate, "location", location)
             if let currentLocation = self.location {
                 guard  location.distance(from: currentLocation) > 10 else{
-                    print("LOCATION: within 10m cancel refresh")
+                //    print("LOCATION: within 10m cancel refresh")
                     return
                 }
             }
-           
+            
             lat = location.coordinate.latitude
             long = location.coordinate.longitude
             self.location = location
             self.mapService.location = location
             Task {
-            let _ = await self.getClosestStations()
+                let _ = await self.getClosestStations()
             }
         }
     }
@@ -182,7 +182,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             }
         case .restricted, .denied:
             self.locationAuthState = .notAuthorized
-           // print("no location access")
+            // print("no location access")
             // Analytics.setUserProperty("false", forName: "locationAccess")
         @unknown default:
             fatalError()
@@ -191,36 +191,36 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     func createAccount() async {
         self.screen = .loading
         if (self.mode == .production) {
-        let newKey: String = "AR-" + UUID().uuidString
-        do {
-            let result = try await self.api.createAccount(auth: newKey)
-            guard result else {
+            let newKey: String = "AR-" + UUID().uuidString
+            do {
+                let result = try await self.api.createAccount(auth: newKey)
+                guard result else {
+                    //TODO: Catch this
+                    return
+                }
+                let loginResult = try await self.api.login(auth: newKey)
+                
+                guard loginResult else {
+                    //TODO: Catch this
+                    return
+                }
+                self.defaults.set(newKey, forKey: "passphrase")
+                self.key = newKey
+                await self.startMain()
+            } catch {
                 //TODO: Catch this
-                return
             }
-            let loginResult = try await self.api.login(auth: newKey)
-            
-            guard loginResult else {
-                //TODO: Catch this
-                return
-            }
-            self.defaults.set(newKey, forKey: "passphrase")
-            self.key = newKey
-            await self.startMain()
-        } catch {
-            //TODO: Catch this
-        }
         } else {
             do {
-            let loginResult = try await self.api.login(auth: "test")
-            
-            guard loginResult else {
-                //TODO: Catch this
-                return
-            }
-            self.defaults.set("test", forKey: "passphrase")
-            self.key = "test"
-            await self.startMain()
+                let loginResult = try await self.api.login(auth: "test")
+                
+                guard loginResult else {
+                    //TODO: Catch this
+                    return
+                }
+                self.defaults.set("test", forKey: "passphrase")
+                self.key = "test"
+                await self.startMain()
             } catch {
                 
             }
@@ -240,7 +240,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         if CLLocationManager.locationServicesEnabled() {
             
             locationManager.startUpdatingLocation()
-           // print("location access after start")
+            // print("location access after start")
             
             //  Analytics.setUserProperty("true", forName: "locationAccess")
         } else {
@@ -256,16 +256,24 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
         
         let _ = await self.getClosestStations()
-        await self.getToStationSuggestions()
+       
         if let id = self.handleTrainsToStationIntent {
             //self.trainsToStationIntent(id)
         }
         await self.cycle()
-        
+        print("show home screen")
         self.screen = .home
         Timer.scheduledTimer(withTimeInterval: self.cycleTimerLength, repeats: true) { timer in
-            Task {await self.cycle()}
+            Task(priority: .high) {await self.cycle()}
         }
+        Task(priority: .background) {
+            async let test = trainAIAndGetSuggestions()
+        }
+       
+    }
+    func trainAIAndGetSuggestions() async {
+      await aiService.train()
+        await self.getToStationSuggestions()
     }
     func getClosestStations() async -> [Station] {
         print("LOCATION STATION: refresh closest station")
@@ -284,9 +292,9 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
                     print("LOCATION: going off closest station", stations[0].name, self.fromStation?.name as Any)
                     
                     // self.locationServicesState = .ready
-                
-                        await self.cycle()
-                        await self.getToStationSuggestions()
+                    
+                    await self.cycle()
+                    await self.getToStationSuggestions()
                     
                 }
                 if let fromStation = self.fromStation {
@@ -315,83 +323,80 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         
     }
     func getToStationSuggestions() async {
+        print("geting to station suggestions")
         guard self.stations?.stations.count ?? 0 > 1 else {
             return
         }
         guard let stations = stations , let fromStation = self.fromStation else {
             return
         }
-
+        
         var predictions = self.stationService.getToStationSuggestions(stations: stations, currentStation: fromStation)
-       // print(predictions, "to Station predictions results")
+        // print(predictions, "to Station predictions results")
         var result: [Station] = []
         if predictions.count > 0 {
             predictions = predictions.filter({a in
                 return self.fromStation != a
-                })
+            })
             struct stationScore {
                 let station: Station
                 let score: Double?
             }
             var scores: [stationScore] = []
             stations.stations.forEach({station in
-               // print("scoring \(station.name)")
+                // print("scoring \(station.name)")
                 guard let lat = station.lat , let long = station.long else {
-                 //   print("no lat long station scores")
-
+                    //   print("no lat long station scores")
+                    
                     scores.append(stationScore(station: station, score: nil))
                     return
                 }
-              
+                
                 guard let predictionStation = predictions.first else {
                     scores.append(stationScore(station: station, score: nil))
-//print("no prediction station scores")
+                    //print("no prediction station scores")
                     return
                 }
-                    let targetStationLoc: CLLocation = CLLocation(latitude: lat, longitude: long)
-                    let predictionStationLoc: CLLocation = CLLocation(latitude: predictionStation.lat!, longitude: predictionStation.long!)
-                    let distance1Miles = predictionStationLoc.distance(from: targetStationLoc)
-                   
+                let targetStationLoc: CLLocation = CLLocation(latitude: lat, longitude: long)
+                let predictionStationLoc: CLLocation = CLLocation(latitude: predictionStation.lat!, longitude: predictionStation.long!)
+                let distance1Miles = predictionStationLoc.distance(from: targetStationLoc)
+                
                 
                 scores.append(stationScore(station: station, score: distance1Miles))
-               // scores[station] = highestScore
-               
-               
+                // scores[station] = highestScore
+                
+                
             })
-         //   print(scores.map({a in
-          //      return [a.station.name: a.score]
-       //     }), "scores \(scores.count)")//
-           // print("sorting scores")
-            
+        
             scores.sort {a,b in
-             //   print("sorting \(a.station.name) and \(b.station.name) score")
+                //   print("sorting \(a.station.name) and \(b.station.name) score")
                 guard let aScore = a.score else {
-            //        print("no a score, \(a.station.name)")
+                    //        print("no a score, \(a.station.name)")
                     return false
                 }
                 guard let bScore = b.score else {
-                 //   print("no b score, \(b.station.name)")
+                    //   print("no b score, \(b.station.name)")
                     return true
                 }
-               // print("\(aScore) \(bScore) score")
+                // print("\(aScore) \(bScore) score")
                 return aScore < bScore
             }
-          //  print("sorted scores")
+            //  print("sorted scores")
             result = scores.map { item in
                 return item.station
             }
-/*scores.sort {a,b in
-                return a.score ?? 100*100 < b.score ?? 100*100
-            })*/
-                    
+            /*scores.sort {a,b in
+             return a.score ?? 100*100 < b.score ?? 100*100
+             })*/
+            
         } else {
-        if (self.closestStations.count > 1) {
-            print("TO STATION SUGGESTIONS: going off of distance")
-            result = closestStations.reversed()
-        } else {
-            print("TO STATION SUGGESTIONS: going off of API")
-            result = self.stations?.stations ?? []
-        }
+            if (self.closestStations.count > 1) {
+                print("TO STATION SUGGESTIONS: going off of distance")
+                result = closestStations.reversed()
+            } else {
+                print("TO STATION SUGGESTIONS: going off of API")
+                result = self.stations?.stations ?? []
+            }
         }
         result = result.filter({a in
             return self.fromStation != a && !predictions.contains(where: {station in
@@ -407,7 +412,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             result[i].firstFive = false
         }
         self.toStationSuggestions = result
-      
+        
     }
     func setFromStationSuggestions() async {
         guard self.stations?.stations.count ?? 0 > 1 else {
@@ -442,19 +447,19 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
         if let toStation = self.toStation {
             
-              print("get trips from \(fromStation.name) to \(toStation.name) at \(self.timeConfig)")
-              do {
-              let trips = try await self.api.trips(from: fromStation, to: toStation, timeConfig: self.timeConfig)
-                  print("Got \(trips.count) trips from \(fromStation.name) to \(toStation.name) at \(self.timeConfig)")
-                  var result: [Trip] =  []
-                  trips.forEach { trip in
-                      result.append(self.stationService.fillOutStations(forTrip: trip, stations: self.stations!))
-                  }
-                  self.trips = result
-                  self.trainsLoading = false
-              } catch {
-                  //TODO: Handel errors from here
-              }
+            print("get trips from \(fromStation.name) to \(toStation.name) at \(self.timeConfig)")
+            do {
+                let trips = try await self.api.trips(from: fromStation, to: toStation, timeConfig: self.timeConfig)
+                print("Got \(trips.count) trips from \(fromStation.name) to \(toStation.name) at \(self.timeConfig)")
+                var result: [Trip] =  []
+                trips.forEach { trip in
+                    result.append(self.stationService.fillOutStations(forTrip: trip, stations: self.stations!))
+                }
+                self.trips = result
+                self.trainsLoading = false
+            } catch {
+                //TODO: Handel errors from here
+            }
         } else {
             print("No to station")
             do {
@@ -465,7 +470,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
                 self.southTrains = south
                 print("got \(trains.count) trains from \(self.fromStation?.name ?? "none")")
                 if (self.firstCycleOfFromStation) {
-                   // print("first cycle \(north) \(south)")
+                    // print("first cycle \(north) \(south)")
                     if (south.count == 0 && north.count == 0) {
                         self.directionFilter = 3
                     } else if (south.count == 0 && north.count > 0) {
@@ -484,7 +489,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
                 //TODO: catch this
             }
         }
-       
+        
     }
     func setFromStation(_ station: Station) {
         self.fromStation = station
@@ -498,6 +503,12 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         Task(priority: TaskPriority(rawValue: 2)) {
             await self.getToStationSuggestions()
             await self.cycle()
+        }
+        if let toStation =  self.toStation {
+            aiService.logTripEvent(TripEvent(fromStation: station, toStation: toStation, date: Date()))
+            Task(priority: .background) {
+                await aiService.train()
+            }
         }
     }
     func setToStation(_ station: Station?) {
@@ -519,7 +530,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             }
             aiService.logTripEvent(TripEvent(fromStation: fromStation, toStation: station, date: Date()))
         }
-        Task {
+        Task(priority: .background) {
             await aiService.train()
         }
     }
@@ -531,18 +542,18 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
     func trainsToStationIntent(departureStationID: String, destinationStationID: String) {
-      /*  guard let stations = self.stations else {
-          //  self.handleTrainsToStationIntent = (departureStationID, destinationStationID)
-            return
-        }
-        self.handleTrainsToStationIntent = nil
-       // let stationReq = self.stationService.getStationFromAbbr(id, stations: stations)
-        guard let station = stationReq else {
-            return
-        }
-        print(station)
-        self.toStation = station
-       */
+        /*  guard let stations = self.stations else {
+         //  self.handleTrainsToStationIntent = (departureStationID, destinationStationID)
+         return
+         }
+         self.handleTrainsToStationIntent = nil
+         // let stationReq = self.stationService.getStationFromAbbr(id, stations: stations)
+         guard let station = stationReq else {
+         return
+         }
+         print(station)
+         self.toStation = station
+         */
     }
     
 }
