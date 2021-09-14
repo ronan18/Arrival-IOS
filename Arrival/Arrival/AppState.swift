@@ -322,44 +322,61 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             return
         }
 
-        let predictions = self.stationService.getToStationSuggestions(stations: stations, currentStation: fromStation)
-        print(predictions, "to Station predictions results")
+        var predictions = self.stationService.getToStationSuggestions(stations: stations, currentStation: fromStation)
+       // print(predictions, "to Station predictions results")
         var result: [Station] = []
         if predictions.count > 0 {
+            predictions = predictions.filter({a in
+                return self.fromStation != a
+                })
             struct stationScore {
                 let station: Station
                 let score: Double?
             }
             var scores: [stationScore] = []
             stations.stations.forEach({station in
+               // print("scoring \(station.name)")
                 guard let lat = station.lat , let long = station.long else {
+                 //   print("no lat long station scores")
+
                     scores.append(stationScore(station: station, score: nil))
                     return
                 }
-                var highestScore: Double = 100*100*100
-                predictions.forEach {predictionStation in
+              
+                guard let predictionStation = predictions.first else {
+                    scores.append(stationScore(station: station, score: nil))
+//print("no prediction station scores")
+                    return
+                }
                     let targetStationLoc: CLLocation = CLLocation(latitude: lat, longitude: long)
                     let predictionStationLoc: CLLocation = CLLocation(latitude: predictionStation.lat!, longitude: predictionStation.long!)
                     let distance1Miles = predictionStationLoc.distance(from: targetStationLoc)
-                    if (distance1Miles < highestScore) {
-                        highestScore = distance1Miles
-                    }
-                }
-                scores.append(stationScore(station: station, score: highestScore))
+                   
+                
+                scores.append(stationScore(station: station, score: distance1Miles))
                // scores[station] = highestScore
                
                
             })
-            print(scores)
+         //   print(scores.map({a in
+          //      return [a.station.name: a.score]
+       //     }), "scores \(scores.count)")//
+           // print("sorting scores")
+            
             scores.sort {a,b in
+             //   print("sorting \(a.station.name) and \(b.station.name) score")
                 guard let aScore = a.score else {
+            //        print("no a score, \(a.station.name)")
                     return false
                 }
-                guard let bScore = a.score else {
+                guard let bScore = b.score else {
+                 //   print("no b score, \(b.station.name)")
                     return true
                 }
+               // print("\(aScore) \(bScore) score")
                 return aScore < bScore
             }
+          //  print("sorted scores")
             result = scores.map { item in
                 return item.station
             }
