@@ -325,12 +325,56 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         let predictions = self.stationService.getToStationSuggestions(stations: stations, currentStation: fromStation)
         print(predictions, "to Station predictions results")
         var result: [Station] = []
+        if predictions.count > 0 {
+            struct stationScore {
+                let station: Station
+                let score: Double?
+            }
+            var scores: [stationScore] = []
+            stations.stations.forEach({station in
+                guard let lat = station.lat , let long = station.long else {
+                    scores.append(stationScore(station: station, score: nil))
+                    return
+                }
+                var highestScore: Double = 100*100*100
+                predictions.forEach {predictionStation in
+                    let targetStationLoc: CLLocation = CLLocation(latitude: lat, longitude: long)
+                    let predictionStationLoc: CLLocation = CLLocation(latitude: predictionStation.lat!, longitude: predictionStation.long!)
+                    let distance1Miles = predictionStationLoc.distance(from: targetStationLoc)
+                    if (distance1Miles < highestScore) {
+                        highestScore = distance1Miles
+                    }
+                }
+                scores.append(stationScore(station: station, score: highestScore))
+               // scores[station] = highestScore
+               
+               
+            })
+            print(scores)
+            scores.sort {a,b in
+                guard let aScore = a.score else {
+                    return false
+                }
+                guard let bScore = a.score else {
+                    return true
+                }
+                return aScore < bScore
+            }
+            result = scores.map { item in
+                return item.station
+            }
+/*scores.sort {a,b in
+                return a.score ?? 100*100 < b.score ?? 100*100
+            })*/
+                    
+        } else {
         if (self.closestStations.count > 1) {
             print("TO STATION SUGGESTIONS: going off of distance")
             result = closestStations.reversed()
         } else {
             print("TO STATION SUGGESTIONS: going off of API")
             result = self.stations?.stations ?? []
+        }
         }
         result = result.filter({a in
             return self.fromStation != a && !predictions.contains(where: {station in
@@ -449,7 +493,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         self.toStation = station
         
         
-        Task(priority: TaskPriority(rawValue: 2)) {
+        Task {
             await self.cycle()
         }
         if let station = station {
@@ -458,14 +502,14 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             }
             aiService.logTripEvent(TripEvent(fromStation: fromStation, toStation: station, date: Date()))
         }
-        Task(priority: TaskPriority(rawValue: 1)) {
+        Task {
             await aiService.train()
         }
     }
     func setTripTime(_ time: TripTime) {
         self.timeConfig = time
         self.trainsLoading = true
-        Task(priority: TaskPriority(rawValue: 2)) {
+        Task {
             await self.cycle()
         }
     }
