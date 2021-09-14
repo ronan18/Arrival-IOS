@@ -15,8 +15,8 @@ import CreateML
 
 public class AIService {
     let diskService = DiskService()
-    var model: MLLogisticRegressionClassifier? = nil
-    
+    var toStationModel: MLLogisticRegressionClassifier? = nil
+    var directionFilterModel: MLLogisticRegressionClassifier? = nil
     public init () {
         print("production ai being used")
     }
@@ -34,8 +34,51 @@ public class AIService {
             }
         }
     }
-    public func train() async {
-        print("running training")
+    public func logDirectionFilterEvent(_ event: DirectionFilterEvent) {
+        self.diskService.storeDirectionFilterEvent(event)
+    }
+    public func trainDirectionFilterAI() async {
+        print("runnin directionFilterAI")
+        let events  = self.diskService.getDirectionFilterEvents()
+        var dataTable: DataFrame = DataFrame()
+        dataTable.append(column: Column<Int>(name: "month", capacity: events.count))
+        dataTable.append(column: Column<Int>(name: "dayOfWeek", capacity: events.count))
+        dataTable.append(column: Column<String>(name: "time", capacity: events.count))
+        dataTable.append(column: Column<String>(name: "fromStation", capacity: events.count))
+        dataTable.append(column: Column<String>(name: "direction", capacity: events.count))
+       
+        events.forEach {event in
+           // print(event)
+            let time  = event.date.formatted(date: .omitted, time: .complete)
+            let components = dateComponents(event.date)
+            
+            dataTable.append(valuesByColumn: ["time": time, "fromStation": event.fromStation.abbr, "direction": event.direction.rawValue, "dayOfWeek": components.weekday, "month": components.month])
+        }
+        debugPrint(dataTable)
+        do {
+            
+            let classifier = try MLLogisticRegressionClassifier(trainingData: dataTable, targetColumn: "direction")
+          // try classifier.write(toFile: "tripStationAI.mlmodel", metadata: MLModelMetadata(author: "Ronan Furuta Arrival", shortDescription: "tripStation AI", license: nil, version: "1", additional: nil))
+            if let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last {
+                let assetPath = documentsDirectory.appendingPathComponent("directionFilterAI.mlmodel")
+                print(assetPath, "asset  ML path")
+                try classifier.write(to: assetPath, metadata: MLModelMetadata(author: "Ronan Furuta Arrival", shortDescription: "directionFilter AI", license: nil, version: "1", additional: nil))
+            }
+           
+           
+           // let results = try classifier.predictions(from: dataTable)
+            
+            self.directionFilterModel = classifier
+            //debugPrint(results)
+           // self.predictDestinationStation(Station(id: "test", name: "ROCK", abbr: "ROCK", lat: 0, long: 0))
+            
+        }catch {
+            print(error, "saving AI model")
+        }
+        
+    }
+    public func trainToStationAI() async {
+        print("running to station training")
         let events  = self.diskService.getTripEvents()
         // debugPrint(events)
         var dataTable: DataFrame = DataFrame()
@@ -70,7 +113,7 @@ public class AIService {
            
            // let results = try classifier.predictions(from: dataTable)
             
-            self.model = classifier
+            self.toStationModel = classifier
             //debugPrint(results)
            // self.predictDestinationStation(Station(id: "test", name: "ROCK", abbr: "ROCK", lat: 0, long: 0))
             
@@ -79,7 +122,7 @@ public class AIService {
         }
         
     }
-    public func loadModel() {
+    public func loadToStationModel() {
         if let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last {
             let assetPath = documentsDirectory.appendingPathComponent("tripStationAI.mlmodel")
         print(assetPath)
@@ -98,7 +141,7 @@ public class AIService {
        
         }
     }
-    class ModelInput: MLFeatureProvider {
+    class ToStationModelInput: MLFeatureProvider {
         var featureNames: Set<String> = ["time", "fromStation", "month", "dayOfWeek"]
         let time: String
         let fromStation: String
@@ -133,17 +176,17 @@ public class AIService {
     }
     public func predictDestinationStation(_ currentStation: Station) -> [StationProbibility]? {
       //  self.loadModel()
-        guard let classifier = model else {
-            self.loadModel()
+        guard let classifier = toStationModel else {
+            self.loadToStationModel()
             return nil
         }
-        do {
+        
            
             let time = Date().formatted(date: .omitted, time: .complete)
             let components = dateComponents(Date())
          
             
-            guard let classifierResults = try? classifier.model.prediction(from: ModelInput(time: time, fromStation: currentStation.abbr, month: components.month!, day: components.weekday!)) else {
+            guard let classifierResults = try? classifier.model.prediction(from: ToStationModelInput(time: time, fromStation: currentStation.abbr, month: components.month!, day: components.weekday!)) else {
                 print("error")
                 return nil
             }
@@ -174,10 +217,7 @@ public class AIService {
             
              return result
            // return results
-        } catch {
-            print("AI run ", error)
-            return nil
-        }
+      
     }
     public func dateComponents(_ date: Date) -> DateComponents {
        let components = Calendar.current.dateComponents([.month, .weekday], from: date)
@@ -185,10 +225,7 @@ public class AIService {
         return components
     }
 }
-public struct StationProbibility {
-   public let id: String
-   public let prob: Double
-}
+
 /*#else
  public class AIService {
  public init() {

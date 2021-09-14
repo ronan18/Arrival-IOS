@@ -26,7 +26,23 @@ struct HomeTrains: View {
     }
     var body: some View {
         VStack {
-            Picker(selection: .init(get: {self.appState.directionFilter}, set: {self.appState.directionFilter = $0}), label: Text("Train Direction")) {
+            Picker(selection: .init(get: {self.appState.directionFilter}, set: {
+                self.appState.directionFilter = $0
+                print("updating manually direction filter")
+                switch $0 {
+                case 1 :
+                  //  self.filteredTrains = self.appState.northTrains
+                    self.appState.logDirectionEvent(.north)
+                    return
+                case 2:
+                  //  self.filteredTrains = self.appState.southTrains
+                    self.appState.logDirectionEvent(.south)
+                    return
+                default:
+                   // self.filteredTrains = self.appState.trains
+                    return
+                }
+            }), label: Text("Train Direction")) {
                 Text("Northbound").tag(1)
                 Text("Southbound").tag(2)
                 Text("All").tag(3)
@@ -70,14 +86,18 @@ struct HomeTrains: View {
                 self.filteredTrains = trains
             }
         }).onChange(of: self.appState.directionFilter, perform: { direction in
+            print("auto updating direction filter")
             switch direction {
             case 1 :
                 self.filteredTrains = self.appState.northTrains
+               // self.appState.logDirectionEvent(.north)
             case 2:
                 self.filteredTrains = self.appState.southTrains
+              //  self.appState.logDirectionEvent(.south)
             default:
                 self.filteredTrains = self.appState.trains
             }
+            
         })
     }
 }

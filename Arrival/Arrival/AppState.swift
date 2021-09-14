@@ -113,7 +113,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             print(error)
             runOnboarding()
         }
-       
+        
     }
     func runOnboarding() {
         self.screen = .onboard
@@ -142,12 +142,12 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-       // print("LOCATION: update")
+        // print("LOCATION: update")
         if let location = locations.first {
             //print(location.coordinate, "location", location)
             if let currentLocation = self.location {
                 guard  location.distance(from: currentLocation) > 10 else{
-                //    print("LOCATION: within 10m cancel refresh")
+                    //    print("LOCATION: within 10m cancel refresh")
                     return
                 }
             }
@@ -256,7 +256,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
         
         let _ = await self.getClosestStations()
-       
+        
         if let id = self.handleTrainsToStationIntent {
             //self.trainsToStationIntent(id)
         }
@@ -269,10 +269,19 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         Task(priority: .background) {
             async let test = trainAIAndGetSuggestions()
         }
-       
+        
+    }
+    func logDirectionEvent(_ direction: TrainDirection) {
+        print("logging direction event \(direction)")
+        guard let fromStation = fromStation else {
+            return
+        }
+
+        aiService.logDirectionFilterEvent(DirectionFilterEvent(fromStation: fromStation, direction: direction, date: Date()))
     }
     func trainAIAndGetSuggestions() async {
-      await aiService.train()
+        async let directionAI = aiService.trainDirectionFilterAI()
+        await aiService.trainToStationAI()
         await self.getToStationSuggestions()
     }
     func getClosestStations() async -> [Station] {
@@ -367,7 +376,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
                 
                 
             })
-        
+            
             scores.sort {a,b in
                 //   print("sorting \(a.station.name) and \(b.station.name) score")
                 guard let aScore = a.score else {
@@ -507,7 +516,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         if let toStation =  self.toStation {
             aiService.logTripEvent(TripEvent(fromStation: station, toStation: toStation, date: Date()))
             Task(priority: .background) {
-                await aiService.train()
+                async let test = trainAIAndGetSuggestions()
             }
         }
     }
@@ -531,7 +540,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             aiService.logTripEvent(TripEvent(fromStation: fromStation, toStation: station, date: Date()))
         }
         Task(priority: .background) {
-            await aiService.train()
+            async let test = trainAIAndGetSuggestions()
         }
     }
     func setTripTime(_ time: TripTime) {

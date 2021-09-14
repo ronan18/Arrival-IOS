@@ -35,10 +35,26 @@ public class DiskService {
             print("error saving tripe event")
         }
     }
+    public func storeDirectionFilterEvent(_ event: DirectionFilterEvent) {
+        do {
+           try Disk.append(event, to: "directionFilterEvents.json", in: .sharedContainer(appGroupName: "group.com.ronanfuruta.arrival"))
+        } catch {
+            print("error saving tripe event")
+        }
+    }
     public func getTripEvents() -> [TripEvent] {
         var events: [TripEvent] = []
         do {
           events  =  try Disk.retrieve("tripEvents.json", from: .sharedContainer(appGroupName: "group.com.ronanfuruta.arrival"), as: [TripEvent].self)
+        } catch {
+            
+        }
+        return events
+    }
+    public func getDirectionFilterEvents() -> [DirectionFilterEvent] {
+        var events: [DirectionFilterEvent] = []
+        do {
+          events  =  try Disk.retrieve("directionFilterEvents.json", from: .sharedContainer(appGroupName: "group.com.ronanfuruta.arrival"), as: [DirectionFilterEvent].self)
         } catch {
             
         }

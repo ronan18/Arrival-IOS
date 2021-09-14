@@ -18,3 +18,17 @@ public struct TripEvent: Hashable, Codable {
     var toStation: Station
     var date: Date
 }
+public struct StationProbibility {
+   public let id: String
+   public let prob: Double
+}
+public struct DirectionFilterEvent: Hashable, Codable {
+    public init(fromStation: Station, direction: TrainDirection, date: Date) {
+        self.direction = direction
+        self.fromStation = fromStation
+        self.date = date
+    }
+    var fromStation: Station
+    var direction: TrainDirection
+    var date: Date
+}

@@ -8,9 +8,9 @@
 import Foundation
 import SwiftUI
 
-public enum TrainDirection {
-    case north
-    case south
+public enum TrainDirection:String, Codable {
+    case north = "north"
+    case south = "south"
 
 }
 public enum TrainColor: String {
