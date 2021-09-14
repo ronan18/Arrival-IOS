@@ -29,6 +29,7 @@ public class DiskService {
         }
     }
     public func storeTipEvent(_ event: TripEvent) {
+       
         do {
            try Disk.append(event, to: "tripEvents.json", in: .sharedContainer(appGroupName: "group.com.ronanfuruta.arrival"))
         } catch {
@@ -36,8 +37,19 @@ public class DiskService {
         }
     }
     public func storeDirectionFilterEvent(_ event: DirectionFilterEvent) {
+        var currentEvents = self.getDirectionFilterEvents()
+        currentEvents = currentEvents.filter {a in
+            if (a.sessionID == a.sessionID) {
+                print("removing \(a.fromStation) \(a.direction) \(a.sessionID) directions")
+                return a.fromStation != event.fromStation
+            } else {
+                return true
+            }
+        }
+        currentEvents.append(event)
         do {
-           try Disk.append(event, to: "directionFilterEvents.json", in: .sharedContainer(appGroupName: "group.com.ronanfuruta.arrival"))
+            try Disk.save(currentEvents, to: .sharedContainer(appGroupName: "group.com.ronanfuruta.arrival"), as: "directionFilterEvents.json")
+          // try Disk.append(event, to: "directionFilterEvents.json", in: .sharedContainer(appGroupName: "group.com.ronanfuruta.arrival"))
         } catch {
             print("error saving tripe event")
         }

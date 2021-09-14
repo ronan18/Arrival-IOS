@@ -23,12 +23,14 @@ public struct StationProbibility {
    public let prob: Double
 }
 public struct DirectionFilterEvent: Hashable, Codable {
-    public init(fromStation: Station, direction: TrainDirection, date: Date) {
+    public init(fromStation: Station, direction: TrainDirection, date: Date, sessionID: UUID) {
         self.direction = direction
         self.fromStation = fromStation
         self.date = date
+        self.sessionID = sessionID.uuidString
     }
     var fromStation: Station
     var direction: TrainDirection
     var date: Date
+    var sessionID: String
 }

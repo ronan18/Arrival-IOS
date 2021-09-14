@@ -174,6 +174,65 @@ public class AIService {
             self.day = day
         }
     }
+    class DirectionFilterModelInput: MLFeatureProvider {
+        var featureNames: Set<String> = ["time", "fromStation", "month", "dayOfWeek"]
+       
+        let time: String
+        let fromStation: String
+        let month: Int
+        let day: Int
+        func featureValue(for featureName: String) -> MLFeatureValue? {
+            switch featureName {
+            case "time":
+                return MLFeatureValue(string: self.time)
+              //  return self.time
+            case "fromStation":
+                return MLFeatureValue(string: self.fromStation)
+            case "month":
+                return MLFeatureValue(int64: Int64(self.month))
+               // return self.month
+            case "dayOfWeek":
+                return MLFeatureValue(int64: Int64(self.day))
+                    // return self.day
+            default:
+                return nil
+                
+            }
+            
+        
+    }
+        init (time: String, fromStation: String, month: Int, day: Int) {
+            self.time = time
+            self.fromStation = fromStation
+            self.month = month
+            self.day = day
+        }
+    }
+    public func predictDirectionFilter(_ currentStation: Station) -> TrainDirection? {
+        print("prediction direction filter")
+        guard let classifier = directionFilterModel else {
+            return nil
+        }
+        let time = Date().formatted(date: .omitted, time: .complete)
+        let components = dateComponents(Date())
+        guard let classifierResults = try? classifier.model.prediction(from: ToStationModelInput(time: time, fromStation: currentStation.abbr, month: components.month!, day: components.weekday!)) else {
+            print("error direction filter")
+            return nil
+        }
+        debugPrint(classifierResults.featureValue(for: "direction"), "direction filter features")
+        if let directionString = classifierResults.featureValue(for: "direction")?.stringValue {
+            switch directionString {
+            case "north":
+                return  .north
+            case "south":
+                return .south
+            default:
+                return  nil
+            }
+        }
+        return nil
+        
+    }
     public func predictDestinationStation(_ currentStation: Station) -> [StationProbibility]? {
       //  self.loadModel()
         guard let classifier = toStationModel else {

@@ -71,7 +71,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     private var long = 0.0
     private var lastLocation: CLLocation? = nil
     private var location: CLLocation? = nil
-    
+    var sessionID: UUID = UUID()
     private var handleTrainsToStationIntent: String? = nil
     
     
@@ -233,6 +233,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             self.runOnboarding()
             return
         }
+        self.sessionID = UUID()
         await self.getStations()
         
         
@@ -277,7 +278,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             return
         }
 
-        aiService.logDirectionFilterEvent(DirectionFilterEvent(fromStation: fromStation, direction: direction, date: Date()))
+        aiService.logDirectionFilterEvent(DirectionFilterEvent(fromStation: fromStation, direction: direction, date: Date(), sessionID: self.sessionID))
     }
     func trainAIAndGetSuggestions() async {
         async let directionAI = aiService.trainDirectionFilterAI()
@@ -479,17 +480,37 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
                 self.southTrains = south
                 print("got \(trains.count) trains from \(self.fromStation?.name ?? "none")")
                 if (self.firstCycleOfFromStation) {
-                    // print("first cycle \(north) \(south)")
+                    print("first cycle directions \(north.count) \(south.count)")
                     if (south.count == 0 && north.count == 0) {
                         self.directionFilter = 3
                     } else if (south.count == 0 && north.count > 0) {
+                      // aiService.predictDirectionFilter(fromStation)
                         self.directionFilter = 1
                     }
                     else if (south.count > 0 && north.count == 0) {
                         self.directionFilter = 2
+                      
+                       // aiService.predictDirectionFilter(fromStation)
+
+                        
+                    } else {
+                        if let direction = aiService.predictDirectionFilter(fromStation) {
+                            switch direction {
+                            case .north:
+                                self.directionFilter = 1
+                            case .south:
+                                self.directionFilter = 2
+                            }
+                        }
                     }
                     
                     self.firstCycleOfFromStation = false
+                } else {
+                    if self.directionFilter == 1 {
+                        //aiService.logDirectionFilterEvent(DirectionFilterEvent(fromStation: fromStation, direction: .north, date: Date()))
+                    } else if self.directionFilter == 2 {
+                       // aiService.logDirectionFilterEvent(DirectionFilterEvent(fromStation: fromStation, direction: .south, date: Date()))
+                    }
                 }
                 self.trainsLoading = false
                 // print(trains)
