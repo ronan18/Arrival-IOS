@@ -40,7 +40,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var trains: [Train] = []
     @Published var northTrains: [Train] = []
     @Published var southTrains: [Train] = []
-    
+    @Published var lastCycle = Date()
     
     @Published var trainsLoading = true
     @Published var firstCycleOfFromStation = true
@@ -53,6 +53,8 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     
     @Published var tripDisplay: Trip? = nil
     @Published var diplayTripModal = false
+    
+    @Published var cycling: Int = 0
     //Services
     let api = ArrivalAPI()
     let disk = DiskService()
@@ -226,6 +228,16 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             }
         }
     }
+    func onAppear() async {
+        print("ON APPEAR", Date().timeIntervalSince(self.lastCycle))
+        if Date().timeIntervalSince(self.lastCycle) >= 60*5 {
+           
+            await self.startMain()
+
+        } else {
+            await self.cycle()
+        }
+    }
     func startMain() async {
         print("start main")
         self.screen = .loading
@@ -268,7 +280,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             Task(priority: .high) {await self.cycle()}
         }
         Task(priority: .background) {
-            async let test = trainAIAndGetSuggestions()
+            async let test: () = trainAIAndGetSuggestions()
         }
         
     }
@@ -281,7 +293,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         aiService.logDirectionFilterEvent(DirectionFilterEvent(fromStation: fromStation, direction: direction, date: Date(), sessionID: self.sessionID))
     }
     func trainAIAndGetSuggestions() async {
-        async let directionAI = aiService.trainDirectionFilterAI()
+        async let directionAI: () = aiService.trainDirectionFilterAI()
         await aiService.trainToStationAI()
         await self.getToStationSuggestions()
     }
@@ -299,6 +311,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
                     }
                     
                     self.fromStation = stations[0]
+                    self.trainsLoading = true
                     print("LOCATION: going off closest station", stations[0].name, self.fromStation?.name as Any)
                     
                     // self.locationServicesState = .ready
@@ -450,9 +463,11 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         if (self.locationAuthState == .authorized) {
             self.screen = .home
         }
+        self.cycling += 1
         
         guard let fromStation = self.fromStation else  {
             print("CYCLE: no from station")
+            self.cycling += -1
             return
         }
         if let toStation = self.toStation {
@@ -467,6 +482,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
                 }
                 self.trips = result
                 self.trainsLoading = false
+                self.lastCycle = Date()
             } catch {
                 //TODO: Handel errors from here
             }
@@ -505,21 +521,21 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
                     }
                     
                     self.firstCycleOfFromStation = false
-                } else {
-                    if self.directionFilter == 1 {
-                        //aiService.logDirectionFilterEvent(DirectionFilterEvent(fromStation: fromStation, direction: .north, date: Date()))
-                    } else if self.directionFilter == 2 {
-                       // aiService.logDirectionFilterEvent(DirectionFilterEvent(fromStation: fromStation, direction: .south, date: Date()))
-                    }
                 }
                 self.trainsLoading = false
+                if self.directionFilter == 1 {
+                    aiService.logDirectionFilterEvent(DirectionFilterEvent(fromStation: fromStation, direction: .north, date: Date(), sessionID: self.sessionID))
+                } else if self.directionFilter == 2 {
+                    aiService.logDirectionFilterEvent(DirectionFilterEvent(fromStation: fromStation, direction: .south, date: Date(), sessionID: self.sessionID))
+                }
                 // print(trains)
+                self.lastCycle = Date()
             } catch {
                 print("ERROR getting trains", error)
                 //TODO: catch this
             }
         }
-        
+        self.cycling += -1
     }
     func setFromStation(_ station: Station) {
         self.fromStation = station

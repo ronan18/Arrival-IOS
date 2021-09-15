@@ -8,13 +8,18 @@
 import SwiftUI
 
 public struct ArrivalHeader: View {
-    public init() {}
+    @ObservedObject var appState: AppState
     public var body: some View {
         HStack {
             Text("Arrival")
                 .font(.largeTitle)
                 .fontWeight(.bold)
+            if((self.appState.trainsLoading && !(self.appState.locationAuthState == .notAuthorized && self.appState.fromStation == nil)) || self.appState.cycling > 0) {
+                ProgressView().progressViewStyle(.circular).tint(.white).padding(.leading,5).frame(width: 20, height: 20).scaleEffect(x: 0.7, y: 0.7, anchor: .center)
+            }
             Spacer()
+            
+            Text("c\(String(self.appState.cycling))")
             Button(action: {}) {
                 Image(systemName: "gear")
             }
@@ -25,7 +30,7 @@ public struct ArrivalHeader: View {
 struct ArrivalHeader_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-        ArrivalHeader()
+            ArrivalHeader(appState: AppState())
             Spacer()
         }
     }

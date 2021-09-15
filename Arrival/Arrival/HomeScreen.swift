@@ -16,7 +16,7 @@ struct HomeScreen: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            ArrivalHeader()
+            ArrivalHeader(appState: appState)
             DestinationBar(appState: appState)
             HeaderAlert()
             if (self.appState.locationAuthState == .notAuthorized && self.appState.fromStation == nil) {

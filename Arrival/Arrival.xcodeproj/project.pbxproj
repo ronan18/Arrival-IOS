@@ -38,11 +38,11 @@
 		34FB5A9E26DAF8AB00964BF9 /* StationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297526D2171900E8F1D7 /* StationCard.swift */; };
 		34FB5AA026DB35FA00964BF9 /* ErrorDeterminingLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FB5A9F26DB35FA00964BF9 /* ErrorDeterminingLocation.swift */; };
 		C527270E26EBDD35002EE89C /* AI.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C527270D26EBDD35002EE89C /* AI.model.swift */; };
+		C52E881526F14B9800AD6FD1 /* ArrivalHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297D26D2A4E300E8F1D7 /* ArrivalHeader.swift */; };
 		C546475A26E2BFBE0055545A /* Intents.service.swift in Sources */ = {isa = PBXBuildFile; fileRef = C546475926E2BFBE0055545A /* Intents.service.swift */; };
 		C54A297226D20E4C00E8F1D7 /* HeaderAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297126D20E4C00E8F1D7 /* HeaderAlert.swift */; };
 		C54A297A26D2A3BF00E8F1D7 /* TripBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297926D2A3BF00E8F1D7 /* TripBar.swift */; };
 		C54A297C26D2A46A00E8F1D7 /* TripTransferText.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297B26D2A46A00E8F1D7 /* TripTransferText.swift */; };
-		C54A297E26D2A4E300E8F1D7 /* ArrivalHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297D26D2A4E300E8F1D7 /* ArrivalHeader.swift */; };
 		C54A298026D2A6CB00E8F1D7 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297F26D2A6CB00E8F1D7 /* HomeScreen.swift */; };
 		C54A298226D2AA7B00E8F1D7 /* HomeTrains.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A298126D2AA7A00E8F1D7 /* HomeTrains.swift */; };
 		C54A298326D2AB4500E8F1D7 /* StationSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297726D219E700E8F1D7 /* StationSearchView.swift */; };
@@ -294,6 +294,7 @@
 				C54A297326D2165200E8F1D7 /* DestinationBar.swift */,
 				C54A297526D2171900E8F1D7 /* StationCard.swift */,
 				3483604B26DC26BD003EEFB9 /* TimeChooserView.swift */,
+				C54A297D26D2A4E300E8F1D7 /* ArrivalHeader.swift */,
 				343DA37D26D089E3008F6A0E /* Assets.xcassets */,
 				343DA37F26D089E3008F6A0E /* Preview Content */,
 			);
@@ -319,7 +320,6 @@
 				341BB6AC26D1F14A0044190A /* TimeDisplayText.swift */,
 				C54A297926D2A3BF00E8F1D7 /* TripBar.swift */,
 				C54A297B26D2A46A00E8F1D7 /* TripTransferText.swift */,
-				C54A297D26D2A4E300E8F1D7 /* ArrivalHeader.swift */,
 				C5CC58B226D582430025BAC7 /* OnboardingIntro.swift */,
 				C5CC58B626D585360025BAC7 /* OnboardingScreen.swift */,
 				C5CC58B426D583290025BAC7 /* LargeButton.swift */,
@@ -578,6 +578,7 @@
 				C5CC58B126D581A70025BAC7 /* AppState.swift in Sources */,
 				C54A298526D2AB6800E8F1D7 /* TripDetailsView.swift in Sources */,
 				34FB5AA026DB35FA00964BF9 /* ErrorDeterminingLocation.swift in Sources */,
+				C52E881526F14B9800AD6FD1 /* ArrivalHeader.swift in Sources */,
 				3469C6E026DC41500036C5D5 /* HomeTrips.swift in Sources */,
 				3483604C26DC26BD003EEFB9 /* TimeChooserView.swift in Sources */,
 				343DA37A26D089DF008F6A0E /* ArrivalApp.swift in Sources */,
@@ -599,7 +600,6 @@
 				C5CC58B326D582430025BAC7 /* OnboardingIntro.swift in Sources */,
 				341BB6AD26D1F14A0044190A /* TimeDisplayText.swift in Sources */,
 				341BB6B026D1F8310044190A /* TripCard.swift in Sources */,
-				C54A297E26D2A4E300E8F1D7 /* ArrivalHeader.swift in Sources */,
 				C5CC58B726D585360025BAC7 /* OnboardingScreen.swift in Sources */,
 				343DA39126D08CD8008F6A0E /* ArrivalUI.docc in Sources */,
 				C54A297A26D2A3BF00E8F1D7 /* TripBar.swift in Sources */,
@@ -890,7 +890,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.ArrivalUI;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -920,7 +920,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.ArrivalUI;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -951,7 +951,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.ArrivalCore;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -982,7 +982,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.ArrivalCore;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -1011,7 +1011,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival.SiriExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1039,7 +1039,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival.SiriExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

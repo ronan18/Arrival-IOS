@@ -30,9 +30,10 @@ struct ArrivalApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-        } .onChange(of: scenePhase) { phase in
+        }.onChange(of: scenePhase) { phase in
             INPreferences.requestSiriAuthorization({status in
             // Handle errors here
+               
         })
     }
     }

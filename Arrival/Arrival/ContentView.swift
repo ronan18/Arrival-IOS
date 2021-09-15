@@ -9,6 +9,7 @@ import SwiftUI
 import ArrivalCore
 import ArrivalUI
 struct ContentView: View {
+    @Environment(\.scenePhase) private var scenePhase
     @StateObject var appState = AppState()
     var body: some View {
         ZStack {
@@ -31,7 +32,16 @@ struct ContentView: View {
             }
             print( destinationStationID, "user activity")
             self.appState.trainsToStationIntent(departure: despartureStationID, destination: destinationStationID)*/
-        })
+        }).onChange(of: scenePhase) { phase in
+            
+            // Handle errors here
+                if (phase == .active) {
+                    Task {
+                        await self.appState.onAppear()
+                    }
+                }
+        
+    }
     }
 }
 

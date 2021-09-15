@@ -9,7 +9,28 @@ import Foundation
 import TabularData
 import CoreML
 import Intents
-//#if true
+#if targetEnvironment(simulator)
+public class AIService{
+    public func predictDestinationStation(_ currentStation: Station) -> [StationProbibility]? {
+        return []
+    }
+    public func predictDirectionFilter(_ currentStation: Station) -> TrainDirection? {
+        return nil
+    }
+    public func trainToStationAI() async {
+        return
+    }
+    public func trainDirectionFilterAI() async {
+        return
+    }
+    public func logDirectionFilterEvent(_ event: DirectionFilterEvent) {
+        return
+    }
+    public func logTripEvent(_ event: TripEvent) {
+        return
+    }
+}
+#else
 import CreateML
 
 
@@ -132,8 +153,8 @@ public class AIService {
             print("AI COMPILING")
            let compile = try MLModel.compileModel(at: assetPath)
          print(compile)
-          var model: MLModel = try MLModel(contentsOf: assetPath)
-            print("got moddel")
+          let model: MLModel = try MLModel(contentsOf: assetPath)
+            print("got moddel", model.description)
            // model.prediction(from: <#T##MLFeatureProvider#>, options: <#T##MLPredictionOptions#>)
         } catch {
             print(error, "AI")
@@ -219,7 +240,7 @@ public class AIService {
             print("error direction filter")
             return nil
         }
-        debugPrint(classifierResults.featureValue(for: "direction"), "direction filter features")
+       // debugPrint(classifierResults.featureValue(for: "direction"), "direction filter features")
         if let directionString = classifierResults.featureValue(for: "direction")?.stringValue {
             switch directionString {
             case "north":
@@ -297,4 +318,7 @@ public class AIService {
  #endif
  
  */
+
+
+#endif
 public let aiService = AIService()
