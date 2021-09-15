@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ArrivalUI
 
 public struct ArrivalHeader: View {
     @ObservedObject var appState: AppState
@@ -20,6 +21,10 @@ public struct ArrivalHeader: View {
             Spacer()
             
             Text("c\(String(self.appState.cycling))")
+            Button(action: {}) {
+                
+                IconBadge("exclamationmark.triangle.fill", badge: 2).foregroundColor(.white)
+            }
             Button(action: {}) {
                 Image(systemName: "gear")
             }

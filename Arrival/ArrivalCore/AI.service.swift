@@ -12,9 +12,18 @@ import Intents
 #if targetEnvironment(simulator)
 public class AIService{
     public func predictDestinationStation(_ currentStation: Station) -> [StationProbibility]? {
+        print("DEBUG AI results")
+
         return []
     }
     public func predictDirectionFilter(_ currentStation: Station) -> TrainDirection? {
+        print("DEBUG AI results")
+        let number = Int.random(in: 0...2)
+        if (number == 1) {
+            return .north
+        } else if (number == 2) {
+            return .south
+        }
         return nil
     }
     public func trainToStationAI() async {
@@ -64,7 +73,7 @@ public class AIService {
         var dataTable: DataFrame = DataFrame()
         dataTable.append(column: Column<Int>(name: "month", capacity: events.count))
         dataTable.append(column: Column<Int>(name: "dayOfWeek", capacity: events.count))
-        dataTable.append(column: Column<String>(name: "time", capacity: events.count))
+        dataTable.append(column: Column<Int>(name: "hour", capacity: events.count))
         dataTable.append(column: Column<String>(name: "fromStation", capacity: events.count))
         dataTable.append(column: Column<String>(name: "direction", capacity: events.count))
        
@@ -73,7 +82,7 @@ public class AIService {
             let time  = event.date.formatted(date: .omitted, time: .complete)
             let components = dateComponents(event.date)
             
-            dataTable.append(valuesByColumn: ["time": time, "fromStation": event.fromStation.abbr, "direction": event.direction.rawValue, "dayOfWeek": components.weekday, "month": components.month])
+            dataTable.append(valuesByColumn: ["hour": components.hour, "fromStation": event.fromStation.abbr, "direction": event.direction.rawValue, "dayOfWeek": components.weekday, "month": components.month])
         }
         debugPrint(dataTable)
         do {
@@ -105,7 +114,7 @@ public class AIService {
         var dataTable: DataFrame = DataFrame()
         dataTable.append(column: Column<Int>(name: "month", capacity: events.count))
         dataTable.append(column: Column<Int>(name: "dayOfWeek", capacity: events.count))
-        dataTable.append(column: Column<String>(name: "time", capacity: events.count))
+        dataTable.append(column: Column<Int>(name: "hour", capacity: events.count))
         dataTable.append(column: Column<String>(name: "fromStation", capacity: events.count))
         dataTable.append(column: Column<String>(name: "toStation", capacity: events.count))
         // dataTable.append(valuesByColumn: ["time": "now", "fromStation": "test from", "toStation": "toStationTest"])
@@ -113,10 +122,10 @@ public class AIService {
         // dataTable.append(row: ["test2", "test2", "test2"])
         events.forEach {event in
            // print(event)
-            let time  = event.date.formatted(date: .omitted, time: .complete)
+           // let time  = event.date.formatted(date: .omitted, time: .complete)
             let components = dateComponents(event.date)
             
-            dataTable.append(valuesByColumn: ["time": time, "fromStation": event.fromStation.abbr, "toStation": event.toStation.abbr, "dayOfWeek": components.weekday, "month": components.month])
+            dataTable.append(valuesByColumn: ["hour": components.hour, "fromStation": event.fromStation.abbr, "toStation": event.toStation.abbr, "dayOfWeek": components.weekday, "month": components.month])
         }
         debugPrint(dataTable)
         
@@ -163,15 +172,15 @@ public class AIService {
         }
     }
     class ToStationModelInput: MLFeatureProvider {
-        var featureNames: Set<String> = ["time", "fromStation", "month", "dayOfWeek"]
-        let time: String
+        var featureNames: Set<String> = ["hour", "fromStation", "month", "dayOfWeek"]
+        let hour: Int
         let fromStation: String
         let month: Int
         let day: Int
         func featureValue(for featureName: String) -> MLFeatureValue? {
             switch featureName {
-            case "time":
-                return MLFeatureValue(string: self.time)
+            case "hour":
+                return MLFeatureValue(int64: Int64(self.hour))
               //  return self.time
             case "fromStation":
                 return MLFeatureValue(string: self.fromStation)
@@ -188,24 +197,24 @@ public class AIService {
             //return nil
         }
         
-        init (time: String, fromStation: String, month: Int, day: Int) {
-            self.time = time
+        init (hour: Int, fromStation: String, month: Int, day: Int) {
+            self.hour = hour
             self.fromStation = fromStation
             self.month = month
             self.day = day
         }
     }
     class DirectionFilterModelInput: MLFeatureProvider {
-        var featureNames: Set<String> = ["time", "fromStation", "month", "dayOfWeek"]
+        var featureNames: Set<String> = ["hour", "fromStation", "month", "dayOfWeek"]
        
-        let time: String
+        let hour: Int
         let fromStation: String
         let month: Int
         let day: Int
         func featureValue(for featureName: String) -> MLFeatureValue? {
             switch featureName {
-            case "time":
-                return MLFeatureValue(string: self.time)
+            case "hour":
+                return MLFeatureValue(int64: Int64(self.hour))
               //  return self.time
             case "fromStation":
                 return MLFeatureValue(string: self.fromStation)
@@ -222,8 +231,8 @@ public class AIService {
             
         
     }
-        init (time: String, fromStation: String, month: Int, day: Int) {
-            self.time = time
+        init (hour: Int, fromStation: String, month: Int, day: Int) {
+            self.hour = hour
             self.fromStation = fromStation
             self.month = month
             self.day = day
@@ -234,9 +243,9 @@ public class AIService {
         guard let classifier = directionFilterModel else {
             return nil
         }
-        let time = Date().formatted(date: .omitted, time: .complete)
+      //  let time = Date().formatted(date: .omitted, time: .complete)
         let components = dateComponents(Date())
-        guard let classifierResults = try? classifier.model.prediction(from: ToStationModelInput(time: time, fromStation: currentStation.abbr, month: components.month!, day: components.weekday!)) else {
+        guard let classifierResults = try? classifier.model.prediction(from: ToStationModelInput(hour: components.hour ?? 0, fromStation: currentStation.abbr, month: components.month ?? 0, day: components.weekday ?? 0)) else {
             print("error direction filter")
             return nil
         }
@@ -262,11 +271,11 @@ public class AIService {
         }
         
            
-            let time = Date().formatted(date: .omitted, time: .complete)
+          //  let time = Date().formatted(date: .omitted, time: .complete)
             let components = dateComponents(Date())
          
             
-            guard let classifierResults = try? classifier.model.prediction(from: ToStationModelInput(time: time, fromStation: currentStation.abbr, month: components.month!, day: components.weekday!)) else {
+        guard let classifierResults = try? classifier.model.prediction(from: ToStationModelInput(hour: components.hour ?? 0, fromStation: currentStation.abbr, month: components.month ?? 0, day: components.weekday ?? 0)) else {
                 print("error")
                 return nil
             }
@@ -300,7 +309,7 @@ public class AIService {
       
     }
     public func dateComponents(_ date: Date) -> DateComponents {
-       let components = Calendar.current.dateComponents([.month, .weekday], from: date)
+        let components = Calendar.current.dateComponents([.month, .weekday, .hour], from: date)
      //   print(components)
         return components
     }

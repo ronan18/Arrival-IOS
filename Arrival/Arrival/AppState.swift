@@ -235,6 +235,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             await self.startMain()
 
         } else {
+            self.sessionID = UUID()
             await self.cycle()
         }
     }
@@ -312,6 +313,9 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
                     
                     self.fromStation = stations[0]
                     self.trainsLoading = true
+                    self.trains = []
+                    self.northTrains = []
+                    self.southTrains = []
                     print("LOCATION: going off closest station", stations[0].name, self.fromStation?.name as Any)
                     
                     // self.locationServicesState = .ready
@@ -538,6 +542,9 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         self.cycling += -1
     }
     func setFromStation(_ station: Station) {
+        self.trains = []
+        self.northTrains = []
+        self.southTrains = []
         self.fromStation = station
         if (station != self.closestStations.first) {
             self.goingOffOfClosestStation = false
@@ -553,7 +560,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         if let toStation =  self.toStation {
             aiService.logTripEvent(TripEvent(fromStation: station, toStation: toStation, date: Date()))
             Task(priority: .background) {
-                async let test = trainAIAndGetSuggestions()
+                async let test: () = trainAIAndGetSuggestions()
             }
         }
     }
@@ -577,7 +584,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             aiService.logTripEvent(TripEvent(fromStation: fromStation, toStation: station, date: Date()))
         }
         Task(priority: .background) {
-            async let test = trainAIAndGetSuggestions()
+            async let test: () = trainAIAndGetSuggestions()
         }
     }
     func setTripTime(_ time: TripTime) {

@@ -57,6 +57,7 @@
 		C599E1E826E3E7B0004C573C /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = C599E1D426E3E5B0004C573C /* Intents.intentdefinition */; settings = {ATTRIBUTES = (no_codegen, ); }; };
 		C599E1E926E3E7C7004C573C /* ArrivalCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */; };
 		C599E1EF26E3E7EA004C573C /* TrainsToStationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C599E1EE26E3E7EA004C573C /* TrainsToStationHandler.swift */; };
+		C5A1BD5F26F254D600263C9E /* IconBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A1BD5E26F254D600263C9E /* IconBadge.swift */; };
 		C5CC589F26D3F5A30025BAC7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = C5CC589E26D3F5A30025BAC7 /* Alamofire */; };
 		C5CC58A226D408420025BAC7 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = C5CC58A126D408420025BAC7 /* SwiftyJSON */; };
 		C5CC58A726D40E570025BAC7 /* Station.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CC58A626D40E570025BAC7 /* Station.model.swift */; };
@@ -197,6 +198,7 @@
 		C599E1DF26E3E794004C573C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C599E1E326E3E794004C573C /* SiriExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SiriExtension.entitlements; sourceTree = "<group>"; };
 		C599E1EE26E3E7EA004C573C /* TrainsToStationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainsToStationHandler.swift; sourceTree = "<group>"; };
+		C5A1BD5E26F254D600263C9E /* IconBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconBadge.swift; sourceTree = "<group>"; };
 		C5CC58A626D40E570025BAC7 /* Station.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.model.swift; sourceTree = "<group>"; };
 		C5CC58A826D412720025BAC7 /* Train.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Train.model.swift; sourceTree = "<group>"; };
 		C5CC58AA26D412BC0025BAC7 /* Trip.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.model.swift; sourceTree = "<group>"; };
@@ -324,6 +326,7 @@
 				C5CC58B626D585360025BAC7 /* OnboardingScreen.swift */,
 				C5CC58B426D583290025BAC7 /* LargeButton.swift */,
 				3483604926DBF6F6003EEFB9 /* TripTimeOption.swift */,
+				C5A1BD5E26F254D600263C9E /* IconBadge.swift */,
 			);
 			path = ArrivalUI;
 			sourceTree = "<group>";
@@ -603,6 +606,7 @@
 				C5CC58B726D585360025BAC7 /* OnboardingScreen.swift in Sources */,
 				343DA39126D08CD8008F6A0E /* ArrivalUI.docc in Sources */,
 				C54A297A26D2A3BF00E8F1D7 /* TripBar.swift in Sources */,
+				C5A1BD5F26F254D600263C9E /* IconBadge.swift in Sources */,
 				C5CC58B526D583290025BAC7 /* LargeButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
