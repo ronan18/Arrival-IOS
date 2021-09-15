@@ -322,6 +322,48 @@ public class ArrivalAPI {
             throw APIError.apiError
         }
     }
+    public func alerts(verbose: Bool = false) async throws -> ([BARTAlert], String?){
+        guard self.authorized else {
+            throw APIError.notAuthorized
+            
+        }
+        guard self.auth != nil else {
+            throw APIError.notAuthorized
+        }
+        let headers: HTTPHeaders = [
+            "Authorization": auth!,
+            "Accept": "application/json",
+            "verbose": verbose ? "true" : "false"
+        ]
+        print("API REQUEST: \(apiURL)/api/v5/advisories", headers)
+        let response = await withCheckedContinuation { cont in
+            AF.request("\(apiURL)/api/v5/advisories", method: .get, headers: headers).responseJSON{ response in
+                cont.resume(returning: response)
+            }
+        }
+        //print(response)
+        switch response.result {
+        case .success(let value):
+            let result = JSON(value)
+            guard let alerts = result["alerts"].array else {
+                throw APIError.requestError
+            }
+            var message = result["message"].string
+            if message?.count == 0 {
+                message = nil
+            }
+            var alertsResult: [BARTAlert] = []
+            alerts.forEach {alertJSON in
+                alertsResult.append(BARTAlert(station: alertJSON["station"].string ?? "", description: alertJSON["description"].string ?? ""))
+            }
+            print(alertsResult)
+            return (alertsResult, message)
+        case .failure(let error):
+            print(error)
+            throw APIError.apiError
+        }
+        
+    }
 }
 
 

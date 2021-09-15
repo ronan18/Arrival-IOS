@@ -10,6 +10,7 @@ import ArrivalUI
 
 public struct ArrivalHeader: View {
     @ObservedObject var appState: AppState
+    @State var presentAlerts = false
     public var body: some View {
         HStack {
             Text("Arrival")
@@ -21,9 +22,17 @@ public struct ArrivalHeader: View {
             Spacer()
             
             Text("c\(String(self.appState.cycling))")
-            Button(action: {}) {
+            
+            Button(action: {
+                self.presentAlerts = true
+            }) {
                 
-                IconBadge("exclamationmark.triangle.fill", badge: 2).foregroundColor(.white)
+                IconBadge("exclamationmark.triangle.fill", badge: self.appState.alerts.count).foregroundColor(.white)
+            }.sheet(isPresented: $presentAlerts) {
+                BARTAlertsScreen(appState: appState, open: self.$presentAlerts)
+            }
+            Button(action: {}) {
+                Image(systemName: "questionmark.circle")
             }
             Button(action: {}) {
                 Image(systemName: "gear")

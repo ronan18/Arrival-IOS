@@ -95,7 +95,7 @@ struct TimeChooserView: View {
                     Spacer()
                    
                     Text("No Destination Station Specified").foregroundColor(Color("TextColor")).font(.title).bold().multilineTextAlignment(.center).padding(.bottom, 5)
-                    Text("Please choose a destination station before choosing a time").multilineTextAlignment(.center)
+                    Text("Please choose a destination station before choosing a time").multilineTextAlignment(.center).foregroundColor(Color("TextColor"))
                     HStack {
                         Spacer()
                         Button(action: {

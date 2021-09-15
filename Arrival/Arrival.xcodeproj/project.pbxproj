@@ -58,6 +58,9 @@
 		C599E1E926E3E7C7004C573C /* ArrivalCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */; };
 		C599E1EF26E3E7EA004C573C /* TrainsToStationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C599E1EE26E3E7EA004C573C /* TrainsToStationHandler.swift */; };
 		C5A1BD5F26F254D600263C9E /* IconBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A1BD5E26F254D600263C9E /* IconBadge.swift */; };
+		C5A1BD6126F2622800263C9E /* BARTAlert.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A1BD6026F2622800263C9E /* BARTAlert.model.swift */; };
+		C5A1BD6326F2662300263C9E /* BARTAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A1BD6226F2662300263C9E /* BARTAlertView.swift */; };
+		C5A1BD6526F2668800263C9E /* BARTAlertsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A1BD6426F2668800263C9E /* BARTAlertsScreen.swift */; };
 		C5CC589F26D3F5A30025BAC7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = C5CC589E26D3F5A30025BAC7 /* Alamofire */; };
 		C5CC58A226D408420025BAC7 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = C5CC58A126D408420025BAC7 /* SwiftyJSON */; };
 		C5CC58A726D40E570025BAC7 /* Station.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CC58A626D40E570025BAC7 /* Station.model.swift */; };
@@ -199,6 +202,9 @@
 		C599E1E326E3E794004C573C /* SiriExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SiriExtension.entitlements; sourceTree = "<group>"; };
 		C599E1EE26E3E7EA004C573C /* TrainsToStationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainsToStationHandler.swift; sourceTree = "<group>"; };
 		C5A1BD5E26F254D600263C9E /* IconBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconBadge.swift; sourceTree = "<group>"; };
+		C5A1BD6026F2622800263C9E /* BARTAlert.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BARTAlert.model.swift; sourceTree = "<group>"; };
+		C5A1BD6226F2662300263C9E /* BARTAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BARTAlertView.swift; sourceTree = "<group>"; };
+		C5A1BD6426F2668800263C9E /* BARTAlertsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BARTAlertsScreen.swift; sourceTree = "<group>"; };
 		C5CC58A626D40E570025BAC7 /* Station.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.model.swift; sourceTree = "<group>"; };
 		C5CC58A826D412720025BAC7 /* Train.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Train.model.swift; sourceTree = "<group>"; };
 		C5CC58AA26D412BC0025BAC7 /* Trip.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.model.swift; sourceTree = "<group>"; };
@@ -297,6 +303,7 @@
 				C54A297526D2171900E8F1D7 /* StationCard.swift */,
 				3483604B26DC26BD003EEFB9 /* TimeChooserView.swift */,
 				C54A297D26D2A4E300E8F1D7 /* ArrivalHeader.swift */,
+				C5A1BD6426F2668800263C9E /* BARTAlertsScreen.swift */,
 				343DA37D26D089E3008F6A0E /* Assets.xcassets */,
 				343DA37F26D089E3008F6A0E /* Preview Content */,
 			);
@@ -327,6 +334,7 @@
 				C5CC58B426D583290025BAC7 /* LargeButton.swift */,
 				3483604926DBF6F6003EEFB9 /* TripTimeOption.swift */,
 				C5A1BD5E26F254D600263C9E /* IconBadge.swift */,
+				C5A1BD6226F2662300263C9E /* BARTAlertView.swift */,
 			);
 			path = ArrivalUI;
 			sourceTree = "<group>";
@@ -337,6 +345,7 @@
 				343DA3A226D08CF5008F6A0E /* ArrivalCore.h */,
 				343DA3A326D08CF5008F6A0E /* ArrivalCore.docc */,
 				3406FAF326D2C75C00D821D8 /* ArrivalAPI.swift */,
+				C5A1BD6026F2622800263C9E /* BARTAlert.model.swift */,
 				C5CC58BC26D6B16C0025BAC7 /* Station.service.swift */,
 				34F61C2E26D5D8A200B35074 /* APIErrors.model.swift */,
 				34F61C3126D5DE9300B35074 /* LocationData.model.swift */,
@@ -585,6 +594,7 @@
 				3469C6E026DC41500036C5D5 /* HomeTrips.swift in Sources */,
 				3483604C26DC26BD003EEFB9 /* TimeChooserView.swift in Sources */,
 				343DA37A26D089DF008F6A0E /* ArrivalApp.swift in Sources */,
+				C5A1BD6526F2668800263C9E /* BARTAlertsScreen.swift in Sources */,
 				C5CC58B926D587060025BAC7 /* OnboardingView.swift in Sources */,
 				C54A298026D2A6CB00E8F1D7 /* HomeScreen.swift in Sources */,
 				C54A298326D2AB4500E8F1D7 /* StationSearchView.swift in Sources */,
@@ -603,6 +613,7 @@
 				C5CC58B326D582430025BAC7 /* OnboardingIntro.swift in Sources */,
 				341BB6AD26D1F14A0044190A /* TimeDisplayText.swift in Sources */,
 				341BB6B026D1F8310044190A /* TripCard.swift in Sources */,
+				C5A1BD6326F2662300263C9E /* BARTAlertView.swift in Sources */,
 				C5CC58B726D585360025BAC7 /* OnboardingScreen.swift in Sources */,
 				343DA39126D08CD8008F6A0E /* ArrivalUI.docc in Sources */,
 				C54A297A26D2A3BF00E8F1D7 /* TripBar.swift in Sources */,
@@ -623,6 +634,7 @@
 				34CAB3FD26DF21A300CE2374 /* AI.service.swift in Sources */,
 				C5CC58A926D412720025BAC7 /* Train.model.swift in Sources */,
 				34F61C3226D5DE9300B35074 /* LocationData.model.swift in Sources */,
+				C5A1BD6126F2622800263C9E /* BARTAlert.model.swift in Sources */,
 				C546475A26E2BFBE0055545A /* Intents.service.swift in Sources */,
 				C5CC58BD26D6B16C0025BAC7 /* Station.service.swift in Sources */,
 				C5CC58AF26D4173F0025BAC7 /* Time.model.swift in Sources */,

@@ -314,20 +314,5 @@ public class AIService {
         return components
     }
 }
-
-/*#else
- public class AIService {
- public init() {
- print("using debug AI service")
- }
- public func train() {
- print("train using debug AI service")
- }
- }
- #endif
- 
- */
-
-
 #endif
 public let aiService = AIService()

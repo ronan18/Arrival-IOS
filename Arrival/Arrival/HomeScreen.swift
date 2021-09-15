@@ -18,7 +18,9 @@ struct HomeScreen: View {
         VStack(spacing: 0) {
             ArrivalHeader(appState: appState)
             DestinationBar(appState: appState)
-            HeaderAlert()
+            if (self.appState.message != nil) {
+                HeaderAlert(message: self.appState.message!)
+            }
             if (self.appState.locationAuthState == .notAuthorized && self.appState.fromStation == nil) {
                 AuthorizeLocationView(appState: appState)
             } else {

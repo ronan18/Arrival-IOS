@@ -54,6 +54,9 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var tripDisplay: Trip? = nil
     @Published var diplayTripModal = false
     
+    @Published var alerts: [BARTAlert] = []
+    @Published var message: String? = nil
+    
     @Published var cycling: Int = 0
     //Services
     let api = ArrivalAPI()
@@ -283,7 +286,18 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         Task(priority: .background) {
             async let test: () = trainAIAndGetSuggestions()
         }
-        
+        await self.refreshAlerts()
+       
+    }
+    func refreshAlerts() async {
+        do {
+           let (alerts, message) = try await self.api.alerts(verbose: false)
+            self.alerts = alerts
+           // print("MESSAGE \(message)")
+            self.message = message
+        } catch {
+           print(error)
+        }
     }
     func logDirectionEvent(_ direction: TrainDirection) {
         print("logging direction event \(direction)")
