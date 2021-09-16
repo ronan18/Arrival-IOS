@@ -46,6 +46,7 @@ struct HomeTrips: View {
             }.listStyle(.plain).refreshable {
                 Task(priority: .userInitiated) {
                     await self.appState.cycle()
+                    await self.appState.refreshAlerts()
                 }
             }.edgesIgnoringSafeArea(.bottom)
             } else {

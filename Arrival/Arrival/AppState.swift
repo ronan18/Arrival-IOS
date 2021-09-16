@@ -83,7 +83,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     //Watchers
     
     private var cycleTimerLength: TimeInterval = 30
-    
+    // var cycleTask: Task? = nil
     override init() {
         super.init()
         locationManager.delegate = self
@@ -474,6 +474,9 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             result[i].firstFive = false
         }
         self.fromStationSuggestions = result
+    }
+    func triggerCycle() async {
+        
     }
     func cycle() async {
         print("CYCLE")
