@@ -88,7 +88,7 @@ public struct DestinationBar: View {
                 StationSearchView(appState: self.appState, mode: .to)
             }
             
-        }.foregroundColor(Color("LightText")).padding().background(.black)
+        }.foregroundColor(Color("LightText")).padding().background(Color("DestinationBar"))
         
         
     }

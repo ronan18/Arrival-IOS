@@ -53,7 +53,7 @@ public struct TrainCard: View {
                     TimeDisplayText(self.eta!,mode: .etd)
                 }
                 }
-            }.padding(.leading, 20).padding([.vertical,.trailing]).foregroundColor(Color("DarkText"))
+            }.padding(.leading, 20).padding([.vertical,.trailing]).foregroundColor(Color("TextColor"))
         }.cornerRadius(10).background(Color("CardBG")).overlay(HStack{Rectangle().frame(width: 10).foregroundColor(self.redacted ? Color.gray :self.train.colorData); Spacer()}).overlay(
             RoundedRectangle(cornerRadius: CGFloat(10.0)).stroke(Color("CardBorder"), lineWidth:3)
         ).cornerRadius(10.0)

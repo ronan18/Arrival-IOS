@@ -42,7 +42,7 @@ public struct StationCard: View {
                     //Text("no distnace")
                 }
                 
-            }.padding(.leading, 20).padding([.vertical,.trailing]).foregroundColor(Color("DarkText"))
+            }.padding(.leading, 20).padding([.vertical,.trailing]).foregroundColor(Color("TextColor"))
         }.cornerRadius(10).background(Color("CardBG")).overlay(
             RoundedRectangle(cornerRadius: CGFloat(10.0)).stroke(Color("CardBorder"), lineWidth:3)
         ).cornerRadius(10.0).task {

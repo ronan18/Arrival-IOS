@@ -26,10 +26,10 @@ public struct TripCard: View {
             VStack {
                 HStack(alignment: .center) {
                     VStack(alignment: .leading) {
-                        Text(self.leg.origin).font(.headline).lineLimit(1).foregroundColor(Color("DarkText"))
+                        Text(self.leg.origin).font(.headline).lineLimit(1).foregroundColor(Color("TextColor"))
                         HStack(alignment: .center, spacing: 0) {
-                            Image(systemName: "arrow.right.circle.fill").foregroundColor(Color("DarkText"))
-                            Text(self.leg.trainHeadSTN).lineLimit(1).foregroundColor(Color("DarkText"))
+                            Image(systemName: "arrow.right.circle.fill").foregroundColor(Color("TextColor"))
+                            Text(self.leg.trainHeadSTN).lineLimit(1).foregroundColor(Color("TextColor"))
                         }.font(.subheadline)
                         
                     }
@@ -43,14 +43,14 @@ public struct TripCard: View {
                             HStack(spacing: 0) {
                                 Image(systemName: self.isStopsExpanded ? "chevron.down" :"chevron.right").padding(.trailing, self.isStopsExpanded ? 5 : 10)
                                 Text("\(self.leg.stopCount) stops before \(destinationText)...")
-                            }.font(.footnote).foregroundColor(Color("DarkText")).accentColor(Color("DarkText"))
+                            }.font(.footnote).foregroundColor(Color("TextColor")).accentColor(Color("TextColor"))
                         }
                         if (self.isStopsExpanded) {
                             
                             VStack {
                                 ForEach(self.leg.stationsEnRoute, id: \.self) { station in
                                     HStack {
-                                        Text(station).font(.caption).foregroundColor(Color("DarkText"))
+                                        Text(station).font(.caption).foregroundColor(Color("TextColor"))
                                         Spacer()
                                     }
                                 }
@@ -60,11 +60,11 @@ public struct TripCard: View {
                         }
                     }
                     Spacer()
-                    TimeIntervalDisplayText(self.leg.enrouteTime, font: .footnote).padding(.leading).foregroundColor(Color("DarkText"))
+                    TimeIntervalDisplayText(self.leg.enrouteTime, font: .footnote).padding(.leading).foregroundColor(Color("TextColor"))
                 }.padding(.bottom)
                 HStack(alignment: .center) {
                     VStack(alignment: .leading) {
-                        Text(self.leg.destination).font(.headline).lineLimit(1).foregroundColor(Color("DarkText"))
+                        Text(self.leg.destination).font(.headline).lineLimit(1).foregroundColor(Color("TextColor"))
                         
                         
                     }

@@ -18,8 +18,9 @@ struct HomeScreen: View {
         VStack(spacing: 0) {
             ArrivalHeader(appState: appState)
             DestinationBar(appState: appState)
+            Divider()
             if (self.appState.message != nil) {
-                HeaderAlert(message: self.appState.message!)
+                HeaderAlert(message: self.appState.message ?? "BART Advisories")
             }
             if (self.appState.locationAuthState == .notAuthorized && self.appState.fromStation == nil) {
                 AuthorizeLocationView(appState: appState)
