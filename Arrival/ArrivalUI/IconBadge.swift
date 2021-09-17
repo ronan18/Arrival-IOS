@@ -16,10 +16,14 @@ public struct IconBadge: View {
     }
    public var body: some View {
        Image(systemName: icon).symbolRenderingMode(.monochrome).overlay(
-           VStack {
+           ZStack {
+               VStack {
+                   Text("")
+               }.frame(width: 10, height: 10).background(Color.yellow).blur(radius: 1, opaque: false).cornerRadius(10).opacity(0.8).tint(.yellow)
                Text(String(badge))
                    .font(.system(size: 6)).fontWeight(.heavy).foregroundColor(.white)
-           }.frame(width: 10, height: 10).background(.ultraThinMaterial).cornerRadius(10).position(x: 17, y: 3).opacity(badge >= 1 ? 1 : 0).colorScheme(.light)
+              
+           }.frame(width: 10, height: 10).cornerRadius(10).position(x: 17, y: 3).opacity(badge >= 1 ? 1 : 0).tint(.yellow).colorScheme(.light)
           // Circle().foregroundColor(.white)
            
        ).colorScheme(.light)
@@ -28,6 +32,6 @@ public struct IconBadge: View {
 
 struct IconBadge_Previews: PreviewProvider {
     static var previews: some View {
-        IconBadge("exclamationmark.triangle.fill", badge: 1).previewLayout(.sizeThatFits).padding()
+        IconBadge("exclamationmark.triangle.fill", badge: 2).previewLayout(.sizeThatFits).padding().colorScheme(.dark)
     }
 }

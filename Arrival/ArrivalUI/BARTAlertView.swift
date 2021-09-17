@@ -22,7 +22,7 @@ public struct BARTAlertView: View {
                    Text(alert.description).font(.headline)
                }
            
-        }.padding().foregroundColor(Color.black)
+        }.padding().foregroundColor(Color("TextColor"))
            Spacer()
        }.cornerRadius(10).background(Color("CardBG")).overlay(
         RoundedRectangle(cornerRadius: CGFloat(10.0)).stroke(Color("CardBorder"), lineWidth:3)
