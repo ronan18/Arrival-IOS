@@ -34,8 +34,16 @@ public struct ArrivalHeader: View {
             Button(action: {}) {
                 Image(systemName: "questionmark.circle")
             }
-            Button(action: {}) {
+            Button(action: {
+                self.appState.settingsModal = true
+            }) {
                 Image(systemName: "gear")
+            }.sheet(isPresented: .init(get: {
+                return self.appState.settingsModal
+            }, set: {
+                self.appState.settingsModal = $0
+            })) {
+                SettingsScreen(appState: appState)
             }
         }.foregroundColor(.white).padding().background(LinearGradient(gradient: Gradient(colors: [Color("ArrivalBlue"),Color("ArrivalBlue"), Color("arrivalBlueBGDark")]), startPoint: .topLeading, endPoint: .bottomTrailing))
     }

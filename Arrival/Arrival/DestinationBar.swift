@@ -19,10 +19,23 @@ public struct DestinationBar: View {
             }) {
                 HStack {
                     
-                    VStack(alignment:.leading) {
+                    VStack(alignment:.leading, spacing: 0) {
+                        HStack(spacing: 5) {
                         Text("From").font(.caption)
+                            if (self.appState.goingOffOfClosestStation) {
+                        Image(systemName: "location.fill").resizable().aspectRatio(contentMode: .fill).frame(width: 8, height: 8)
+                            }
+                        }
                         if (self.appState.fromStation != nil || self.appState.locationAuthState == .notAuthorized) {
+                           
+                          
                             Text(self.appState.fromStation?.name ?? "Choose").font(.headline).lineLimit(1)
+                               
+                            
+                             /*  if (self.appState.goingOffOfClosestStation) {
+                                   Image(systemName: "location.fill").resizable().aspectRatio(contentMode: .fill).frame(width: 10, height: 10)
+                               }*/
+                            
                         } else {
                             Text("Station").font(.headline).redacted(reason: .placeholder).lineLimit(1)
                         }

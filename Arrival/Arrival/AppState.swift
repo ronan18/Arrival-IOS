@@ -23,6 +23,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var fromStationChooser = false
     @Published var toStationChooser = false
     @Published var timeChooser = false
+    @Published var settingsModal = false
     
     @Published var locationAuthState = LocationAuthState.notAuthorized
     @Published var locationDataState  = LocationDataSate.notReady
@@ -69,6 +70,8 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     let defaults = UserDefaults.standard
     let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
     let mode = RunMode.development
+    let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
+
     
     //Location state
     private var locationManager = CLLocationManager()
@@ -563,9 +566,11 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         self.northTrains = []
         self.southTrains = []
         self.fromStation = station
-        if (station != self.closestStations.first) {
+        if (station.abbr != self.closestStations.first?.abbr) {
+            print("not going off of closest station \(station.abbr) closest \(self.closestStations.first?.abbr)")
             self.goingOffOfClosestStation = false
         } else {
+            print("going off of closest station \(station.abbr)")
             self.goingOffOfClosestStation = true
         }
         self.trainsLoading = true

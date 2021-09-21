@@ -14,7 +14,7 @@ struct BARTAlertsScreen: View {
     
     var body: some View {
         NavigationView {
-            VStack {
+            VStack(spacing: 0) {
                 List() {
                     if (self.appState.alerts.count >= 1) {
                         ForEach(self.appState.alerts) {alert in
@@ -27,7 +27,7 @@ struct BARTAlertsScreen: View {
                             Spacer().frame(height:100)
                             Image(systemName: "clock.badge.checkmark.fill").font(.system(size: 100)).symbolRenderingMode(.hierarchical).padding().foregroundColor(.green)
                             Text("No Delays Reported!").font(.title2).bold().foregroundColor(Color("TextColor"))
-                            Text("Have a good day").foregroundColor(Color("TextColor")).font(.subheadline)
+                            Text("BART has not reported any issues with train service").foregroundColor(Color("TextColor")).font(.subheadline)
                             Spacer()
                         }
                         Spacer()

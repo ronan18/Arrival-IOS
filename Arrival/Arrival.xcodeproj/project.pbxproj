@@ -48,6 +48,7 @@
 		C54A298326D2AB4500E8F1D7 /* StationSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297726D219E700E8F1D7 /* StationSearchView.swift */; };
 		C54A298526D2AB6800E8F1D7 /* TripDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A298426D2AB6800E8F1D7 /* TripDetailsView.swift */; };
 		C550A8EB26D96A42008A2679 /* DestinationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297326D2165200E8F1D7 /* DestinationBar.swift */; };
+		C57DC2C626F93DAA00BFA620 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57DC2C526F93DAA00BFA620 /* SettingsScreen.swift */; };
 		C58B60D626D9990D00FCB47B /* MockupData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58B60D526D9990D00FCB47B /* MockupData.swift */; };
 		C599E1D526E3E5B0004C573C /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = C599E1D426E3E5B0004C573C /* Intents.intentdefinition */; };
 		C599E1DB26E3E794004C573C /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C546474B26E2897A0055545A /* Intents.framework */; };
@@ -194,6 +195,7 @@
 		C54A297F26D2A6CB00E8F1D7 /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		C54A298126D2AA7A00E8F1D7 /* HomeTrains.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTrains.swift; sourceTree = "<group>"; };
 		C54A298426D2AB6800E8F1D7 /* TripDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailsView.swift; sourceTree = "<group>"; };
+		C57DC2C526F93DAA00BFA620 /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
 		C58B60D526D9990D00FCB47B /* MockupData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockupData.swift; sourceTree = "<group>"; };
 		C599E1D426E3E5B0004C573C /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		C599E1DA26E3E794004C573C /* SiriExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SiriExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -304,6 +306,7 @@
 				3483604B26DC26BD003EEFB9 /* TimeChooserView.swift */,
 				C54A297D26D2A4E300E8F1D7 /* ArrivalHeader.swift */,
 				C5A1BD6426F2668800263C9E /* BARTAlertsScreen.swift */,
+				C57DC2C526F93DAA00BFA620 /* SettingsScreen.swift */,
 				343DA37D26D089E3008F6A0E /* Assets.xcassets */,
 				343DA37F26D089E3008F6A0E /* Preview Content */,
 			);
@@ -592,6 +595,7 @@
 				34FB5AA026DB35FA00964BF9 /* ErrorDeterminingLocation.swift in Sources */,
 				C52E881526F14B9800AD6FD1 /* ArrivalHeader.swift in Sources */,
 				3469C6E026DC41500036C5D5 /* HomeTrips.swift in Sources */,
+				C57DC2C626F93DAA00BFA620 /* SettingsScreen.swift in Sources */,
 				3483604C26DC26BD003EEFB9 /* TimeChooserView.swift in Sources */,
 				343DA37A26D089DF008F6A0E /* ArrivalApp.swift in Sources */,
 				C5A1BD6526F2668800263C9E /* BARTAlertsScreen.swift in Sources */,

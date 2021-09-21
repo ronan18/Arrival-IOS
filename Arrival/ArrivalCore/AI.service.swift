@@ -11,6 +11,8 @@ import CoreML
 import Intents
 #if targetEnvironment(simulator)
 public class AIService{
+    public var toStationEventsCount: Int = 0
+    public var directionFilterEventsCount: Int = 0
     public func predictDestinationStation(_ currentStation: Station) -> [StationProbibility]? {
         print("DEBUG AI results")
 
@@ -47,6 +49,8 @@ public class AIService {
     let diskService = DiskService()
     var toStationModel: MLLogisticRegressionClassifier? = nil
     var directionFilterModel: MLLogisticRegressionClassifier? = nil
+    public var toStationEventsCount: Int = 0
+    public var directionFilterEventsCount: Int = 0
     public init () {
         print("production ai being used")
     }
@@ -70,6 +74,7 @@ public class AIService {
     public func trainDirectionFilterAI() async {
         print("runnin directionFilterAI")
         let events  = self.diskService.getDirectionFilterEvents()
+        self.directionFilterEventsCount = events.count
         var dataTable: DataFrame = DataFrame()
         dataTable.append(column: Column<Int>(name: "month", capacity: events.count))
         dataTable.append(column: Column<Int>(name: "dayOfWeek", capacity: events.count))
@@ -110,6 +115,7 @@ public class AIService {
     public func trainToStationAI() async {
         print("running to station training")
         let events  = self.diskService.getTripEvents()
+        self.toStationEventsCount = events.count
         // debugPrint(events)
         var dataTable: DataFrame = DataFrame()
         dataTable.append(column: Column<Int>(name: "month", capacity: events.count))

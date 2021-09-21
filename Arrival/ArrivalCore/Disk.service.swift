@@ -41,7 +41,7 @@ public class DiskService {
         currentEvents = currentEvents.filter {a in
             if (a.sessionID == a.sessionID) {
                 
-                print("\(a.fromStation.abbr != event.fromStation.abbr ? "keeping" : "removing") \(a.fromStation) \(a.direction) \(a.sessionID) directions")
+             //   print("\(a.fromStation.abbr != event.fromStation.abbr ? "keeping" : "removing") \(a.fromStation) \(a.direction) \(a.sessionID) directions")
                 return a.fromStation.abbr != event.fromStation.abbr
             } else {
                 return true
