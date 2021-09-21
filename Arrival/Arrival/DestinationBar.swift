@@ -22,7 +22,7 @@ public struct DestinationBar: View {
                     VStack(alignment:.leading, spacing: 0) {
                         HStack(spacing: 5) {
                         Text("From").font(.caption)
-                            if (self.appState.goingOffOfClosestStation) {
+                            if (self.appState.goingOffOfClosestStation && self.appState.locationAuthState == .authorized) {
                         Image(systemName: "location.fill").resizable().aspectRatio(contentMode: .fill).frame(width: 8, height: 8)
                             }
                         }
