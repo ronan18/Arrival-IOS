@@ -11,12 +11,19 @@ import ArrivalCore
 struct SettingsScreen: View {
     @ObservedObject var appState: AppState
     @AppStorage("displayNavigationTime") var displayNavigationTime = true
+   
+    
     var body: some View {
         NavigationView {
             Form {
                 Section(header: Text("STATION SEARCH")) {
                     Toggle("Display walking and driving time", isOn: $displayNavigationTime)
-                }
+                    HStack {
+                        Text("Show driving time when station is farther than")
+                       
+                        TextField("1 miles", text: .constant("1")).keyboardType(.decimalPad)
+                    }
+                }.foregroundColor(Color("TextColor"))
                 Section(header: Text("MACHINE LEARNING DATA")) {
                     HStack {
                         Text("Direction Filter Events")
@@ -25,7 +32,7 @@ struct SettingsScreen: View {
                     }
                     Button(role: .destructive, action: {}) {
                         Text("Reset Direction Filter Data")
-                    }.controlSize(/*@START_MENU_TOKEN@*/.small/*@END_MENU_TOKEN@*/).foregroundColor(.red)
+                    }.foregroundColor(.red)
                     HStack {
                         Text("To Station Events")
                         Spacer()
@@ -33,8 +40,8 @@ struct SettingsScreen: View {
                     }
                     Button(role: .destructive, action: {}) {
                         Text("Reset To Station Data")
-                    }.controlSize(/*@START_MENU_TOKEN@*/.small/*@END_MENU_TOKEN@*/).foregroundColor(.red)
-                }
+                    }.foregroundColor(.red)
+                }.foregroundColor(Color("TextColor"))
                 Section(header: Text("SYSTEM CONFIGURATION")) {
                     HStack {
                         Text("ID")
@@ -58,9 +65,9 @@ struct SettingsScreen: View {
                     }
                     Button(action: {}) {
                         Text("Export Configuration")
-                    }.foregroundColor(.accentColor).controlSize(/*@START_MENU_TOKEN@*/.small/*@END_MENU_TOKEN@*/)
-                }
-            }.navigationTitle("Arrival Settings").navigationBarItems(trailing:Button(action: {
+                    }.foregroundColor(.accentColor)
+                }.foregroundColor(Color("TextColor"))
+            }.foregroundColor(Color("TextColor")).navigationTitle("Arrival Settings").navigationBarItems(trailing:Button(action: {
                 self.appState.settingsModal = false
             }) {
                 Text("Done").foregroundColor(Color("TextColor"))
