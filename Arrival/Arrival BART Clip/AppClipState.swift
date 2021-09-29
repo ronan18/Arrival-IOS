@@ -250,6 +250,7 @@ class AppClipState:  NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     func startMain() async {
         print("start main")
+        self.requestLocation()
         self.screen = .loading
         guard self.key != nil else {
             self.runOnboarding()
@@ -376,8 +377,7 @@ class AppClipState:  NSObject, ObservableObject, CLLocationManagerDelegate {
             self.cycling += -1
             return
         }
-        
-        print("No to station")
+       
         do {
             print("get trains from \(self.fromStation?.name ?? "none")")
             let (trains, north, south) = try await self.api.trainsFrom(from: fromStation, timeConfig: TripTime(type: .now))
@@ -399,25 +399,12 @@ class AppClipState:  NSObject, ObservableObject, CLLocationManagerDelegate {
                     // aiService.predictDirectionFilter(fromStation)
                     
                     
-                } else {
-                    if let direction = aiService.predictDirectionFilter(fromStation) {
-                        switch direction {
-                        case .north:
-                            self.directionFilter = 1
-                        case .south:
-                            self.directionFilter = 2
-                        }
-                    }
                 }
                 
                 self.firstCycleOfFromStation = false
             }
             self.trainsLoading = false
-            if self.directionFilter == 1 {
-                aiService.logDirectionFilterEvent(DirectionFilterEvent(fromStation: fromStation, direction: .north, date: Date(), sessionID: self.sessionID))
-            } else if self.directionFilter == 2 {
-                aiService.logDirectionFilterEvent(DirectionFilterEvent(fromStation: fromStation, direction: .south, date: Date(), sessionID: self.sessionID))
-            }
+           
             // print(trains)
             self.lastCycle = Date()
         } catch {

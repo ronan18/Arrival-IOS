@@ -64,6 +64,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     let disk = DiskService()
     let stationService = StationService()
     let mapService = MapService()
+    var cycleTimer: Timer? = nil
     // let aiService = AIService()
     
     //Constants
@@ -71,7 +72,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
     let mode = RunMode.development
     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
-
+    
     
     //Location state
     private var locationManager = CLLocationManager()
@@ -118,8 +119,8 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
                 runOnboarding()
             }
         } catch {
-            print(error)
-            runOnboarding()
+            print(error, "login failed")
+            self.screen = .noNetwork
         }
         
     }
@@ -147,6 +148,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             self.disk.saveStations(stations)
         } catch {
             //TODO: Catch this
+            self.screen = .noNetwork
         }
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -216,6 +218,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
                 self.key = newKey
                 await self.startMain()
             } catch {
+                self.screen = .noNetwork
                 //TODO: Catch this
             }
         } else {
@@ -237,12 +240,20 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     func onAppear() async {
         print("ON APPEAR", Date().timeIntervalSince(self.lastCycle))
         if Date().timeIntervalSince(self.lastCycle) >= 60*5 {
-           
+            
             await self.startMain()
-
+            
         } else {
             self.sessionID = UUID()
             await self.cycle()
+        }
+    }
+    func restart() {
+        if (self.cycleTimer != nil) {
+            self.cycleTimer?.invalidate()
+        }
+        Task(priority: .high) {
+            await startMain()
         }
     }
     func startMain() async {
@@ -281,25 +292,30 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             //self.trainsToStationIntent(id)
         }
         await self.cycle()
-        print("show home screen")
-        self.screen = .home
-        Timer.scheduledTimer(withTimeInterval: self.cycleTimerLength, repeats: true) { timer in
+       
+        if (self.screen != .noNetwork) {
+            print("show home screen")
+            self.screen = .home
+        }  else {
+            print("no show home screen")
+        }
+        self.cycleTimer = Timer.scheduledTimer(withTimeInterval: self.cycleTimerLength, repeats: true) { timer in
             Task(priority: .high) {await self.cycle()}
         }
         Task(priority: .background) {
             async let test: () = trainAIAndGetSuggestions()
         }
         await self.refreshAlerts()
-       
+        
     }
     func refreshAlerts() async {
         do {
-           let (alerts, message) = try await self.api.alerts(verbose: false)
+            let (alerts, message) = try await self.api.alerts(verbose: false)
             self.alerts = alerts
-           // print("MESSAGE \(message)")
+            // print("MESSAGE \(message)")
             self.message = message
         } catch {
-           print(error)
+            print(error)
         }
     }
     func logDirectionEvent(_ direction: TrainDirection) {
@@ -307,7 +323,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         guard let fromStation = fromStation else {
             return
         }
-
+        
         aiService.logDirectionFilterEvent(DirectionFilterEvent(fromStation: fromStation, direction: direction, date: Date(), sessionID: self.sessionID))
     }
     func trainAIAndGetSuggestions() async {
@@ -484,7 +500,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     func cycle() async {
         print("CYCLE")
         
-        if (self.locationAuthState == .authorized) {
+        if (self.locationAuthState == .authorized && self.screen != .noNetwork) {
             self.screen = .home
         }
         self.cycling += 1
@@ -524,14 +540,14 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
                     if (south.count == 0 && north.count == 0) {
                         self.directionFilter = 3
                     } else if (south.count == 0 && north.count > 0) {
-                      // aiService.predictDirectionFilter(fromStation)
+                        // aiService.predictDirectionFilter(fromStation)
                         self.directionFilter = 1
                     }
                     else if (south.count > 0 && north.count == 0) {
                         self.directionFilter = 2
-                      
-                       // aiService.predictDirectionFilter(fromStation)
-
+                        
+                        // aiService.predictDirectionFilter(fromStation)
+                        
                         
                     } else {
                         if let direction = aiService.predictDirectionFilter(fromStation) {
@@ -617,18 +633,18 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
     func trainsToStationIntent(departureStationID: String, destinationStationID: String) {
-        /*  guard let stations = self.stations else {
-         //  self.handleTrainsToStationIntent = (departureStationID, destinationStationID)
-         return
-         }
-         self.handleTrainsToStationIntent = nil
-         // let stationReq = self.stationService.getStationFromAbbr(id, stations: stations)
-         guard let station = stationReq else {
-         return
-         }
-         print(station)
-         self.toStation = station
-         */
+        guard let stations = self.stations else {
+            //  self.handleTrainsToStationIntent = (departureStationID, destinationStationID)
+            return
+        }
+        self.handleTrainsToStationIntent = nil
+        //let stationReq = self.stationService.getStationFromAbbr(id, stations: stations)
+      /*  guard let station = stationReq else {
+            return
+        }
+        print(station)
+        self.toStation = station*/
+        
     }
     
 }

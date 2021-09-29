@@ -17,11 +17,15 @@ struct ContentView: View {
                 OnboardingView(appState: appState)
             } else if (appState.screen == .home) {
                 HomeScreen(appState: appState)
+            } else if (self.appState.screen == .noNetwork) {
+                NoNetwork(retry: {
+                    Task { self.appState.startMain()}
+                })
             } else if (appState.screen == .loading) {
-                ProgressView()
+                LoadingScreen(indicator: true, versionInfo: true)
             }
         }.onContinueUserActivity("TrainsToStationIntent", perform: {userActivity in
-           /* guard let intent = userActivity.interaction?.intent as? TrainsToStationIntent else {
+            guard let intent = userActivity.interaction?.intent as? TrainsToStationIntent else {
                 return
             }
             guard let departureStationID = intent.departureStation?.identifier else {
@@ -31,7 +35,7 @@ struct ContentView: View {
                 return
             }
             print( destinationStationID, "user activity")
-            self.appState.trainsToStationIntent(departure: despartureStationID, destination: destinationStationID)*/
+            self.appState.trainsToStationIntent(departureStationID: departureStationID, destinationStationID: destinationStationID)
         }).onChange(of: scenePhase) { phase in
             
             // Handle errors here

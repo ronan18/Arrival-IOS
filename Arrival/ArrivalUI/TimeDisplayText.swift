@@ -7,10 +7,7 @@
 
 import SwiftUI
 import ArrivalCore
-public enum TimeDisplayType {
-    case timeTill
-    case etd
-}
+
 public struct TimeDisplayText: View {
     let font: Font
     let timeText: String

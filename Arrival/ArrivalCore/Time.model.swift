@@ -27,3 +27,7 @@ public struct TripTime {
     }
     
 }
+public enum TimeDisplayType {
+    case timeTill
+    case etd
+}

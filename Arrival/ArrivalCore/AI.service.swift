@@ -9,7 +9,7 @@ import Foundation
 import TabularData
 import CoreML
 import Intents
-#if targetEnvironment(simulator)
+#if targetEnvironment(simulator) || os(watchOS)
 public class AIService{
     public var toStationEventsCount: Int = 0
     public var directionFilterEventsCount: Int = 0

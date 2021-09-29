@@ -14,11 +14,14 @@ struct ContentView: View {
     var body: some View {
         if (self.appState.screen == .home) {
             HomeScreen(appState: appState)
+        } else if (self.appState.screen == .noNetwork) {
+            NoNetwork(retry: {})
         } else {
-            Text("Loading")
+            LoadingScreen()
         }
-       
     }
+       
+    
 }
 
 struct ContentView_Previews: PreviewProvider {

@@ -40,7 +40,7 @@ public class ArrivalAPI {
             })
             return(StationStorage(stations: stations, byAbbr: stationsByAbbr, version: result["version"].doubleValue))
         case .failure(let error):
-            print(error)
+            print(error, "stations")
             throw APIError.requestError
             // return nil
         }
@@ -72,7 +72,7 @@ public class ArrivalAPI {
             }
             
         case .failure(let error):
-            print(error)
+            print(error, "login")
             throw APIError.requestError
         }
         
@@ -198,6 +198,7 @@ public class ArrivalAPI {
         switch response.result {
         case .success(let value):
             let result = JSON(value)
+           // print(result)
             var north: [Train] = []
             var south: [Train] = []
             var trains: [Train] = []
@@ -228,6 +229,7 @@ public class ArrivalAPI {
             south.sort(by: {(a,b) in
                 return a.etd < b.etd
             })
+           // print("trais count \(trains.count)")
             return (trains, north, south)
         case .failure(let error):
             print(error)

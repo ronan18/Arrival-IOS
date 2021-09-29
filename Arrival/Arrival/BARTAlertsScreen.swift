@@ -27,7 +27,7 @@ struct BARTAlertsScreen: View {
                             Spacer().frame(height:100)
                             Image(systemName: "clock.badge.checkmark.fill").font(.system(size: 100)).symbolRenderingMode(.hierarchical).padding().foregroundColor(.green)
                             Text("No Delays Reported!").font(.title2).bold().foregroundColor(Color("TextColor"))
-                            Text("BART has not reported any issues with train service").foregroundColor(Color("TextColor")).font(.subheadline)
+                            Text("BART has not reported any issues with train service").foregroundColor(Color("TextColor")).font(.subheadline).lineLimit(2)
                             Spacer()
                         }
                         Spacer()
