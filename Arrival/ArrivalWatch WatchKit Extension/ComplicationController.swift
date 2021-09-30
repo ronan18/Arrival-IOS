@@ -13,8 +13,8 @@ class ComplicationController: NSObject, CLKComplicationDataSource {
     // MARK: - Complication Configuration
 
     func getComplicationDescriptors(handler: @escaping ([CLKComplicationDescriptor]) -> Void) {
-        let descriptors = [
-            CLKComplicationDescriptor(identifier: "complication", displayName: "Arrival", supportedFamilies: CLKComplicationFamily.allCases)
+        let descriptors: [CLKComplicationDescriptor] = [
+//            /CLKComplicationDescriptor(identifier: "complication", displayName: "Arrival", supportedFamilies: CLKComplicationFamily.allCases)
             // Multiple complication support can be added here with more descriptors
         ]
         

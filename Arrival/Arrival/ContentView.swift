@@ -19,7 +19,7 @@ struct ContentView: View {
                 HomeScreen(appState: appState)
             } else if (self.appState.screen == .noNetwork) {
                 NoNetwork(retry: {
-                    Task { self.appState.startMain()}
+                    Task { await self.appState.startMain()}
                 })
             } else if (appState.screen == .loading) {
                 LoadingScreen(indicator: true, versionInfo: true)
