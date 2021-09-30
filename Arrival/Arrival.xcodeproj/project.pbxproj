@@ -38,23 +38,8 @@
 		34FB5A9E26DAF8AB00964BF9 /* StationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297526D2171900E8F1D7 /* StationCard.swift */; };
 		34FB5AA026DB35FA00964BF9 /* ErrorDeterminingLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FB5A9F26DB35FA00964BF9 /* ErrorDeterminingLocation.swift */; };
 		C527270E26EBDD35002EE89C /* AI.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C527270D26EBDD35002EE89C /* AI.model.swift */; };
-		C52AADF42704AB1F0068B4C9 /* ArrivalWatch WatchKit App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = C52AADF32704AB1F0068B4C9 /* ArrivalWatch WatchKit App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		C52AADF92704AB210068B4C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C52AADF82704AB210068B4C9 /* Assets.xcassets */; };
-		C52AADFF2704AB210068B4C9 /* ArrivalWatch WatchKit Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C52AADFE2704AB210068B4C9 /* ArrivalWatch WatchKit Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		C52AAE042704AB210068B4C9 /* ArrivalApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52AAE032704AB210068B4C9 /* ArrivalApp.swift */; };
-		C52AAE062704AB210068B4C9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52AAE052704AB210068B4C9 /* ContentView.swift */; };
-		C52AAE082704AB210068B4C9 /* NotificationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52AAE072704AB210068B4C9 /* NotificationController.swift */; };
-		C52AAE0A2704AB210068B4C9 /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52AAE092704AB210068B4C9 /* NotificationView.swift */; };
-		C52AAE0C2704AB210068B4C9 /* ComplicationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52AAE0B2704AB210068B4C9 /* ComplicationController.swift */; };
-		C52AAE0E2704AB230068B4C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C52AAE0D2704AB230068B4C9 /* Assets.xcassets */; };
-		C52AAE112704AB230068B4C9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C52AAE102704AB230068B4C9 /* Preview Assets.xcassets */; };
-		C52AAE202704AB810068B4C9 /* WatchAppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52AAE1F2704AB810068B4C9 /* WatchAppState.swift */; };
-		C52AAE2C2704BBAF0068B4C9 /* HomeTrains.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52AAE2B2704BBAF0068B4C9 /* HomeTrains.swift */; };
-		C52AAE2E2704BBC30068B4C9 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52AAE2D2704BBC30068B4C9 /* HomeScreen.swift */; };
 		C52AAE412704D02F0068B4C9 /* ArrivalWatchCore.docc in Sources */ = {isa = PBXBuildFile; fileRef = C52AAE402704D02F0068B4C9 /* ArrivalWatchCore.docc */; };
 		C52AAE422704D02F0068B4C9 /* ArrivalWatchCore.h in Headers */ = {isa = PBXBuildFile; fileRef = C52AAE3F2704D02F0068B4C9 /* ArrivalWatchCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C52AAE452704D02F0068B4C9 /* ArrivalWatchCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C52AAE3D2704D02F0068B4C9 /* ArrivalWatchCore.framework */; };
-		C52AAE462704D02F0068B4C9 /* ArrivalWatchCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C52AAE3D2704D02F0068B4C9 /* ArrivalWatchCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C52AAE4B2704D0410068B4C9 /* AI.service.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34CAB3FC26DF21A300CE2374 /* AI.service.swift */; };
 		C52AAE4D2704D0410068B4C9 /* BARTAlert.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A1BD6026F2622800263C9E /* BARTAlert.model.swift */; };
 		C52AAE4E2704D0410068B4C9 /* Screen.Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CC58BA26D58FD20025BAC7 /* Screen.Model.swift */; };
@@ -74,15 +59,11 @@
 		C52AAE802704D0B20068B4C9 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = C52AAE7F2704D0B20068B4C9 /* Alamofire */; };
 		C52AAE822704D11F0068B4C9 /* Disk.service.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52AAE812704D11F0068B4C9 /* Disk.service.swift */; };
 		C52AAE862704DD6E0068B4C9 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = C52AAE852704DD6E0068B4C9 /* SwiftyJSON */; };
-		C52AAE882704DF800068B4C9 /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52AAE872704DF800068B4C9 /* LoadingScreen.swift */; };
 		C52AAE922704E00B0068B4C9 /* ArrivalWatchUI.docc in Sources */ = {isa = PBXBuildFile; fileRef = C52AAE912704E00B0068B4C9 /* ArrivalWatchUI.docc */; };
 		C52AAE932704E00B0068B4C9 /* ArrivalWatchUI.h in Headers */ = {isa = PBXBuildFile; fileRef = C52AAE902704E00B0068B4C9 /* ArrivalWatchUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C52AAE962704E00B0068B4C9 /* ArrivalWatchUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C52AAE8E2704E00B0068B4C9 /* ArrivalWatchUI.framework */; };
-		C52AAE972704E00B0068B4C9 /* ArrivalWatchUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C52AAE8E2704E00B0068B4C9 /* ArrivalWatchUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C52AAE9C2704E0190068B4C9 /* TrainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52AAE9B2704E0190068B4C9 /* TrainView.swift */; };
 		C52AAE9D2704E3050068B4C9 /* ArrivalWatchCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C52AAE3D2704D02F0068B4C9 /* ArrivalWatchCore.framework */; };
 		C52AAEA42704E3840068B4C9 /* TimeDisplayText.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52AAEA32704E3840068B4C9 /* TimeDisplayText.swift */; };
-		C52AAEA82704E5C20068B4C9 /* AuthorizeLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C52AAEA72704E5C20068B4C9 /* AuthorizeLocationView.swift */; };
 		C52E881526F14B9800AD6FD1 /* ArrivalHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297D26D2A4E300E8F1D7 /* ArrivalHeader.swift */; };
 		C546475A26E2BFBE0055545A /* Intents.service.swift in Sources */ = {isa = PBXBuildFile; fileRef = C546475926E2BFBE0055545A /* Intents.service.swift */; };
 		C54A297226D20E4C00E8F1D7 /* HeaderAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297126D20E4C00E8F1D7 /* HeaderAlert.swift */; };
@@ -165,34 +146,6 @@
 			remoteGlobalIDString = 343DA39F26D08CF5008F6A0E;
 			remoteInfo = ArrivalCore;
 		};
-		C52AADF52704AB1F0068B4C9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 343DA36E26D089DF008F6A0E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C52AADF22704AB1F0068B4C9;
-			remoteInfo = "ArrivalWatch WatchKit App";
-		};
-		C52AAE002704AB210068B4C9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 343DA36E26D089DF008F6A0E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C52AADFD2704AB210068B4C9;
-			remoteInfo = "ArrivalWatch WatchKit Extension";
-		};
-		C52AAE432704D02F0068B4C9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 343DA36E26D089DF008F6A0E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C52AAE3C2704D02F0068B4C9;
-			remoteInfo = ArrivalWatchCore;
-		};
-		C52AAE942704E00B0068B4C9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 343DA36E26D089DF008F6A0E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C52AAE8D2704E00B0068B4C9;
-			remoteInfo = ArrivalWatchUI;
-		};
 		C52AAE9F2704E3050068B4C9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 343DA36E26D089DF008F6A0E /* Project object */;
@@ -246,40 +199,6 @@
 			files = (
 				343DA39626D08CD8008F6A0E /* ArrivalUI.framework in Embed Frameworks */,
 				343DA3A926D08CF5008F6A0E /* ArrivalCore.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C52AAE162704AB230068B4C9 /* Embed Watch Content */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
-			dstSubfolderSpec = 16;
-			files = (
-				C52AADF42704AB1F0068B4C9 /* ArrivalWatch WatchKit App.app in Embed Watch Content */,
-			);
-			name = "Embed Watch Content";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C52AAE192704AB230068B4C9 /* Embed App Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				C52AADFF2704AB210068B4C9 /* ArrivalWatch WatchKit Extension.appex in Embed App Extensions */,
-			);
-			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C52AAE4A2704D02F0068B4C9 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				C52AAE972704E00B0068B4C9 /* ArrivalWatchUI.framework in Embed Frameworks */,
-				C52AAE462704D02F0068B4C9 /* ArrivalWatchCore.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -361,10 +280,7 @@
 		34FB5A9A26DAEF0E00964BF9 /* Maps.service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maps.service.swift; sourceTree = "<group>"; };
 		34FB5A9F26DB35FA00964BF9 /* ErrorDeterminingLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDeterminingLocation.swift; sourceTree = "<group>"; };
 		C527270D26EBDD35002EE89C /* AI.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI.model.swift; sourceTree = "<group>"; };
-		C52AADF02704AB1F0068B4C9 /* Arrival.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Arrival.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C52AADF32704AB1F0068B4C9 /* ArrivalWatch WatchKit App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ArrivalWatch WatchKit App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C52AADF82704AB210068B4C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		C52AADFE2704AB210068B4C9 /* ArrivalWatch WatchKit Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "ArrivalWatch WatchKit Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C52AAE032704AB210068B4C9 /* ArrivalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalApp.swift; sourceTree = "<group>"; };
 		C52AAE052704AB210068B4C9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C52AAE072704AB210068B4C9 /* NotificationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationController.swift; sourceTree = "<group>"; };
@@ -471,22 +387,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C52AADFB2704AB210068B4C9 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C52AAE962704E00B0068B4C9 /* ArrivalWatchUI.framework in Frameworks */,
-				C52AAE452704D02F0068B4C9 /* ArrivalWatchCore.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C52AAE252704ABB10068B4C9 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C52AAE3A2704D02F0068B4C9 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -551,9 +451,6 @@
 				343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */,
 				C599E1DA26E3E794004C573C /* SiriExtension.appex */,
 				C5A16FEA26FA34D40027DF58 /* Arrival BART Clip.app */,
-				C52AADF02704AB1F0068B4C9 /* Arrival.app */,
-				C52AADF32704AB1F0068B4C9 /* ArrivalWatch WatchKit App.app */,
-				C52AADFE2704AB210068B4C9 /* ArrivalWatch WatchKit Extension.appex */,
 				C52AAE3D2704D02F0068B4C9 /* ArrivalWatchCore.framework */,
 				C52AAE8E2704E00B0068B4C9 /* ArrivalWatchUI.framework */,
 			);
@@ -860,61 +757,6 @@
 			productReference = 343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		C52AADEF2704AB1F0068B4C9 /* ArrivalWatch */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C52AAE1E2704AB230068B4C9 /* Build configuration list for PBXNativeTarget "ArrivalWatch" */;
-			buildPhases = (
-				C52AADEE2704AB1F0068B4C9 /* Resources */,
-				C52AAE162704AB230068B4C9 /* Embed Watch Content */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C52AADF62704AB1F0068B4C9 /* PBXTargetDependency */,
-			);
-			name = ArrivalWatch;
-			productName = ArrivalWatch;
-			productReference = C52AADF02704AB1F0068B4C9 /* Arrival.app */;
-			productType = "com.apple.product-type.application.watchapp2-container";
-		};
-		C52AADF22704AB1F0068B4C9 /* ArrivalWatch WatchKit App */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C52AAE1D2704AB230068B4C9 /* Build configuration list for PBXNativeTarget "ArrivalWatch WatchKit App" */;
-			buildPhases = (
-				C52AADF12704AB1F0068B4C9 /* Resources */,
-				C52AAE192704AB230068B4C9 /* Embed App Extensions */,
-				C52AAE252704ABB10068B4C9 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C52AAE012704AB210068B4C9 /* PBXTargetDependency */,
-			);
-			name = "ArrivalWatch WatchKit App";
-			productName = "ArrivalWatch WatchKit App";
-			productReference = C52AADF32704AB1F0068B4C9 /* ArrivalWatch WatchKit App.app */;
-			productType = "com.apple.product-type.application.watchapp2";
-		};
-		C52AADFD2704AB210068B4C9 /* ArrivalWatch WatchKit Extension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C52AAE1C2704AB230068B4C9 /* Build configuration list for PBXNativeTarget "ArrivalWatch WatchKit Extension" */;
-			buildPhases = (
-				C52AADFA2704AB210068B4C9 /* Sources */,
-				C52AADFB2704AB210068B4C9 /* Frameworks */,
-				C52AADFC2704AB210068B4C9 /* Resources */,
-				C52AAE4A2704D02F0068B4C9 /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C52AAE442704D02F0068B4C9 /* PBXTargetDependency */,
-				C52AAE952704E00B0068B4C9 /* PBXTargetDependency */,
-			);
-			name = "ArrivalWatch WatchKit Extension";
-			productName = "ArrivalWatch WatchKit Extension";
-			productReference = C52AADFE2704AB210068B4C9 /* ArrivalWatch WatchKit Extension.appex */;
-			productType = "com.apple.product-type.watchkit2-extension";
-		};
 		C52AAE3C2704D02F0068B4C9 /* ArrivalWatchCore */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = C52AAE472704D02F0068B4C9 /* Build configuration list for PBXNativeTarget "ArrivalWatchCore" */;
@@ -1013,15 +855,6 @@
 					343DA39F26D08CF5008F6A0E = {
 						CreatedOnToolsVersion = 13.0;
 					};
-					C52AADEF2704AB1F0068B4C9 = {
-						CreatedOnToolsVersion = 13.0;
-					};
-					C52AADF22704AB1F0068B4C9 = {
-						CreatedOnToolsVersion = 13.0;
-					};
-					C52AADFD2704AB210068B4C9 = {
-						CreatedOnToolsVersion = 13.0;
-					};
 					C52AAE3C2704D02F0068B4C9 = {
 						CreatedOnToolsVersion = 13.0;
 					};
@@ -1060,9 +893,6 @@
 				343DA39F26D08CF5008F6A0E /* ArrivalCore */,
 				C599E1D926E3E794004C573C /* SiriExtension */,
 				C5A16FE926FA34D40027DF58 /* Arrival BART Clip */,
-				C52AADEF2704AB1F0068B4C9 /* ArrivalWatch */,
-				C52AADF22704AB1F0068B4C9 /* ArrivalWatch WatchKit App */,
-				C52AADFD2704AB210068B4C9 /* ArrivalWatch WatchKit Extension */,
 				C52AAE3C2704D02F0068B4C9 /* ArrivalWatchCore */,
 				C52AAE8D2704E00B0068B4C9 /* ArrivalWatchUI */,
 			);
@@ -1090,30 +920,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C52AADEE2704AB1F0068B4C9 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C52AADF12704AB1F0068B4C9 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C52AADF92704AB210068B4C9 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C52AADFC2704AB210068B4C9 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C52AAE112704AB230068B4C9 /* Preview Assets.xcassets in Resources */,
-				C52AAE0E2704AB230068B4C9 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1225,23 +1031,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C52AADFA2704AB210068B4C9 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C52AAE082704AB210068B4C9 /* NotificationController.swift in Sources */,
-				C52AAE062704AB210068B4C9 /* ContentView.swift in Sources */,
-				C52AAE0C2704AB210068B4C9 /* ComplicationController.swift in Sources */,
-				C52AAE2C2704BBAF0068B4C9 /* HomeTrains.swift in Sources */,
-				C52AAE2E2704BBC30068B4C9 /* HomeScreen.swift in Sources */,
-				C52AAE042704AB210068B4C9 /* ArrivalApp.swift in Sources */,
-				C52AAE0A2704AB210068B4C9 /* NotificationView.swift in Sources */,
-				C52AAE202704AB810068B4C9 /* WatchAppState.swift in Sources */,
-				C52AAE882704DF800068B4C9 /* LoadingScreen.swift in Sources */,
-				C52AAEA82704E5C20068B4C9 /* AuthorizeLocationView.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		C52AAE392704D02F0068B4C9 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1321,26 +1110,6 @@
 			isa = PBXTargetDependency;
 			target = 343DA39F26D08CF5008F6A0E /* ArrivalCore */;
 			targetProxy = 3475A95226DACE4700DFDD9E /* PBXContainerItemProxy */;
-		};
-		C52AADF62704AB1F0068B4C9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C52AADF22704AB1F0068B4C9 /* ArrivalWatch WatchKit App */;
-			targetProxy = C52AADF52704AB1F0068B4C9 /* PBXContainerItemProxy */;
-		};
-		C52AAE012704AB210068B4C9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C52AADFD2704AB210068B4C9 /* ArrivalWatch WatchKit Extension */;
-			targetProxy = C52AAE002704AB210068B4C9 /* PBXContainerItemProxy */;
-		};
-		C52AAE442704D02F0068B4C9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C52AAE3C2704D02F0068B4C9 /* ArrivalWatchCore */;
-			targetProxy = C52AAE432704D02F0068B4C9 /* PBXContainerItemProxy */;
-		};
-		C52AAE952704E00B0068B4C9 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C52AAE8D2704E00B0068B4C9 /* ArrivalWatchUI */;
-			targetProxy = C52AAE942704E00B0068B4C9 /* PBXContainerItemProxy */;
 		};
 		C52AAEA02704E3050068B4C9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1695,160 +1464,6 @@
 			};
 			name = Release;
 		};
-		C52AAE142704AB230068B4C9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7M5JDZSYX7;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.ArrivalWatch;
-				PRODUCT_NAME = Arrival;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		C52AAE152704AB230068B4C9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7M5JDZSYX7;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.ArrivalWatch;
-				PRODUCT_NAME = Arrival;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
-		C52AAE172704AB230068B4C9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7M5JDZSYX7;
-				GENERATE_INFOPLIST_FILE = YES;
-				IBSC_MODULE = ArrivalWatch_WatchKit_Extension;
-				INFOPLIST_KEY_CFBundleDisplayName = "ArrivalWatch WatchKit App";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.ArrivalWatch.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 8.0;
-			};
-			name = Debug;
-		};
-		C52AAE182704AB230068B4C9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7M5JDZSYX7;
-				GENERATE_INFOPLIST_FILE = YES;
-				IBSC_MODULE = ArrivalWatch_WatchKit_Extension;
-				INFOPLIST_KEY_CFBundleDisplayName = "ArrivalWatch WatchKit App";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.ArrivalWatch.watchkitapp;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 8.0;
-			};
-			name = Release;
-		};
-		C52AAE1A2704AB230068B4C9 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"ArrivalWatch WatchKit Extension/Preview Content\"";
-				DEVELOPMENT_TEAM = 7M5JDZSYX7;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "ArrivalWatch WatchKit Extension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "ArrivalWatch WatchKit Extension";
-				INFOPLIST_KEY_CLKComplicationPrincipalClass = "$(PRODUCT_MODULE_NAME).ComplicationController";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_WKWatchOnly = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.ArrivalWatch.watchkitapp.watchkitextension;
-				PRODUCT_NAME = "${TARGET_NAME}";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 8.0;
-			};
-			name = Debug;
-		};
-		C52AAE1B2704AB230068B4C9 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_COMPLICATION_NAME = Complication;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"ArrivalWatch WatchKit Extension/Preview Content\"";
-				DEVELOPMENT_TEAM = 7M5JDZSYX7;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "ArrivalWatch WatchKit Extension/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "ArrivalWatch WatchKit Extension";
-				INFOPLIST_KEY_CLKComplicationPrincipalClass = "$(PRODUCT_MODULE_NAME).ComplicationController";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_WKWatchOnly = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.ArrivalWatch.watchkitapp.watchkitextension;
-				PRODUCT_NAME = "${TARGET_NAME}";
-				SDKROOT = watchos;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 4;
-				WATCHOS_DEPLOYMENT_TARGET = 8.0;
-			};
-			name = Release;
-		};
 		C52AAE482704D02F0068B4C9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2148,33 +1763,6 @@
 			buildConfigurations = (
 				343DA3AB26D08CF5008F6A0E /* Debug */,
 				343DA3AC26D08CF5008F6A0E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C52AAE1C2704AB230068B4C9 /* Build configuration list for PBXNativeTarget "ArrivalWatch WatchKit Extension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C52AAE1A2704AB230068B4C9 /* Debug */,
-				C52AAE1B2704AB230068B4C9 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C52AAE1D2704AB230068B4C9 /* Build configuration list for PBXNativeTarget "ArrivalWatch WatchKit App" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C52AAE172704AB230068B4C9 /* Debug */,
-				C52AAE182704AB230068B4C9 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C52AAE1E2704AB230068B4C9 /* Build configuration list for PBXNativeTarget "ArrivalWatch" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C52AAE142704AB230068B4C9 /* Debug */,
-				C52AAE152704AB230068B4C9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
