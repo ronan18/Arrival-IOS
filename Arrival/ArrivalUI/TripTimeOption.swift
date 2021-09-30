@@ -31,12 +31,12 @@ public struct TripTimeOption: View {
         
             TimeDisplayText(self.tripTime.time, mode: self.timeMode).foregroundColor(Color("TextColor"))
            
-        }.frame(width: size, height: size).padding().cornerRadius(10).overlay(
+       }.frame(width: size, height: 20).padding().cornerRadius(10).overlay(
             RoundedRectangle(cornerRadius: CGFloat(10.0)).stroke(Color("CardBorder"), lineWidth:3)
         ).cornerRadius(10.0).foregroundColor(Color("TextColor")).overlay(VStack {
             Spacer()
-            if (self.tripTime.type == .now) {
-            Text("Provides Realtime Data")
+            if (self.tripTime.type == .now && false) {
+            Text("(realtime)")
                     .font(.system(size: 10)).foregroundColor(Color.gray).multilineTextAlignment(.center)
             }
         }.padding(.bottom))

@@ -420,7 +420,7 @@ class AppClipState:  NSObject, ObservableObject, CLLocationManagerDelegate {
         self.southTrains = []
         self.fromStation = station
         if (station.abbr != self.closestStations.first?.abbr) {
-            print("not going off of closest station \(station.abbr) closest \(self.closestStations.first?.abbr)")
+            print("not going off of closest station \(station.abbr) closest \(self.closestStations.first?.abbr ?? "none")")
             self.goingOffOfClosestStation = false
         } else {
             print("going off of closest station \(station.abbr)")
