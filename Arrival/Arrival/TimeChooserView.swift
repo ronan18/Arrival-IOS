@@ -27,7 +27,7 @@ struct TimeChooserView: View {
                             Picker(selection: self.$leaveArrive, label: Text("Leave or Arrive")) {
                                 Text("Leave").tag(1)
                                 Text("Arrive").tag(2)
-                            }.pickerStyle(SegmentedPickerStyle()).padding(.bottom) 
+                            }.pickerStyle(SegmentedPickerStyle()).padding(.bottom)
                             HStack {
                                 TripTimeOption(TripTime(type: .now), choose: {time in
                                     self.choose(time)
@@ -49,31 +49,31 @@ struct TimeChooserView: View {
                             }.padding(.top)
                             Divider()
                             DatePicker("Specify a custom time", selection: $customTime, in: Date()...)
-                                .datePickerStyle(GraphicalDatePickerStyle()).frame(maxHeight: 400).onAppear {
-                                    if (self.appState.timeConfig.time < Date()) {
-                                        self.customTime = Date()
-                                    } else {
-                                    self.customTime = self.appState.timeConfig.time
-                                    }
-                                }
+                                .datePickerStyle(GraphicalDatePickerStyle()).frame(maxHeight: 400)
+                        }
+                        
+                        LargeButton("Choose", action: {
+                            if (self.leaveArrive == 1) {
+                                self.choose(TripTime(type: .leave, time: self.customTime))
+                            } else {
+                                self.choose(TripTime(type: .arrive, time: self.customTime))
+                            }
                             
-                            LargeButton("Choose", action: {
-                                if (self.leaveArrive == 1) {
-                                    self.choose(TripTime(type: .leave, time: self.customTime))
-                                } else {
-                                    self.choose(TripTime(type: .arrive, time: self.customTime))
-                                }
-                                
-                            })
-                            
-                            
-                            Spacer()
-                        }.padding().navigationBarTitle("Choose Trip Time").navigationBarItems(trailing:Button(action: {
-                            self.appState.timeChooser = false
-                        }) {
-                            Text("Done")
-                                .foregroundColor(Color("TextColor"))
-                        }).navigationBarTitleDisplayMode(.inline)
+                        })
+                        
+                        
+                        Spacer()
+                    }.padding().navigationBarTitle("Choose Trip Time").navigationBarItems(trailing:Button(action: {
+                        self.appState.timeChooser = false
+                    }) {
+                        Text("Done")
+                            .foregroundColor(Color("TextColor"))
+                    }).navigationBarTitleDisplayMode(.inline).onAppear {
+                        if (self.appState.timeConfig.time < Date()) {
+                            self.customTime = Date()
+                        } else {
+                            self.customTime = self.appState.timeConfig.time
+                        }
                     }
                 }
                 if (self.appState.toStation == nil) {

@@ -16,15 +16,12 @@ struct SettingsScreen: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("STATION SEARCH")) {
-                    Toggle("Display walking and driving time", isOn: $displayNavigationTime)
-                    HStack {
-                        Text("Show driving time when station is farther than")
-                       
-                        TextField("1 miles", text: .constant("1")).keyboardType(.decimalPad)
-                    }
-                }.foregroundColor(Color("TextColor"))
-                Section(header: Text("MACHINE LEARNING DATA")) {
+                NavigationLink(destination: Form {
+                    Toggle("Display walking and driving time", isOn: $displayNavigationTime).foregroundColor(Color("TextColor"))
+                  }.navigationTitle("Station Search")) {
+                    Text("Station Search")
+                }
+                NavigationLink(destination: Form {
                     HStack {
                         Text("Direction Filter Events")
                         Spacer()
@@ -41,8 +38,10 @@ struct SettingsScreen: View {
                     Button(role: .destructive, action: {}) {
                         Text("Reset To Station Data")
                     }.foregroundColor(.red)
-                }.foregroundColor(Color("TextColor"))
-                Section(header: Text("SYSTEM CONFIGURATION")) {
+                  }.foregroundColor(Color("TextColor")).navigationTitle("Machine Learning")) {
+                    Text("Machine Learning")
+                }
+                NavigationLink(destination: Form {
                     HStack {
                         Text("ID")
                         Spacer()
@@ -66,7 +65,10 @@ struct SettingsScreen: View {
                     Button(action: {}) {
                         Text("Export Configuration")
                     }.foregroundColor(.accentColor)
-                }.foregroundColor(Color("TextColor"))
+                  }.foregroundColor(Color("TextColor")).navigationTitle("System Configuration")) {
+                    Text("System Configuration")
+                }
+             
             }.foregroundColor(Color("TextColor")).navigationTitle("Arrival Settings").navigationBarItems(trailing:Button(action: {
                 self.appState.settingsModal = false
             }) {

@@ -153,7 +153,7 @@ public class AIService {
             //debugPrint(results)
            // self.predictDestinationStation(Station(id: "test", name: "ROCK", abbr: "ROCK", lat: 0, long: 0))
             
-        }catch {
+        } catch {
             print(error, "saving AI model")
         }
         
