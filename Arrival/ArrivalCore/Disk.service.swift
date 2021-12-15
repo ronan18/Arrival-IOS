@@ -15,6 +15,10 @@ public class DiskService {
     public func getStations() -> StationStorage? {
         do {
             let stations = try Disk.retrieve("stations.json", from: .sharedContainer(appGroupName: "group.com.ronanfuruta.arrival"), as: StationStorage.self)
+            //print(stations)
+            if (stations.stations.isEmpty) {
+                return nil
+            }
             return stations
         } catch {
             return nil

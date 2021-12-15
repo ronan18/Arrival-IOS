@@ -16,7 +16,7 @@ import Network
 
 @MainActor
 class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
-    //Publishers
+    //MARK: Publishers
     @Published var key: String? = nil
     
     @Published var screen: AppScreen = .loading
@@ -46,7 +46,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var trainsLoading = true
     @Published var firstCycleOfFromStation = true
     
-    //stations state
+    //MARK: stations state
     @Published var stations: StationStorage? = nil
     @Published var closestStations: [Station] = []
     @Published var toStationSuggestions: [Station] = []
@@ -59,7 +59,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var message: String? = nil
     
     @Published var cycling: Int = 0
-    //Services
+    //MARK: Services
     let api = ArrivalAPI()
     let disk = DiskService()
     let stationService = StationService()
@@ -67,14 +67,14 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     var cycleTimer: Timer? = nil
     // let aiService = AIService()
     
-    //Constants
+    //MARK: Constants
     let defaults = UserDefaults.standard
     let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
     let mode = RunMode.development
     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
     
     
-    //Location state
+    //MARK: Location state
     private var locationManager = CLLocationManager()
     private var lat = 0.0
     private var long = 0.0
@@ -84,7 +84,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     private var handleTrainsToStationIntent: String? = nil
     
     
-    //Watchers
+    //MARK: Watchers
     
     private var cycleTimerLength: TimeInterval = 30
     // var cycleTask: Task? = nil
@@ -99,6 +99,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         
     }
     func startUp() async {
+        print("start up")
         let key = defaults.string(forKey: "passphrase")
         let lastVersion = defaults.string(forKey: "lastVersion")
         if (lastVersion != version) {
@@ -106,6 +107,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
         
         guard let key = key else {
+            print("need to run onboarding")
             runOnboarding()
             return
         }
@@ -113,9 +115,11 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         do {
             let auth = try await api.login(auth: key)
             if auth {
+                print("auth for start main")
                 self.key = key
                 await self.startMain()
             } else {
+                print("onboard")
                 runOnboarding()
             }
         } catch {
@@ -131,11 +135,15 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         locationManager.requestWhenInUseAuthorization()
     }
     func getStations(force: Bool = false) async {
+        print("getting stations")
         guard !force else {
+            print("force mode")
             await self.fetchStations()
             return
         }
+        
         if let stations = disk.getStations() {
+            print("disk stations")
             self.stations = stations
         } else {
             await self.fetchStations()
@@ -257,6 +265,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
     func startMain() async {
+        print("starting main up")
         print("start main")
         self.screen = .loading
         guard self.key != nil else {
@@ -285,7 +294,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             }
             
         }
-        
+        print("have stations", self.stations?.stations.count)
         let _ = await self.getClosestStations()
         
         if let id = self.handleTrainsToStationIntent {
@@ -326,6 +335,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         
         aiService.logDirectionFilterEvent(DirectionFilterEvent(fromStation: fromStation, direction: direction, date: Date(), sessionID: self.sessionID))
     }
+    //MARK: Suggestion Generations
     func trainAIAndGetSuggestions() async {
         async let directionAI: () = aiService.trainDirectionFilterAI()
         await aiService.trainToStationAI()
@@ -374,6 +384,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             }
             
         } else {
+            await self.getStations()
             
             return []
             
@@ -501,7 +512,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         print("CYCLE")
         
         if (self.locationAuthState == .authorized && self.screen != .noNetwork) {
-            self.screen = .home
+          //  self.screen = .home
         }
         self.cycling += 1
         
