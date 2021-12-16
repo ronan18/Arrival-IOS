@@ -73,6 +73,8 @@
 		C54A298226D2AA7B00E8F1D7 /* HomeTrains.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A298126D2AA7A00E8F1D7 /* HomeTrains.swift */; };
 		C54A298326D2AB4500E8F1D7 /* StationSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297726D219E700E8F1D7 /* StationSearchView.swift */; };
 		C54A298526D2AB6800E8F1D7 /* TripDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A298426D2AB6800E8F1D7 /* TripDetailsView.swift */; };
+		C54DBD5E276A7C5E00B58C85 /* HelpScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54DBD5D276A7C5E00B58C85 /* HelpScreen.swift */; };
+		C54DBD60276A7CF600B58C85 /* HelpLargeCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54DBD5F276A7CF600B58C85 /* HelpLargeCard.swift */; };
 		C550A8EB26D96A42008A2679 /* DestinationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297326D2165200E8F1D7 /* DestinationBar.swift */; };
 		C57DC2C626F93DAA00BFA620 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57DC2C526F93DAA00BFA620 /* SettingsScreen.swift */; };
 		C58B60D626D9990D00FCB47B /* MockupData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58B60D526D9990D00FCB47B /* MockupData.swift */; };
@@ -107,6 +109,7 @@
 		C5A1BD6126F2622800263C9E /* BARTAlert.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A1BD6026F2622800263C9E /* BARTAlert.model.swift */; };
 		C5A1BD6326F2662300263C9E /* BARTAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A1BD6226F2662300263C9E /* BARTAlertView.swift */; };
 		C5A1BD6526F2668800263C9E /* BARTAlertsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A1BD6426F2668800263C9E /* BARTAlertsScreen.swift */; };
+		C5B1D939276BA2A600E1EFA6 /* SquareImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B1D938276BA2A600E1EFA6 /* SquareImage.swift */; };
 		C5CC589F26D3F5A30025BAC7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = C5CC589E26D3F5A30025BAC7 /* Alamofire */; };
 		C5CC58A226D408420025BAC7 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = C5CC58A126D408420025BAC7 /* SwiftyJSON */; };
 		C5CC58A726D40E570025BAC7 /* Station.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CC58A626D40E570025BAC7 /* Station.model.swift */; };
@@ -316,6 +319,8 @@
 		C54A297F26D2A6CB00E8F1D7 /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		C54A298126D2AA7A00E8F1D7 /* HomeTrains.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTrains.swift; sourceTree = "<group>"; };
 		C54A298426D2AB6800E8F1D7 /* TripDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailsView.swift; sourceTree = "<group>"; };
+		C54DBD5D276A7C5E00B58C85 /* HelpScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpScreen.swift; sourceTree = "<group>"; };
+		C54DBD5F276A7CF600B58C85 /* HelpLargeCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpLargeCard.swift; sourceTree = "<group>"; };
 		C57DC2C526F93DAA00BFA620 /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
 		C58B60D526D9990D00FCB47B /* MockupData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockupData.swift; sourceTree = "<group>"; };
 		C591741D27021B3C0034805F /* NoNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoNetwork.swift; sourceTree = "<group>"; };
@@ -344,6 +349,7 @@
 		C5A1BD6026F2622800263C9E /* BARTAlert.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BARTAlert.model.swift; sourceTree = "<group>"; };
 		C5A1BD6226F2662300263C9E /* BARTAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BARTAlertView.swift; sourceTree = "<group>"; };
 		C5A1BD6426F2668800263C9E /* BARTAlertsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BARTAlertsScreen.swift; sourceTree = "<group>"; };
+		C5B1D938276BA2A600E1EFA6 /* SquareImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareImage.swift; sourceTree = "<group>"; };
 		C5CC58A626D40E570025BAC7 /* Station.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.model.swift; sourceTree = "<group>"; };
 		C5CC58A826D412720025BAC7 /* Train.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Train.model.swift; sourceTree = "<group>"; };
 		C5CC58AA26D412BC0025BAC7 /* Trip.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.model.swift; sourceTree = "<group>"; };
@@ -472,6 +478,7 @@
 				C54A297726D219E700E8F1D7 /* StationSearchView.swift */,
 				C54A298426D2AB6800E8F1D7 /* TripDetailsView.swift */,
 				C5CC58B026D581A70025BAC7 /* AppState.swift */,
+				C54DBD5D276A7C5E00B58C85 /* HelpScreen.swift */,
 				C5CC58B826D587060025BAC7 /* OnboardingView.swift */,
 				C54A297326D2165200E8F1D7 /* DestinationBar.swift */,
 				C54A297526D2171900E8F1D7 /* StationCard.swift */,
@@ -499,6 +506,7 @@
 				343DA38F26D08CD8008F6A0E /* ArrivalUI.h */,
 				343DA39026D08CD8008F6A0E /* ArrivalUI.docc */,
 				341BB6AA26D1ED080044190A /* TrainCard.swift */,
+				C5B1D938276BA2A600E1EFA6 /* SquareImage.swift */,
 				341BB6AF26D1F8310044190A /* TripCard.swift */,
 				C54A297126D20E4C00E8F1D7 /* HeaderAlert.swift */,
 				341BB6AC26D1F14A0044190A /* TimeDisplayText.swift */,
@@ -512,6 +520,7 @@
 				C5A1BD6226F2662300263C9E /* BARTAlertView.swift */,
 				C5F4FF1E26FA544800669F11 /* LoadingScreen.swift */,
 				C591741D27021B3C0034805F /* NoNetwork.swift */,
+				C54DBD5F276A7CF600B58C85 /* HelpLargeCard.swift */,
 			);
 			path = ArrivalUI;
 			sourceTree = "<group>";
@@ -970,6 +979,7 @@
 				C54A298526D2AB6800E8F1D7 /* TripDetailsView.swift in Sources */,
 				34FB5AA026DB35FA00964BF9 /* ErrorDeterminingLocation.swift in Sources */,
 				C52E881526F14B9800AD6FD1 /* ArrivalHeader.swift in Sources */,
+				C54DBD5E276A7C5E00B58C85 /* HelpScreen.swift in Sources */,
 				3469C6E026DC41500036C5D5 /* HomeTrips.swift in Sources */,
 				C57DC2C626F93DAA00BFA620 /* SettingsScreen.swift in Sources */,
 				3483604C26DC26BD003EEFB9 /* TimeChooserView.swift in Sources */,
@@ -996,8 +1006,10 @@
 				341BB6B026D1F8310044190A /* TripCard.swift in Sources */,
 				C5A1BD6326F2662300263C9E /* BARTAlertView.swift in Sources */,
 				C5F4FF1F26FA544800669F11 /* LoadingScreen.swift in Sources */,
+				C5B1D939276BA2A600E1EFA6 /* SquareImage.swift in Sources */,
 				C5CC58B726D585360025BAC7 /* OnboardingScreen.swift in Sources */,
 				343DA39126D08CD8008F6A0E /* ArrivalUI.docc in Sources */,
+				C54DBD60276A7CF600B58C85 /* HelpLargeCard.swift in Sources */,
 				C54A297A26D2A3BF00E8F1D7 /* TripBar.swift in Sources */,
 				C5A1BD5F26F254D600263C9E /* IconBadge.swift in Sources */,
 				C5CC58B526D583290025BAC7 /* LargeButton.swift in Sources */,
