@@ -14,6 +14,7 @@ import ArrivalCore
 struct HomeScreen: View {
     @ObservedObject var appState: AppState
 
+
     var body: some View {
         VStack(spacing: 0) {
             ArrivalHeader(appState: appState)

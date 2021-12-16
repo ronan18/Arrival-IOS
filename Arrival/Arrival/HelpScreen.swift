@@ -9,6 +9,7 @@ import SwiftUI
 import ArrivalUI
 
 struct HelpScreen: View {
+    var close: ()->()
     var body: some View {
         NavigationView {
             VStack {
@@ -22,24 +23,24 @@ struct HelpScreen: View {
                     VStack(alignment:.leading) {
                         Text("Item").font(.headline)
                         Text("Learn more about this thing").font(.subheadline)
-                    }
+                    }.foregroundColor(Color("TextColor"))
                     Spacer()
                     Image(systemName: "chevron.right")
                 }.padding(.vertical)
                 
                 
                 Spacer()
-            }.padding().navigationTitle("Arrival Tips").toolbar {
-                Button("Done") {
-                   
-                }
-            }
+            }.padding().navigationTitle("Arrival Tips").navigationBarItems(trailing:Button(action: {
+                self.close()
+            }) {
+                Text("Done").foregroundColor(Color("TextColor"))
+            })
         }
     }
 }
 
 struct HelpScreen_Previews: PreviewProvider {
     static var previews: some View {
-        HelpScreen()
+        HelpScreen(close: {})
     }
 }

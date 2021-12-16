@@ -11,6 +11,7 @@ import ArrivalUI
 public struct ArrivalHeader: View {
     @ObservedObject var appState: AppState
     @State var presentAlerts = false
+    @State var helpScreen = false
     public var body: some View {
         HStack {
             Text("Arrival")
@@ -31,8 +32,12 @@ public struct ArrivalHeader: View {
             }.sheet(isPresented: $presentAlerts) {
                 BARTAlertsScreen(appState: appState, open: self.$presentAlerts)
             }
-            Button(action: {}) {
+            Button(action: {
+                self.helpScreen = true
+            }) {
                 Image(systemName: "questionmark.circle")
+            }.sheet(isPresented: self.$helpScreen) {
+                HelpScreen(close: {self.helpScreen = false})
             }
             Button(action: {
                 self.appState.settingsModal = true
