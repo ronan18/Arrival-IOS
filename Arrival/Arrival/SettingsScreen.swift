@@ -11,6 +11,7 @@ import ArrivalCore
 struct SettingsScreen: View {
     @ObservedObject var appState: AppState
     @AppStorage("displayNavigationTime") var displayNavigationTime = true
+    @State var isPresentingShareSheet = false
    
     
     var body: some View {
@@ -62,9 +63,11 @@ struct SettingsScreen: View {
                         Spacer()
                         Text("v\(self.appState.version)").textSelection(.enabled)
                     }
-                    Button(action: {}) {
-                        Text("Export Configuration")
-                    }.foregroundColor(.accentColor)
+                    Button(action: {
+                        self.isPresentingShareSheet = true
+                    }) {
+                        Text("Share diagnostics configuration")
+                    }.foregroundColor(.accentColor).shareSheet(isPresented: $isPresentingShareSheet, items: [self.appState.systemConfig()])
                   }.foregroundColor(Color("TextColor")).navigationTitle("System Configuration")) {
                     Text("System Configuration")
                 }
@@ -83,3 +86,4 @@ struct SettingsScreen_Previews: PreviewProvider {
         SettingsScreen(appState: AppState())
     }
 }
+

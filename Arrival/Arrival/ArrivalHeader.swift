@@ -21,8 +21,9 @@ public struct ArrivalHeader: View {
                 ProgressView().progressViewStyle(.circular).tint(.white).padding(.leading,5).frame(width: 20, height: 20).scaleEffect(x: 0.7, y: 0.7, anchor: .center)
             }
             Spacer()
-            
+            if (self.appState.mode == .development) {
             Text("c\(String(self.appState.cycling))")
+            }
             
             Button(action: {
                 self.presentAlerts = true

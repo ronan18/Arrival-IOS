@@ -294,12 +294,12 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             }
             
         }
-        print("have stations", self.stations?.stations.count)
+        print("have stations", self.stations?.stations.count as Any)
         let _ = await self.getClosestStations()
-        
+        /*
         if let id = self.handleTrainsToStationIntent {
             //self.trainsToStationIntent(id)
-        }
+        }*/
         await self.cycle()
        
         if (self.screen != .noNetwork) {
@@ -656,6 +656,10 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         print(station)
         self.toStation = station*/
         
+    }
+    func systemConfig() -> String {
+        let raw = "v:\(self.version),s:v\(self.stations?.version ?? 0)c\(self.stations?.stations.count ?? 0),m:\(self.mode == .production ? "production": "debug"),id:\(self.key ?? "NONE"),tse:\(aiService.toStationEventsCount),dfe:\(aiService.directionFilterEventsCount)"
+        return Data(raw.utf8).base64EncodedString()
     }
     
 }

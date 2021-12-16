@@ -39,3 +39,21 @@ struct ArrivalApp: App {
     }
    
 }
+extension UIApplication {
+    
+    static let keyWindow = keyWindowScene?.windows.filter(\.isKeyWindow).first
+    static let keyWindowScene = shared.connectedScenes.first { $0.activationState == .foregroundActive } as? UIWindowScene
+    
+}
+
+extension View {
+    
+    func shareSheet(isPresented: Binding<Bool>, items: [Any]) -> some View {
+        guard isPresented.wrappedValue else { return self }
+        let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        activityViewController.completionWithItemsHandler = { _, _, _, _ in isPresented.wrappedValue = false }
+        UIApplication.keyWindow?.rootViewController?.presentedViewController?.present(activityViewController, animated: true)
+        return self
+    }
+    
+}
