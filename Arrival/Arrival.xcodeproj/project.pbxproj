@@ -124,7 +124,10 @@
 		C5CC58B926D587060025BAC7 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CC58B826D587060025BAC7 /* OnboardingView.swift */; };
 		C5CC58BB26D58FD20025BAC7 /* Screen.Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CC58BA26D58FD20025BAC7 /* Screen.Model.swift */; };
 		C5CC58BD26D6B16C0025BAC7 /* Station.service.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5CC58BC26D6B16C0025BAC7 /* Station.service.swift */; };
+		C5EFA2BD2774D7D600A0AA71 /* HelpScreenText.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5EFA2BC2774D7D600A0AA71 /* HelpScreenText.swift */; };
 		C5F4FF1F26FA544800669F11 /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F4FF1E26FA544800669F11 /* LoadingScreen.swift */; };
+		C5F77A6D2778DFB600250F89 /* helpScreenContent.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F77A6C2778DFB600250F89 /* helpScreenContent.model.swift */; };
+		C5F77A6F2778E5C300250F89 /* HelpItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F77A6E2778E5C300250F89 /* HelpItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -362,7 +365,10 @@
 		C5CC58B826D587060025BAC7 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		C5CC58BA26D58FD20025BAC7 /* Screen.Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screen.Model.swift; sourceTree = "<group>"; };
 		C5CC58BC26D6B16C0025BAC7 /* Station.service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Station.service.swift; sourceTree = "<group>"; };
+		C5EFA2BC2774D7D600A0AA71 /* HelpScreenText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpScreenText.swift; sourceTree = "<group>"; };
 		C5F4FF1E26FA544800669F11 /* LoadingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreen.swift; sourceTree = "<group>"; };
+		C5F77A6C2778DFB600250F89 /* helpScreenContent.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = helpScreenContent.model.swift; sourceTree = "<group>"; };
+		C5F77A6E2778E5C300250F89 /* HelpItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -521,6 +527,8 @@
 				C5F4FF1E26FA544800669F11 /* LoadingScreen.swift */,
 				C591741D27021B3C0034805F /* NoNetwork.swift */,
 				C54DBD5F276A7CF600B58C85 /* HelpLargeCard.swift */,
+				C5EFA2BC2774D7D600A0AA71 /* HelpScreenText.swift */,
+				C5F77A6E2778E5C300250F89 /* HelpItem.swift */,
 			);
 			path = ArrivalUI;
 			sourceTree = "<group>";
@@ -549,6 +557,7 @@
 				C527270D26EBDD35002EE89C /* AI.model.swift */,
 				C546475926E2BFBE0055545A /* Intents.service.swift */,
 				C599E1D426E3E5B0004C573C /* Intents.intentdefinition */,
+				C5F77A6C2778DFB600250F89 /* helpScreenContent.model.swift */,
 			);
 			path = ArrivalCore;
 			sourceTree = "<group>";
@@ -1004,6 +1013,8 @@
 				C5CC58B326D582430025BAC7 /* OnboardingIntro.swift in Sources */,
 				341BB6AD26D1F14A0044190A /* TimeDisplayText.swift in Sources */,
 				341BB6B026D1F8310044190A /* TripCard.swift in Sources */,
+				C5EFA2BD2774D7D600A0AA71 /* HelpScreenText.swift in Sources */,
+				C5F77A6F2778E5C300250F89 /* HelpItem.swift in Sources */,
 				C5A1BD6326F2662300263C9E /* BARTAlertView.swift in Sources */,
 				C5F4FF1F26FA544800669F11 /* LoadingScreen.swift in Sources */,
 				C5B1D939276BA2A600E1EFA6 /* SquareImage.swift in Sources */,
@@ -1029,6 +1040,7 @@
 				C5CC58A926D412720025BAC7 /* Train.model.swift in Sources */,
 				34F61C3226D5DE9300B35074 /* LocationData.model.swift in Sources */,
 				C5A1BD6126F2622800263C9E /* BARTAlert.model.swift in Sources */,
+				C5F77A6D2778DFB600250F89 /* helpScreenContent.model.swift in Sources */,
 				C546475A26E2BFBE0055545A /* Intents.service.swift in Sources */,
 				C5CC58BD26D6B16C0025BAC7 /* Station.service.swift in Sources */,
 				C5CC58AF26D4173F0025BAC7 /* Time.model.swift in Sources */,

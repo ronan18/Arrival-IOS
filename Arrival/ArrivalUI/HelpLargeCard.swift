@@ -6,18 +6,20 @@
 //
 
 import SwiftUI
-
+import ArrivalCore
 public struct HelpLargeCard: View {
     var title: String
-    public init (title: String) {
-        self.title = title
+    var image: URL
+    public init (_ config: helpScreenData) {
+        self.title = config.name
+        self.image = URL(string: config.image)!
      
     }
     public var body: some View {
         GeometryReader { geo in
             ZStack {
                
-                AsyncImage(url: URL(string: "https://images.unsplash.com/photo-1638811125056-7a7a5fed3bb6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2574&q=80")!) {image in
+                AsyncImage(url: image) {image in
                     image.resizable().aspectRatio( contentMode: .fill).clipped()
                 } placeholder: {
                     VStack {
@@ -48,7 +50,7 @@ struct HelpLargeCard_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
       
-            HelpLargeCard(title: "Whats New")
+            HelpLargeCard(MockUpData().helpScreen)
         
         }.padding()
         
