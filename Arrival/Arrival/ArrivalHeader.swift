@@ -38,7 +38,7 @@ public struct ArrivalHeader: View {
             }) {
                 Image(systemName: "questionmark.circle")
             }.sheet(isPresented: self.$helpScreen) {
-                HelpScreen(close: {self.helpScreen = false})
+                HelpScreen(appState: appState, close: {self.helpScreen = false})
             }
             Button(action: {
                 self.appState.settingsModal = true

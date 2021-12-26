@@ -128,6 +128,7 @@
 		C5F4FF1F26FA544800669F11 /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F4FF1E26FA544800669F11 /* LoadingScreen.swift */; };
 		C5F77A6D2778DFB600250F89 /* helpScreenContent.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F77A6C2778DFB600250F89 /* helpScreenContent.model.swift */; };
 		C5F77A6F2778E5C300250F89 /* HelpItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F77A6E2778E5C300250F89 /* HelpItem.swift */; };
+		C5F77A712778ED6B00250F89 /* HelpContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F77A702778ED6B00250F89 /* HelpContent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -369,6 +370,7 @@
 		C5F4FF1E26FA544800669F11 /* LoadingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreen.swift; sourceTree = "<group>"; };
 		C5F77A6C2778DFB600250F89 /* helpScreenContent.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = helpScreenContent.model.swift; sourceTree = "<group>"; };
 		C5F77A6E2778E5C300250F89 /* HelpItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpItem.swift; sourceTree = "<group>"; };
+		C5F77A702778ED6B00250F89 /* HelpContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpContent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -558,6 +560,7 @@
 				C546475926E2BFBE0055545A /* Intents.service.swift */,
 				C599E1D426E3E5B0004C573C /* Intents.intentdefinition */,
 				C5F77A6C2778DFB600250F89 /* helpScreenContent.model.swift */,
+				C5F77A702778ED6B00250F89 /* HelpContent.swift */,
 			);
 			path = ArrivalCore;
 			sourceTree = "<group>";
@@ -1037,6 +1040,7 @@
 				C527270E26EBDD35002EE89C /* AI.model.swift in Sources */,
 				34FB5A9B26DAEF0F00964BF9 /* Maps.service.swift in Sources */,
 				34CAB3FD26DF21A300CE2374 /* AI.service.swift in Sources */,
+				C5F77A712778ED6B00250F89 /* HelpContent.swift in Sources */,
 				C5CC58A926D412720025BAC7 /* Train.model.swift in Sources */,
 				34F61C3226D5DE9300B35074 /* LocationData.model.swift in Sources */,
 				C5A1BD6126F2622800263C9E /* BARTAlert.model.swift in Sources */,

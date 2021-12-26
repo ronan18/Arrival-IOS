@@ -15,15 +15,15 @@ public struct HelpScreenText: View {
     }
     public var body: some View {
         
-        VStack(alignment:.leading) {
+        VStack(alignment:.leading, spacing: 0) {
             GeometryReader { geo in
                 ScrollView {
                     VStack(alignment: .leading) {
                     ForEach(config.content) {row in
                         if (row.type == .heading) {
-                            Text(row.content).font(.title).fontWeight(.bold)
+                            Text(row.formattedContent).font(.title).fontWeight(.bold)
                         } else if (row.type == .text) {
-                            Text(row.content)
+                            Text(row.formattedContent)
                         } else if (row.type == .image) {
                             
                             AsyncImage(url: URL(string: row.content)) {image in
@@ -32,7 +32,7 @@ public struct HelpScreenText: View {
                                 VStack {
                                     ProgressView().tint(.white)
                                 }.frame(width: geo.size.width, height: geo.size.width/1.3).background(.gray)
-                            }.frame(width: geo.size.width, height: geo.size.width/1.3).padding(.vertical)
+                            }.frame(width: geo.size.width, height: geo.size.width/1.3).padding(.vertical, 2)
                             
                             
                         } else if (row.type == .devider) {
@@ -49,7 +49,7 @@ public struct HelpScreenText: View {
                     }
                 }
             }
-        }.padding().navigationTitle(config.name).foregroundColor(Color("DarkText"))
+        }.padding(.horizontal).navigationTitle(config.name).foregroundColor(Color("DarkText"))
         
     }
 }

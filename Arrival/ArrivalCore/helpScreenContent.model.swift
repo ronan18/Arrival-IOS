@@ -25,10 +25,12 @@ public struct helpScreenContentRow: Identifiable {
     public init (type: HelpScreenContentType, content: String) {
         self.type = type
         self.content = content
+        self.formattedContent = (try? AttributedString(markdown: content)) ?? AttributedString()
     }
     public let id = UUID()
     public let type: HelpScreenContentType
     public let content: String
+    public let formattedContent: AttributedString
 }
 public enum HelpScreenContentType {
     case text

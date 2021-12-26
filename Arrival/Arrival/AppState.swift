@@ -59,6 +59,10 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     @Published var message: String? = nil
     
     @Published var cycling: Int = 0
+    
+    //MARK: Static Information
+    var helpContent = defaultHelpContent
+    
     //MARK: Services
     let api = ArrivalAPI()
     let disk = DiskService()

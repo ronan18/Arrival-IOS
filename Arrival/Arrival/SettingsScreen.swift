@@ -18,31 +18,17 @@ struct SettingsScreen: View {
         NavigationView {
             Form {
                 NavigationLink(destination: Form {
-                    Toggle("Display walking and driving time", isOn: $displayNavigationTime).foregroundColor(Color("TextColor"))
+                    Section(footer:Text("Disabling this will reduce the amount of cellular data Arrival uses").foregroundColor(.gray)) {
+                        Toggle("Display walking and driving time", isOn: $displayNavigationTime).foregroundColor(Color("TextColor"))
+                    }
                   }.navigationTitle("Station Search")) {
                     Text("Station Search")
                 }
-                NavigationLink(destination: Form {
-                    HStack {
-                        Text("Direction Filter Events")
-                        Spacer()
-                        Text("\(aiService.directionFilterEventsCount)").textSelection(.enabled)
-                    }
-                    Button(role: .destructive, action: {}) {
-                        Text("Reset Direction Filter Data")
-                    }.foregroundColor(.red)
-                    HStack {
-                        Text("To Station Events")
-                        Spacer()
-                        Text("\(aiService.toStationEventsCount)").textSelection(.enabled)
-                    }
-                    Button(role: .destructive, action: {}) {
-                        Text("Reset To Station Data")
-                    }.foregroundColor(.red)
-                  }.foregroundColor(Color("TextColor")).navigationTitle("Machine Learning")) {
+                NavigationLink(destination: MachineLearningSettings()) {
                     Text("Machine Learning")
                 }
-                NavigationLink(destination: Form {
+                
+                Section( header: Text("System Configuration")) {
                     HStack {
                         Text("ID")
                         Spacer()
@@ -68,8 +54,6 @@ struct SettingsScreen: View {
                     }) {
                         Text("Share diagnostics configuration")
                     }.foregroundColor(.accentColor).shareSheet(isPresented: $isPresentingShareSheet, items: [self.appState.systemConfig()])
-                  }.foregroundColor(Color("TextColor")).navigationTitle("System Configuration")) {
-                    Text("System Configuration")
                 }
              
             }.foregroundColor(Color("TextColor")).navigationTitle("Arrival Settings").navigationBarItems(trailing:Button(action: {
@@ -87,3 +71,38 @@ struct SettingsScreen_Previews: PreviewProvider {
     }
 }
 
+
+struct MachineLearningSettings: View {
+    var body: some View {
+        
+        VStack {
+            Text("Arrival uses on device machine learning to automatically suggest and show BART information to you. This provides an easier and more intuitive user experience. To protect your privacy, all of this processing happens offline.").font(.subheadline)
+                .foregroundColor(Color("DarkText")).padding(.horizontal)
+        Form {
+            
+            Section(footer: Text("The direction filter AI predicts what train direction you are most likely to view and proactivly shows them.").foregroundColor(.gray)) {
+                HStack {
+                    Text("Direction Filter Events")
+                    Spacer()
+                    Text("\(aiService.directionFilterEventsCount)").textSelection(.enabled)
+                }
+                Button(role: .destructive, action: {}) {
+                    Text("Reset Direction Filter AI")
+                }.foregroundColor(.red)
+            }
+            Section(footer: Text("The Destination AI predicts which station you are most likely to travel to. It then increases the accuracy of your search results using this information.").foregroundColor(.gray)) {
+                HStack {
+                    Text("Destination Events")
+                    Spacer()
+                    Text("\(aiService.toStationEventsCount)").textSelection(.enabled)
+                }
+                Button(role: .destructive, action: {}) {
+                    Text("Reset Destination AI")
+                }.foregroundColor(.red)
+            }
+            
+        }
+        }.background(Color("FormColor")).foregroundColor(Color("TextColor")).navigationTitle("Machine Learning")
+        
+    }
+}

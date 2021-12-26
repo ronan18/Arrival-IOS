@@ -24,7 +24,7 @@ public struct HelpItem: View {
             VStack(alignment:.leading) {
                 Text(title).font(.headline)
                 Text(subtitle).font(.subheadline)
-            }.foregroundColor(Color("TextColor"))
+            }.foregroundColor(Color("TextColor")).multilineTextAlignment(.leading)
             Spacer()
             Image(systemName: "chevron.right").foregroundColor(.accentColor)
         }.padding(.vertical, 8)
