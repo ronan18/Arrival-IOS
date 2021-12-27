@@ -102,6 +102,7 @@ struct MachineLearningSettings: View {
             }
             
         }
+            Spacer()
         }.background(Color("FormColor")).foregroundColor(Color("TextColor")).navigationTitle("Machine Learning")
         
     }
