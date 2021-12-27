@@ -129,6 +129,7 @@
 		C5F77A6D2778DFB600250F89 /* helpScreenContent.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F77A6C2778DFB600250F89 /* helpScreenContent.model.swift */; };
 		C5F77A6F2778E5C300250F89 /* HelpItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F77A6E2778E5C300250F89 /* HelpItem.swift */; };
 		C5F77A712778ED6B00250F89 /* HelpContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F77A702778ED6B00250F89 /* HelpContent.swift */; };
+		C5F77A732779516900250F89 /* ArrivalLegaL.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F77A722779516900250F89 /* ArrivalLegaL.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -371,6 +372,7 @@
 		C5F77A6C2778DFB600250F89 /* helpScreenContent.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = helpScreenContent.model.swift; sourceTree = "<group>"; };
 		C5F77A6E2778E5C300250F89 /* HelpItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpItem.swift; sourceTree = "<group>"; };
 		C5F77A702778ED6B00250F89 /* HelpContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpContent.swift; sourceTree = "<group>"; };
+		C5F77A722779516900250F89 /* ArrivalLegaL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalLegaL.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -531,6 +533,7 @@
 				C54DBD5F276A7CF600B58C85 /* HelpLargeCard.swift */,
 				C5EFA2BC2774D7D600A0AA71 /* HelpScreenText.swift */,
 				C5F77A6E2778E5C300250F89 /* HelpItem.swift */,
+				C5F77A722779516900250F89 /* ArrivalLegaL.swift */,
 			);
 			path = ArrivalUI;
 			sourceTree = "<group>";
@@ -1015,6 +1018,7 @@
 				C54A297C26D2A46A00E8F1D7 /* TripTransferText.swift in Sources */,
 				C5CC58B326D582430025BAC7 /* OnboardingIntro.swift in Sources */,
 				341BB6AD26D1F14A0044190A /* TimeDisplayText.swift in Sources */,
+				C5F77A732779516900250F89 /* ArrivalLegaL.swift in Sources */,
 				341BB6B026D1F8310044190A /* TripCard.swift in Sources */,
 				C5EFA2BD2774D7D600A0AA71 /* HelpScreenText.swift in Sources */,
 				C5F77A6F2778E5C300250F89 /* HelpItem.swift in Sources */,

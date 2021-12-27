@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ArrivalCore
+import ArrivalUI
 
 struct SettingsScreen: View {
     @ObservedObject var appState: AppState
@@ -54,6 +55,12 @@ struct SettingsScreen: View {
                     }) {
                         Text("Share diagnostics configuration")
                     }.foregroundColor(.accentColor).shareSheet(isPresented: $isPresentingShareSheet, items: [self.appState.systemConfig()])
+                   
+                }
+                HStack {
+                    Spacer()
+                ArrivalLegal()
+                    Spacer()
                 }
              
             }.foregroundColor(Color("TextColor")).navigationTitle("Arrival Settings").navigationBarItems(trailing:Button(action: {
