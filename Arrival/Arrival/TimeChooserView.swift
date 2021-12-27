@@ -12,7 +12,8 @@ struct TimeChooserView: View {
     @ObservedObject var appState: AppState
     @State var leaveArrive = 1
     @State var customTime: Date = Date()
-   
+    var leaveTimes: [TripTime] = [TripTime(type: .now),TripTime(type: .leave, time: Date(timeIntervalSinceNow: 65*10)), TripTime(type: .leave, time: Date(timeIntervalSinceNow: 65*20))]
+    var arriveTimes: [TripTime] = [TripTime(type: .arrive, time: Date(timeIntervalSinceNow: 60*20)), TripTime(type: .arrive, time: Date(timeIntervalSinceNow: 60*40)),TripTime(type: .arrive, time: Date(timeIntervalSinceNow: 60*60))]
     func choose(_ time: TripTime) {
         self.appState.setTripTime(time)
         self.appState.timeChooser = false
@@ -29,18 +30,7 @@ struct TimeChooserView: View {
                                 Text("Arrive").tag(2)
                             }.pickerStyle(SegmentedPickerStyle()).padding(.bottom)
                             
-                            HStack {
-                                TripTimeOption(TripTime(type: .now), choose: {time in
-                                    self.choose(time)
-                                }, size: geo.size.width / 5.2)
-                                Spacer()
-                                TripTimeOption(TripTime(type: .leave, time: Date(timeIntervalSinceNow: 65*10)), choose: {time in
-                                    self.choose(time)}, size: geo.size.width / 5.2)
-                                Spacer()
-                                TripTimeOption(TripTime(type: .leave, time: Date(timeIntervalSinceNow: 65*20)), choose: {time in
-                                    self.choose(time)}, size: geo.size.width / 5.2)
-                            }.padding(.bottom)
-                            
+                            TimesChooser(times: (self.leaveArrive == 1 ? leaveTimes : arriveTimes), choose: choose, geo: geo)
                             
                             ChooseCustomTime(choose: choose, customTime: $customTime, leaveArrive: $leaveArrive)
                         }
@@ -136,5 +126,24 @@ struct ChooseCustomTime: View {
                 
             })
         }
+    }
+}
+
+struct TimesChooser: View {
+    var times: [TripTime]
+    var choose: (TripTime) -> ()
+    var geo: GeometryProxy
+    var body: some View {
+        HStack {
+            TripTimeOption(times[0], choose: {time in
+                self.choose(time)
+            }, size: geo.size.width / 5.2)
+            Spacer()
+            TripTimeOption(times[1], choose: {time in
+                self.choose(time)}, size: geo.size.width / 5.2)
+            Spacer()
+            TripTimeOption(times[2], choose: {time in
+                self.choose(time)}, size: geo.size.width / 5.2)
+        }.padding(.bottom)
     }
 }

@@ -82,7 +82,7 @@
 		C599E1D526E3E5B0004C573C /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = C599E1D426E3E5B0004C573C /* Intents.intentdefinition */; };
 		C599E1DB26E3E794004C573C /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C546474B26E2897A0055545A /* Intents.framework */; };
 		C599E1DE26E3E794004C573C /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C599E1DD26E3E794004C573C /* IntentHandler.swift */; };
-		C599E1E226E3E794004C573C /* SiriExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C599E1DA26E3E794004C573C /* SiriExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C599E1E226E3E794004C573C /* SiriExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C599E1DA26E3E794004C573C /* SiriExtension.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		C599E1E726E3E7AF004C573C /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = C599E1D426E3E5B0004C573C /* Intents.intentdefinition */; settings = {ATTRIBUTES = (no_codegen, ); }; };
 		C599E1E826E3E7B0004C573C /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = C599E1D426E3E5B0004C573C /* Intents.intentdefinition */; settings = {ATTRIBUTES = (no_codegen, ); }; };
 		C599E1E926E3E7C7004C573C /* ArrivalCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */; };
@@ -129,7 +129,7 @@
 		C5F77A6D2778DFB600250F89 /* helpScreenContent.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F77A6C2778DFB600250F89 /* helpScreenContent.model.swift */; };
 		C5F77A6F2778E5C300250F89 /* HelpItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F77A6E2778E5C300250F89 /* HelpItem.swift */; };
 		C5F77A712778ED6B00250F89 /* HelpContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F77A702778ED6B00250F89 /* HelpContent.swift */; };
-		C5F77A732779516900250F89 /* ArrivalLegaL.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F77A722779516900250F89 /* ArrivalLegaL.swift */; };
+		C5F77A732779516900250F89 /* ArrivalLegal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5F77A722779516900250F89 /* ArrivalLegal.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -372,7 +372,7 @@
 		C5F77A6C2778DFB600250F89 /* helpScreenContent.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = helpScreenContent.model.swift; sourceTree = "<group>"; };
 		C5F77A6E2778E5C300250F89 /* HelpItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpItem.swift; sourceTree = "<group>"; };
 		C5F77A702778ED6B00250F89 /* HelpContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpContent.swift; sourceTree = "<group>"; };
-		C5F77A722779516900250F89 /* ArrivalLegaL.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalLegaL.swift; sourceTree = "<group>"; };
+		C5F77A722779516900250F89 /* ArrivalLegal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalLegal.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -533,7 +533,7 @@
 				C54DBD5F276A7CF600B58C85 /* HelpLargeCard.swift */,
 				C5EFA2BC2774D7D600A0AA71 /* HelpScreenText.swift */,
 				C5F77A6E2778E5C300250F89 /* HelpItem.swift */,
-				C5F77A722779516900250F89 /* ArrivalLegaL.swift */,
+				C5F77A722779516900250F89 /* ArrivalLegal.swift */,
 			);
 			path = ArrivalUI;
 			sourceTree = "<group>";
@@ -1018,7 +1018,7 @@
 				C54A297C26D2A46A00E8F1D7 /* TripTransferText.swift in Sources */,
 				C5CC58B326D582430025BAC7 /* OnboardingIntro.swift in Sources */,
 				341BB6AD26D1F14A0044190A /* TimeDisplayText.swift in Sources */,
-				C5F77A732779516900250F89 /* ArrivalLegaL.swift in Sources */,
+				C5F77A732779516900250F89 /* ArrivalLegal.swift in Sources */,
 				341BB6B026D1F8310044190A /* TripCard.swift in Sources */,
 				C5EFA2BD2774D7D600A0AA71 /* HelpScreenText.swift in Sources */,
 				C5F77A6F2778E5C300250F89 /* HelpItem.swift in Sources */,
@@ -1150,6 +1150,7 @@
 		};
 		C599E1E126E3E794004C573C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = C599E1D926E3E794004C573C /* SiriExtension */;
 			targetProxy = C599E1E026E3E794004C573C /* PBXContainerItemProxy */;
 		};
@@ -1160,6 +1161,7 @@
 		};
 		C5A16FF826FA34D70027DF58 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
+			platformFilter = ios;
 			target = C5A16FE926FA34D40027DF58 /* Arrival BART Clip */;
 			targetProxy = C5A16FF726FA34D70027DF58 /* PBXContainerItemProxy */;
 		};
@@ -1300,7 +1302,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Arrival/Arrival.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20212;
+				CURRENT_PROJECT_VERSION = 20213;
 				DEVELOPMENT_ASSET_PATHS = "\"Arrival/Preview Content\"";
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				ENABLE_PREVIEWS = YES;
@@ -1341,7 +1343,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Arrival/Arrival.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20212;
+				CURRENT_PROJECT_VERSION = 20213;
 				DEVELOPMENT_ASSET_PATHS = "\"Arrival/Preview Content\"";
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				ENABLE_PREVIEWS = YES;
@@ -1378,7 +1380,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20212;
+				CURRENT_PROJECT_VERSION = 20213;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1408,7 +1410,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20212;
+				CURRENT_PROJECT_VERSION = 20213;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1439,7 +1441,7 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20212;
+				CURRENT_PROJECT_VERSION = 20213;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1470,7 +1472,7 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20212;
+				CURRENT_PROJECT_VERSION = 20213;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1502,7 +1504,7 @@
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20212;
+				CURRENT_PROJECT_VERSION = 20213;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1536,7 +1538,7 @@
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20212;
+				CURRENT_PROJECT_VERSION = 20213;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1570,7 +1572,7 @@
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20212;
+				CURRENT_PROJECT_VERSION = 20213;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1604,7 +1606,7 @@
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20212;
+				CURRENT_PROJECT_VERSION = 20213;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1638,7 +1640,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = SiriExtension/SiriExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20212;
+				CURRENT_PROJECT_VERSION = 20213;
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SiriExtension/Info.plist;
@@ -1666,7 +1668,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = SiriExtension/SiriExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20212;
+				CURRENT_PROJECT_VERSION = 20213;
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SiriExtension/Info.plist;
@@ -1696,7 +1698,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = "Arrival BART Clip/Arrival_BART_Clip.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20212;
+				CURRENT_PROJECT_VERSION = 20213;
 				DEVELOPMENT_ASSET_PATHS = "\"Arrival BART Clip/Preview Content\"";
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				ENABLE_PREVIEWS = YES;
@@ -1732,7 +1734,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = "Arrival BART Clip/Arrival_BART_Clip.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20212;
+				CURRENT_PROJECT_VERSION = 20213;
 				DEVELOPMENT_ASSET_PATHS = "\"Arrival BART Clip/Preview Content\"";
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				ENABLE_PREVIEWS = YES;

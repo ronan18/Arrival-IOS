@@ -84,7 +84,7 @@ struct MachineLearningSettings: View {
         
         VStack {
             Text("Arrival uses on device machine learning to automatically suggest and show BART information to you. This provides an easier and more intuitive user experience. To protect your privacy, all of this processing happens offline.").font(.subheadline)
-                .foregroundColor(Color("DarkText")).padding(.horizontal)
+                .foregroundColor(Color("TextColor")).padding(.horizontal)
         Form {
             
             Section(footer: Text("The direction filter AI predicts what train direction you are most likely to view and proactivly shows them.").foregroundColor(.gray)) {
