@@ -21,7 +21,7 @@ public struct HelpScreenText: View {
                     VStack(alignment: .leading) {
                     ForEach(config.content) {row in
                         if (row.type == .heading) {
-                            Text(row.formattedContent).font(.title).fontWeight(.bold)
+                            Text(row.formattedContent).font(.title2).fontWeight(.bold)
                         } else if (row.type == .text) {
                             Text(row.formattedContent)
                         } else if (row.type == .image) {
@@ -57,7 +57,7 @@ public struct HelpScreenText: View {
 struct HelpScreenText_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            HelpScreenText(MockUpData().helpScreen)
+            HelpScreenText(defaultHelpContent.featured)
         }
     }
 }
