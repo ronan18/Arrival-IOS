@@ -14,7 +14,7 @@ public struct ArrivalLegal: View {
        VStack(alignment:.center,spacing: 4) {
             Text("Arrival is created by **[Ronan Furuta](https://ronanfuruta.com/?r=arrivalInApp)**")
                 .font(.footnote)
-           Text("By using Arrival you agree to \n **[Privacy Policy](https://arrival.city)** and **[Terms of Serivce](https://arrival.city)**").tint(Color("TextColor"))
+           Text("By using Arrival you agree to \n **[Privacy Policy](https://arrival.city/privacypolicy.html)** and **[Terms of Serivce](https://arrival.city)**").tint(Color("TextColor"))
                 .font(.caption2)
         }.multilineTextAlignment(.center)
     }

@@ -49,7 +49,7 @@ public struct HelpScreenText: View {
                     }
                 }
             }
-        }.padding(.horizontal).navigationTitle(config.name).foregroundColor(Color("DarkText"))
+        }.padding(.horizontal).navigationTitle(config.name).foregroundColor(Color("TextColor"))
         
     }
 }

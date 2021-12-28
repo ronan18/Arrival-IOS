@@ -87,7 +87,7 @@ struct MachineLearningSettings: View {
                 .foregroundColor(Color("TextColor")).padding(.horizontal)
         Form {
             
-            Section(footer: Text("The direction filter AI predicts what train direction you are most likely to view and proactivly shows them.").foregroundColor(.gray)) {
+            Section(footer: Text("The Direction Filter AI predicts what train direction you are most likely to view and proactivly shows them.").foregroundColor(.gray)) {
                 HStack {
                     Text("Direction Filter Events")
                     Spacer()
