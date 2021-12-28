@@ -12,6 +12,7 @@
 			<array/>
 			<key>IntentsSupported</key>
 			<array>
+				<string>TrainsFromStationIntent</string>
 				<string>TrainsToStationIntent</string>
 			</array>
 		</dict>
