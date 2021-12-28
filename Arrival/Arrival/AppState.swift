@@ -84,8 +84,10 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     private var long = 0.0
     private var lastLocation: CLLocation? = nil
     private var location: CLLocation? = nil
+    
+    //MARK: App State
     var sessionID: UUID = UUID()
-    private var handleTrainsToStationIntent: String? = nil
+    private var handleTrainsToStationIntent: [String]? = nil
     
     
     //MARK: Watchers
@@ -647,18 +649,44 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             await self.cycle()
         }
     }
-    func trainsToStationIntent(departureStationID: String, destinationStationID: String) {
+    func trainsIntent(departureStationID: String, destinationStationID: String?) {
+        print("APPSTATE: handle trains to station intent from \(departureStationID) to \(String(describing: destinationStationID))")
         guard let stations = self.stations else {
-            //  self.handleTrainsToStationIntent = (departureStationID, destinationStationID)
+            print("stations have not been loaded yet")
+            if let destinationStationID = destinationStationID {
+                self.handleTrainsToStationIntent = [departureStationID, destinationStationID]
+            } else {
+                self.handleTrainsToStationIntent = [departureStationID]
+            }
+             
             return
         }
+        if let destinationStationID = destinationStationID {
+            let fromStation = self.stationService.getStationFromAbbr(departureStationID, stations: stations)
+          guard let fromStation = fromStation else {
+                return
+            }
+            print("TRAINS INTENT from station",fromStation)
+          
+            let toStation = self.stationService.getStationFromAbbr(destinationStationID, stations: stations)
+          guard let toStation = toStation else {
+                return
+            }
+            print("TRAINS INTENT TO STATION:", toStation)
+            
+            self.fromStation = fromStation
+            self.toStation = toStation
+            self.trainsLoading = true
+            Task {
+                await self.cycle()
+            }
+            
+        } else {
+            
+        }
+        
         self.handleTrainsToStationIntent = nil
-        //let stationReq = self.stationService.getStationFromAbbr(id, stations: stations)
-      /*  guard let station = stationReq else {
-            return
-        }
-        print(station)
-        self.toStation = station*/
+       
         
     }
     func systemConfig() -> String {

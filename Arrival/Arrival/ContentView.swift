@@ -34,8 +34,8 @@ struct ContentView: View {
             guard let destinationStationID = intent.destinationStation?.identifier else {
                 return
             }
-            print( destinationStationID, "user activity")
-            self.appState.trainsToStationIntent(departureStationID: departureStationID, destinationStationID: destinationStationID)
+            print(departureStationID, destinationStationID, "user activity")
+            self.appState.trainsIntent(departureStationID: departureStationID, destinationStationID: destinationStationID)
         }).onChange(of: scenePhase) { phase in
             
             // Handle errors here
