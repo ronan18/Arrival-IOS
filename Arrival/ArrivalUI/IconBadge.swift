@@ -32,6 +32,6 @@ public struct IconBadge: View {
 
 struct IconBadge_Previews: PreviewProvider {
     static var previews: some View {
-        IconBadge("exclamationmark.triangle.fill", badge: 2).previewLayout(.sizeThatFits).padding().colorScheme(.dark)
+        IconBadge("exclamationmark.triangle.fill", badge: 1).previewLayout(.sizeThatFits).padding().colorScheme(.dark)
     }
 }

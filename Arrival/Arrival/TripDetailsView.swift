@@ -9,6 +9,8 @@ import SwiftUI
 import ArrivalUI
 struct TripDetailsView: View {
     @ObservedObject var appState: AppState
+    @State var shareText: String = ""
+    @State var isPresentingShare = false
     var body: some View {
         if (self.appState.tripDisplay != nil) {
             NavigationView() {
@@ -36,7 +38,20 @@ struct TripDetailsView: View {
                 }).navigationBarTitleDisplayMode(.automatic).toolbar {
                     ToolbarItemGroup(placement: .bottomBar) {
                         VStack {
-                            LargeButton("SHARE TRIP", action: {}, haptic: true)
+         
+                           
+                            LargeButton("SHARE TRIP", action: {
+                                guard let trip = self.appState.tripDisplay else {
+                                    return
+                                }
+                                let shareText = self.appState.generateTripShareText(trip: trip)
+                                print(shareText)
+                                self.shareText = shareText
+                                self.isPresentingShare = true
+                                
+                            }, haptic: true).shareSheet(isPresented: $isPresentingShare, items: [self.shareText])
+                            
+                         
                         }.background(.thinMaterial)
                     }
                 }

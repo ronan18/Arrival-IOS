@@ -29,7 +29,7 @@ public struct ArrivalHeader: View {
                 self.presentAlerts = true
             }) {
                 
-                IconBadge("exclamationmark.triangle.fill", badge: self.appState.alerts.count).foregroundColor(.white)
+                IconBadge("exclamationmark.triangle", badge: self.appState.alerts.count).foregroundColor(.white)
             }.sheet(isPresented: $presentAlerts) {
                 BARTAlertsScreen(appState: appState, open: self.$presentAlerts)
             }

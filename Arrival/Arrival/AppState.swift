@@ -693,5 +693,9 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         let raw = "v:\(self.version),s:v\(self.stations?.version ?? 0)c\(self.stations?.stations.count ?? 0),m:\(self.mode == .production ? "production": "debug"),id:\(self.key ?? "NONE"),tse:\(aiService.toStationEventsCount),dfe:\(aiService.directionFilterEventsCount)"
         return Data(raw.utf8).base64EncodedString()
     }
+    func generateTripShareText(trip: Trip) -> String {
+        
+        return "\(trip.originTime.formatted(date: .omitted, time: .shortened)) ETD from \(trip.origin.name) to arrive at \(trip.destination.name) at \(trip.destinationTime.formatted(date: .omitted, time: .shortened)) \n predictions from Arrival BART https://arrival.city"
+    }
     
 }

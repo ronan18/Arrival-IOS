@@ -36,6 +36,16 @@ struct ContentView: View {
             }
             print(departureStationID, destinationStationID, "user activity")
             self.appState.trainsIntent(departureStationID: departureStationID, destinationStationID: destinationStationID)
+        }).onContinueUserActivity("TrainsFromStationIntent", perform: {userActivity in
+            guard let intent = userActivity.interaction?.intent as? TrainsFromStationIntent else {
+                return
+            }
+            guard let departureStationID = intent.fromStation?.identifier else {
+                return
+            }
+          
+            print(departureStationID, "user activity from station")
+            self.appState.trainsIntent(departureStationID: departureStationID, destinationStationID: nil)
         }).onChange(of: scenePhase) { phase in
             
             // Handle errors here

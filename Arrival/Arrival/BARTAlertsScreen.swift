@@ -26,8 +26,10 @@ struct BARTAlertsScreen: View {
                         VStack(alignment: .center) {
                             Spacer().frame(height:100)
                             Image(systemName: "clock.badge.checkmark.fill").font(.system(size: 100)).symbolRenderingMode(.hierarchical).padding().foregroundColor(.green)
-                            Text("No Delays Reported!").font(.title2).bold().foregroundColor(Color("TextColor"))
-                            Text("BART has not reported any issues with train service").foregroundColor(Color("TextColor")).font(.subheadline).lineLimit(3)
+                            Text("No Delays Reported").font(.title2).bold().foregroundColor(Color("TextColor"))
+            
+                            Text("BART has not reported any issues with train service. *If an issue is reported, an organge indicator will appear on warning icon.*").foregroundColor(Color("TextColor")).font(.subheadline).multilineTextAlignment(.center).lineLimit(10)
+                           
                             Spacer()
                         }
                         Spacer()

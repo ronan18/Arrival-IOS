@@ -10,12 +10,12 @@ import Foundation
 import Intents
 import ArrivalCore
 
-class ToStationIntentHandler: NSObject, TrainsToStationIntentHandling {
-    
+class FromStationHandler: NSObject, TrainsFromStationIntentHandling {
     let api = ArrivalAPI()
     let diskService = DiskService()
     var stations: StationStorage? = nil
     func getStations() async -> StationStorage? {
+        print("get station")
         guard self.stations == nil else {
             return self.stations!
         }
@@ -31,49 +31,21 @@ class ToStationIntentHandler: NSObject, TrainsToStationIntentHandling {
         }
         
     }
-    func handle(intent: TrainsToStationIntent) async -> TrainsToStationIntentResponse {
-        return TrainsToStationIntentResponse()
+   
+    
+    func handle(intent: TrainsFromStationIntent) async -> TrainsFromStationIntentResponse {
+        return TrainsFromStationIntentResponse()
     }
     
+   
     
-    func resolveDestinationStation(for intent: TrainsToStationIntent) async -> IntentStationResolutionResult {
-        print("resolve destionation intent")
-        
-        return IntentStationResolutionResult.success(with: intent.destinationStation!)
-    }
-    
-    
-    func resolveDepartureStation(for intent: TrainsToStationIntent) async -> IntentStationResolutionResult {
+    func resolveFromStation(for intent: TrainsFromStationIntent) async -> IntentStationResolutionResult {
         print("resolve departure intent")
         
-        return IntentStationResolutionResult.success(with: intent.departureStation!)
+        return IntentStationResolutionResult.success(with: intent.fromStation!)
     }
     
-    func provideDestinationStationOptionsCollection(for intent: TrainsToStationIntent, searchTerm: String?, with completion: @escaping (INObjectCollection<IntentStation>?, Error?) -> Void) {
-        print("Destination thhings running")
-        Task {
-            let stationsReq = await getStations()
-            guard let stations = stationsReq?.stations else {
-                completion(nil, nil)
-                print("ERROR no stations exist")
-                return
-            }
-            let potentials = stations.filter {station in
-                guard let searchTerm = searchTerm else {
-                    return true
-                }
-                
-                return station.name.contains(searchTerm)
-            }
-            let stationIntents: [IntentStation] = potentials.map { station in
-                return IntentStation(identifier: station.abbr, display: station.name)
-            }
-            let result = INObjectCollection(items: stationIntents)
-            completion(result , nil)
-        }
-    }
-    
-    func provideDepartureStationOptionsCollection(for intent: TrainsToStationIntent, searchTerm: String?, with completion: @escaping (INObjectCollection<IntentStation>?, Error?) -> Void) {
+    func provideFromStationOptionsCollection(for intent: TrainsFromStationIntent, searchTerm: String?, with completion: @escaping (INObjectCollection<IntentStation>?, Error?) -> Void) {
         print("Departure thhings running")
         Task {
             let stationsReq = await getStations()
@@ -97,6 +69,8 @@ class ToStationIntentHandler: NSObject, TrainsToStationIntentHandling {
             completion(result , nil)
         }
     }
+    
+    
     
     
 }
