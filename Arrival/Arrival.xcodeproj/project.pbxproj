@@ -88,24 +88,6 @@
 		C599E1E826E3E7B0004C573C /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = C599E1D426E3E5B0004C573C /* Intents.intentdefinition */; settings = {ATTRIBUTES = (no_codegen, ); }; };
 		C599E1E926E3E7C7004C573C /* ArrivalCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */; };
 		C599E1EF26E3E7EA004C573C /* TrainsToStationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C599E1EE26E3E7EA004C573C /* TrainsToStationHandler.swift */; };
-		C5A16FED26FA34D40027DF58 /* Arrival_BART_ClipApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A16FEC26FA34D40027DF58 /* Arrival_BART_ClipApp.swift */; };
-		C5A16FEF26FA34D40027DF58 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A16FEE26FA34D40027DF58 /* ContentView.swift */; };
-		C5A16FF126FA34D70027DF58 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5A16FF026FA34D70027DF58 /* Assets.xcassets */; };
-		C5A16FF426FA34D70027DF58 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C5A16FF326FA34D70027DF58 /* Preview Assets.xcassets */; };
-		C5A16FF926FA34D70027DF58 /* Arrival BART Clip.app in Embed App Clips */ = {isa = PBXBuildFile; fileRef = C5A16FEA26FA34D40027DF58 /* Arrival BART Clip.app */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		C5A16FFE26FA35180027DF58 /* ArrivalCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */; };
-		C5A16FFF26FA35180027DF58 /* ArrivalCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C5A1700226FA35180027DF58 /* ArrivalUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 343DA38D26D08CD8008F6A0E /* ArrivalUI.framework */; };
-		C5A1700326FA35180027DF58 /* ArrivalUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 343DA38D26D08CD8008F6A0E /* ArrivalUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		C5A1700826FA37D90027DF58 /* AppClipState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A1700726FA37D90027DF58 /* AppClipState.swift */; };
-		C5A1700A26FA385E0027DF58 /* ClipHomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A1700926FA385E0027DF58 /* ClipHomeScreen.swift */; };
-		C5A1700C26FA3A530027DF58 /* ArrivalClipHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A1700B26FA3A530027DF58 /* ArrivalClipHeader.swift */; };
-		C5A1700D26FA46A30027DF58 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 343DA37D26D089E3008F6A0E /* Assets.xcassets */; };
-		C5A1700F26FA46FB0027DF58 /* ClipDestinationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A1700E26FA46FB0027DF58 /* ClipDestinationBar.swift */; };
-		C5A1701126FA48200027DF58 /* ClipAuthorizeLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A1701026FA48200027DF58 /* ClipAuthorizeLocationView.swift */; };
-		C5A1701326FA487E0027DF58 /* ClipHomeTrainsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A1701226FA487E0027DF58 /* ClipHomeTrainsView.swift */; };
-		C5A1701526FA4BAD0027DF58 /* ClipStationSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A1701426FA4BAD0027DF58 /* ClipStationSearchView.swift */; };
-		C5A1701726FA4BFA0027DF58 /* ClipStationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A1701626FA4BFA0027DF58 /* ClipStationCard.swift */; };
 		C5A1BD5F26F254D600263C9E /* IconBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A1BD5E26F254D600263C9E /* IconBadge.swift */; };
 		C5A1BD6126F2622800263C9E /* BARTAlert.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A1BD6026F2622800263C9E /* BARTAlert.model.swift */; };
 		C5A1BD6326F2662300263C9E /* BARTAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5A1BD6226F2662300263C9E /* BARTAlertView.swift */; };
@@ -176,27 +158,6 @@
 			remoteGlobalIDString = 343DA39F26D08CF5008F6A0E;
 			remoteInfo = ArrivalCore;
 		};
-		C5A16FF726FA34D70027DF58 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 343DA36E26D089DF008F6A0E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C5A16FE926FA34D40027DF58;
-			remoteInfo = "Arrival BART Clip";
-		};
-		C5A1700026FA35180027DF58 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 343DA36E26D089DF008F6A0E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 343DA39F26D08CF5008F6A0E;
-			remoteInfo = ArrivalCore;
-		};
-		C5A1700426FA35180027DF58 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 343DA36E26D089DF008F6A0E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 343DA38C26D08CD8008F6A0E;
-			remoteInfo = ArrivalUI;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -239,21 +200,8 @@
 			dstPath = "$(CONTENTS_FOLDER_PATH)/AppClips";
 			dstSubfolderSpec = 16;
 			files = (
-				C5A16FF926FA34D70027DF58 /* Arrival BART Clip.app in Embed App Clips */,
 			);
 			name = "Embed App Clips";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C5A1700626FA35180027DF58 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				C5A1700326FA35180027DF58 /* ArrivalUI.framework in Embed Frameworks */,
-				C5A16FFF26FA35180027DF58 /* ArrivalCore.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -337,7 +285,6 @@
 		C599E1DF26E3E794004C573C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C599E1E326E3E794004C573C /* SiriExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SiriExtension.entitlements; sourceTree = "<group>"; };
 		C599E1EE26E3E7EA004C573C /* TrainsToStationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainsToStationHandler.swift; sourceTree = "<group>"; };
-		C5A16FEA26FA34D40027DF58 /* Arrival BART Clip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Arrival BART Clip.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C5A16FEC26FA34D40027DF58 /* Arrival_BART_ClipApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Arrival_BART_ClipApp.swift; sourceTree = "<group>"; };
 		C5A16FEE26FA34D40027DF58 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		C5A16FF026FA34D70027DF58 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -431,15 +378,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C5A16FE726FA34D40027DF58 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C5A1700226FA35180027DF58 /* ArrivalUI.framework in Frameworks */,
-				C5A16FFE26FA35180027DF58 /* ArrivalCore.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -468,7 +406,6 @@
 				343DA38D26D08CD8008F6A0E /* ArrivalUI.framework */,
 				343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */,
 				C599E1DA26E3E794004C573C /* SiriExtension.appex */,
-				C5A16FEA26FA34D40027DF58 /* Arrival BART Clip.app */,
 				C52AAE3D2704D02F0068B4C9 /* ArrivalWatchCore.framework */,
 				C52AAE8E2704E00B0068B4C9 /* ArrivalWatchUI.framework */,
 			);
@@ -733,7 +670,6 @@
 				343DA39426D08CD8008F6A0E /* PBXTargetDependency */,
 				343DA3A726D08CF5008F6A0E /* PBXTargetDependency */,
 				C599E1E126E3E794004C573C /* PBXTargetDependency */,
-				C5A16FF826FA34D70027DF58 /* PBXTargetDependency */,
 			);
 			name = Arrival;
 			packageProductDependencies = (
@@ -843,26 +779,6 @@
 			productReference = C599E1DA26E3E794004C573C /* SiriExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		C5A16FE926FA34D40027DF58 /* Arrival BART Clip */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C5A16FFD26FA34D70027DF58 /* Build configuration list for PBXNativeTarget "Arrival BART Clip" */;
-			buildPhases = (
-				C5A16FE626FA34D40027DF58 /* Sources */,
-				C5A16FE726FA34D40027DF58 /* Frameworks */,
-				C5A16FE826FA34D40027DF58 /* Resources */,
-				C5A1700626FA35180027DF58 /* Embed Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C5A1700126FA35180027DF58 /* PBXTargetDependency */,
-				C5A1700526FA35180027DF58 /* PBXTargetDependency */,
-			);
-			name = "Arrival BART Clip";
-			productName = "Arrival BART Clip";
-			productReference = C5A16FEA26FA34D40027DF58 /* Arrival BART Clip.app */;
-			productType = "com.apple.product-type.application.on-demand-install-capable";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -891,9 +807,6 @@
 					C599E1D926E3E794004C573C = {
 						CreatedOnToolsVersion = 13.0;
 					};
-					C5A16FE926FA34D40027DF58 = {
-						CreatedOnToolsVersion = 13.0;
-					};
 				};
 			};
 			buildConfigurationList = 343DA37126D089DF008F6A0E /* Build configuration list for PBXProject "Arrival" */;
@@ -919,7 +832,6 @@
 				343DA38C26D08CD8008F6A0E /* ArrivalUI */,
 				343DA39F26D08CF5008F6A0E /* ArrivalCore */,
 				C599E1D926E3E794004C573C /* SiriExtension */,
-				C5A16FE926FA34D40027DF58 /* Arrival BART Clip */,
 				C52AAE3C2704D02F0068B4C9 /* ArrivalWatchCore */,
 				C52AAE8D2704E00B0068B4C9 /* ArrivalWatchUI */,
 			);
@@ -968,16 +880,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C5A16FE826FA34D40027DF58 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C5A16FF426FA34D70027DF58 /* Preview Assets.xcassets in Resources */,
-				C5A1700D26FA46A30027DF58 /* Assets.xcassets in Resources */,
-				C5A16FF126FA34D70027DF58 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1112,23 +1014,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C5A16FE626FA34D40027DF58 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C5A1701326FA487E0027DF58 /* ClipHomeTrainsView.swift in Sources */,
-				C5A1700F26FA46FB0027DF58 /* ClipDestinationBar.swift in Sources */,
-				C5A1701726FA4BFA0027DF58 /* ClipStationCard.swift in Sources */,
-				C5A1700A26FA385E0027DF58 /* ClipHomeScreen.swift in Sources */,
-				C5A1701126FA48200027DF58 /* ClipAuthorizeLocationView.swift in Sources */,
-				C5A1700C26FA3A530027DF58 /* ArrivalClipHeader.swift in Sources */,
-				C5A1700826FA37D90027DF58 /* AppClipState.swift in Sources */,
-				C5A1701526FA4BAD0027DF58 /* ClipStationSearchView.swift in Sources */,
-				C5A16FEF26FA34D40027DF58 /* ContentView.swift in Sources */,
-				C5A16FED26FA34D40027DF58 /* Arrival_BART_ClipApp.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1162,22 +1047,6 @@
 			isa = PBXTargetDependency;
 			target = 343DA39F26D08CF5008F6A0E /* ArrivalCore */;
 			targetProxy = C599E1EB26E3E7C7004C573C /* PBXContainerItemProxy */;
-		};
-		C5A16FF826FA34D70027DF58 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			platformFilter = ios;
-			target = C5A16FE926FA34D40027DF58 /* Arrival BART Clip */;
-			targetProxy = C5A16FF726FA34D70027DF58 /* PBXContainerItemProxy */;
-		};
-		C5A1700126FA35180027DF58 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 343DA39F26D08CF5008F6A0E /* ArrivalCore */;
-			targetProxy = C5A1700026FA35180027DF58 /* PBXContainerItemProxy */;
-		};
-		C5A1700526FA35180027DF58 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 343DA38C26D08CD8008F6A0E /* ArrivalUI */;
-			targetProxy = C5A1700426FA35180027DF58 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1306,7 +1175,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Arrival/Arrival.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20215;
+				CURRENT_PROJECT_VERSION = 20216;
 				DEVELOPMENT_ASSET_PATHS = "\"Arrival/Preview Content\"";
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				ENABLE_PREVIEWS = YES;
@@ -1347,7 +1216,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Arrival/Arrival.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20215;
+				CURRENT_PROJECT_VERSION = 20216;
 				DEVELOPMENT_ASSET_PATHS = "\"Arrival/Preview Content\"";
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				ENABLE_PREVIEWS = YES;
@@ -1384,7 +1253,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20215;
+				CURRENT_PROJECT_VERSION = 20216;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1414,7 +1283,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20215;
+				CURRENT_PROJECT_VERSION = 20216;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1445,7 +1314,7 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20215;
+				CURRENT_PROJECT_VERSION = 20216;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1476,7 +1345,7 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20215;
+				CURRENT_PROJECT_VERSION = 20216;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1508,7 +1377,7 @@
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20215;
+				CURRENT_PROJECT_VERSION = 20216;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1542,7 +1411,7 @@
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20215;
+				CURRENT_PROJECT_VERSION = 20216;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1576,7 +1445,7 @@
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20215;
+				CURRENT_PROJECT_VERSION = 20216;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1610,7 +1479,7 @@
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20215;
+				CURRENT_PROJECT_VERSION = 20216;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1644,7 +1513,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = SiriExtension/SiriExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20215;
+				CURRENT_PROJECT_VERSION = 20216;
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SiriExtension/Info.plist;
@@ -1672,7 +1541,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
 				CODE_SIGN_ENTITLEMENTS = SiriExtension/SiriExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20215;
+				CURRENT_PROJECT_VERSION = 20216;
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SiriExtension/Info.plist;
@@ -1688,78 +1557,6 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		C5A16FFB26FA34D70027DF58 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CODE_SIGN_ENTITLEMENTS = "Arrival BART Clip/Arrival_BART_Clip.entitlements";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20215;
-				DEVELOPMENT_ASSET_PATHS = "\"Arrival BART Clip/Preview Content\"";
-				DEVELOPMENT_TEAM = 7M5JDZSYX7;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Arrival BART Clip/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = Arrival;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Arrival uses your location to determine the closest station to you";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 3.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival.Clip;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		C5A16FFC26FA34D70027DF58 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
-				CODE_SIGN_ENTITLEMENTS = "Arrival BART Clip/Arrival_BART_Clip.entitlements";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20215;
-				DEVELOPMENT_ASSET_PATHS = "\"Arrival BART Clip/Preview Content\"";
-				DEVELOPMENT_TEAM = 7M5JDZSYX7;
-				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Arrival BART Clip/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = Arrival;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Arrival uses your location to determine the closest station to you";
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
-				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 3.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival.Clip;
-				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1828,15 +1625,6 @@
 			buildConfigurations = (
 				C599E1E526E3E794004C573C /* Debug */,
 				C599E1E626E3E794004C573C /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C5A16FFD26FA34D70027DF58 /* Build configuration list for PBXNativeTarget "Arrival BART Clip" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C5A16FFB26FA34D70027DF58 /* Debug */,
-				C5A16FFC26FA34D70027DF58 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
