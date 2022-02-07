@@ -682,7 +682,19 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             }
             
         } else {
+         
+            let fromStation = self.stationService.getStationFromAbbr(departureStationID, stations: stations)
+          guard let fromStation = fromStation else {
+                return
+            }
+            print("TRAINS INTENT from station",fromStation)
+            self.fromStation = fromStation
+            self.trainsLoading = true
+            Task {
+                await self.cycle()
+            }
             
+           
         }
         
         self.handleTrainsToStationIntent = nil
@@ -695,7 +707,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     func generateTripShareText(trip: Trip) -> String {
         
-        return "\(trip.originTime.formatted(date: .omitted, time: .shortened)) ETD from \(trip.origin.name) to arrive at \(trip.destination.name) at \(trip.destinationTime.formatted(date: .omitted, time: .shortened)) \n predictions from Arrival BART https://arrival.city"
+        return "\(trip.originTime.formatted(date: .omitted, time: .shortened)) ETD \(trip.legs.first?.route.color.rawValue ?? "") train from \(trip.origin.name) to arrive at \(trip.destination.name) at \(trip.destinationTime.formatted(date: .omitted, time: .shortened)) \n predictions from Arrival BART https://arrival.city"
     }
     
 }
