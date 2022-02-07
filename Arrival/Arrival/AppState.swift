@@ -74,7 +74,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     //MARK: Constants
     let defaults = UserDefaults.standard
     let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
-    let mode: RunMode = .development
+    let mode: RunMode = .production
     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
     
     

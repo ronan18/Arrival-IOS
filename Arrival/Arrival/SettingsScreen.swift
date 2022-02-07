@@ -33,7 +33,7 @@ struct SettingsScreen: View {
                     HStack {
                         Text("ID")
                         Spacer()
-                        Text(self.appState.key ?? "NONE").textSelection(.enabled)
+                        Text(self.appState.key ?? "NONE").textSelection(.enabled).font(.caption)
                     }
                     HStack {
                         Text("Mode")
