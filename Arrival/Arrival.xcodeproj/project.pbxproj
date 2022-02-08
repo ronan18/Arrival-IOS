@@ -1185,8 +1185,9 @@
 				INFOPLIST_KEY_CFBundleName = Arrival;
 				INFOPLIST_KEY_CFBundleVersion = 20211;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.navigation";
+				INFOPLIST_KEY_NSLocationUsageDescription = "Arrival needs your location to determine the closest station to you";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Arrival needs your location to determine the closest station to you";
-				INFOPLIST_KEY_NSSiriUsageDescription = "Siri support is used to enable siri short cuts";
+				INFOPLIST_KEY_NSSiriUsageDescription = "Siri support is used to enable Siri Shortcuts";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1226,8 +1227,9 @@
 				INFOPLIST_KEY_CFBundleName = Arrival;
 				INFOPLIST_KEY_CFBundleVersion = 20211;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.navigation";
+				INFOPLIST_KEY_NSLocationUsageDescription = "Arrival needs your location to determine the closest station to you";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Arrival needs your location to determine the closest station to you";
-				INFOPLIST_KEY_NSSiriUsageDescription = "Siri support is used to enable siri short cuts";
+				INFOPLIST_KEY_NSSiriUsageDescription = "Siri support is used to enable Siri Shortcuts";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
