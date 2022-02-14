@@ -25,7 +25,7 @@ struct SettingsScreen: View {
                   }.navigationTitle("Station Search")) {
                     Text("Station Search")
                 }
-                NavigationLink(destination: MachineLearningSettings()) {
+                NavigationLink(destination: MachineLearningSettings(appState: appState)) {
                     Text("Machine Learning")
                 }
                 
@@ -80,6 +80,11 @@ struct SettingsScreen_Previews: PreviewProvider {
 
 
 struct MachineLearningSettings: View {
+    @ObservedObject var appState: AppState
+    @State var resetDirectionFilter = false
+    @State var resetTripAI = false
+    @State var tripAiEvents: Int = 0
+    @State var filterAIEvents: Int = 0
     var body: some View {
         
         VStack {
@@ -91,26 +96,63 @@ struct MachineLearningSettings: View {
                 HStack {
                     Text("Direction Filter Events")
                     Spacer()
-                    Text("\(aiService.directionFilterEventsCount)").textSelection(.enabled)
+                    Text("\(self.filterAIEvents)").textSelection(.enabled)
                 }
-                Button(role: .destructive, action: {}) {
+                Button(role: .destructive, action: {
+                    self.resetDirectionFilter = true
+                }) {
                     Text("Reset Direction Filter AI")
-                }.foregroundColor(.red)
+                }.foregroundColor(.red).confirmationDialog(
+                    "Reset Direction Filter AI. This action cannot be undone.",
+                    isPresented: $resetDirectionFilter, titleVisibility: .visible
+                ) {
+                    Button("Reset Direction Filter AI", role: .destructive) {
+                        self.appState.disk.resetDirectionFilterEvents()
+                        Task {
+                            await aiService.trainDirectionFilterAI()
+                            self.filterAIEvents = 0
+                        }
+                        // Handle empty trash action.
+                    }
+                    Button("Cancel", role: .cancel) {
+                        resetDirectionFilter = false
+                    }
+                }
             }
             Section(footer: Text("The Destination AI predicts which station you are most likely to travel to. It then increases the accuracy of your search results using this information.").foregroundColor(.gray)) {
                 HStack {
                     Text("Destination Events")
                     Spacer()
-                    Text("\(aiService.toStationEventsCount)").textSelection(.enabled)
+                    Text("\(self.tripAiEvents)").textSelection(.enabled)
                 }
-                Button(role: .destructive, action: {}) {
+                Button(role: .destructive, action: {
+                    self.resetTripAI = true
+                }) {
                     Text("Reset Destination AI")
-                }.foregroundColor(.red)
+                }.foregroundColor(.red).confirmationDialog(
+                    "Reset Destination AI. This action cannot be undone.",
+                    isPresented: $resetTripAI, titleVisibility: .visible
+                ) {
+                    Button("Reset Destination AI", role: .destructive) {
+                        self.appState.disk.resetTripEvents()
+                        Task {
+                            await aiService.trainToStationAI()
+                            self.tripAiEvents = 0
+                        }
+                        // Handle empty trash action.
+                    }
+                    Button("Cancel", role: .cancel) {
+                        resetTripAI = false
+                    }
+                }
             }
             
         }
             Spacer()
-        }.background(Color("FormColor")).foregroundColor(Color("TextColor")).navigationTitle("Machine Learning")
+        }.background(Color("FormColor")).foregroundColor(Color("TextColor")).navigationTitle("Machine Learning").onAppear(perform: {
+            self.filterAIEvents = aiService.directionFilterEventsCount
+            self.tripAiEvents = aiService.toStationEventsCount
+        })
         
     }
 }

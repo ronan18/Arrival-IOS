@@ -77,4 +77,18 @@ public class DiskService {
         }
         return events
     }
+    public func resetDirectionFilterEvents() {
+        do {
+            try Disk.remove("directionFilterEvents.json", from: .sharedContainer(appGroupName: "group.com.ronanfuruta.arrival"))
+        } catch {
+        
+        }
+    }
+    public func resetTripEvents() {
+        do {
+            try Disk.remove("tripEvents.json", from: .sharedContainer(appGroupName: "group.com.ronanfuruta.arrival"))
+        } catch {
+            
+        }
+    }
 }
