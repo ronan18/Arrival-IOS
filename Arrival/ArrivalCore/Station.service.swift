@@ -7,7 +7,7 @@
 
 import Foundation
 import CoreLocation
-import Intents
+//import Intents
 import CoreML
 import TabularData
 public class StationService {

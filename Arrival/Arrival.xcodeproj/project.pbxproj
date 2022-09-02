@@ -80,11 +80,11 @@
 		C57DC2C626F93DAA00BFA620 /* SettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C57DC2C526F93DAA00BFA620 /* SettingsScreen.swift */; };
 		C58B60D626D9990D00FCB47B /* MockupData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C58B60D526D9990D00FCB47B /* MockupData.swift */; };
 		C591741E27021B3C0034805F /* NoNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = C591741D27021B3C0034805F /* NoNetwork.swift */; };
-		C599E1D526E3E5B0004C573C /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = C599E1D426E3E5B0004C573C /* Intents.intentdefinition */; };
+		C598CDD42850296500D82CD5 /* TrainsFromStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C598CDD12850296500D82CD5 /* TrainsFromStation.swift */; };
+		C598CDD52850296500D82CD5 /* TrainsToStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C598CDD22850296500D82CD5 /* TrainsToStation.swift */; };
+		C598CDD62850296500D82CD5 /* IntentStation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C598CDD32850296500D82CD5 /* IntentStation.swift */; };
 		C599E1DB26E3E794004C573C /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C546474B26E2897A0055545A /* Intents.framework */; };
 		C599E1DE26E3E794004C573C /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C599E1DD26E3E794004C573C /* IntentHandler.swift */; };
-		C599E1E226E3E794004C573C /* SiriExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = C599E1DA26E3E794004C573C /* SiriExtension.appex */; platformFilter = ios; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		C599E1E726E3E7AF004C573C /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = C599E1D426E3E5B0004C573C /* Intents.intentdefinition */; settings = {ATTRIBUTES = (no_codegen, ); }; };
 		C599E1E826E3E7B0004C573C /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = C599E1D426E3E5B0004C573C /* Intents.intentdefinition */; settings = {ATTRIBUTES = (no_codegen, ); }; };
 		C599E1E926E3E7C7004C573C /* ArrivalCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 343DA3A026D08CF5008F6A0E /* ArrivalCore.framework */; };
 		C599E1EF26E3E7EA004C573C /* TrainsToStationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C599E1EE26E3E7EA004C573C /* TrainsToStationHandler.swift */; };
@@ -144,13 +144,6 @@
 			remoteGlobalIDString = C52AAE3C2704D02F0068B4C9;
 			remoteInfo = ArrivalWatchCore;
 		};
-		C599E1E026E3E794004C573C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 343DA36E26D089DF008F6A0E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C599E1D926E3E794004C573C;
-			remoteInfo = SiriExtension;
-		};
 		C599E1EB26E3E7C7004C573C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 343DA36E26D089DF008F6A0E /* Project object */;
@@ -171,17 +164,6 @@
 				343DA3A926D08CF5008F6A0E /* ArrivalCore.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C546475826E2897A0055545A /* Embed App Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-				C599E1E226E3E794004C573C /* SiriExtension.appex in Embed App Extensions */,
-			);
-			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		C550DCF726E15C5A006C8709 /* Embed Watch Content */ = {
@@ -279,6 +261,9 @@
 		C57DC2C526F93DAA00BFA620 /* SettingsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScreen.swift; sourceTree = "<group>"; };
 		C58B60D526D9990D00FCB47B /* MockupData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockupData.swift; sourceTree = "<group>"; };
 		C591741D27021B3C0034805F /* NoNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoNetwork.swift; sourceTree = "<group>"; };
+		C598CDD12850296500D82CD5 /* TrainsFromStation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainsFromStation.swift; sourceTree = "<group>"; };
+		C598CDD22850296500D82CD5 /* TrainsToStation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainsToStation.swift; sourceTree = "<group>"; };
+		C598CDD32850296500D82CD5 /* IntentStation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentStation.swift; sourceTree = "<group>"; };
 		C599E1D426E3E5B0004C573C /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
 		C599E1DA26E3E794004C573C /* SiriExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SiriExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C599E1DD26E3E794004C573C /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
@@ -416,6 +401,9 @@
 			isa = PBXGroup;
 			children = (
 				34F61C3026D5DDF800B35074 /* Arrival.entitlements */,
+				C598CDD12850296500D82CD5 /* TrainsFromStation.swift */,
+				C598CDD22850296500D82CD5 /* TrainsToStation.swift */,
+				C598CDD32850296500D82CD5 /* IntentStation.swift */,
 				343DA38726D08A2C008F6A0E /* Info.plist */,
 				343DA37926D089DF008F6A0E /* ArrivalApp.swift */,
 				343DA37B26D089DF008F6A0E /* ContentView.swift */,
@@ -500,7 +488,6 @@
 				34CAB3FC26DF21A300CE2374 /* AI.service.swift */,
 				C527270D26EBDD35002EE89C /* AI.model.swift */,
 				C546475926E2BFBE0055545A /* Intents.service.swift */,
-				C599E1D426E3E5B0004C573C /* Intents.intentdefinition */,
 				C5F77A6C2778DFB600250F89 /* helpScreenContent.model.swift */,
 				C5F77A702778ED6B00250F89 /* HelpContent.swift */,
 			);
@@ -577,6 +564,7 @@
 			isa = PBXGroup;
 			children = (
 				C599E1E326E3E794004C573C /* SiriExtension.entitlements */,
+				C599E1D426E3E5B0004C573C /* Intents.intentdefinition */,
 				C599E1DD26E3E794004C573C /* IntentHandler.swift */,
 				C599E1EE26E3E7EA004C573C /* TrainsToStationHandler.swift */,
 				C506EA7A277B834B00AC8358 /* TrainsFromStationHandler.swift */,
@@ -661,7 +649,6 @@
 				343DA37426D089DF008F6A0E /* Resources */,
 				343DA39A26D08CD8008F6A0E /* Embed Frameworks */,
 				C550DCF726E15C5A006C8709 /* Embed Watch Content */,
-				C546475826E2897A0055545A /* Embed App Extensions */,
 				C5A16FFA26FA34D70027DF58 /* Embed App Clips */,
 			);
 			buildRules = (
@@ -669,7 +656,6 @@
 			dependencies = (
 				343DA39426D08CD8008F6A0E /* PBXTargetDependency */,
 				343DA3A726D08CF5008F6A0E /* PBXTargetDependency */,
-				C599E1E126E3E794004C573C /* PBXTargetDependency */,
 			);
 			name = Arrival;
 			packageProductDependencies = (
@@ -892,8 +878,8 @@
 			files = (
 				343DA37C26D089DF008F6A0E /* ContentView.swift in Sources */,
 				C54A298226D2AA7B00E8F1D7 /* HomeTrains.swift in Sources */,
+				C598CDD52850296500D82CD5 /* TrainsToStation.swift in Sources */,
 				C550A8EB26D96A42008A2679 /* DestinationBar.swift in Sources */,
-				C599E1E726E3E7AF004C573C /* Intents.intentdefinition in Sources */,
 				34FB5A9E26DAF8AB00964BF9 /* StationCard.swift in Sources */,
 				C5CC58B126D581A70025BAC7 /* AppState.swift in Sources */,
 				C54A298526D2AB6800E8F1D7 /* TripDetailsView.swift in Sources */,
@@ -903,11 +889,13 @@
 				3469C6E026DC41500036C5D5 /* HomeTrips.swift in Sources */,
 				C57DC2C626F93DAA00BFA620 /* SettingsScreen.swift in Sources */,
 				3483604C26DC26BD003EEFB9 /* TimeChooserView.swift in Sources */,
+				C598CDD42850296500D82CD5 /* TrainsFromStation.swift in Sources */,
 				343DA37A26D089DF008F6A0E /* ArrivalApp.swift in Sources */,
 				C5A1BD6526F2668800263C9E /* BARTAlertsScreen.swift in Sources */,
 				C5CC58B926D587060025BAC7 /* OnboardingView.swift in Sources */,
 				C54A298026D2A6CB00E8F1D7 /* HomeScreen.swift in Sources */,
 				C54A298326D2AB4500E8F1D7 /* StationSearchView.swift in Sources */,
+				C598CDD62850296500D82CD5 /* IntentStation.swift in Sources */,
 				3475A94E26DACA1E00DFDD9E /* AuthorizeLocationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -959,7 +947,6 @@
 				C5CC58AF26D4173F0025BAC7 /* Time.model.swift in Sources */,
 				C5CC58AB26D412BC0025BAC7 /* Trip.model.swift in Sources */,
 				C58B60D626D9990D00FCB47B /* MockupData.swift in Sources */,
-				C599E1D526E3E5B0004C573C /* Intents.intentdefinition in Sources */,
 				C5CC58BB26D58FD20025BAC7 /* Screen.Model.swift in Sources */,
 				3406FAF426D2C75C00D821D8 /* ArrivalAPI.swift in Sources */,
 				343DA3A426D08CF5008F6A0E /* ArrivalCore.docc in Sources */,
@@ -1036,12 +1023,6 @@
 			isa = PBXTargetDependency;
 			target = C52AAE3C2704D02F0068B4C9 /* ArrivalWatchCore */;
 			targetProxy = C52AAE9F2704E3050068B4C9 /* PBXContainerItemProxy */;
-		};
-		C599E1E126E3E794004C573C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			platformFilter = ios;
-			target = C599E1D926E3E794004C573C /* SiriExtension */;
-			targetProxy = C599E1E026E3E794004C573C /* PBXContainerItemProxy */;
 		};
 		C599E1EC26E3E7C7004C573C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1178,6 +1159,7 @@
 				CURRENT_PROJECT_VERSION = 20221;
 				DEVELOPMENT_ASSET_PATHS = "\"Arrival/Preview Content\"";
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Arrival/Info.plist;
@@ -1202,8 +1184,8 @@
 				MARKETING_VERSION = 3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1222,6 +1204,7 @@
 				CURRENT_PROJECT_VERSION = 20221;
 				DEVELOPMENT_ASSET_PATHS = "\"Arrival/Preview Content\"";
 				DEVELOPMENT_TEAM = 7M5JDZSYX7;
+				"ENABLE_HARDENED_RUNTIME[sdk=macosx*]" = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Arrival/Info.plist;
@@ -1246,8 +1229,8 @@
 				MARKETING_VERSION = 3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.arrival;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1278,6 +1261,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.ArrivalUI;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1309,6 +1295,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.ArrivalUI;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1341,6 +1330,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.ArrivalCore;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1373,6 +1365,9 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.ronanfuruta.ArrivalCore;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

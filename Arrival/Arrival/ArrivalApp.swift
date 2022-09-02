@@ -8,7 +8,7 @@
 import SwiftUI
 import ArrivalCore
 import Network
-import Intents
+
 @main
 struct ArrivalApp: App {
     @Environment(\.scenePhase) private var scenePhase
@@ -30,13 +30,9 @@ struct ArrivalApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-        }.onChange(of: scenePhase) { phase in
-            INPreferences.requestSiriAuthorization({status in
-            // Handle errors here
-               
-        })
+        }
     }
-    }
+    
    
 }
 extension UIApplication {

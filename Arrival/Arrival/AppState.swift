@@ -11,7 +11,7 @@ import ArrivalUI
 import Combine
 import CoreLocation
 import SwiftUI
-import Intents
+//import Intents
 import Network
 
 @MainActor
@@ -74,7 +74,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     //MARK: Constants
     let defaults = UserDefaults.standard
     let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
-    let mode: RunMode = .production
+    let mode: RunMode = .development
     let appVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
     
     

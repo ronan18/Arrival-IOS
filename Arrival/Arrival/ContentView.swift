@@ -24,7 +24,7 @@ struct ContentView: View {
             } else if (appState.screen == .loading) {
                 LoadingScreen(indicator: true, versionInfo: true)
             }
-        }.onContinueUserActivity("TrainsToStationIntent", perform: {userActivity in
+        }/*.onContinueUserActivity("TrainsToStationIntent", perform: {userActivity in
             guard let intent = userActivity.interaction?.intent as? TrainsToStationIntent else {
                 return
             }
@@ -46,7 +46,7 @@ struct ContentView: View {
           
             print(departureStationID, "user activity from station")
             self.appState.trainsIntent(departureStationID: departureStationID, destinationStationID: nil)
-        }).onChange(of: scenePhase) { phase in
+        })*/.onChange(of: scenePhase) { phase in
             
             // Handle errors here
                 if (phase == .active) {
@@ -55,7 +55,11 @@ struct ContentView: View {
                     }
                 }
         
-    }
+        }.onContinueUserActivity("TrainsFromStationIntent", perform: {activity in
+            print("continuing user activty: TrainsFromStationIntent")
+        }).onContinueUserActivity("AppIntent", perform: {activity in
+            print("Continuing an activty")
+        })
     }
 }
 

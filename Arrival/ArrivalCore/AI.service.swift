@@ -8,7 +8,7 @@
 import Foundation
 import TabularData
 import CoreML
-import Intents
+//import Intents
 #if targetEnvironment(simulator) || os(watchOS)
 public class AIService{
     public var toStationEventsCount: Int = 0
@@ -56,8 +56,8 @@ public class AIService {
     }
     public func logTripEvent(_ event: TripEvent) {
         self.diskService.storeTipEvent(event)
-        let intent = TrainsToStationIntent()
-        intent.departureStation = IntentStation(identifier: event.fromStation.id, display: event.fromStation.name)
+       // let intent = TrainsToStationIntent()
+       /* intent.departureStation = IntentStation(identifier: event.fromStation.id, display: event.fromStation.name)
         intent.destinationStation = IntentStation(identifier: event.toStation.id, display: event.toStation.name)
         
         INInteraction(intent: intent, response: nil).donate { (error) in
@@ -66,7 +66,7 @@ public class AIService {
             } else {
                 print("\n Donated CreateExpenseIntent")
             }
-        }
+        }*/
     }
     public func logDirectionFilterEvent(_ event: DirectionFilterEvent) {
         self.diskService.storeDirectionFilterEvent(event)
