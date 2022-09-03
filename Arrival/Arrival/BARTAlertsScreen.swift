@@ -29,7 +29,7 @@ struct BARTAlertsScreen: View {
                             Image(systemName: "clock.badge.checkmark.fill").font(.system(size: 100)).symbolRenderingMode(.hierarchical).padding().foregroundColor(.green)
                             Text("No Delays Reported").font(.title2).bold().foregroundColor(Color("TextColor"))
             
-                            Text("BART has not reported any issues with train service. If an issue is reported, an organge indicator will appear on the warning icon.").foregroundColor(Color("TextColor")).font(.subheadline).multilineTextAlignment(.center).lineLimit(15) .minimumScaleFactor(0.5)
+                            Text("BART has not reported any issues with train service. If an issue is reported, an orange indicator will appear on the warning icon.").foregroundColor(Color("TextColor")).font(.subheadline).multilineTextAlignment(.center).lineLimit(15) .minimumScaleFactor(0.5)
                            
                             Spacer()
                         }

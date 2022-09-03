@@ -87,6 +87,7 @@ public class ArrivalAPI {
             "Authorization": auth,
             "Accept": "application/json"
         ]
+        print("creating account with auth \(auth)")
         let response = await withCheckedContinuation { cont in
             AF.request("\(apiURL)/api/v2/createaccount", method: .post, parameters: ["passphrase":auth], headers: headers).responseJSON{ response in
                 cont.resume(returning: response)
@@ -101,12 +102,13 @@ public class ArrivalAPI {
                 return true
             } else {
                 //  self.auth = auth
+                print("create account error")
                 throw APIError.apiError
                 //return  false
             }
             
         case .failure(let error):
-            print(error)
+            print("create account", error)
             throw APIError.requestError
             // return false
         }

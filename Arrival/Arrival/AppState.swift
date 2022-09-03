@@ -219,6 +219,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             do {
                 let result = try await self.api.createAccount(auth: newKey)
                 guard result else {
+                    print("error creating account with production account")
                     //TODO: Catch this
                     return
                 }
@@ -240,6 +241,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
                 let loginResult = try await self.api.login(auth: "test")
                 
                 guard loginResult else {
+                    print("error creating account with beta account")
                     //TODO: Catch this
                     return
                 }
