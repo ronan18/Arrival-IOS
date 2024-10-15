@@ -44,7 +44,7 @@ public struct StationSearchView: View {
                     }.cornerRadius(10).background(Color("CardBG")).overlay(
                         RoundedRectangle(cornerRadius: CGFloat(10.0)).stroke(Color("CardBorder"), lineWidth:3)
                     ).cornerRadius(10.0)
-                    }.listRowSeparator(.hidden)
+                    }.listRowSeparator(.hidden).listRowInsets(EdgeInsets()).padding(.vertical, 5).padding(.horizontal)
                 }
                 ForEach(self.mode == .to ? self.appState.toStationSuggestions.filter({a in searchFilter(self.searchText, station: a)}) : self.appState.fromStationSuggestions.filter({a in searchFilter(self.searchText, station: a)})) { station in
                     Button(action: {
@@ -60,11 +60,11 @@ public struct StationSearchView: View {
                         }
                        
                     }) {
-                    StationCard(appState: self.appState, station: station)
-                    }.listRowSeparator(.hidden)
+                        StationCard(appState: self.appState, station: station)
+                    }.listRowSeparator(.hidden).listRowInsets(EdgeInsets()).padding(.vertical, 5).padding(.horizontal)
                     
                 }
-            }.listStyle(.plain).navigationBarTitle(self.mode == .to ? "To Station" : "From Station").navigationBarItems(trailing:Button(action: {
+            }.listStyle(.plain).listRowSpacing(0).navigationBarTitle(self.mode == .to ? "To Station" : "From Station").navigationBarItems(trailing:Button(action: {
                 switch (self.mode) {
                 case .from:
                    
