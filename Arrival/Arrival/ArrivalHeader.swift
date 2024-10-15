@@ -33,13 +33,14 @@ public struct ArrivalHeader: View {
             }.sheet(isPresented: $presentAlerts) {
                 BARTAlertsScreen(appState: appState, open: self.$presentAlerts)
             }
+            /*
             Button(action: {
                 self.helpScreen = true
             }) {
                 Image(systemName: "questionmark.circle")
             }.sheet(isPresented: self.$helpScreen) {
                 HelpScreen(appState: appState, close: {self.helpScreen = false})
-            }
+            }*/
             Button(action: {
                 self.appState.settingsModal = true
             }) {

@@ -119,15 +119,12 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
         
         do {
-            let auth = try await api.login(auth: key)
-            if auth {
+           
+           
                 print("auth for start main")
                 self.key = key
                 await self.startMain()
-            } else {
-                print("onboard")
-                runOnboarding()
-            }
+           
         } catch {
             print(error, "login failed")
             self.screen = .noNetwork
@@ -186,7 +183,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         }
     }
     
-    func locationManager(_ manager: CLLocationManager,
+     func locationManager(_ manager: CLLocationManager,
                          didChangeAuthorization status: CLAuthorizationStatus) {
         //print("location auth status updated")
         switch status {
@@ -214,44 +211,15 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     }
     func createAccount() async {
         self.screen = .loading
-        if (self.mode == .production) {
+      
             let newKey: String = "AR-" + UUID().uuidString
-            do {
-                let result = try await self.api.createAccount(auth: newKey)
-                guard result else {
-                    print("error creating account with production account")
-                    //TODO: Catch this
-                    return
-                }
-                let loginResult = try await self.api.login(auth: newKey)
-                
-                guard loginResult else {
-                    //TODO: Catch this
-                    return
-                }
+ 
+               
                 self.defaults.set(newKey, forKey: "passphrase")
                 self.key = newKey
                 await self.startMain()
-            } catch {
-                self.screen = .noNetwork
-                //TODO: Catch this
-            }
-        } else {
-            do {
-                let loginResult = try await self.api.login(auth: "test")
-                
-                guard loginResult else {
-                    print("error creating account with beta account")
-                    //TODO: Catch this
-                    return
-                }
-                self.defaults.set("test", forKey: "passphrase")
-                self.key = "test"
-                await self.startMain()
-            } catch {
-                
-            }
-        }
+         
+    
     }
     func onAppear() async {
         print("ON APPEAR", Date().timeIntervalSince(self.lastCycle))
@@ -350,7 +318,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         await self.getToStationSuggestions()
     }
     func getClosestStations() async -> [Station] {
-        print("LOCATION STATION: refresh closest station")
+       // print("LOCATION STATION: refresh closest station")
         if let stations = self.stations {
             if let location = self.location {
                 let stations =  await self.stationService.getClosestStations(stations: stations.stations, location: location)
@@ -549,7 +517,8 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             print("No to station")
             do {
                 print("get trains from \(self.fromStation?.name ?? "none")")
-                let (trains, north, south) = try await self.api.trainsFrom(from: fromStation, timeConfig: TripTime(type: .now))
+               // let (trains, north, south) = try await self.api.trainsFrom(from: fromStation, timeConfig: TripTime(type: .now))
+                let (trains, north, south) = try await self.api.trainsFrom(from: fromStation)
                 self.trains = trains
                 self.northTrains = north
                 self.southTrains = south

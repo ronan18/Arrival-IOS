@@ -20,6 +20,24 @@ public func convertBartDate(time: String, date: String) -> Date? {
     // print("date",dateFormatter.string(from: date!))
     return date
 }
+func convertDateToBartTime(_ date: Date) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.locale = Locale(identifier: "en_US")
+    
+    dateFormatter.timeZone = TimeZone(abbreviation: "PST")
+    dateFormatter.timeStyle = .medium
+    dateFormatter.dateFormat = "hh:mma"
+    return dateFormatter.string(from: date)
+}
+func convertDateToBartDate(_ date: Date) -> String {
+    let dateFormatter = DateFormatter()
+    dateFormatter.locale = Locale(identifier: "en_US")
+    
+    dateFormatter.timeZone = TimeZone(abbreviation: "PST")
+    dateFormatter.timeStyle = .medium
+    dateFormatter.dateFormat = "MM/dd/yyyy"
+    return dateFormatter.string(from: date)
+}
 public func timeIntervalUntil(_ date: Date) -> TimeInterval {
     return date.timeIntervalSince(Date())
 }

@@ -45,7 +45,7 @@ public class StationService {
         return result
     }
     public func getClosestStations(stations: [Station], location: CLLocation) async -> ([Station]){
-        print("STATION SERVICE: getting nearest station")
+        //print("STATION SERVICE: getting nearest station")
         let sorted = stations.sorted  {
             let station1Loc: CLLocation = CLLocation(latitude: $0.lat!, longitude: $0.long!)
             let station2Loc: CLLocation = CLLocation(latitude: $1.lat!, longitude: $1.long!)
