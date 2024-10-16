@@ -118,17 +118,12 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
             return
         }
         
-        do {
-           
+   
            
                 print("auth for start main")
                 self.key = key
                 await self.startMain()
-           
-        } catch {
-            print(error, "login failed")
-            self.screen = .noNetwork
-        }
+       
         
     }
     func runOnboarding() {
@@ -151,15 +146,40 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
         } else {
             await self.fetchStations()
         }
+            /*
+        let coder = JSONEncoder()
+        
+        guard let data = try? coder.encode(self.stations) else {
+            return
+        }
+        let result = String(decoding: data, as: UTF8.self)
+        print("stations")
+        print(result) */
+        
     }
     func fetchStations() async {
+        
         do {
+           
             let stations = try await self.api.stations()
             self.stations = stations
             self.disk.saveStations(stations)
         } catch {
+            
+            let coder = JSONDecoder()
+            let url = Bundle.main.url(forResource: "Stations", withExtension: "json")!
+            
+            guard let data = try? Data(contentsOf: url) else {
+                return
+            }
+            guard let stations = try? coder.decode(StationStorage.self, from: data) else {
+                return
+            }
+            self.stations = stations
+          //  self.disk.saveStations(stations)
             //TODO: Catch this
-            self.screen = .noNetwork
+            // self.screen = .noNetwork
+            print("got stations from offline")
         }
     }
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

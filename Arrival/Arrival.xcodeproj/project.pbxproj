@@ -38,6 +38,7 @@
 		34FB5A9E26DAF8AB00964BF9 /* StationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C54A297526D2171900E8F1D7 /* StationCard.swift */; };
 		34FB5AA026DB35FA00964BF9 /* ErrorDeterminingLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34FB5A9F26DB35FA00964BF9 /* ErrorDeterminingLocation.swift */; };
 		C506EA7B277B834B00AC8358 /* TrainsFromStationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C506EA7A277B834B00AC8358 /* TrainsFromStationHandler.swift */; };
+		C524B90D2CBFEB9800876B74 /* Stations.json in Resources */ = {isa = PBXBuildFile; fileRef = C524B90C2CBFEB9800876B74 /* Stations.json */; };
 		C527270E26EBDD35002EE89C /* AI.model.swift in Sources */ = {isa = PBXBuildFile; fileRef = C527270D26EBDD35002EE89C /* AI.model.swift */; };
 		C52AAE412704D02F0068B4C9 /* ArrivalWatchCore.docc in Sources */ = {isa = PBXBuildFile; fileRef = C52AAE402704D02F0068B4C9 /* ArrivalWatchCore.docc */; };
 		C52AAE422704D02F0068B4C9 /* ArrivalWatchCore.h in Headers */ = {isa = PBXBuildFile; fileRef = C52AAE3F2704D02F0068B4C9 /* ArrivalWatchCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -237,6 +238,7 @@
 		34FB5A9A26DAEF0E00964BF9 /* Maps.service.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Maps.service.swift; sourceTree = "<group>"; };
 		34FB5A9F26DB35FA00964BF9 /* ErrorDeterminingLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorDeterminingLocation.swift; sourceTree = "<group>"; };
 		C506EA7A277B834B00AC8358 /* TrainsFromStationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainsFromStationHandler.swift; sourceTree = "<group>"; };
+		C524B90C2CBFEB9800876B74 /* Stations.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Stations.json; sourceTree = "<group>"; };
 		C527270D26EBDD35002EE89C /* AI.model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AI.model.swift; sourceTree = "<group>"; };
 		C52AADF82704AB210068B4C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C52AAE032704AB210068B4C9 /* ArrivalApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalApp.swift; sourceTree = "<group>"; };
@@ -427,6 +429,7 @@
 				C54A297726D219E700E8F1D7 /* StationSearchView.swift */,
 				C54A298426D2AB6800E8F1D7 /* TripDetailsView.swift */,
 				C5CC58B026D581A70025BAC7 /* AppState.swift */,
+				C524B90C2CBFEB9800876B74 /* Stations.json */,
 				C54DBD5D276A7C5E00B58C85 /* HelpScreen.swift */,
 				C5CC58B826D587060025BAC7 /* OnboardingView.swift */,
 				C54A297326D2165200E8F1D7 /* DestinationBar.swift */,
@@ -844,6 +847,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				343DA38126D089E3008F6A0E /* Preview Assets.xcassets in Resources */,
+				C524B90D2CBFEB9800876B74 /* Stations.json in Resources */,
 				343DA37E26D089E3008F6A0E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
