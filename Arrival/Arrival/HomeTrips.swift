@@ -38,7 +38,6 @@ struct HomeTrips: View {
                     }) {
                     TrainCard(train: trip.legs.first!.trainData, timeDisplayMode: self.$timeDisplayMode, eta: trip.destinationTime)
                     }.contentShape(Rectangle()).listRowSeparator(.hidden).listRowInsets(EdgeInsets()).padding(.vertical, 5).buttonStyle(PlainButtonStyle())  
-                
               
                    
                 }.edgesIgnoringSafeArea(.bottom)
@@ -53,6 +52,7 @@ struct HomeTrips: View {
                 VStack {
                     Spacer()
                     Text("No Trips in this direction")
+                    Text("You query may be out of service hours or your network connection is down.").font(.caption).multilineTextAlignment(.center)
                     Spacer()
                 }
             }

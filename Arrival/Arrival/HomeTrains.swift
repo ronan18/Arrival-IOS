@@ -73,6 +73,9 @@ struct HomeTrains: View {
                 VStack {
                     Spacer()
                     Text("No Trains in this direction")
+                    if (appState.trains.count == 0) {
+                        Text("you may be out of service hours or your network connection is down.").font(.caption).multilineTextAlignment(.center)
+                    }
                     Spacer()
                 }
             }

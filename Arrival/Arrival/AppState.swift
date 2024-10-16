@@ -19,7 +19,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     //MARK: Publishers
     @Published var key: String? = nil
     
-    @Published var screen: AppScreen = .loading
+    @Published var screen: AppScreen = .home
     @Published var fromStationChooser = false
     @Published var toStationChooser = false
     @Published var timeChooser = false
@@ -243,7 +243,8 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
     func startMain() async {
         print("starting main up")
         print("start main")
-        self.screen = .loading
+        self.screen = .home
+       // self.screen = .loading
         guard self.key != nil else {
             self.runOnboarding()
             return
@@ -280,7 +281,7 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
        
         if (self.screen != .noNetwork) {
             print("show home screen")
-            self.screen = .home
+           
         }  else {
             print("no show home screen")
         }
@@ -511,6 +512,10 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
                 self.trainsLoading = false
                 self.lastCycle = Date()
             } catch {
+                self.trainsLoading = false
+                self.lastCycle = Date()
+              //  self.trips = []
+              
                 //TODO: Handel errors from here
             }
         } else {
@@ -560,6 +565,13 @@ class AppState: NSObject, ObservableObject, CLLocationManagerDelegate {
                 self.lastCycle = Date()
             } catch {
                 print("ERROR getting trains", error)
+                self.trainsLoading = false
+                self.firstCycleOfFromStation = false
+                self.lastCycle = Date()
+               /* self.trips = []
+                self.trains = []
+                self.northTrains = []
+                self.southTrains = []*/
                 //TODO: catch this
             }
         }
