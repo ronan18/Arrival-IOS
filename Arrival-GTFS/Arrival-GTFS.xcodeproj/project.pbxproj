@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C57303C42D5CA49C003E2F42 /* Arrival_GTFS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C57303B92D5CA49B003E2F42 /* Arrival_GTFS.framework */; };
+		C57304142D5CF333003E2F42 /* Zip in Frameworks */ = {isa = PBXBuildFile; productRef = C57304132D5CF333003E2F42 /* Zip */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C57304142D5CF333003E2F42 /* Zip in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +121,7 @@
 			);
 			name = "Arrival-GTFS";
 			packageProductDependencies = (
+				C57304132D5CF333003E2F42 /* Zip */,
 			);
 			productName = "Arrival-GTFS";
 			productReference = C57303B92D5CA49B003E2F42 /* Arrival_GTFS.framework */;
@@ -174,6 +177,9 @@
 			);
 			mainGroup = C57303AF2D5CA49B003E2F42;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				C57304122D5CF333003E2F42 /* XCRemoteSwiftPackageReference "Zip" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C57303BA2D5CA49B003E2F42 /* Products */;
 			projectDirPath = "";
@@ -507,6 +513,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C57304122D5CF333003E2F42 /* XCRemoteSwiftPackageReference "Zip" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/marmelroy/Zip.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C57304132D5CF333003E2F42 /* Zip */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C57304122D5CF333003E2F42 /* XCRemoteSwiftPackageReference "Zip" */;
+			productName = Zip;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C57303B02D5CA49B003E2F42 /* Project object */;
 }
