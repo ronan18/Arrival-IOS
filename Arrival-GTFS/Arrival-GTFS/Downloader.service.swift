@@ -9,13 +9,29 @@ import Foundation
 internal import Zip
 
 
-public class GTFSDownloader {
-    public init() {}
-    static let shared = GTFSDownloader()
+public class GTFSFileManager {
+    public init() {
+        self.initializeURLS()
+    }
+    static let shared = GTFSFileManager()
+    var dbLocation: URL! = nil
+    var downloadZipLocation: URL = FileManager.default.temporaryDirectory.appendingPathComponent("google_transit.zip")
+    var unpackedDataLocation: URL! = nil
+   
+    
+    func initializeURLS() {
+        guard let destiation = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
+           return
+        }
+        
+        self.dbLocation = destiation.appending(path: "Arrival/db")
+        self.unpackedDataLocation = destiation.appending(path: "Arrival/gtfs/")
+    }
+    
     let gtfsURL = URL(string: "https://www.bart.gov/dev/schedules/google_transit.zip")!
     
-    func downloadGTFS() async throws -> URL {
-        let file = FileManager.default.temporaryDirectory.appendingPathComponent("google_transit.zip")
+    func downloadGTFS() async throws {
+        
         let (tempURL, _, error) = await withCheckedContinuation { continuation in
             let task = URLSession.shared.downloadTask(with: gtfsURL) {
                 (tempURL, response, error) in
@@ -34,32 +50,52 @@ public class GTFSDownloader {
 
     
             // Remove any existing document at file
-            if FileManager.default.fileExists(atPath: file.path) {
-                try FileManager.default.removeItem(at: file)
+        if FileManager.default.fileExists(atPath: downloadZipLocation.path) {
+                try FileManager.default.removeItem(at: downloadZipLocation)
             }
 
             // Copy the tempURL to file
             try FileManager.default.copyItem(
                 at: tempURL,
-                to: file
+                to: downloadZipLocation
             )
 
-          return file
+        
         
 
      
     }
-    func unzipGTFS(file: URL) async throws -> URL {
-        guard let destiation = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
-            throw URLError(.badServerResponse)
-        }
-        
-        let finalDest = destiation.appending(path: "Arrival/gtfs/")
-        try Zip.unzipFile(file, destination: finalDest, overwrite: true, password: nil, progress: { (progress) -> () in
+    func unzipGTFS() async throws {
+       
+        try Zip.unzipFile(self.downloadZipLocation, destination: self.unpackedDataLocation, overwrite: true, password: nil, progress: { (progress) -> () in
                // print(progress)
             }) // Unzip
         
-        return finalDest
+
         
     }
+    func saveDB() async throws {
+        guard let dbLocation else {
+            throw URLError(.badServerResponse)
+        }
+         let encodedData = try JSONEncoder().encode(GTFSDB.shared)
+          
+       
+        try encodedData.write(to: dbLocation)
+                print(dbLocation)
+           
+        }
+    func loadDB() async throws {
+        guard let dbLocation else {
+            throw URLError(.badServerResponse)
+        }
+        
+        let data = try Data(contentsOf: dbLocation)
+               let decoder = JSONDecoder()
+               let jsonData = try decoder.decode(GTFSDB.self, from: data)
+        GTFSDB.shared.importData(jsonData)
+        
+    }
+        
+    
 }

@@ -55,7 +55,7 @@ public struct TripsDB: Codable, Hashable, Equatable {
         self.byStopIDIndex = byStopID
         
       
-        print("trips DB built")
+      
     }
     
     public func byTripID(_ tripId: String) -> Trip? {

@@ -54,24 +54,7 @@ public class GTFS: Codable {
         async let feedInformation: [FeedInfo]? = initializeOptionalFile(url.appendingPathComponent("feed_info.txt"))
         
         async let attributions: [Attribution]? = initializeOptionalFile(url.appendingPathComponent("attributions.txt"))
-        
-        /*
-        self.fareAttributes = initializeOptionalFile(url.appendingPathComponent("fare_attributes.txt"))
-        self.fareRules = initializeOptionalFile(url.appendingPathComponent("fare_rules.txt"))*/
-        //self.shapes = initializeOptionalFile(url.appendingPathComponent("shapes.txt"))
-        
-        
-        
-       
-        //self.pathways = initializeOptionalFile(url.appendingPathComponent("pathways.txt"))
-   
-        
-       // self.translations = initializeOptionalFile(url.appendingPathComponent("translations.txt"))
-        
-       
-      
-        
-        
+    
         self.agencies = try await agencies
         self.stops = try await stops
         self.routes = try await routes

@@ -17,6 +17,15 @@ public class GTFSDB: Codable {
     var tripsDB: TripsDB = .init()
     var routesDB: RoutesDB = .init()
     
+    func importData(_ gtfsDB: GTFSDB) {
+        self.stationsDB = gtfsDB.stationsDB
+        self.transfersDB = gtfsDB.transfersDB
+        self.calendarsDB = gtfsDB.calendarsDB
+        self.stopTimesDB = gtfsDB.stopTimesDB
+        self.tripsDB = gtfsDB.tripsDB
+        self.routesDB = gtfsDB.routesDB
+    }
+    
     func ingest(gtfs: GTFS) async throws {
         async let stationsDB = StationsDB(from: gtfs.stops)
         
@@ -40,9 +49,8 @@ public class GTFSDB: Codable {
         async let routesDB = RoutesDB(from: gtfs.routes, trips: self.tripsDB, stations: self.stationsDB)
         self.routesDB = await routesDB
         
-        
-        
     }
+   
 }
 
 public enum GTFSDBError: Error {

@@ -48,8 +48,7 @@ public struct RoutesDB: Codable, Hashable, Equatable{
         
         self.byStopIDIndex = inProgressByStopID
         
-        
-        print("routes DB built")
+    
     }
     
     public func byRouteID(_ routeID: String) -> Route? {
