@@ -6,41 +6,46 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		C57C862B2D785991009A5F43 /* ArrivalGTFS in Frameworks */ = {isa = PBXBuildFile; productRef = C57C862A2D785991009A5F43 /* ArrivalGTFS */; };
+		C57C862E2D785AD9009A5F43 /* Zip in Frameworks */ = {isa = PBXBuildFile; productRef = C57C862D2D785AD9009A5F43 /* Zip */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
-		C57303632D5CA3DD003E2F42 /* PBXContainerItemProxy */ = {
+		C57C860D2D78595F009A5F43 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = C57303482D5CA3DC003E2F42 /* Project object */;
+			containerPortal = C57C85F22D78595E009A5F43 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = C573034F2D5CA3DC003E2F42;
+			remoteGlobalIDString = C57C85F92D78595E009A5F43;
 			remoteInfo = Arrival;
 		};
-		C573036D2D5CA3DD003E2F42 /* PBXContainerItemProxy */ = {
+		C57C86172D78595F009A5F43 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = C57303482D5CA3DC003E2F42 /* Project object */;
+			containerPortal = C57C85F22D78595E009A5F43 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = C573034F2D5CA3DC003E2F42;
+			remoteGlobalIDString = C57C85F92D78595E009A5F43;
 			remoteInfo = Arrival;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		C57303502D5CA3DC003E2F42 /* Arrival.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Arrival.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C57303622D5CA3DD003E2F42 /* ArrivalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArrivalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		C573036C2D5CA3DD003E2F42 /* ArrivalUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArrivalUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C57C85FA2D78595E009A5F43 /* Arrival.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Arrival.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C57C860C2D78595F009A5F43 /* ArrivalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArrivalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C57C86162D78595F009A5F43 /* ArrivalUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArrivalUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		C57303522D5CA3DC003E2F42 /* Arrival */ = {
+		C57C85FC2D78595E009A5F43 /* Arrival */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Arrival;
 			sourceTree = "<group>";
 		};
-		C57303652D5CA3DD003E2F42 /* ArrivalTests */ = {
+		C57C860F2D78595F009A5F43 /* ArrivalTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = ArrivalTests;
 			sourceTree = "<group>";
 		};
-		C573036F2D5CA3DD003E2F42 /* ArrivalUITests */ = {
+		C57C86192D78595F009A5F43 /* ArrivalUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = ArrivalUITests;
 			sourceTree = "<group>";
@@ -48,21 +53,23 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		C573034D2D5CA3DC003E2F42 /* Frameworks */ = {
+		C57C85F72D78595E009A5F43 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C57C862E2D785AD9009A5F43 /* Zip in Frameworks */,
+				C57C862B2D785991009A5F43 /* ArrivalGTFS in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C57C86092D78595F009A5F43 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C573035F2D5CA3DD003E2F42 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C57303692D5CA3DD003E2F42 /* Frameworks */ = {
+		C57C86132D78595F009A5F43 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -72,22 +79,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		C57303472D5CA3DC003E2F42 = {
+		C57C85F12D78595E009A5F43 = {
 			isa = PBXGroup;
 			children = (
-				C57303522D5CA3DC003E2F42 /* Arrival */,
-				C57303652D5CA3DD003E2F42 /* ArrivalTests */,
-				C573036F2D5CA3DD003E2F42 /* ArrivalUITests */,
-				C57303512D5CA3DC003E2F42 /* Products */,
+				C57C85FC2D78595E009A5F43 /* Arrival */,
+				C57C860F2D78595F009A5F43 /* ArrivalTests */,
+				C57C86192D78595F009A5F43 /* ArrivalUITests */,
+				C57C85FB2D78595E009A5F43 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
-		C57303512D5CA3DC003E2F42 /* Products */ = {
+		C57C85FB2D78595E009A5F43 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C57303502D5CA3DC003E2F42 /* Arrival.app */,
-				C57303622D5CA3DD003E2F42 /* ArrivalTests.xctest */,
-				C573036C2D5CA3DD003E2F42 /* ArrivalUITests.xctest */,
+				C57C85FA2D78595E009A5F43 /* Arrival.app */,
+				C57C860C2D78595F009A5F43 /* ArrivalTests.xctest */,
+				C57C86162D78595F009A5F43 /* ArrivalUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,134 +102,140 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		C573034F2D5CA3DC003E2F42 /* Arrival */ = {
+		C57C85F92D78595E009A5F43 /* Arrival */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C57303762D5CA3DD003E2F42 /* Build configuration list for PBXNativeTarget "Arrival" */;
+			buildConfigurationList = C57C86202D78595F009A5F43 /* Build configuration list for PBXNativeTarget "Arrival" */;
 			buildPhases = (
-				C573034C2D5CA3DC003E2F42 /* Sources */,
-				C573034D2D5CA3DC003E2F42 /* Frameworks */,
-				C573034E2D5CA3DC003E2F42 /* Resources */,
+				C57C85F62D78595E009A5F43 /* Sources */,
+				C57C85F72D78595E009A5F43 /* Frameworks */,
+				C57C85F82D78595E009A5F43 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				C57303522D5CA3DC003E2F42 /* Arrival */,
+				C57C85FC2D78595E009A5F43 /* Arrival */,
 			);
 			name = Arrival;
 			packageProductDependencies = (
+				C57C862A2D785991009A5F43 /* ArrivalGTFS */,
+				C57C862D2D785AD9009A5F43 /* Zip */,
 			);
 			productName = Arrival;
-			productReference = C57303502D5CA3DC003E2F42 /* Arrival.app */;
+			productReference = C57C85FA2D78595E009A5F43 /* Arrival.app */;
 			productType = "com.apple.product-type.application";
 		};
-		C57303612D5CA3DD003E2F42 /* ArrivalTests */ = {
+		C57C860B2D78595F009A5F43 /* ArrivalTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C57303792D5CA3DD003E2F42 /* Build configuration list for PBXNativeTarget "ArrivalTests" */;
+			buildConfigurationList = C57C86232D78595F009A5F43 /* Build configuration list for PBXNativeTarget "ArrivalTests" */;
 			buildPhases = (
-				C573035E2D5CA3DD003E2F42 /* Sources */,
-				C573035F2D5CA3DD003E2F42 /* Frameworks */,
-				C57303602D5CA3DD003E2F42 /* Resources */,
+				C57C86082D78595F009A5F43 /* Sources */,
+				C57C86092D78595F009A5F43 /* Frameworks */,
+				C57C860A2D78595F009A5F43 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				C57303642D5CA3DD003E2F42 /* PBXTargetDependency */,
+				C57C860E2D78595F009A5F43 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				C57303652D5CA3DD003E2F42 /* ArrivalTests */,
+				C57C860F2D78595F009A5F43 /* ArrivalTests */,
 			);
 			name = ArrivalTests;
 			packageProductDependencies = (
 			);
 			productName = ArrivalTests;
-			productReference = C57303622D5CA3DD003E2F42 /* ArrivalTests.xctest */;
+			productReference = C57C860C2D78595F009A5F43 /* ArrivalTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		C573036B2D5CA3DD003E2F42 /* ArrivalUITests */ = {
+		C57C86152D78595F009A5F43 /* ArrivalUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C573037C2D5CA3DD003E2F42 /* Build configuration list for PBXNativeTarget "ArrivalUITests" */;
+			buildConfigurationList = C57C86262D78595F009A5F43 /* Build configuration list for PBXNativeTarget "ArrivalUITests" */;
 			buildPhases = (
-				C57303682D5CA3DD003E2F42 /* Sources */,
-				C57303692D5CA3DD003E2F42 /* Frameworks */,
-				C573036A2D5CA3DD003E2F42 /* Resources */,
+				C57C86122D78595F009A5F43 /* Sources */,
+				C57C86132D78595F009A5F43 /* Frameworks */,
+				C57C86142D78595F009A5F43 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				C573036E2D5CA3DD003E2F42 /* PBXTargetDependency */,
+				C57C86182D78595F009A5F43 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				C573036F2D5CA3DD003E2F42 /* ArrivalUITests */,
+				C57C86192D78595F009A5F43 /* ArrivalUITests */,
 			);
 			name = ArrivalUITests;
 			packageProductDependencies = (
 			);
 			productName = ArrivalUITests;
-			productReference = C573036C2D5CA3DD003E2F42 /* ArrivalUITests.xctest */;
+			productReference = C57C86162D78595F009A5F43 /* ArrivalUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		C57303482D5CA3DC003E2F42 /* Project object */ = {
+		C57C85F22D78595E009A5F43 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1600;
 				LastUpgradeCheck = 1600;
 				TargetAttributes = {
-					C573034F2D5CA3DC003E2F42 = {
+					C57C85F92D78595E009A5F43 = {
 						CreatedOnToolsVersion = 16.0;
 					};
-					C57303612D5CA3DD003E2F42 = {
+					C57C860B2D78595F009A5F43 = {
 						CreatedOnToolsVersion = 16.0;
-						TestTargetID = C573034F2D5CA3DC003E2F42;
+						TestTargetID = C57C85F92D78595E009A5F43;
 					};
-					C573036B2D5CA3DD003E2F42 = {
+					C57C86152D78595F009A5F43 = {
 						CreatedOnToolsVersion = 16.0;
-						TestTargetID = C573034F2D5CA3DC003E2F42;
+						TestTargetID = C57C85F92D78595E009A5F43;
 					};
 				};
 			};
-			buildConfigurationList = C573034B2D5CA3DC003E2F42 /* Build configuration list for PBXProject "Arrival" */;
+			buildConfigurationList = C57C85F52D78595E009A5F43 /* Build configuration list for PBXProject "Arrival" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 				Base,
 			);
-			mainGroup = C57303472D5CA3DC003E2F42;
+			mainGroup = C57C85F12D78595E009A5F43;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				C57C86292D785991009A5F43 /* XCLocalSwiftPackageReference "../arrivalGTFS" */,
+				C57C862C2D785AD9009A5F43 /* XCRemoteSwiftPackageReference "Zip" */,
+			);
 			preferredProjectObjectVersion = 77;
-			productRefGroup = C57303512D5CA3DC003E2F42 /* Products */;
+			productRefGroup = C57C85FB2D78595E009A5F43 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C573034F2D5CA3DC003E2F42 /* Arrival */,
-				C57303612D5CA3DD003E2F42 /* ArrivalTests */,
-				C573036B2D5CA3DD003E2F42 /* ArrivalUITests */,
+				C57C85F92D78595E009A5F43 /* Arrival */,
+				C57C860B2D78595F009A5F43 /* ArrivalTests */,
+				C57C86152D78595F009A5F43 /* ArrivalUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		C573034E2D5CA3DC003E2F42 /* Resources */ = {
+		C57C85F82D78595E009A5F43 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C57303602D5CA3DD003E2F42 /* Resources */ = {
+		C57C860A2D78595F009A5F43 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C573036A2D5CA3DD003E2F42 /* Resources */ = {
+		C57C86142D78595F009A5F43 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -232,21 +245,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		C573034C2D5CA3DC003E2F42 /* Sources */ = {
+		C57C85F62D78595E009A5F43 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C573035E2D5CA3DD003E2F42 /* Sources */ = {
+		C57C86082D78595F009A5F43 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C57303682D5CA3DD003E2F42 /* Sources */ = {
+		C57C86122D78595F009A5F43 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -256,20 +269,20 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		C57303642D5CA3DD003E2F42 /* PBXTargetDependency */ = {
+		C57C860E2D78595F009A5F43 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = C573034F2D5CA3DC003E2F42 /* Arrival */;
-			targetProxy = C57303632D5CA3DD003E2F42 /* PBXContainerItemProxy */;
+			target = C57C85F92D78595E009A5F43 /* Arrival */;
+			targetProxy = C57C860D2D78595F009A5F43 /* PBXContainerItemProxy */;
 		};
-		C573036E2D5CA3DD003E2F42 /* PBXTargetDependency */ = {
+		C57C86182D78595F009A5F43 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = C573034F2D5CA3DC003E2F42 /* Arrival */;
-			targetProxy = C573036D2D5CA3DD003E2F42 /* PBXContainerItemProxy */;
+			target = C57C85F92D78595E009A5F43 /* Arrival */;
+			targetProxy = C57C86172D78595F009A5F43 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		C57303742D5CA3DD003E2F42 /* Debug */ = {
+		C57C861E2D78595F009A5F43 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -332,7 +345,7 @@
 			};
 			name = Debug;
 		};
-		C57303752D5CA3DD003E2F42 /* Release */ = {
+		C57C861F2D78595F009A5F43 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -388,7 +401,7 @@
 			};
 			name = Release;
 		};
-		C57303772D5CA3DD003E2F42 /* Debug */ = {
+		C57C86212D78595F009A5F43 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -417,7 +430,7 @@
 			};
 			name = Debug;
 		};
-		C57303782D5CA3DD003E2F42 /* Release */ = {
+		C57C86222D78595F009A5F43 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -446,7 +459,7 @@
 			};
 			name = Release;
 		};
-		C573037A2D5CA3DD003E2F42 /* Debug */ = {
+		C57C86242D78595F009A5F43 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -465,7 +478,7 @@
 			};
 			name = Debug;
 		};
-		C573037B2D5CA3DD003E2F42 /* Release */ = {
+		C57C86252D78595F009A5F43 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -484,7 +497,7 @@
 			};
 			name = Release;
 		};
-		C573037D2D5CA3DD003E2F42 /* Debug */ = {
+		C57C86272D78595F009A5F43 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -501,7 +514,7 @@
 			};
 			name = Debug;
 		};
-		C573037E2D5CA3DD003E2F42 /* Release */ = {
+		C57C86282D78595F009A5F43 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
@@ -521,43 +534,73 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		C573034B2D5CA3DC003E2F42 /* Build configuration list for PBXProject "Arrival" */ = {
+		C57C85F52D78595E009A5F43 /* Build configuration list for PBXProject "Arrival" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C57303742D5CA3DD003E2F42 /* Debug */,
-				C57303752D5CA3DD003E2F42 /* Release */,
+				C57C861E2D78595F009A5F43 /* Debug */,
+				C57C861F2D78595F009A5F43 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C57303762D5CA3DD003E2F42 /* Build configuration list for PBXNativeTarget "Arrival" */ = {
+		C57C86202D78595F009A5F43 /* Build configuration list for PBXNativeTarget "Arrival" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C57303772D5CA3DD003E2F42 /* Debug */,
-				C57303782D5CA3DD003E2F42 /* Release */,
+				C57C86212D78595F009A5F43 /* Debug */,
+				C57C86222D78595F009A5F43 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C57303792D5CA3DD003E2F42 /* Build configuration list for PBXNativeTarget "ArrivalTests" */ = {
+		C57C86232D78595F009A5F43 /* Build configuration list for PBXNativeTarget "ArrivalTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C573037A2D5CA3DD003E2F42 /* Debug */,
-				C573037B2D5CA3DD003E2F42 /* Release */,
+				C57C86242D78595F009A5F43 /* Debug */,
+				C57C86252D78595F009A5F43 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C573037C2D5CA3DD003E2F42 /* Build configuration list for PBXNativeTarget "ArrivalUITests" */ = {
+		C57C86262D78595F009A5F43 /* Build configuration list for PBXNativeTarget "ArrivalUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C573037D2D5CA3DD003E2F42 /* Debug */,
-				C573037E2D5CA3DD003E2F42 /* Release */,
+				C57C86272D78595F009A5F43 /* Debug */,
+				C57C86282D78595F009A5F43 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		C57C86292D785991009A5F43 /* XCLocalSwiftPackageReference "../arrivalGTFS" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../arrivalGTFS;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C57C862C2D785AD9009A5F43 /* XCRemoteSwiftPackageReference "Zip" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/marmelroy/Zip.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.1.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C57C862A2D785991009A5F43 /* ArrivalGTFS */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ArrivalGTFS;
+		};
+		C57C862D2D785AD9009A5F43 /* Zip */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C57C862C2D785AD9009A5F43 /* XCRemoteSwiftPackageReference "Zip" */;
+			productName = Zip;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
-	rootObject = C57303482D5CA3DC003E2F42 /* Project object */;
+	rootObject = C57C85F22D78595E009A5F43 /* Project object */;
 }
